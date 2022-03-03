@@ -1,0 +1,9 @@
+build/
+dist/
+.coverage
+__pycache__/
+.tox/
+zyte_common_items.egg-info
+htmlcov/
+docs/_build/
+docs/_autosummary/
