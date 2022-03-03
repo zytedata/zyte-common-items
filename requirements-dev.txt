@@ -1,0 +1,5 @@
+bump2version
+pre-commit
+pytest
+mypy
+tox
