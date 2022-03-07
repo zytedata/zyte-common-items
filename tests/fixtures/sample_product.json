@@ -1,0 +1,127 @@
+[
+  {
+    "product": {
+      "name": "Product name",
+      "offers": [
+        {
+          "price": "42",
+          "regularPrice": "45.00",
+          "currency": "USD",
+          "availability": "InStock"
+        }
+      ],
+      "sku": "product sku",
+      "mpn": "product mpn",
+      "gtin": [
+        {
+          "type": "ean13",
+          "value": "978-3-16-148410-0"
+        }
+      ],
+      "brand": {
+        "name": "product brand"
+      },
+      "breadcrumbs": [
+        {
+          "name": "Level 1",
+          "link": "http://example.com"
+        }
+      ],
+      "mainImage": {
+        "url": "http://example.com/image.png"
+      },
+      "images": [
+        {"url": "http://example.com/image.png"}
+      ],
+      "description": "product description",
+      "descriptionHtml": "<article>HTML description for Product ...",
+      "aggregateRating": {
+        "ratingValue": 4.5,
+        "bestRating": 5.0,
+        "reviewCount": 31
+      },
+      "color": "White/Gum Light Brown/White",
+      "size": "US 10.5",
+      "style": "Striped finish",
+      "additionalProperty": [
+        {
+          "name": "property 1",
+          "value": "value of property 1"
+        }
+      ],
+      "probability": 0.95,
+      "canonicalUrl": "https://example.com/product/",
+      "url": "https://example.com/product",
+      "hasVariants": [
+        {
+          "name": "Variant name",
+          "offers": [
+              {
+              "price": "47",
+              "regularPrice": "88.00",
+              "currency": "USD",
+              "availability": "InStock"
+              }
+          ],
+          "sku": "variant sku",
+          "mpn": "variant mpn",
+          "gtin": [
+              {
+              "type": "ean13",
+              "value": "978-3-16-148410-1"
+              }
+          ],
+          "brand": {
+              "name": "variant brand"
+          },
+          "breadcrumbs": [
+              {
+              "name": "Level 1",
+              "link": "http://example.com"
+              }
+          ],
+          "mainImage": {
+              "url": "http://example.com/image-variant.png"
+          },
+          "images": [
+              {"url": "http://example.com/image-variant.png"}
+          ],
+          "description": "variant description",
+          "descriptionHtml": "<article>HTML description for Variant ...",
+          "aggregateRating": {
+              "ratingValue": 4.29,
+              "bestRating": 5.0,
+              "reviewCount": 32
+          },
+          "color": "Black/Gum Dark Red/White",
+          "size": "US 9.5",
+          "style": "Striped finish",
+          "additionalProperty": [
+            {
+              "name": "variant property 1",
+              "value": "variant value of property 1"
+            }
+          ],
+          "canonicalUrl": "https://example.com/product-variant/",
+          "probability": 1.0,
+          "url": "https://example.com/product-variant"
+        }
+      ]
+    },
+    "webPage": {
+      "inLanguages": [
+        {"code": "en"},
+        {"code": "es"}
+      ]
+    },
+    "query": {
+      "id": "1564747029122-9e02a1868d70b7a2",
+      "domain": "example.com",
+      "userQuery": {
+        "pageType": "product",
+        "url": "https://example.com/product"
+      }
+    },
+    "algorithmVersion": "20.8.1"
+  }
+]

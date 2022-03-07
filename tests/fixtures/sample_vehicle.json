@@ -1,0 +1,85 @@
+[
+  {
+    "vehicle": {
+      "name": "Vehicle name",
+      "offers": [
+        {
+          "price": "42000",
+          "currency": "USD",
+          "availability": "InStock",
+          "regularPrice": "48000"
+        }
+      ],
+      "sku": "Vehicle sku",
+      "mpn": "Vehicle model",
+      "vehicleIdentificationNumber": "4T1BE32K25U056382",
+      "mileageFromOdometer": {
+        "value": 25000,
+        "unitCode": "KMT"
+      },
+      "vehicleTransmission": "manual",
+      "fuelType": "Petrol",
+      "vehicleEngine": {
+        "raw": "4.4L "
+      },
+      "availableAtOrFrom": {
+        "raw": "New york"
+      },
+      "color": "black",
+      "vehicleInteriorColor": "Silver",
+      "numberOfDoors": 5,
+      "vehicleSeatingCapacity": 6,
+      "fuelEfficiency": [
+        {
+          "raw": "45 mpg (city)"
+        }
+      ],
+      "brand": {
+        "name": "product brand"
+      },
+      "breadcrumbs": [
+        {
+          "name": "Level 1",
+          "link": "http://example.com"
+        }
+      ],
+      "mainImage": {
+        "url": "http://example.com/image.png"
+      },
+      "images": [
+        {"url": "http://example.com/image.png"}
+      ],
+      "description": "vehicle description",
+      "descriptionHtml": "<article>HTML description for Vehicle ...",
+      "aggregateRating": {
+        "ratingValue": 4.5,
+        "bestRating": 5.0,
+        "reviewCount": 31
+      },
+      "additionalProperty": [
+        {
+          "name": "property 1",
+          "value": "value of property 1"
+        }
+      ],
+      "probability": 0.95,
+      "canonicalUrl": "https://example.com/vehicle/",
+      "url": "https://example.com/vehicle"
+    },
+    "webPage": {
+      "inLanguages": [
+        {"code": "en"},
+        {"code": "es"}
+      ]
+    },
+    "query": {
+      "id": "1564747029122-9e02a1868d70b7a2",
+      "domain": "example.com",
+      "userQuery": {
+        "pageType": "vehicle",
+        "url": "https://example.com/vehicle"
+      }
+    },
+    "algorithmVersion": "20.8.1"
+  }
+]

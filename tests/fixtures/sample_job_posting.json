@@ -1,0 +1,40 @@
+[
+  {
+    "jobPosting": {
+      "title": "Regional Manager",
+      "datePosted": "2019-06-19T00:00:00",
+      "validThrough": "2019-08-19T00:00:00",
+      "description": "Job Description ...",
+      "descriptionHtml": "<article>HTML for Job Description ...",
+      "baseSalary": {
+        "currency": "$",
+        "raw": "$90000 gross",
+        "value": 90000.0
+      },
+      "jobLocation": {
+        "raw": "North Pole"
+      },
+      "hiringOrganization": {
+        "raw": "ACME Corporation"
+      },
+      "employmentType": "Full-time",
+      "probability": 0.95,
+      "url": "https://example.com/job"
+    },
+    "webPage": {
+      "inLanguages": [
+        {"code": "en"},
+        {"code": "es"}
+      ]
+    },
+    "query": {
+      "id": "1564747029122-9e02a1868d70b7a3",
+      "domain": "example.com",
+      "userQuery": {
+        "pageType": "jobPosting",
+        "url": "https://example.com/job"
+      }
+    },
+    "algorithmVersion": "20.8.1"
+  }
+]

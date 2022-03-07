@@ -1,0 +1,61 @@
+[
+  {
+    "reviewList": {
+      "paginationNext": {
+        "text": "Next Page",
+        "url": "http://example.com/review-4"
+      },
+      "paginationPrevious": {
+        "text": "Previous Page",
+        "url": "http://example.com/review-2"
+      },
+      "reviews": [
+        {
+          "datePublished": "2020-01-30T00:00:00",
+          "datePublishedRaw": "Jan 30, 2020",
+          "isVerified": true,
+          "name": "A great tool!",
+          "probability": 0.95,
+          "reviewBody": "AutoExtract is a great tool for review extraction",
+          "reviewRating": {
+            "bestRating": 5.0,
+            "ratingValue": 5.0
+          },
+          "votedHelpful": 12,
+          "votedUnhelpful": 1
+        },
+        {
+          "datePublished": null,
+          "datePublishedRaw": null,
+          "isVerified": null,
+          "name": "Another review",
+          "probability": 0.95,
+          "reviewBody": null,
+          "reviewRating": null,
+          "votedHelpful": null,
+          "votedUnhelpful": null
+        }
+      ],
+      "url": "https://example.com/review-3"
+    },
+    "webPage": {
+      "inLanguages": [
+        {
+          "code": "en"
+        },
+        {
+          "code": "es"
+        }
+      ]
+    },
+    "query": {
+      "id": "1564747029122-9e02a1868d70b7a3",
+      "domain": "example.com",
+      "userQuery": {
+        "pageType": "reviews",
+        "url": "https://example.com/review-3"
+      }
+    },
+    "algorithmVersion": "20.8.1"
+  }
+]

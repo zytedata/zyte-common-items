@@ -1,0 +1,72 @@
+[
+  {
+    "articleList": {
+      "url": "http://www.example.com/article-list-page-3",
+      "paginationNext": {
+        "text": "Next Page",
+        "url": "http://example.com/article-list-page-4"
+      },
+      "paginationPrevious": {
+        "text": "Previous Page",
+        "url": "http://example.com/article-list-page-2"
+      },
+      "breadcrumbs": [
+        {
+          "name": "Level 1",
+          "link": "http://example.com"
+        }
+      ],
+      "articles": [
+        {
+          "articleBody": "Article body ...",
+          "authors": [
+            {"name": "Alice", "raw": "Alice and Bob"},
+            {"name": "Bob", "raw": "Alice and Bob"}
+          ],
+          "datePublished": "2019-06-19T00:00:00",
+          "datePublishedRaw": "June 19, 2019",
+          "headline": "Article headline",
+          "mainImage": {
+            "url": "http://example.com/image.png"
+          },
+          "images": [
+            {"url": "http://example.com/image.png"}
+          ],
+          "inLanguage": "en",
+          "probability": 0.95,
+          "url": "https://www.example.com/article?id=23"
+        },
+        {
+          "articleBody": null,
+          "authors": [],
+          "datePublished": null,
+          "datePublishedRaw": null,
+          "headline": "Headline of another article",
+          "mainImage": null,
+          "images": [],
+          "inLanguage": null,
+          "probability": 0.82,
+          "url": "https://www.example.com/article?id=25"
+        }
+      ]
+    },
+    "webPage": {
+      "inLanguages": [
+        {
+          "code": "en"
+        },
+        {
+          "code": "es"
+        }
+      ]
+    },
+    "query": {
+      "id": "1564747029122-9e02a1868d70b7a3",
+      "domain": "www.example.com",
+      "userQuery": {
+        "pageType": "articleList",
+        "url": "http://www.example.com/article-list-page-3"
+      }
+    }
+  }
+]

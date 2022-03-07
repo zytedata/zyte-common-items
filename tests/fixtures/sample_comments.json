@@ -1,0 +1,44 @@
+[
+  {
+    "comments": {
+      "url": "https://example.com/article-with-comments",
+      "comments": [
+        {
+          "text": "A comment on article",
+          "datePublished": "2020-01-30T00:00:00",
+          "datePublishedRaw": "Jan 30, 2020",
+          "upvoteCount": 12,
+          "downvoteCount": 1,
+          "probability": 0.95
+        },
+        {
+          "datePublished": null,
+          "datePublishedRaw": null,
+          "downvoteCount": null,
+          "probability": 0.95,
+          "text": "Another comment",
+          "upvoteCount": null
+        }
+      ]
+    },
+    "webPage": {
+      "inLanguages": [
+        {
+          "code": "en"
+        },
+        {
+          "code": "es"
+        }
+      ]
+    },
+    "query": {
+      "id": "1564747029122-9e02a1868d70b7a3",
+      "domain": "example.com",
+      "userQuery": {
+        "pageType": "comments",
+        "url": "https://example.com/article-with-comments"
+      }
+    },
+    "algorithmVersion": "20.8.1"
+  }
+]

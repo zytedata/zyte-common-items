@@ -1,0 +1,72 @@
+[
+  {
+    "realEstate": {
+      "name": "Real Estate name",
+      "datePublished": "2020-06-18T00:00:00",
+      "datePublishedRaw": "June 18, 2020",
+      "description": "Real Estate description",
+      "mainImage": {
+        "url": "http://example.com/image.png"
+      },
+      "images": [
+        {"url": "http://example.com/image.png"}
+      ],
+      "yearBuilt": 2018,
+      "breadcrumbs": [
+        {
+          "name": "Level 1",
+          "link": "http://example.com"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "name": "property 1",
+          "value": "value of property 1"
+        }
+      ],
+      "address": {
+        "postalCode": "77701",
+        "streetAddress": "3214 Brookview Drive",
+        "addressCountry": "US",
+        "addressLocality": "Beaumont",
+        "addressRegion": "Texas",
+        "raw": "3214 Brookview Drive, Beaumont, Texas 77701, US"
+      },
+      "area": {
+        "value": 54.0,
+        "unitCode": "SQMT",
+        "raw": "54 m²"
+      },
+      "numberOfBathroomsTotal": 3,
+      "numberOfFullBathrooms": 2,
+      "numberOfPartialBathrooms": 1,
+      "numberOfBedrooms": 2,
+      "numberOfRooms": 3,
+      "identifier": "XYZ",
+      "tradeActions": [
+        {
+          "tradeType": "RentAction",
+          "price": "1700.0",
+          "currency": "USD"
+        }
+      ],
+      "probability": 0.95,
+      "url": "http://example.com/example-real-estate-page"
+    },
+    "webPage": {
+      "inLanguages": [
+        {"code": "en"},
+        {"code": "es"}
+      ]
+    },
+    "query": {
+      "id": "1564747029122-9e02a1868d70b7a3",
+      "domain": "example.com",
+      "userQuery": {
+        "pageType": "realEstate",
+        "url": "http://example.com/example-real-estate-page"
+      }
+    },
+    "algorithmVersion": "20.8.1"
+  }
+]

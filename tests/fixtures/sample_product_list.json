@@ -1,0 +1,98 @@
+[
+  {
+    "productList":{
+      "url":"http://example.com/product-list-page-3",
+      "breadcrumbs":[
+        {
+          "name":"Home",
+          "link":"http://example.com"
+        }
+      ],
+      "paginationNext":{
+        "text":"Next Page",
+        "url":"http://example.com/product-list-page-4"
+      },
+      "paginationPrevious":{
+        "text":"Previous Page",
+        "url":"http://example.com/product-list-page-2"
+      },
+      "products":[
+        {
+          "name":"Product 1",
+          "url":"http://example.com/product1",
+          "offers":[
+            {
+              "price":"42",
+              "currency":"USD",
+              "availability":"InStock",
+              "regularPrice":"60"
+            }
+          ],
+          "sku":"product sku",
+          "brand": {
+            "name": "product1 brand"
+          },
+          "mainImage": {
+            "url": "http://example.com/image.png"
+          },
+          "images": [
+            {"url": "http://example.com/image.png"}
+          ],
+          "description":"product1 description",
+          "descriptionHtml": "<article>HTML description for Product ...",
+          "aggregateRating":{
+            "ratingValue":4.5,
+            "bestRating":5.0,
+            "reviewCount":31
+          },
+          "probability":0.95
+        },
+        {
+          "name":"Product 2",
+          "url":"http://example.com/product2",
+          "offers":[
+            {
+              "price":"72",
+              "regularPrice":"82",
+              "currency":"USD",
+              "availability":"OutOfStock"
+            }
+          ],
+          "sku":"product2 sku",
+          "brand": {
+            "name": "product2 brand"
+          },
+          "mainImage": {
+            "url": "http://example.com/image2.png"
+          },
+          "images": [
+            {"url": "http://example.com/image2.png"}
+          ],
+          "description":"product2 description",
+          "descriptionHtml": "<article>HTML description for Product ...",
+          "aggregateRating":{
+            "ratingValue":1.5,
+            "bestRating":5.0,
+            "reviewCount":85
+          },
+          "probability":0.90
+        }
+      ]
+    },
+    "webPage": {
+      "inLanguages": [
+        {"code": "en"},
+        {"code": "es"}
+      ]
+    },
+    "query":{
+      "id":"1564747029122-9e02a1868d70b7a2",
+      "domain":"example.com",
+      "userQuery":{
+        "pageType":"productList",
+        "url":"https://example.com/product-list-page"
+      }
+    },
+    "algorithmVersion": "20.8.1"
+  }
+]
