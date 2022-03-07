@@ -12,10 +12,14 @@ ignore =
     C408
 
 per-file-ignores =
-    # Ignore "imported but unused" errors in __init__ files, as those imports are there
+    # Ignore: "imported but unused" errors in __init__ files, as those imports are there
     # to expose submodule functions so they can be imported directly from that module
-    autoextract_poet/__init__.py:F401
+    zyte_common_items/__init__.py:F401,
 
-    # Ignore * imports in these files 
-    autoextract_poet/__init__.py:F403
-    tests/test_page_inputs.py:F405
+    # Ignore: * imports in these files 
+    zyte_common_items/__init__.py:F403,
+    zyte_common_items/zyte_data_api.py:F403,
+
+    # Ignore: may be undefined, or defined from star imports
+    zyte_common_items/zyte_data_api.py:F405,
+    tests/test_page_inputs.py:F405,
