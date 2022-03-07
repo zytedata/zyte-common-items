@@ -8,33 +8,8 @@ from typing import List, Optional
 import attr
 
 from zyte_common_items import Item
+from zyte_common_items.common_fields import *  # noqa
 from zyte_common_items.util import export
-
-
-@export
-@attr.define(slots=True)
-class Author(Item):
-    name: str
-    raw: Optional[str] = None
-
-
-@export
-@attr.define(slots=True)
-class Breadcrumb(Item):
-    name: Optional[str] = None
-    link: Optional[str] = None
-
-
-@export
-@attr.define(slots=True)
-class Image(Item):
-    url: str
-
-
-@export
-@attr.define(slots=True)
-class Media(Item):
-    url: str
 
 
 @export
@@ -63,13 +38,6 @@ class Article(Item):
 
 @export
 @attr.define(slots=True)
-class PaginationLink(Item):
-    url: str
-    text: Optional[str] = None
-
-
-@export
-@attr.define(slots=True)
 class ArticleFromList(Item):
     probability: float = 1.0
     url: Optional[str] = None
@@ -91,43 +59,6 @@ class ArticleList(Item):
     paginationPrevious: Optional[PaginationLink] = None
     breadcrumbs: List[Breadcrumb] = attr.Factory(list)
     articles: List[ArticleFromList] = attr.Factory(list)
-
-
-@export
-@attr.define(slots=True)
-class Offer(Item):
-    price: Optional[str] = None
-    currency: Optional[str] = None
-    regularPrice: Optional[str] = None
-    availability: Optional[str] = None  # TODO handle allowed values
-
-
-@export
-@attr.define(slots=True)
-class GTIN(Item):
-    type: str  # TODO: handle allowed values
-    value: str
-
-
-@export
-@attr.define(slots=True)
-class Brand(Item):
-    name: str
-
-
-@export
-@attr.define(slots=True)
-class ProductRating(Item):
-    ratingValue: Optional[float] = None
-    bestRating: Optional[float] = None
-    reviewCount: Optional[int] = None
-
-
-@export
-@attr.define(slots=True)
-class AdditionalProperty(Item):
-    name: str
-    value: Optional[str] = None
 
 
 @export
@@ -225,12 +156,6 @@ class CommentList(Item):
 
 @export
 @attr.define(slots=True)
-class Topic(Item):
-    name: str
-
-
-@export
-@attr.define(slots=True)
 class ForumPost(Item):
     probability: float = 1.0
     text: Optional[str] = None
@@ -250,26 +175,6 @@ class ForumPostList(Item):
 
 @export
 @attr.define(slots=True)
-class Organization(Item):
-    raw: str
-
-
-@export
-@attr.define(slots=True)
-class Location(Item):
-    raw: str
-
-
-@export
-@attr.define(slots=True)
-class Salary(Item):
-    raw: Optional[str] = None
-    value: Optional[float] = None
-    currency: Optional[str] = None
-
-
-@export
-@attr.define(slots=True)
 class JobPosting(Item):
     url: str
     probability: float = 1.0
@@ -282,33 +187,6 @@ class JobPosting(Item):
     hiringOrganization: Optional[Organization] = None
     baseSalary: Optional[Salary] = None
     jobLocation: Optional[Location] = None
-
-
-@export
-@attr.define(slots=True)
-class Address(Item):
-    postalCode: Optional[str] = None
-    streetAddress: Optional[str] = None
-    addressCountry: Optional[str] = None
-    addressLocality: Optional[str] = None
-    addressRegion: Optional[str] = None
-    raw: Optional[str] = None
-
-
-@export
-@attr.define(slots=True)
-class Area(Item):
-    raw: str
-    value: Optional[float]
-    unitCode: Optional[str]
-
-
-@export
-@attr.define(slots=True)
-class TradeAction(Item):
-    tradeType: Optional[str] = None
-    price: Optional[str] = None
-    currency: Optional[str] = None
 
 
 @export
@@ -338,13 +216,6 @@ class RealEstate(Item):
 
 @export
 @attr.define(slots=True)
-class ReviewRating(Item):
-    ratingValue: Optional[float] = None
-    bestRating: Optional[float] = None
-
-
-@export
-@attr.define(slots=True)
 class Review(Item):
     probability: float = 1.0
     name: Optional[str] = None
@@ -364,39 +235,6 @@ class ReviewList(Item):
     paginationNext: Optional[PaginationLink] = None
     paginationPrevious: Optional[PaginationLink] = None
     reviews: List[Review] = attr.Factory(list)
-
-
-@export
-@attr.define(slots=True)
-class VehicleRating(Item):
-    ratingValue: Optional[float] = None
-    bestRating: Optional[float] = None
-    reviewCount: Optional[int] = None
-
-
-@export
-@attr.define(slots=True)
-class MileageFromOdometer(Item):
-    value: Optional[int] = None
-    unitCode: Optional[str] = None
-
-
-@export
-@attr.define(slots=True)
-class VehicleEngine(Item):
-    raw: str
-
-
-@export
-@attr.define(slots=True)
-class AvailableAtOrFrom(Item):
-    raw: str
-
-
-@export
-@attr.define(slots=True)
-class FuelEfficiency(Item):
-    raw: str
 
 
 @export
