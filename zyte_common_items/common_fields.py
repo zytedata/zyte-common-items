@@ -69,7 +69,7 @@ class Brand(Item):
 
 @export
 @attr.define(slots=True)
-class ProductRating(Item):
+class Rating(Item):
     ratingValue: Optional[float] = None
     bestRating: Optional[float] = None
     reviewCount: Optional[int] = None
@@ -86,12 +86,6 @@ class AdditionalProperty(Item):
 @attr.define(slots=True)
 class Topic(Item):
     name: str
-
-
-@export
-@attr.define(slots=True)
-class Organization(Item):
-    raw: str
 
 
 @export
@@ -142,7 +136,7 @@ class Address(Item):
 class Area(Item):
     raw: str
     value: Optional[float]
-    unitCode: Optional[str]
+    unitCode: Optional[str]  # SQMT, SQFT, ACRE
 
 
 @export
@@ -151,21 +145,6 @@ class TradeAction(Item):
     tradeType: Optional[str] = None
     price: Optional[str] = None
     currency: Optional[str] = None
-
-
-@export
-@attr.define(slots=True)
-class ReviewRating(Item):
-    ratingValue: Optional[float] = None
-    bestRating: Optional[float] = None
-
-
-@export
-@attr.define(slots=True)
-class VehicleRating(Item):
-    ratingValue: Optional[float] = None
-    bestRating: Optional[float] = None
-    reviewCount: Optional[int] = None
 
 
 @export

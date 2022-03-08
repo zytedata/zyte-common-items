@@ -16,7 +16,6 @@ from zyte_common_items.util import export
 @attr.define(slots=True)
 class Article(Item):
     url: str
-    probability: float = 1.0
     headline: Optional[str] = None
     articleBody: Optional[str] = None
     articleBodyHtml: Optional[str] = None
@@ -27,28 +26,31 @@ class Article(Item):
     dateModified: Optional[str] = None
     dateModifiedRaw: Optional[str] = None
     authors: List[Author] = attr.Factory(list)
-    inLanguage: Optional[str] = None
     breadcrumbs: List[Breadcrumb] = attr.Factory(list)
     mainImage: Optional[Image] = None
     images: List[Image] = attr.Factory(list)
     videos: List[Media] = attr.Factory(list)
     audios: List[Media] = attr.Factory(list)
     canonicalUrl: Optional[str] = None
+    # These are specific to Zyte Data API
+    probability: Optional[float] = 1.0
+    inLanguage: Optional[str] = None
 
 
 @export
 @attr.define(slots=True)
 class ArticleFromList(Item):
-    probability: float = 1.0
     url: Optional[str] = None
     headline: Optional[str] = None
     articleBody: Optional[str] = None
     datePublished: Optional[str] = None
     datePublishedRaw: Optional[str] = None
     authors: List[Author] = attr.Factory(list)
-    inLanguage: Optional[str] = None
     mainImage: Optional[Image] = None
     images: List[Image] = attr.Factory(list)
+    # These are specific to Zyte Data API
+    probability: Optional[float] = 1.0
+    inLanguage: Optional[str] = None
 
 
 @export
@@ -63,9 +65,8 @@ class ArticleList(Item):
 
 @export
 @attr.define(slots=True)
-class ProductVariant(Item):
+class BasicProduct(Item):
     url: Optional[str] = None
-    probability: Optional[float] = 1.0
     name: Optional[str] = None
     offers: List[Offer] = attr.Factory(list)
     sku: Optional[str] = None
@@ -77,7 +78,7 @@ class ProductVariant(Item):
     images: List[Image] = attr.Factory(list)
     description: Optional[str] = None
     descriptionHtml: Optional[str] = None
-    aggregateRating: Optional[ProductRating] = None
+    aggregateRating: Optional[Rating] = None
     color: Optional[str] = None
     size: Optional[str] = None
     style: Optional[str] = None
@@ -87,33 +88,20 @@ class ProductVariant(Item):
 
 @export
 @attr.define(slots=True)
-class Product(Item):
-    url: str
-    probability: float = 1.0
-    name: Optional[str] = None
-    offers: List[Offer] = attr.Factory(list)
-    sku: Optional[str] = None
-    mpn: Optional[str] = None
-    gtin: List[GTIN] = attr.Factory(list)
-    brand: Optional[Brand] = None
-    breadcrumbs: List[Breadcrumb] = attr.Factory(list)
-    mainImage: Optional[Image] = None
-    images: List[Image] = attr.Factory(list)
-    description: Optional[str] = None
-    descriptionHtml: Optional[str] = None
-    aggregateRating: Optional[ProductRating] = None
-    color: Optional[str] = None
-    size: Optional[str] = None
-    style: Optional[str] = None
-    additionalProperty: List[AdditionalProperty] = attr.Factory(list)
-    canonicalUrl: Optional[str] = None
-    hasVariants: List[ProductVariant] = attr.Factory(list)
+class VariantProduct(BasicProduct):
+    # These are specific to Zyte Data API
+    probability: Optional[float] = 1.0
+
+
+@export
+@attr.define(slots=True)
+class Product(VariantProduct):
+    hasVariants: List[VariantProduct] = attr.Factory(list)
 
 
 @export
 @attr.s(auto_attribs=True, slots=True)
 class ProductFromList(Item):
-    probability: float = 1.0
     url: Optional[str] = None
     name: Optional[str] = None
     offers: List[Offer] = attr.Factory(list)
@@ -123,7 +111,9 @@ class ProductFromList(Item):
     images: List[Image] = attr.Factory(list)
     description: Optional[str] = None
     descriptionHtml: Optional[str] = None
-    aggregateRating: Optional[ProductRating] = None
+    aggregateRating: Optional[Rating] = None
+    # These are specific to Zyte Data API
+    probability: Optional[float] = 1.0
 
 
 @export
@@ -139,12 +129,13 @@ class ProductList(Item):
 @export
 @attr.define(slots=True)
 class Comment(Item):
-    probability: float = 1.0
     text: Optional[str] = None
     datePublished: Optional[str] = None
     datePublishedRaw: Optional[str] = None
     upvoteCount: Optional[int] = None
     downvoteCount: Optional[int] = None
+    # These are specific to Zyte Data API
+    probability: Optional[float] = 1.0
 
 
 @export
@@ -157,12 +148,13 @@ class CommentList(Item):
 @export
 @attr.define(slots=True)
 class ForumPost(Item):
-    probability: float = 1.0
     text: Optional[str] = None
     datePublished: Optional[str] = None
     datePublishedRaw: Optional[str] = None
     replyCount: Optional[int] = None
     upvoteCount: Optional[int] = None
+    # These are specific to Zyte Data API
+    probability: Optional[float] = 1.0
 
 
 @export
@@ -175,9 +167,14 @@ class ForumPostList(Item):
 
 @export
 @attr.define(slots=True)
+class Organization(Item):
+    raw: str
+
+
+@export
+@attr.define(slots=True)
 class JobPosting(Item):
     url: str
-    probability: float = 1.0
     title: Optional[str] = None
     datePosted: Optional[str] = None
     validThrough: Optional[str] = None
@@ -187,13 +184,14 @@ class JobPosting(Item):
     hiringOrganization: Optional[Organization] = None
     baseSalary: Optional[Salary] = None
     jobLocation: Optional[Location] = None
+    # These are specific to Zyte Data API
+    probability: Optional[float] = 1.0
 
 
 @export
 @attr.define(slots=True)
 class RealEstate(Item):
     url: str
-    probability: float = 1.0
     name: Optional[str] = None
     datePublished: Optional[str] = None
     datePublishedRaw: Optional[str] = None
@@ -212,12 +210,20 @@ class RealEstate(Item):
     tradeActions: List[TradeAction] = attr.Factory(list)
     breadcrumbs: List[Breadcrumb] = attr.Factory(list)
     additionalProperty: List[AdditionalProperty] = attr.Factory(list)
+    # These are specific to Zyte Data API
+    probability: Optional[float] = 1.0
+
+
+@export
+@attr.define(slots=True)
+class ReviewRating(Item):
+    ratingValue: Optional[float] = None
+    bestRating: Optional[float] = None
 
 
 @export
 @attr.define(slots=True)
 class Review(Item):
-    probability: float = 1.0
     name: Optional[str] = None
     reviewBody: Optional[str] = None
     datePublished: Optional[str] = None
@@ -226,6 +232,8 @@ class Review(Item):
     votedHelpful: Optional[int] = None
     votedUnhelpful: Optional[int] = None
     isVerified: Optional[bool] = None
+    # These are specific to Zyte Data API
+    probability: Optional[float] = 1.0
 
 
 @export
@@ -241,7 +249,6 @@ class ReviewList(Item):
 @attr.define(slots=True)
 class Vehicle(Item):
     url: str
-    probability: float = 1.0
     name: Optional[str] = None
     offers: List[Offer] = attr.Factory(list)
     sku: Optional[str] = None
@@ -252,7 +259,7 @@ class Vehicle(Item):
     images: List[Image] = attr.Factory(list)
     description: Optional[str] = None
     descriptionHtml: Optional[str] = None
-    aggregateRating: Optional[VehicleRating] = None
+    aggregateRating: Optional[Rating] = None
     vehicleIdentificationNumber: Optional[str] = None
     mileageFromOdometer: Optional[MileageFromOdometer] = None
     vehicleTransmission: Optional[str] = None
@@ -266,3 +273,5 @@ class Vehicle(Item):
     fuelEfficiency: List[FuelEfficiency] = attr.Factory(list)
     additionalProperty: List[AdditionalProperty] = attr.Factory(list)
     canonicalUrl: Optional[str] = None
+    # These are specific to Zyte Data API
+    probability: Optional[float] = 1.0
