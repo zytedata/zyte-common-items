@@ -16,7 +16,6 @@ setup(
     ),
     install_requires=[
         "attrs",
-        "itemadapter",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
