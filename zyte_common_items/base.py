@@ -1,6 +1,9 @@
 """The ``Item`` class should be used as the parent class for data containers."""
 
-import attr
+from datetime import datetime
+from typing import Optional
+
+import attrs
 
 try:
     from typing import get_args
@@ -37,7 +40,7 @@ class _ItemBase:
 
 
 @export
-@attr.define(slots=True)
+@attrs.define(slots=True)
 class Item(_ItemBase):
     def __attrs_post_init__(self):
         self._unknown_fields_dict = {}
@@ -118,3 +121,52 @@ class Item(_ItemBase):
             item.update({key: cls.from_list(item.get(key, [])) for key, cls in (from_list or {}).items()})
 
         return item
+
+
+@export
+@attrs.define(slots=True)
+class AdditionalProperty:
+    name: str
+    value: str
+
+
+@export
+@attrs.define(slots=True, kw_only=True)
+class AggregateRating:
+    best_rating: Optional[float] = None
+    rating_value: Optional[float] = None
+    review_count: Optional[int] = None
+
+
+@export
+@attrs.define(slots=True)
+class Brand:
+    name: str
+
+
+@export
+@attrs.define(slots=True)
+class Breadcrumb:
+    name: str
+    link: str
+
+
+@export
+@attrs.define(slots=True)
+class Gtin:
+    type: str
+    value: str
+
+
+@export
+@attrs.define(slots=True)
+class Image:
+    data_url: Optional[str] = None
+    url: Optional[str] = None
+
+
+@export
+@attrs.define(slots=True)
+class Metadata:
+    date_downloaded: datetime
+    probability: Optional[float] = None

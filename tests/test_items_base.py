@@ -3,7 +3,30 @@ from typing import Optional, Union
 import attr
 import pytest
 
-from zyte_common_items import Item, is_data_container
+from zyte_common_items import (
+    AggregateRating,
+    Image,
+    is_data_container,
+    Item,
+    Metadata,
+)
+
+def test_aggregated_rating_optional_fields():
+    AggregateRating(best_rating=5.0)
+    AggregateRating(rating_value=2.5)
+    AggregateRating(review_count=123)
+
+
+def test_image_optional_fields():
+    Image(
+        data_url=(
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFBAMAAAB"
+            "/QTvWAAAAFVBMVEXMzMyWlpaxsbG3t7e+vr7FxcWjo6PZoQRwAAAACXBIWXMA"
+            "AA7EAAAOxAGVKw4bAAAAEklEQVQImWNgQALKDgwMYQwMAAOLALoJbp2PAAAAA"
+            "ElFTkSuQmCC"
+        ),
+    )
+    Image(url="http://example.com/image1.png")
 
 
 class NotConsideredAnItem:
@@ -61,3 +84,7 @@ def test_item_from_dict_value_error():
     """
     with pytest.raises(ValueError):
         BigItemIncorrect.from_dict({"sub_item": {"name": "hello"}})
+
+
+def test_metadata_optional_fields():
+    Metadata(date_downloaded="2022-12-31T13:01:54Z")
