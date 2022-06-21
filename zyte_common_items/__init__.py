@@ -6,8 +6,8 @@ from .base import (
     Breadcrumb,
     Gtin,
     Image,
-    is_data_container,
     Item,
     Metadata,
+    is_data_container,
 )
 from .items import Product, ProductVariant

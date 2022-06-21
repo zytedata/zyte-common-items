@@ -16,7 +16,6 @@ from zyte_common_items import (
     ProductVariant,
 )
 
-
 _PRODUCT_VARIANT_MIN_KWARGS = {
     "url": ResponseUrl("https://example.com/?product=product22"),
 }
@@ -69,20 +68,13 @@ _PRODUCT_ALL_KWARGS = {
         Breadcrumb(name="Level 1", link="http://example.com/level1"),
         Breadcrumb(name="Level 2", link="http://example.com/level1/level2"),
     ],
-    "description": (
-        "Full freshness all over the fridge\n"
-        "5 Conversion Modes on demand\n"
-        "Super Cooling Plus™"
-    ),
+    "description": ("Full freshness all over the fridge\n" "5 Conversion Modes on demand\n" "Super Cooling Plus™"),
     "description_html": (
         "<article><p>Full freshness all over the fridge</p>"
         "<p>5 Conversion Modes on demand</p>"
         "<p>Super Cooling Plus&trade;</p></article>"
     ),
-    "features": [
-        "Easily store fragile products.",
-        "Bluetooth connectivity."
-    ],
+    "features": ["Easily store fragile products.", "Bluetooth connectivity."],
     "product_id": "A123DK9823",
 }
 
@@ -90,10 +82,7 @@ _PRODUCT_ALL_KWARGS = {
 def test_product_all_fields():
     product = Product(**_PRODUCT_ALL_KWARGS)
 
-    assert (
-        product.additional_properties
-        == _PRODUCT_ALL_KWARGS["additional_properties"]
-    )
+    assert product.additional_properties == _PRODUCT_ALL_KWARGS["additional_properties"]
 
     assert product.aggregate_rating == _PRODUCT_ALL_KWARGS["aggregate_rating"]
 
@@ -103,9 +92,7 @@ def test_product_all_fields():
 
     assert product.breadcrumbs == _PRODUCT_ALL_KWARGS["breadcrumbs"]
 
-    assert (
-        str(product.canonical_url) == str(_PRODUCT_ALL_KWARGS["canonical_url"])
-    )
+    assert str(product.canonical_url) == str(_PRODUCT_ALL_KWARGS["canonical_url"])
     assert product.canonical_url.__class__ == ResponseUrl
 
     assert product.color == _PRODUCT_ALL_KWARGS["color"]
@@ -167,16 +154,11 @@ def test_product_missing_fields():
 def test_product_variant_all_fields():
     product_variant = ProductVariant(**_PRODUCT_VARIANT_ALL_KWARGS)
 
-    assert (
-        product_variant.additional_properties
-        == _PRODUCT_VARIANT_ALL_KWARGS["additional_properties"]
-    )
+    assert product_variant.additional_properties == _PRODUCT_VARIANT_ALL_KWARGS["additional_properties"]
 
     assert product_variant.availability == _PRODUCT_VARIANT_ALL_KWARGS["availability"]
 
-    assert (
-        str(product_variant.canonical_url) == str(_PRODUCT_VARIANT_ALL_KWARGS["canonical_url"])
-    )
+    assert str(product_variant.canonical_url) == str(_PRODUCT_VARIANT_ALL_KWARGS["canonical_url"])
     assert product_variant.canonical_url.__class__ == ResponseUrl
 
     assert product_variant.color == _PRODUCT_VARIANT_ALL_KWARGS["color"]
@@ -223,4 +205,3 @@ def test_product_variant_missing_fields():
         del incomplete_kwargs[required_field]
         with pytest.raises(TypeError):
             ProductVariant(**incomplete_kwargs)
-

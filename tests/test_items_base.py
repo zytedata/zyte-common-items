@@ -4,13 +4,8 @@ from typing import Optional, Union
 import attr
 import pytest
 
-from zyte_common_items import (
-    AggregateRating,
-    Image,
-    is_data_container,
-    Item,
-    Metadata,
-)
+from zyte_common_items import AggregateRating, Image, Item, Metadata, is_data_container
+
 
 def test_aggregated_rating_optional_fields():
     AggregateRating(best_rating=5.0)

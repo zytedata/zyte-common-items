@@ -1,9 +1,6 @@
 """The ``Item`` class should be used as the parent class for data containers."""
 
 from datetime import datetime
-from typing import Optional
-
-import attrs
 
 try:
     from typing import get_args
@@ -18,6 +15,8 @@ except ImportError:
     from zyte_common_items.util import get_origin
 
 from typing import Dict, List, Optional, Union
+
+import attrs
 
 from zyte_common_items.util import export, split_in_unknown_and_known_fields
 
