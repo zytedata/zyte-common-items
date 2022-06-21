@@ -1,4 +1,5 @@
 from copy import copy
+from datetime import datetime, timezone
 
 import pytest
 from web_poet import ResponseUrl
@@ -51,7 +52,7 @@ _PRODUCT_VARIANT_ALL_KWARGS = {
 _PRODUCT_MIN_KWARGS = {
     **_PRODUCT_VARIANT_MIN_KWARGS,
     "metadata": Metadata(
-        date_downloaded="2022-12-31T13:01:54Z",
+        date_downloaded=datetime(2022, 12, 31, 13, 1, 54, tzinfo=timezone.utc),
         probability=1.0,
     ),
 }

@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from typing import Optional, Union
 
 import attr
@@ -87,4 +88,6 @@ def test_item_from_dict_value_error():
 
 
 def test_metadata_optional_fields():
-    Metadata(date_downloaded="2022-12-31T13:01:54Z")
+    Metadata(
+        date_downloaded=datetime(2022, 12, 31, 13, 1, 54, tzinfo=timezone.utc),
+    )
