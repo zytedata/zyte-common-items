@@ -35,7 +35,7 @@ class _ProductBase(Item):
     size: Optional[str] = None
     sku: Optional[str] = None
     style: Optional[str] = None
-    url: ResponseUrl = attrs.field(converter=ResponseUrl)
+    url: ResponseUrl
 
 
 @export
@@ -52,7 +52,7 @@ class Product(_ProductBase):
     breadcrumbs: Optional[List[Breadcrumb]] = None
     description: Optional[str] = None
     description_html: Optional[str] = None
-    features: List[str] = None
+    features: Optional[List[str]] = None
     metadata: Metadata
     product_id: Optional[str] = None
     variants: Optional[List[ProductVariant]] = None
