@@ -1,6 +1,7 @@
 from copy import copy
 
 import pytest
+from itemadapter import ItemAdapter
 
 from zyte_common_items import (
     AdditionalProperty,
@@ -24,7 +25,7 @@ _PRODUCT_VARIANT_ALL_KWARGS = {
     "gtin": [Gtin(type="foo", value="bar")],
     "images": [
         Image(
-            data_url=(
+            dataUrl=(
                 "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFBAMAAAB"
                 "/QTvWAAAAFVBMVEXMzMyWlpaxsbG3t7e+vr7FxcWjo6PZoQRwAAAACXBIWXMA"
                 "AA7EAAAOxAGVKw4bAAAAEklEQVQImWNgQALKDgwMYQwMAAOLALoJbp2PAAAAA"
@@ -42,11 +43,12 @@ _PRODUCT_VARIANT_ALL_KWARGS = {
     "size": "XL",
     "sku": "A123DK9823",
     "style": "polka dots",
+    "url": "https://example.com/?product=product22",
 }
 _PRODUCT_MIN_KWARGS = {
     "url": "https://example.com/?product=product22",
     "metadata": Metadata(
-        date_downloaded="20221231T130154Z",
+        dateDownloaded="20221231T130154Z",
         probability=1.0,
     ),
 }
@@ -54,9 +56,9 @@ _PRODUCT_ALL_KWARGS = {
     **_PRODUCT_MIN_KWARGS,
     **_PRODUCT_VARIANT_ALL_KWARGS,
     "aggregateRating": AggregateRating(
-        best_rating=5.0,
-        rating_value=2.5,
-        review_count=123,
+        bestRating=5.0,
+        ratingValue=2.5,
+        reviewCount=123,
     ),
     "brand": Brand(name="Ka-pow"),
     "breadcrumbs": [
@@ -70,6 +72,7 @@ _PRODUCT_ALL_KWARGS = {
         "<p>Super Cooling Plus&trade;</p></article>"
     ),
     "features": ["Easily store fragile products.", "Bluetooth connectivity."],
+    "variants": [ProductVariant()],
 }
 
 
@@ -93,6 +96,86 @@ def test_product_missing_fields():
         del incomplete_kwargs[required_field]
         with pytest.raises(TypeError):
             Product(**incomplete_kwargs)
+
+
+def test_product_serialization():
+    product = Product(**_PRODUCT_ALL_KWARGS)
+    adapter = ItemAdapter(product)
+    serialized_product = adapter.asdict()
+    assert serialized_product == {
+        "additionalProperties": [dict(name="foo", value="bar")],
+        "aggregateRating": dict(
+            bestRating=5.0,
+            ratingValue=2.5,
+            reviewCount=123,
+        ),
+        "availability": "InStock",
+        "brand": dict(name="Ka-pow"),
+        "breadcrumbs": [
+            dict(name="Level 1", link="http://example.com/level1"),
+            dict(name="Level 2", link="http://example.com/level1/level2"),
+        ],
+        "canonicalUrl": "https://example.com/product22",
+        "color": "white",
+        "currency": "USD",
+        "currencyRaw": "$",
+        "description": "Full freshness all over the fridge\n5 Conversion Modes on demand\nSuper Cooling Plus™",
+        "descriptionHtml": (
+            "<article><p>Full freshness all over the fridge</p>"
+            "<p>5 Conversion Modes on demand</p>"
+            "<p>Super Cooling Plus&trade;</p></article>"
+        ),
+        "features": ["Easily store fragile products.", "Bluetooth connectivity."],
+        "gtin": [dict(type="foo", value="bar")],
+        "images": [
+            dict(
+                dataUrl=(
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFBAMAAAB"
+                    "/QTvWAAAAFVBMVEXMzMyWlpaxsbG3t7e+vr7FxcWjo6PZoQRwAAAACXBIWXMA"
+                    "AA7EAAAOxAGVKw4bAAAAEklEQVQImWNgQALKDgwMYQwMAAOLALoJbp2PAAAAA"
+                    "ElFTkSuQmCC"
+                ),
+                url=None,
+            ),
+            dict(url="http://example.com/image1.png", dataUrl=None),
+        ],
+        "mainImage": dict(url="http://example.com/image1.png", dataUrl=None),
+        "metadata": dict(
+            dateDownloaded="20221231T130154Z",
+            probability=1.0,
+        ),
+        "mpn": "HSC0424PP",
+        "name": "White two-door refrigerator",
+        "price": "9999.99",
+        "productId": "A123DK9823",
+        "regularPrice": "11999.99",
+        "size": "XL",
+        "sku": "A123DK9823",
+        "style": "polka dots",
+        "url": "https://example.com/?product=product22",
+        "variants": [
+            {
+                "additionalProperties": None,
+                "availability": None,
+                "canonicalUrl": None,
+                "color": None,
+                "currency": None,
+                "currencyRaw": None,
+                "gtin": None,
+                "images": None,
+                "mainImage": None,
+                "mpn": None,
+                "name": None,
+                "price": None,
+                "productId": None,
+                "regularPrice": None,
+                "size": None,
+                "sku": None,
+                "style": None,
+                "url": None,
+            },
+        ],
+    }
 
 
 def test_product_variant_all_fields():
