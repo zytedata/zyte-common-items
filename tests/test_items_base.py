@@ -4,13 +4,25 @@ from typing import Optional, Union
 import attr
 import pytest
 
-from zyte_common_items import AggregateRating, Image, Item, Metadata, is_data_container
+from zyte_common_items import (
+    AggregateRating,
+    Breadcrumb,
+    Image,
+    Item,
+    Metadata,
+    is_data_container,
+)
 
 
 def test_aggregated_rating_optional_fields():
     AggregateRating(best_rating=5.0)
     AggregateRating(rating_value=2.5)
     AggregateRating(review_count=123)
+
+
+def test_breadcrumb_optional_fields():
+    Breadcrumb(name="foo")
+    Breadcrumb(link="https://example.com")
 
 
 def test_image_optional_fields():

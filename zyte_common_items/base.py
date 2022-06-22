@@ -137,8 +137,8 @@ class Brand:
 
 @_export_attrs()
 class Breadcrumb:
-    name: str
-    link: str
+    name: Optional[str] = None
+    link: Optional[str] = None
 
 
 @_export_attrs()
