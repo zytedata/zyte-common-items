@@ -2,7 +2,7 @@ import sys
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type
 from weakref import WeakKeyDictionary
 
-import attr
+import attrs
 
 # Caches the attribute names for attr.s classes
 CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
@@ -15,10 +15,10 @@ def split_in_unknown_and_known_fields(data: Optional[dict], item_cls: Type) -> T
     attributes not belonging to ``item_cls`` class
     """
     data = data or {}
-    if not attr.has(item_cls):
+    if not attrs.has(item_cls):
         raise ValueError(f"The cls {item_cls} is not attr.s class")
     if item_cls not in CLASS_ATTRS:
-        CLASS_ATTRS[item_cls] = {field.name for field in attr.fields(item_cls)}
+        CLASS_ATTRS[item_cls] = {field.name for field in attrs.fields(item_cls)}
     unknown, known = split_dict(data, lambda k: k in CLASS_ATTRS[item_cls])
     return unknown, known
 
@@ -71,3 +71,11 @@ def get_origin(tp) -> Tuple:
     if origin == List:
         origin = list
     return origin
+
+
+def _export_attrs(**kwargs):
+    def decorator(f):
+        attrs_decorator = attrs.define(**{"slots": True, **kwargs})
+        return export(attrs_decorator(f))
+
+    return decorator

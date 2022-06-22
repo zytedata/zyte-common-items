@@ -14,9 +14,7 @@ except ImportError:
 
 from typing import Dict, List, Optional, Union
 
-import attrs
-
-from zyte_common_items.util import export, split_in_unknown_and_known_fields
+from zyte_common_items.util import _export_attrs, split_in_unknown_and_known_fields
 
 
 def is_data_container(cls_or_obj):
@@ -36,8 +34,7 @@ class _ItemBase:
     __slots__ = ("_unknown_fields_dict",)
 
 
-@export
-@attrs.define(slots=True)
+@_export_attrs()
 class Item(_ItemBase):
     def __attrs_post_init__(self):
         self._unknown_fields_dict = {}
@@ -120,50 +117,43 @@ class Item(_ItemBase):
         return item
 
 
-@export
-@attrs.define(slots=True)
+@_export_attrs()
 class AdditionalProperty:
     name: str
     value: str
 
 
-@export
-@attrs.define(slots=True, kw_only=True)
+@_export_attrs(kw_only=True)
 class AggregateRating:
     best_rating: Optional[float] = None
     rating_value: Optional[float] = None
     review_count: Optional[int] = None
 
 
-@export
-@attrs.define(slots=True)
+@_export_attrs()
 class Brand:
     name: str
 
 
-@export
-@attrs.define(slots=True)
+@_export_attrs()
 class Breadcrumb:
     name: str
     link: str
 
 
-@export
-@attrs.define(slots=True)
+@_export_attrs()
 class Gtin:
     type: str
     value: str
 
 
-@export
-@attrs.define(slots=True)
+@_export_attrs(kw_only=True)
 class Image:
     data_url: Optional[str] = None
     url: Optional[str] = None
 
 
-@export
-@attrs.define(slots=True)
+@_export_attrs(kw_only=True)
 class Metadata:
     date_downloaded: str
     probability: Optional[float] = None
