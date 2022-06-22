@@ -1,5 +1,7 @@
 from typing import List, Optional
 
+import attrs
+
 from zyte_common_items.base import (
     AdditionalProperty,
     AggregateRating,
@@ -10,10 +12,11 @@ from zyte_common_items.base import (
     Item,
     Metadata,
 )
-from zyte_common_items.util import _export_attrs
+from zyte_common_items.util import export
 
 
-@_export_attrs(kw_only=True)
+@export
+@attrs.define(slots=True, kw_only=True)
 class _ProductBase(Item):
     additionalProperties: Optional[List[AdditionalProperty]] = None
     availability: Optional[str] = None
@@ -34,12 +37,14 @@ class _ProductBase(Item):
     style: Optional[str] = None
 
 
-@_export_attrs(kw_only=True)
+@export
+@attrs.define(slots=True, kw_only=True)
 class ProductVariant(_ProductBase):
     url: Optional[str] = None
 
 
-@_export_attrs(kw_only=True)
+@export
+@attrs.define(slots=True, kw_only=True)
 class Product(_ProductBase):
     aggregateRating: Optional[AggregateRating] = None
     brand: Optional[Brand] = None
