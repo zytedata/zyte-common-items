@@ -141,7 +141,7 @@ class Brand(Item):
 
 
 @export
-@attrs.define(slots=True)
+@attrs.define(slots=True, kw_only=True)
 class Breadcrumb(Item):
     name: Optional[str] = None
     link: Optional[str] = None
@@ -155,14 +155,14 @@ class Gtin(Item):
 
 
 @export
-@attrs.define(slots=True)
+@attrs.define(slots=True, kw_only=True)
 class Image(Item):
     dataUrl: Optional[str] = None
     url: Optional[str] = None
 
 
 @export
-@attrs.define(slots=True)
+@attrs.define(slots=True, kw_only=True)
 class Metadata(Item):
     dateDownloaded: str
     probability: Optional[float] = None
