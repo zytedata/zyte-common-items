@@ -1,7 +1,6 @@
 from typing import List, Optional
 
 import attrs
-from web_poet import ResponseUrl
 
 from zyte_common_items.base import (
     AdditionalProperty,
@@ -19,40 +18,40 @@ from zyte_common_items.util import export
 @export
 @attrs.define(slots=True, kw_only=True)
 class _ProductBase(Item):
-    additional_properties: Optional[List[AdditionalProperty]] = None
+    additionalProperties: Optional[List[AdditionalProperty]] = None
     availability: Optional[str] = None
-    canonical_url: Optional[ResponseUrl] = None
+    canonicalUrl: Optional[str] = None
     color: Optional[str] = None
     currency: Optional[str] = None
-    currency_raw: Optional[str] = None
+    currencyRaw: Optional[str] = None
     gtin: Optional[List[Gtin]] = None
     images: Optional[List[Image]] = None
-    main_image: Optional[Image] = None
+    mainImage: Optional[Image] = None
     mpn: Optional[str] = None
     name: Optional[str] = None
     price: Optional[str] = None
-    regular_price: Optional[str] = None
+    productId: Optional[str] = None
+    regularPrice: Optional[str] = None
     size: Optional[str] = None
     sku: Optional[str] = None
     style: Optional[str] = None
-    url: ResponseUrl
 
 
 @export
 @attrs.define(slots=True, kw_only=True)
 class ProductVariant(_ProductBase):
-    pass
+    url: Optional[str] = None
 
 
 @export
 @attrs.define(slots=True, kw_only=True)
 class Product(_ProductBase):
-    aggregate_rating: Optional[AggregateRating] = None
+    aggregateRating: Optional[AggregateRating] = None
     brand: Optional[Brand] = None
     breadcrumbs: Optional[List[Breadcrumb]] = None
     description: Optional[str] = None
-    description_html: Optional[str] = None
+    descriptionHtml: Optional[str] = None
     features: Optional[List[str]] = None
     metadata: Metadata
-    product_id: Optional[str] = None
+    url: str
     variants: Optional[List[ProductVariant]] = None

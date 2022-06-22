@@ -1,7 +1,5 @@
 """The ``Item`` class should be used as the parent class for data containers."""
 
-from datetime import datetime
-
 try:
     from typing import get_args
 except ImportError:
@@ -167,5 +165,5 @@ class Image:
 @export
 @attrs.define(slots=True)
 class Metadata:
-    date_downloaded: datetime
+    date_downloaded: str
     probability: Optional[float] = None

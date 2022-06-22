@@ -16,7 +16,6 @@ setup(
     ),
     install_requires=[
         "attrs",
-        "web-poet >= 0.2.0",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
