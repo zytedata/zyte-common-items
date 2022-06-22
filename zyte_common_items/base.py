@@ -125,9 +125,9 @@ class AdditionalProperty:
 
 @_export_attrs(kw_only=True)
 class AggregateRating:
-    best_rating: Optional[float] = None
-    rating_value: Optional[float] = None
-    review_count: Optional[int] = None
+    bestRating: Optional[float] = None
+    ratingValue: Optional[float] = None
+    reviewCount: Optional[int] = None
 
 
 @_export_attrs()
@@ -149,11 +149,11 @@ class Gtin:
 
 @_export_attrs(kw_only=True)
 class Image:
-    data_url: Optional[str] = None
+    dataUrl: Optional[str] = None
     url: Optional[str] = None
 
 
 @_export_attrs(kw_only=True)
 class Metadata:
-    date_downloaded: str
+    dateDownloaded: str
     probability: Optional[float] = None
