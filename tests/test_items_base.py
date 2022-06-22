@@ -15,9 +15,9 @@ from zyte_common_items import (
 
 
 def test_aggregated_rating_optional_fields():
-    AggregateRating(best_rating=5.0)
-    AggregateRating(rating_value=2.5)
-    AggregateRating(review_count=123)
+    AggregateRating(bestRating=5.0)
+    AggregateRating(ratingValue=2.5)
+    AggregateRating(reviewCount=123)
 
 
 def test_breadcrumb_optional_fields():
@@ -27,7 +27,7 @@ def test_breadcrumb_optional_fields():
 
 def test_image_optional_fields():
     Image(
-        data_url=(
+        dataUrl=(
             "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFBAMAAAB"
             "/QTvWAAAAFVBMVEXMzMyWlpaxsbG3t7e+vr7FxcWjo6PZoQRwAAAACXBIWXMA"
             "AA7EAAAOxAGVKw4bAAAAEklEQVQImWNgQALKDgwMYQwMAAOLALoJbp2PAAAAA"
@@ -96,5 +96,5 @@ def test_item_from_dict_value_error():
 
 def test_metadata_optional_fields():
     Metadata(
-        date_downloaded=datetime(2022, 12, 31, 13, 1, 54, tzinfo=timezone.utc),
+        dateDownloaded=datetime(2022, 12, 31, 13, 1, 54, tzinfo=timezone.utc),
     )

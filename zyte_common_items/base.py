@@ -1,5 +1,7 @@
 """The ``Item`` class should be used as the parent class for data containers."""
 
+from collections import ChainMap
+
 try:
     from typing import get_args
 except ImportError:
@@ -88,26 +90,23 @@ class Item(_ItemBase):
 
         from_dict, from_list = {}, {}
 
-        annotations = getattr(cls, "__annotations__", {})
+        annotations = ChainMap(*(c.__annotations__ for c in cls.__mro__ if "__annotations__" in c.__dict__))
 
         for field, type_annotation in annotations.items():
             origin = get_origin(type_annotation)
-
-            if origin == list:
-                from_list[field] = get_args(type_annotation)[0]
-
-            elif origin == Union:
+            if origin == Union:
                 field_classes = get_args(type_annotation)
                 if len(field_classes) != 2 or not isinstance(None, field_classes[1]):
                     raise ValueError("Field should only be annotated with one type (or optional).")
+                type_annotation = field_classes[0]
+                origin = get_origin(type_annotation)
 
-                field_class = field_classes[0]
-
-                # ignore classes like str, float, int etc
-                if not is_data_container(field_class):
-                    continue
-
-                from_dict[field] = field_class
+            if origin is list:
+                type_annotation = get_args(type_annotation)[0]
+                if is_data_container(type_annotation):
+                    from_list[field] = type_annotation
+            elif is_data_container(type_annotation):
+                from_dict[field] = type_annotation
 
         if from_dict or from_list:
             item = dict(**item)
@@ -118,42 +117,42 @@ class Item(_ItemBase):
 
 
 @_export_attrs()
-class AdditionalProperty:
+class AdditionalProperty(Item):
     name: str
     value: str
 
 
 @_export_attrs(kw_only=True)
-class AggregateRating:
+class AggregateRating(Item):
     bestRating: Optional[float] = None
     ratingValue: Optional[float] = None
     reviewCount: Optional[int] = None
 
 
 @_export_attrs()
-class Brand:
+class Brand(Item):
     name: str
 
 
 @_export_attrs()
-class Breadcrumb:
+class Breadcrumb(Item):
     name: Optional[str] = None
     link: Optional[str] = None
 
 
 @_export_attrs()
-class Gtin:
+class Gtin(Item):
     type: str
     value: str
 
 
 @_export_attrs(kw_only=True)
-class Image:
+class Image(Item):
     dataUrl: Optional[str] = None
     url: Optional[str] = None
 
 
 @_export_attrs(kw_only=True)
-class Metadata:
+class Metadata(Item):
     dateDownloaded: str
     probability: Optional[float] = None

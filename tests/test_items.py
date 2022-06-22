@@ -178,6 +178,37 @@ def test_product_serialization():
     }
 
 
+def test_product_unknown_input():
+    product = Product.from_dict(
+        dict(
+            a="b",
+            additionalProperties=[{"name": "a", "value": "b", "max": 10}],
+            aggregateRating=dict(worstRating=0),
+            brand={"name": "Zyte", "slug": "zyte"},
+            breadcrumbs=[{"children": [{"name": "foo"}, {"link": "bar"}]}],
+            gtin=[{"type": "gtin8", "value": "00000000", "checkPass": False}],
+            images=[{"format": "PNG"}],
+            mainImage={"format": "JPEG"},
+            metadata=dict(
+                dateDownloaded="20221231T130154Z",
+                author="Guido",
+            ),
+            url="https://example.com/?product=product22",
+            variants=[dict(position=1)],
+        )
+    )
+    assert product._unknown_fields_dict["a"] == "b"
+    assert product.additionalProperties[0]._unknown_fields_dict["max"] == 10
+    assert product.aggregateRating._unknown_fields_dict["worstRating"] == 0
+    assert product.brand._unknown_fields_dict["slug"] == "zyte"
+    assert product.breadcrumbs[0]._unknown_fields_dict["children"] == [{"name": "foo"}, {"link": "bar"}]
+    assert product.gtin[0]._unknown_fields_dict["checkPass"] is False
+    assert product.images[0]._unknown_fields_dict["format"] == "PNG"
+    assert product.mainImage._unknown_fields_dict["format"] == "JPEG"
+    assert product.metadata._unknown_fields_dict["author"] == "Guido"
+    assert product.variants[0]._unknown_fields_dict["position"] == 1
+
+
 def test_product_variant_all_fields():
     product_variant = ProductVariant(**_PRODUCT_VARIANT_ALL_KWARGS)
     for field in list(_PRODUCT_VARIANT_ALL_KWARGS):
