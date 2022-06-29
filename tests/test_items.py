@@ -40,7 +40,7 @@ _PRODUCT_VARIANT_ALL_KWARGS = {
 _PRODUCT_MIN_KWARGS = {
     "url": "https://example.com/?product=product22",
     "metadata": Metadata(
-        dateDownloaded="20221231T130154Z",
+        dateDownloaded="2022-12-31T13:01:54Z",
         probability=1.0,
     ),
 }
@@ -124,7 +124,7 @@ def test_product_serialization():
         ],
         "mainImage": dict(url="http://example.com/image1.png"),
         "metadata": dict(
-            dateDownloaded="20221231T130154Z",
+            dateDownloaded="2022-12-31T13:01:54Z",
             probability=1.0,
         ),
         "mpn": "HSC0424PP",
@@ -176,7 +176,6 @@ def test_product_unknown_input():
                 "format": "JPEG",
             },
             metadata=dict(
-                dateDownloaded="20221231T130154Z",
                 author="Guido",
             ),
             url="https://example.com/?product=product22",
