@@ -48,6 +48,6 @@ class Product(_ProductBase):
     description: Optional[str] = None
     descriptionHtml: Optional[str] = None
     features: Optional[List[str]] = None
-    metadata: Metadata
+    metadata: Optional[Metadata] = None
     url: str
     variants: Optional[List[ProductVariant]] = None

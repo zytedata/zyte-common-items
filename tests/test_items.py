@@ -39,10 +39,6 @@ _PRODUCT_VARIANT_ALL_KWARGS = {
 }
 _PRODUCT_MIN_KWARGS = {
     "url": "https://example.com/?product=product22",
-    "metadata": Metadata(
-        dateDownloaded="2022-12-31T13:01:54Z",
-        probability=1.0,
-    ),
 }
 _PRODUCT_ALL_KWARGS = {
     **_PRODUCT_MIN_KWARGS,
@@ -64,6 +60,10 @@ _PRODUCT_ALL_KWARGS = {
         "<p>Super Cooling Plus&trade;</p></article>"
     ),
     "features": ["Easily store fragile products.", "Bluetooth connectivity."],
+    "metadata": Metadata(
+        dateDownloaded="2022-12-31T13:01:54Z",
+        probability=1.0,
+    ),
     "variants": [ProductVariant()],
 }
 
