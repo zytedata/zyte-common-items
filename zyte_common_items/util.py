@@ -1,5 +1,6 @@
 import sys
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type
+from warnings import warn
 from weakref import WeakKeyDictionary
 
 import attr
@@ -48,6 +49,11 @@ def export(fn):
     ``__all__`` variable in the module. Useful to control
     what is imported when ``import * from <module>`` is used.
     """
+    warn(
+        "The export decorator is deprecated",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     mod = sys.modules[fn.__module__]
     if hasattr(mod, "__all__"):
         mod.__all__.append(fn.__name__)

@@ -12,10 +12,8 @@ from zyte_common_items.base import (
     Item,
     Metadata,
 )
-from zyte_common_items.util import export
 
 
-@export
 @attrs.define(slots=True, kw_only=True)
 class _ProductBase(Item):
     additionalProperties: Optional[List[AdditionalProperty]] = None
@@ -37,13 +35,11 @@ class _ProductBase(Item):
     style: Optional[str] = None
 
 
-@export
 @attrs.define(slots=True, kw_only=True)
 class ProductVariant(_ProductBase):
     url: Optional[str] = None
 
 
-@export
 @attrs.define(slots=True, kw_only=True)
 class Product(_ProductBase):
     aggregateRating: Optional[AggregateRating] = None
