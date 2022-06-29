@@ -149,7 +149,7 @@ class Brand(Item):
 @attrs.define(slots=True, kw_only=True)
 class Breadcrumb(Item):
     name: Optional[str] = None
-    link: Optional[str] = None
+    url: Optional[str] = None
 
 
 @attrs.define(slots=True)

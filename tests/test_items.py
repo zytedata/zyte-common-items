@@ -49,8 +49,8 @@ _PRODUCT_ALL_KWARGS = {
     ),
     "brand": Brand(name="Ka-pow"),
     "breadcrumbs": [
-        Breadcrumb(name="Level 1", link="http://example.com/level1"),
-        Breadcrumb(name="Level 2", link="http://example.com/level1/level2"),
+        Breadcrumb(name="Level 1", url="http://example.com/level1"),
+        Breadcrumb(name="Level 2", url="http://example.com/level1/level2"),
     ],
     "description": ("Full freshness all over the fridge\n5 Conversion Modes on demand\nSuper Cooling Plus™"),
     "descriptionHtml": (
@@ -102,8 +102,8 @@ def test_product_serialization_all():
         "availability": "InStock",
         "brand": dict(name="Ka-pow"),
         "breadcrumbs": [
-            dict(name="Level 1", link="http://example.com/level1"),
-            dict(name="Level 2", link="http://example.com/level1/level2"),
+            dict(name="Level 1", url="http://example.com/level1"),
+            dict(name="Level 2", url="http://example.com/level1/level2"),
         ],
         "canonicalUrl": "https://example.com/product22",
         "color": "white",
@@ -153,7 +153,7 @@ def test_product_unknown_input():
             additionalProperties=[{"name": "a", "value": "b", "max": 10}],
             aggregateRating=dict(worstRating=0),
             brand={"name": "Zyte", "slug": "zyte"},
-            breadcrumbs=[{"children": [{"name": "foo"}, {"link": "bar"}]}],
+            breadcrumbs=[{"children": [{"name": "foo"}, {"url": "bar"}]}],
             gtin=[{"type": "gtin8", "value": "00000000", "checkPass": False}],
             images=[{"url": "http://example.com/image1.png", "format": "PNG"}],
             mainImage={
@@ -171,7 +171,7 @@ def test_product_unknown_input():
     assert product.additionalProperties[0]._unknown_fields_dict["max"] == 10
     assert product.aggregateRating._unknown_fields_dict["worstRating"] == 0
     assert product.brand._unknown_fields_dict["slug"] == "zyte"
-    assert product.breadcrumbs[0]._unknown_fields_dict["children"] == [{"name": "foo"}, {"link": "bar"}]
+    assert product.breadcrumbs[0]._unknown_fields_dict["children"] == [{"name": "foo"}, {"url": "bar"}]
     assert product.gtin[0]._unknown_fields_dict["checkPass"] is False
     assert product.images[0]._unknown_fields_dict["format"] == "PNG"
     assert product.mainImage._unknown_fields_dict["format"] == "JPEG"

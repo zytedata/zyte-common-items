@@ -20,7 +20,7 @@ def test_aggregated_rating_optional_fields():
 
 def test_breadcrumb_optional_fields():
     Breadcrumb(name="foo")
-    Breadcrumb(link="https://example.com")
+    Breadcrumb(url="https://example.com")
 
 
 class NotConsideredAnItem:
