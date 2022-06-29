@@ -150,8 +150,7 @@ class Gtin(Item):
 
 @attrs.define(slots=True, kw_only=True)
 class Image(Item):
-    dataUrl: Optional[str] = None
-    url: Optional[str] = None
+    url: Optional[str]
 
 
 @attrs.define(slots=True, kw_only=True)

@@ -24,14 +24,6 @@ _PRODUCT_VARIANT_ALL_KWARGS = {
     "currencyRaw": "$",
     "gtin": [Gtin(type="foo", value="bar")],
     "images": [
-        Image(
-            dataUrl=(
-                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFBAMAAAB"
-                "/QTvWAAAAFVBMVEXMzMyWlpaxsbG3t7e+vr7FxcWjo6PZoQRwAAAACXBIWXMA"
-                "AA7EAAAOxAGVKw4bAAAAEklEQVQImWNgQALKDgwMYQwMAAOLALoJbp2PAAAAA"
-                "ElFTkSuQmCC"
-            ),
-        ),
         Image(url="http://example.com/image1.png"),
     ],
     "mainImage": Image(url="http://example.com/image1.png"),
@@ -128,18 +120,9 @@ def test_product_serialization():
         "features": ["Easily store fragile products.", "Bluetooth connectivity."],
         "gtin": [dict(type="foo", value="bar")],
         "images": [
-            dict(
-                dataUrl=(
-                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFBAMAAAB"
-                    "/QTvWAAAAFVBMVEXMzMyWlpaxsbG3t7e+vr7FxcWjo6PZoQRwAAAACXBIWXMA"
-                    "AA7EAAAOxAGVKw4bAAAAEklEQVQImWNgQALKDgwMYQwMAAOLALoJbp2PAAAAA"
-                    "ElFTkSuQmCC"
-                ),
-                url=None,
-            ),
-            dict(url="http://example.com/image1.png", dataUrl=None),
+            dict(url="http://example.com/image1.png"),
         ],
-        "mainImage": dict(url="http://example.com/image1.png", dataUrl=None),
+        "mainImage": dict(url="http://example.com/image1.png"),
         "metadata": dict(
             dateDownloaded="20221231T130154Z",
             probability=1.0,
@@ -187,8 +170,11 @@ def test_product_unknown_input():
             brand={"name": "Zyte", "slug": "zyte"},
             breadcrumbs=[{"children": [{"name": "foo"}, {"link": "bar"}]}],
             gtin=[{"type": "gtin8", "value": "00000000", "checkPass": False}],
-            images=[{"format": "PNG"}],
-            mainImage={"format": "JPEG"},
+            images=[{"url": "http://example.com/image1.png", "format": "PNG"}],
+            mainImage={
+                "url": "http://example.com/image1.jpeg",
+                "format": "JPEG",
+            },
             metadata=dict(
                 dateDownloaded="20221231T130154Z",
                 author="Guido",

@@ -7,7 +7,6 @@ import pytest
 from zyte_common_items import (
     AggregateRating,
     Breadcrumb,
-    Image,
     Item,
     Metadata,
     is_data_container,
@@ -23,18 +22,6 @@ def test_aggregated_rating_optional_fields():
 def test_breadcrumb_optional_fields():
     Breadcrumb(name="foo")
     Breadcrumb(link="https://example.com")
-
-
-def test_image_optional_fields():
-    Image(
-        dataUrl=(
-            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFBAMAAAB"
-            "/QTvWAAAAFVBMVEXMzMyWlpaxsbG3t7e+vr7FxcWjo6PZoQRwAAAACXBIWXMA"
-            "AA7EAAAOxAGVKw4bAAAAEklEQVQImWNgQALKDgwMYQwMAAOLALoJbp2PAAAAA"
-            "ElFTkSuQmCC"
-        ),
-    )
-    Image(url="http://example.com/image1.png")
 
 
 class NotConsideredAnItem:
