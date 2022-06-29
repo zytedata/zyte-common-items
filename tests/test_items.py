@@ -15,13 +15,13 @@ from zyte_common_items import (
 )
 
 _PRODUCT_VARIANT_ALL_KWARGS = {
-    "additionalProperties": [AdditionalProperty(name="foo", value="bar")],
+    "additionalProperties": [AdditionalProperty("foo", "bar")],
     "availability": "InStock",
     "canonicalUrl": "https://example.com/product22",
     "color": "white",
     "currency": "USD",
     "currencyRaw": "$",
-    "gtin": [Gtin(type="foo", value="bar")],
+    "gtin": [Gtin("foo", "bar")],
     "images": [
         Image(url="http://example.com/image1.png"),
     ],
@@ -47,7 +47,7 @@ _PRODUCT_ALL_KWARGS = {
         ratingValue=2.5,
         reviewCount=123,
     ),
-    "brand": Brand(name="Ka-pow"),
+    "brand": Brand("Ka-pow"),
     "breadcrumbs": [
         Breadcrumb(name="Level 1", url="http://example.com/level1"),
         Breadcrumb(name="Level 2", url="http://example.com/level1/level2"),
