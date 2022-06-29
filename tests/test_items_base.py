@@ -80,6 +80,11 @@ def test_item_from_dict_value_error():
         BigItemIncorrect.from_dict({"sub_item": {"name": "hello"}})
 
 
+def test_metadata_default_probability():
+    metadata = Metadata()
+    assert metadata.probability == 1.0
+
+
 def test_metadata_optional_fields():
     Metadata(
         dateDownloaded="2022-12-31T13:01:54Z",
@@ -87,3 +92,4 @@ def test_metadata_optional_fields():
     Metadata(
         probability=1.0,
     )
+    Metadata()
