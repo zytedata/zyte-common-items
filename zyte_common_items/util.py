@@ -9,6 +9,18 @@ import attr
 CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
 
 
+def _remove_empty_values(obj):
+    if isinstance(obj, dict):
+        for key in list(obj):
+            if obj[key] in (None, [], {}):
+                del obj[key]
+            else:
+                _remove_empty_values(obj[key])
+    elif isinstance(obj, list):
+        for item in obj:
+            _remove_empty_values(item)
+
+
 def split_in_unknown_and_known_fields(data: Optional[dict], item_cls: Type) -> Tuple[Dict, Dict]:
     """
     Return a pair of dicts. The first one contains those elements not belonging to the

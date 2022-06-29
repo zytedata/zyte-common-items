@@ -1,7 +1,6 @@
 from copy import copy
 
 import pytest
-from itemadapter import ItemAdapter
 
 from zyte_common_items import (
     AdditionalProperty,
@@ -90,10 +89,9 @@ def test_product_missing_fields():
             Product(**incomplete_kwargs)
 
 
-def test_product_serialization():
+def test_product_serialization_all():
     product = Product(**_PRODUCT_ALL_KWARGS)
-    adapter = ItemAdapter(product)
-    serialized_product = adapter.asdict()
+    serialized_product = product.asdict()
     assert serialized_product == {
         "additionalProperties": [dict(name="foo", value="bar")],
         "aggregateRating": dict(
@@ -136,28 +134,15 @@ def test_product_serialization():
         "sku": "A123DK9823",
         "style": "polka dots",
         "url": "https://example.com/?product=product22",
-        "variants": [
-            {
-                "additionalProperties": None,
-                "availability": None,
-                "canonicalUrl": None,
-                "color": None,
-                "currency": None,
-                "currencyRaw": None,
-                "gtin": None,
-                "images": None,
-                "mainImage": None,
-                "mpn": None,
-                "name": None,
-                "price": None,
-                "productId": None,
-                "regularPrice": None,
-                "size": None,
-                "sku": None,
-                "style": None,
-                "url": None,
-            },
-        ],
+        "variants": [{}],
+    }
+
+
+def test_product_serialization_min():
+    product = Product(**_PRODUCT_MIN_KWARGS)
+    serialized_product = product.asdict()
+    assert serialized_product == {
+        "url": "https://example.com/?product=product22",
     }
 
 
