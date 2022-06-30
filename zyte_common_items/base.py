@@ -166,4 +166,4 @@ class Image(Item):
 @attrs.define(slots=True, kw_only=True)
 class Metadata(Item):
     dateDownloaded: Optional[str] = None
-    probability: float = 1.0
+    probability: Optional[float] = None
