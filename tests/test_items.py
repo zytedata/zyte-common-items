@@ -89,7 +89,7 @@ def test_product_missing_fields():
             Product(**incomplete_kwargs)
 
 
-def test_product_serialization_all():
+def test_product_asdict_all():
     product = Product(**_PRODUCT_ALL_KWARGS)
     serialized_product = product.asdict()
     assert serialized_product == {
@@ -138,8 +138,25 @@ def test_product_serialization_all():
     }
 
 
-def test_product_serialization_min():
+def test_product_asdict_min():
     product = Product(**_PRODUCT_MIN_KWARGS)
+    serialized_product = product.asdict()
+    assert serialized_product == {
+        "url": "https://example.com/?product=product22",
+    }
+
+
+def test_product_asdict_tuple():
+    product = Product(**_PRODUCT_MIN_KWARGS, variants=({},))
+    serialized_product = product.asdict()
+    assert serialized_product == {
+        "url": "https://example.com/?product=product22",
+        "variants": ({},),
+    }
+
+
+def test_product_asdict_tuple_empty():
+    product = Product(**_PRODUCT_MIN_KWARGS, variants=tuple())
     serialized_product = product.asdict()
     assert serialized_product == {
         "url": "https://example.com/?product=product22",

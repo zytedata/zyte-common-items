@@ -1,4 +1,5 @@
 import sys
+from collections.abc import Sequence
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type
 from warnings import warn
 from weakref import WeakKeyDictionary
@@ -12,7 +13,8 @@ CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
 def _remove_empty_values(obj):
     if isinstance(obj, dict):
         for key in list(obj):
-            if obj[key] in (None, [], {}):
+            value = obj[key]
+            if value is None or (isinstance(value, (dict, Sequence)) and not value):
                 del obj[key]
             else:
                 _remove_empty_values(obj[key])
