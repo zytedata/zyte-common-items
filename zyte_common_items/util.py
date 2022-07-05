@@ -1,5 +1,5 @@
 import sys
-from collections.abc import Sequence
+from collections.abc import Collection, Mapping
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type
 from warnings import warn
 from weakref import WeakKeyDictionary
@@ -10,15 +10,20 @@ import attr
 CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
 
 
+def _is_non_bytes_non_str_collection(obj):
+    """Return True for any collection other than bytes or str."""
+    return not isinstance(obj, (bytes, str)) and isinstance(obj, Collection)
+
+
 def _remove_empty_values(obj):
-    if isinstance(obj, dict):
+    if isinstance(obj, Mapping):
         for key in list(obj):
             value = obj[key]
-            if value is None or (isinstance(value, (dict, Sequence)) and not value):
+            if value is None or (_is_non_bytes_non_str_collection(value) and not value):
                 del obj[key]
             else:
                 _remove_empty_values(obj[key])
-    elif isinstance(obj, list):
+    elif _is_non_bytes_non_str_collection(obj):
         for item in obj:
             _remove_empty_values(item)
 

@@ -1,6 +1,7 @@
+from collections.abc import Collection
 from typing import Optional, Union
 
-import attr
+import attrs
 import pytest
 
 from zyte_common_items import Item, is_data_container
@@ -12,17 +13,17 @@ class NotConsideredAnItem:
     pass
 
 
-@attr.define(slots=True)
+@attrs.define(slots=True)
 class SubItem(Item):
     name: str
 
 
-@attr.define(slots=True)
+@attrs.define(slots=True)
 class BigItem(Item):
     sub_item: Optional[SubItem] = None
 
 
-@attr.define(slots=True)
+@attrs.define(slots=True)
 class BigItemIncorrect(Item):
     """This item is particularly incorrect since the annotation for its field
     belongs to multiple types.
@@ -42,6 +43,35 @@ def test_is_data_container():
 
     assert not is_data_container(NotConsideredAnItem)
     assert not is_data_container(NotConsideredAnItem())
+
+
+class EmptyCollection(Collection):
+    def __contains__(self, item):
+        return False
+
+    def __len__(self):
+        return 0
+
+    def __iter__(self):
+        return
+        yield
+
+
+@pytest.mark.parametrize(
+    "obj",
+    (
+        [],
+        tuple(),
+        EmptyCollection(),
+    ),
+)
+def test_item_asdict_empty_collection(obj):
+    @attrs.define(slots=True)
+    class _Item(Item):
+        children: Collection[Item]
+
+    item = _Item(obj)
+    assert item.asdict() == {}
 
 
 def test_item_from_dict():
