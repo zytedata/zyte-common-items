@@ -23,9 +23,9 @@ _PRODUCT_VARIANT_ALL_KWARGS = {
     "currencyRaw": "$",
     "gtin": [Gtin("foo", "bar")],
     "images": [
-        Image(url="http://example.com/image1.png"),
+        Image("http://example.com/image1.png"),
     ],
-    "mainImage": Image(url="http://example.com/image1.png"),
+    "mainImage": Image("http://example.com/image1.png"),
     "mpn": "HSC0424PP",
     "name": "White two-door refrigerator",
     "price": "9999.99",

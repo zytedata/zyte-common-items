@@ -37,7 +37,7 @@ class Gtin(Item):
     value: str
 
 
-@attrs.define(slots=True, kw_only=True)
+@attrs.define(slots=True)
 class Image(Item):
     url: Optional[str]
 
