@@ -3,24 +3,7 @@ from typing import Optional, Union
 import attr
 import pytest
 
-from zyte_common_items import (
-    AggregateRating,
-    Breadcrumb,
-    Item,
-    Metadata,
-    is_data_container,
-)
-
-
-def test_aggregated_rating_optional_fields():
-    AggregateRating(bestRating=5.0)
-    AggregateRating(ratingValue=2.5)
-    AggregateRating(reviewCount=123)
-
-
-def test_breadcrumb_optional_fields():
-    Breadcrumb(name="foo")
-    Breadcrumb(url="https://example.com")
+from zyte_common_items import Item, is_data_container
 
 
 class NotConsideredAnItem:
@@ -78,9 +61,3 @@ def test_item_from_dict_value_error():
     """
     with pytest.raises(ValueError):
         BigItemIncorrect.from_dict({"sub_item": {"name": "hello"}})
-
-
-def test_metadata_default_values():
-    metadata = Metadata()
-    assert metadata.dateDownloaded is None
-    assert metadata.probability is None

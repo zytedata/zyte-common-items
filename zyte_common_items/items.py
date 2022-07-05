@@ -2,14 +2,14 @@ from typing import List, Optional
 
 import attrs
 
-from zyte_common_items.base import (
+from zyte_common_items.base import Item
+from zyte_common_items.components import (
     AdditionalProperty,
     AggregateRating,
     Brand,
     Breadcrumb,
     Gtin,
     Image,
-    Item,
     Metadata,
 )
 
