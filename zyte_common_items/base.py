@@ -70,7 +70,7 @@ class Item(_ItemBase):
         return [cls.from_dict(item) for item in items or []]
 
     @classmethod
-    def _apply_field_types_to_sub_fields(cls, item: Optional[Dict]):
+    def _apply_field_types_to_sub_fields(cls, item: Dict):
         """This applies the correct data container class for some of the fields
         that need them.
 
