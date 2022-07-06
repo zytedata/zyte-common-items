@@ -4,6 +4,7 @@ from contextlib import contextmanager
 # In Python ≤ 3.8 you cannot annotate with “collections.abc.Collection[Item]”,
 # so we need to import typing.Collection for annotation instead.
 from typing import Collection as CollectionType
+from typing import Optional
 
 import attrs
 import pytest
@@ -21,107 +22,6 @@ def configured_adapter():
         yield
     finally:
         ItemAdapter.ADAPTER_CLASSES.popleft()
-
-
-def test_unknown_field_get():
-    product = Product.from_dict(
-        dict(
-            a="b",
-            additionalProperties=[{"name": "a", "value": "b", "max": 10}],
-            aggregateRating={"worstRating": 0},
-            url="https://example.com/",
-        )
-    )
-
-    with configured_adapter():
-        adapter = ItemAdapter(product)
-        assert adapter["a"] == "b"
-
-        adapter = ItemAdapter(product.additionalProperties[0])
-        assert adapter["max"] == 10
-
-        adapter = ItemAdapter(product.aggregateRating)
-        assert adapter["worstRating"] == 0
-
-
-def test_unknown_field_set():
-    product = Product.from_dict(
-        dict(
-            additionalProperties=[{"name": "a", "value": "b"}],
-            aggregateRating={"bestRating": 5.0},
-            url="https://example.com/",
-        )
-    )
-
-    with configured_adapter():
-        adapter = ItemAdapter(product)
-        adapter["a"] = "b"
-        assert adapter["a"] == "b"
-        assert product._unknown_fields_dict["a"] == "b"
-
-        adapter = ItemAdapter(product.additionalProperties[0])
-        adapter["max"] = 10
-        assert adapter["max"] == 10
-        assert product.additionalProperties[0]._unknown_fields_dict["max"] == 10
-
-        adapter = ItemAdapter(product.aggregateRating)
-        adapter["worstRating"] = 0
-        assert adapter["worstRating"] == 0
-        assert product.aggregateRating._unknown_fields_dict["worstRating"] == 0
-
-
-def test_unknown_field_update():
-    product = Product.from_dict(
-        dict(
-            a="b",
-            additionalProperties=[{"name": "a", "value": "b", "max": 10}],
-            aggregateRating={"worstRating": 0},
-            url="https://example.com/",
-        )
-    )
-
-    with configured_adapter():
-        adapter = ItemAdapter(product)
-        adapter["a"] = "c"
-        assert adapter["a"] == "c"
-        assert product._unknown_fields_dict["a"] == "c"
-
-        adapter = ItemAdapter(product.additionalProperties[0])
-        adapter["max"] = 20
-        assert adapter["max"] == 20
-        assert product.additionalProperties[0]._unknown_fields_dict["max"] == 20
-
-        adapter = ItemAdapter(product.aggregateRating)
-        adapter["worstRating"] = 1
-        assert adapter["worstRating"] == 1
-        assert product.aggregateRating._unknown_fields_dict["worstRating"] == 1
-
-
-def test_unknown_field_remove():
-    product = Product.from_dict(
-        dict(
-            a="b",
-            additionalProperties=[{"name": "a", "value": "b", "max": 10}],
-            aggregateRating={"worstRating": 0},
-            url="https://example.com/",
-        )
-    )
-
-    with configured_adapter():
-        adapter = ItemAdapter(product)
-        del adapter["a"]
-        assert "a" not in adapter
-        assert "a" not in product._unknown_fields_dict
-
-        adapter = ItemAdapter(product.additionalProperties[0])
-        del adapter["max"]
-        assert "max" not in adapter
-        assert "max" not in product.additionalProperties[0]._unknown_fields_dict
-
-        adapter = ItemAdapter(product.aggregateRating)
-        del adapter["worstRating"]
-        assert "worstRating" not in adapter
-        assert "worstRating" not in product.aggregateRating._unknown_fields_dict
 
 
 def test_asdict_all_fields():
@@ -242,3 +142,229 @@ def test_asdict_unknown_fields():
     with configured_adapter():
         adapter = ItemAdapter(product)
         assert adapter.asdict() == input_dict
+
+
+def test_field_meta():
+    metadata = {"b": "c"}
+
+    @attrs.define(slots=True)
+    class _Item(Item):
+        a = attrs.field(default=None, metadata=metadata)
+
+    item = _Item()
+    with configured_adapter():
+        adapter = ItemAdapter(item)
+        actual_dict = adapter.get_field_meta("a")
+    assert actual_dict == metadata
+
+
+def test_field_meta_missing_field():
+    item = Item()
+    with configured_adapter():
+        adapter = ItemAdapter(item)
+        with pytest.raises(KeyError):
+            adapter.get_field_meta("a")
+
+
+def test_field_meta_unknown_field():
+    """There cannot be metadata for unknown fields, but trying to get it should
+    not cause an exception either."""
+    item = Item.from_dict({"a": None})
+    with configured_adapter():
+        adapter = ItemAdapter(item)
+        actual_dict = adapter.get_field_meta("a")
+    assert actual_dict == {}
+
+
+def test_field_names():
+    @attrs.define(slots=True)
+    class _Item(Item):
+        a: int
+        b: Optional[int] = None
+
+    item = _Item.from_dict({"a": 1, "c": 2, "d": None})
+    with configured_adapter():
+        adapter = ItemAdapter(item)
+        actual = adapter.field_names()
+    assert tuple(actual) == ("a", "b", "c", "d")
+
+
+def test_known_field_get():
+    url = "https://example.com/"
+    product = Product(url=url)
+    with configured_adapter():
+        adapter = ItemAdapter(product)
+        assert adapter["url"] == url
+
+
+def test_known_field_get_missing():
+    url = "https://example.com/"
+    product = Product(url=url)
+    with configured_adapter():
+        adapter = ItemAdapter(product)
+        assert adapter["canonicalUrl"] is None
+
+
+def test_known_field_set():
+    url = "https://example.com/"
+    product = Product(url=url)
+    with configured_adapter():
+        adapter = ItemAdapter(product)
+        adapter["canonicalUrl"] = url
+        assert adapter["canonicalUrl"] == url
+        assert product.canonicalUrl == url
+
+
+def test_known_field_update():
+    product = Product(url="https://example.com/a")
+    with configured_adapter():
+        adapter = ItemAdapter(product)
+        new_url = "https://example.com/b"
+        adapter["url"] = new_url
+        assert adapter["url"] == new_url
+        assert product.url == new_url
+
+
+def test_known_field_remove():
+    url = "https://example.com/"
+    product = Product(url=url, canonicalUrl=url)
+    with configured_adapter():
+        adapter = ItemAdapter(product)
+        del adapter["canonicalUrl"]
+        assert "canonicalUrl" not in adapter
+        assert not hasattr(product, "canonicalUrl")
+
+
+def test_known_field_remove_missing():
+    product = Product(url="https://example.com/")
+    with configured_adapter():
+        adapter = ItemAdapter(product)
+        del adapter["canonicalUrl"]
+        assert "canonicalUrl" not in adapter
+        assert not hasattr(product, "canonicalUrl")
+
+
+def test_known_field_remove_missing_twice():
+    product = Product(url="https://example.com/")
+    with configured_adapter():
+        adapter = ItemAdapter(product)
+        del adapter["canonicalUrl"]
+        with pytest.raises(KeyError):
+            del adapter["canonicalUrl"]
+
+
+def test_unknown_field_get():
+    product = Product.from_dict(
+        dict(
+            a="b",
+            additionalProperties=[{"name": "a", "value": "b", "max": 10}],
+            aggregateRating={"worstRating": 0},
+            url="https://example.com/",
+        )
+    )
+
+    with configured_adapter():
+        adapter = ItemAdapter(product)
+        assert adapter["a"] == "b"
+
+        adapter = ItemAdapter(product.additionalProperties[0])
+        assert adapter["max"] == 10
+
+        adapter = ItemAdapter(product.aggregateRating)
+        assert adapter["worstRating"] == 0
+
+
+def test_unknown_field_get_missing():
+    product = Product(url="https://example.com")
+    with configured_adapter():
+        adapter = ItemAdapter(product)
+        with pytest.raises(KeyError):
+            adapter["a"]
+
+
+def test_unknown_field_set():
+    product = Product.from_dict(
+        dict(
+            additionalProperties=[{"name": "a", "value": "b"}],
+            aggregateRating={"bestRating": 5.0},
+            url="https://example.com/",
+        )
+    )
+
+    with configured_adapter():
+        adapter = ItemAdapter(product)
+        adapter["a"] = "b"
+        assert adapter["a"] == "b"
+        assert product._unknown_fields_dict["a"] == "b"
+
+        adapter = ItemAdapter(product.additionalProperties[0])
+        adapter["max"] = 10
+        assert adapter["max"] == 10
+        assert product.additionalProperties[0]._unknown_fields_dict["max"] == 10
+
+        adapter = ItemAdapter(product.aggregateRating)
+        adapter["worstRating"] = 0
+        assert adapter["worstRating"] == 0
+        assert product.aggregateRating._unknown_fields_dict["worstRating"] == 0
+
+
+def test_unknown_field_update():
+    product = Product.from_dict(
+        dict(
+            a="b",
+            additionalProperties=[{"name": "a", "value": "b", "max": 10}],
+            aggregateRating={"worstRating": 0},
+            url="https://example.com/",
+        )
+    )
+
+    with configured_adapter():
+        adapter = ItemAdapter(product)
+        adapter["a"] = "c"
+        assert adapter["a"] == "c"
+        assert product._unknown_fields_dict["a"] == "c"
+
+        adapter = ItemAdapter(product.additionalProperties[0])
+        adapter["max"] = 20
+        assert adapter["max"] == 20
+        assert product.additionalProperties[0]._unknown_fields_dict["max"] == 20
+
+        adapter = ItemAdapter(product.aggregateRating)
+        adapter["worstRating"] = 1
+        assert adapter["worstRating"] == 1
+        assert product.aggregateRating._unknown_fields_dict["worstRating"] == 1
+
+
+def test_unknown_field_remove():
+    product = Product.from_dict(
+        dict(
+            a="b",
+            additionalProperties=[{"name": "a", "value": "b", "max": 10}],
+            aggregateRating={"worstRating": 0},
+            url="https://example.com/",
+        )
+    )
+
+    with configured_adapter():
+        adapter = ItemAdapter(product)
+        del adapter["a"]
+        assert "a" not in adapter
+        assert "a" not in product._unknown_fields_dict
+
+        adapter = ItemAdapter(product.additionalProperties[0])
+        del adapter["max"]
+        assert "max" not in adapter
+        assert "max" not in product.additionalProperties[0]._unknown_fields_dict
+
+        adapter = ItemAdapter(product.aggregateRating)
+        del adapter["worstRating"]
+        assert "worstRating" not in adapter
+        assert "worstRating" not in product.aggregateRating._unknown_fields_dict
+
+
+def test_unknown_field_remove_missing():
+    product = Product(url="https://example.com/")
+    with configured_adapter():
+        adapter = ItemAdapter(product)
+        with pytest.raises(KeyError):
+            del adapter["a"]

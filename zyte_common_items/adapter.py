@@ -37,8 +37,9 @@ class ZyteItemAdapter(AttrsAdapter):
     def get_field_meta(self, field_name: str) -> MappingProxyType:
         if field_name in self._fields_dict:
             return self._fields_dict[field_name].metadata  # type: ignore
-        else:
+        elif field_name in self.item._unknown_fields_dict:
             return MappingProxyType({})
+        raise KeyError(field_name)
 
     def field_names(self) -> KeysView:
         return KeysView({**self._fields_dict, **self.item._unknown_fields_dict})
@@ -58,10 +59,8 @@ class ZyteItemAdapter(AttrsAdapter):
 
     def __delitem__(self, field_name: str) -> None:
         if field_name in self._fields_dict:
-            try:
-                delattr(self.item, field_name)
-            except AttributeError:
-                raise KeyError(field_name)
+            del self._fields_dict[field_name]
+            delattr(self.item, field_name)
         elif field_name in self.item._unknown_fields_dict:
             del self.item._unknown_fields_dict[field_name]
         else:

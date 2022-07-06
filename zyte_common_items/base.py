@@ -87,9 +87,6 @@ class Item(_ItemBase):
             * Article having ``headline: Optional[str]``
             * Product having ``name: Optional[str]``
         """
-        if not item:
-            return None
-
         from_dict, from_list = {}, {}
 
         annotations = ChainMap(*(c.__annotations__ for c in cls.__mro__ if "__annotations__" in c.__dict__))
