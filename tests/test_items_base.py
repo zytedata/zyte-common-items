@@ -1,4 +1,3 @@
-from collections.abc import Collection
 from typing import Optional, Union
 
 import attrs
@@ -43,35 +42,6 @@ def test_is_data_container():
 
     assert not is_data_container(NotConsideredAnItem)
     assert not is_data_container(NotConsideredAnItem())
-
-
-class EmptyCollection(Collection):
-    def __contains__(self, item):
-        return False
-
-    def __len__(self):
-        return 0
-
-    def __iter__(self):
-        return
-        yield
-
-
-@pytest.mark.parametrize(
-    "obj",
-    (
-        [],
-        tuple(),
-        EmptyCollection(),
-    ),
-)
-def test_item_asdict_empty_collection(obj):
-    @attrs.define(slots=True)
-    class _Item(Item):
-        children: Collection[Item]
-
-    item = _Item(obj)
-    assert item.asdict() == {}
 
 
 def test_item_from_dict():

@@ -17,12 +17,8 @@ except ImportError:
 from typing import Dict, List, Optional, Union
 
 import attrs
-from itemadapter import ItemAdapter
 
-from zyte_common_items.util import (
-    _remove_empty_values,
-    split_in_unknown_and_known_fields,
-)
+from zyte_common_items.util import split_in_unknown_and_known_fields
 
 
 def is_data_container(cls_or_obj):
@@ -46,12 +42,6 @@ class _ItemBase:
 class Item(_ItemBase):
     def __attrs_post_init__(self):
         self._unknown_fields_dict = {}
-
-    def asdict(self):
-        adapter = ItemAdapter(self)
-        result = adapter.asdict()
-        _remove_empty_values(result)
-        return result
 
     @classmethod
     def from_dict(cls, item: Optional[Dict]):
