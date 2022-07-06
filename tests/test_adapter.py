@@ -1,6 +1,10 @@
 from collections.abc import Collection
 from contextlib import contextmanager
 
+# In Python ≤ 3.8 you cannot annotate with “collections.abc.Collection[Item]”,
+# so we need to import typing.Collection for annotation instead.
+from typing import Collection as CollectionType
+
 import attrs
 import pytest
 from itemadapter import ItemAdapter
@@ -218,7 +222,7 @@ class EmptyCollection(Collection):
 def test_asdict_empty_collection(value):
     @attrs.define(slots=True)
     class _Item(Item):
-        children: Collection[Item]
+        children: CollectionType[Item]
 
     item = _Item(value)
     with configured_adapter():
