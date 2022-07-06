@@ -1,3 +1,6 @@
+"""This module offers better integration with the itemadapter package."""
+
+
 from types import MappingProxyType
 from typing import Any, Collection, Iterator, KeysView
 
@@ -7,11 +10,22 @@ from zyte_common_items.base import Item
 
 
 def _is_empty(value):
+    """Return ``True`` if the value is to be considered empty for the purpose
+    of excluding it from serialization.
+
+    Empty values include: ``None``, empty collections (tuples, lists, etc.).
+
+    Non-empty values include: empty ``bytes`` or ``str``, ``False``, ``0``.
+
+    *value* is assumed not to be a mapping, which should be treated as a
+    non-empty value, but this function would treat as an empty value.
+    """
     return value is None or (not value and not isinstance(value, (bytes, str)) and isinstance(value, Collection))
 
 
 class ZyteItemAdapter(AttrsAdapter):
-    """itemadapter adapter for zyte-common-items items.
+    """Adapter class for the itemadapter library that improves interaction with
+    :class:`zyte_common_items.Item` for itemadapter users like Scrapy.
 
     Configure it as early as possible in your code::
 
