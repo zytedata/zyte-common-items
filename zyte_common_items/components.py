@@ -15,20 +15,39 @@ class AdditionalProperty(Item):
     <zyte_common_items.Product.additionalProperties>`.
     """
 
+    #: Name.
     name: str
+
+    #: Value.
     value: str
 
 
 @attrs.define(slots=True, kw_only=True)
 class AggregateRating(Item):
+    """Aggregate data about reviews and ratings.
+
+    At least one of :attr:`ratingValue` or :attr:`reviewCount` is required.
+
+    See :attr:`Product.aggregateRating
+    <zyte_common_items.Product.aggregateRating`.
+    """
+
+    #: Maximum value of the rating system.
     bestRating: Optional[float] = None
+
+    #: Average value of all ratings.
     ratingValue: Optional[float] = None
+
+    #: Review count.
     reviewCount: Optional[int] = None
 
 
 @attrs.define(slots=True)
 class Brand(Item):
-    """Details of a brand."""
+    """Brand.
+
+    See :attr:`Product.brand <zyte_common_items.Product.brand`.
+    """
 
     #: Name as it appears on the source webpage (no post-processing).
     name: str
@@ -38,11 +57,14 @@ class Brand(Item):
 class Breadcrumb(Item):
     """A breadcrumb from the `breadcrumb trail`_ of a webpage.
 
+    See :attr:`Product.breadcrumbs <zyte_common_items.Product.breadcrumbs`.
+
     .. _breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
     """
 
-    #: Text displayed.
+    #: Displayed name.
     name: Optional[str] = None
+
     #: Target URL.
     url: Optional[str] = None
 
@@ -56,13 +78,13 @@ class Gtin(Item):
     .. _GTIN: https://en.wikipedia.org/wiki/Global_Trade_Item_Number
     """
 
-    #: Name of the GTIN format of ``value``.
+    #: Identifier of the GTIN format of ``value``.
     #:
     #: One of: ``"gtin13"``, ``"gtin8"``, ``"gtin14"``, ``"isbn10"``,
     #: ``"isbn13"``, ``"ismn"``, ``"issn"``, ``"upc"``.
     type: str
 
-    #: GTIN value.
+    #: Value.
     #:
     #: It should only contain digits.
     value: str
@@ -70,13 +92,17 @@ class Gtin(Item):
 
 @attrs.define(slots=True)
 class Image(Item):
-    """Image data."""
+    """Image.
+
+    See :class:`Product.images <zyte_common_items.Product.images>` and
+    :class:`Product.mainImage <zyte_common_items.Product.mainImage>`.
+    """
 
     #: URL.
     #:
-    #: When multiple URLs exist for a given image, pointing to image files
-    #: which are different-quality versions of the same image, the URL of the
-    #: highest-quality image file should be used.
+    #: When multiple URLs exist for a given image, and those URLs point to
+    #: image files that are different-quality versions of that image, the URL
+    #: of the highest-quality image file should be used.
     #:
     #: `Data URIs`_ are not allowed in this attribute.
     #:
@@ -86,5 +112,22 @@ class Image(Item):
 
 @attrs.define(slots=True, kw_only=True)
 class Metadata(Item):
+    """Data extraction process metadata.
+
+    See :class:`Product.metadata <zyte_common_items.Product.metadata>`.
+    """
+
+    #: Date and time when the product data was downloaded, in UTC timezone and
+    #: the following format: ``YYYY-MM-DDThh:mm:ssZ``.
     dateDownloaded: Optional[str] = None
+
+    #: The probability (0 for 0%, 1 for 100%) that the webpage features the
+    #: requested data type.
+    #:
+    #: For example, if the extraction of a product from a given URL is
+    #: requested, and that URL points to the webpage of a product with complete
+    #: certainty, the value should be `1`. If with complete certainty the
+    #: webpage features a job listing instead of a product, the value should be
+    #: `0`. When there is no complete certainty, the value could be anything in
+    #: between (e.g. `0.96`).
     probability: Optional[float] = None
