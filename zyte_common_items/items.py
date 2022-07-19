@@ -155,7 +155,7 @@ class ProductVariant(_ProductBase):
     See :attr:`Product.variants`.
     """
 
-    #: Main URL from which the product variant data was extracted.
+    #: Main URL from which the product variant data could be extracted.
     #:
     #: See also ``canonicalUrl``.
     url: Optional[str] = None
