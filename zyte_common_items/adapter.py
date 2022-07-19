@@ -85,8 +85,6 @@ class ZyteItemAdapter(AttrsAdapter):
     def __iter__(self) -> Iterator:
         fields = [attr for attr in self._fields_dict if not _is_empty(getattr(self.item, attr))]
         fields.extend(
-            attr
-            for attr in self.item._unknown_fields_dict
-            if (attr not in fields and not _is_empty(self.item._unknown_fields_dict[attr]))
+            attr for attr in self.item._unknown_fields_dict if not _is_empty(self.item._unknown_fields_dict[attr])
         )
         return iter(fields)
