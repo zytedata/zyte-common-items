@@ -43,6 +43,17 @@ Installation
 Requires **Python 3.7+**.
 
 
+Configuration
+=============
+
+As early as possible in your code, configure the supplied item adapter::
+
+    from itemadapter import ItemAdapter
+    from zyte_common_items import ZyteItemAdapter
+
+    ItemAdapter.ADAPTER_CLASSES.appendleft(ZyteItemAdapter)
+
+
 Usage
 =====
 

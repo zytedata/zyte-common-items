@@ -1,6 +1,6 @@
 from typing import Optional, Union
 
-import attr
+import attrs
 import pytest
 
 from zyte_common_items import Item, is_data_container
@@ -12,17 +12,17 @@ class NotConsideredAnItem:
     pass
 
 
-@attr.define(slots=True)
+@attrs.define(slots=True)
 class SubItem(Item):
     name: str
 
 
-@attr.define(slots=True)
+@attrs.define(slots=True)
 class BigItem(Item):
     sub_item: Optional[SubItem] = None
 
 
-@attr.define(slots=True)
+@attrs.define(slots=True)
 class BigItemIncorrect(Item):
     """This item is particularly incorrect since the annotation for its field
     belongs to multiple types.

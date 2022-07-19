@@ -1,5 +1,4 @@
-import sys
-from typing import Any, Callable, Dict, List, Optional, Tuple, Type
+from typing import Any, Callable, Dict, Optional, Tuple, Type
 from weakref import WeakKeyDictionary
 
 import attr
@@ -42,20 +41,6 @@ def split_dict(dict: Dict, key_pred: Callable[[Any], Any]) -> Tuple[Dict, Dict]:
     return (no, yes)
 
 
-def export(fn):
-    """
-    Decorator that includes the decorated element into the
-    ``__all__`` variable in the module. Useful to control
-    what is imported when ``import * from <module>`` is used.
-    """
-    mod = sys.modules[fn.__module__]
-    if hasattr(mod, "__all__"):
-        mod.__all__.append(fn.__name__)
-    else:
-        mod.__all__ = [fn.__name__]
-    return fn
-
-
 def get_args(tp) -> Tuple:
     """Offers backward compatibility for Python 3.7 since
     typing.get_args(tp) is only available startingo on 3.8.
@@ -67,7 +52,4 @@ def get_origin(tp) -> Tuple:
     """Offers backward compatibility for Python 3.7 since
     typing.get_origin(tp) is only available startingo on 3.8.
     """
-    origin = getattr(tp, "__origin__", ())
-    if origin == List:
-        origin = list
-    return origin
+    return getattr(tp, "__origin__", ())

@@ -1,6 +1,6 @@
 """The ``Item`` class should be used as the parent class for data containers."""
 
-import attr
+from collections import ChainMap
 
 try:
     from typing import get_args
@@ -16,7 +16,9 @@ except ImportError:
 
 from typing import Dict, List, Optional, Union
 
-from zyte_common_items.util import export, split_in_unknown_and_known_fields
+import attrs
+
+from zyte_common_items.util import split_in_unknown_and_known_fields
 
 
 def is_data_container(cls_or_obj):
@@ -36,8 +38,7 @@ class _ItemBase:
     __slots__ = ("_unknown_fields_dict",)
 
 
-@export
-@attr.define(slots=True)
+@attrs.define(slots=True)
 class Item(_ItemBase):
     def __attrs_post_init__(self):
         self._unknown_fields_dict = {}
@@ -69,7 +70,7 @@ class Item(_ItemBase):
         return [cls.from_dict(item) for item in items or []]
 
     @classmethod
-    def _apply_field_types_to_sub_fields(cls, item: Optional[Dict]):
+    def _apply_field_types_to_sub_fields(cls, item: Dict):
         """This applies the correct data container class for some of the fields
         that need them.
 
@@ -86,31 +87,25 @@ class Item(_ItemBase):
             * Article having ``headline: Optional[str]``
             * Product having ``name: Optional[str]``
         """
-        if not item:
-            return None
-
         from_dict, from_list = {}, {}
 
-        annotations = getattr(cls, "__annotations__", {})
+        annotations = ChainMap(*(c.__annotations__ for c in cls.__mro__ if "__annotations__" in c.__dict__))
 
         for field, type_annotation in annotations.items():
             origin = get_origin(type_annotation)
-
-            if origin == list:
-                from_list[field] = get_args(type_annotation)[0]
-
-            elif origin == Union:
+            if origin == Union:
                 field_classes = get_args(type_annotation)
                 if len(field_classes) != 2 or not isinstance(None, field_classes[1]):
                     raise ValueError("Field should only be annotated with one type (or optional).")
+                type_annotation = field_classes[0]
+                origin = get_origin(type_annotation)
 
-                field_class = field_classes[0]
-
-                # ignore classes like str, float, int etc
-                if not is_data_container(field_class):
-                    continue
-
-                from_dict[field] = field_class
+            if origin is list:
+                type_annotation = get_args(type_annotation)[0]
+                if is_data_container(type_annotation):
+                    from_list[field] = type_annotation
+            elif is_data_container(type_annotation):
+                from_dict[field] = type_annotation
 
         if from_dict or from_list:
             item = dict(**item)

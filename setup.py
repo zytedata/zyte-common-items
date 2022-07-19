@@ -15,7 +15,7 @@ setup(
         ]
     ),
     install_requires=[
-        "attrs",
+        "attrs>=21.3.0",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
