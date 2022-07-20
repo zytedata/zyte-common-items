@@ -1,3 +1,4 @@
+import inspect
 from typing import Any, Callable, Dict, Optional, Tuple, Type
 from weakref import WeakKeyDictionary
 
@@ -53,3 +54,10 @@ def get_origin(tp) -> Tuple:
     typing.get_origin(tp) is only available startingo on 3.8.
     """
     return getattr(tp, "__origin__", ())
+
+
+async def maybe_await(obj):
+    """Return the value of obj, awaiting it if needed"""
+    if inspect.isawaitable(obj):
+        return await obj
+    return obj

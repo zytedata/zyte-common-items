@@ -18,7 +18,7 @@ from typing import Dict, List, Optional, Union
 
 import attrs
 
-from zyte_common_items.util import split_in_unknown_and_known_fields
+from zyte_common_items.util import split_in_unknown_and_known_fields, maybe_await
 
 
 def is_data_container(cls_or_obj):
@@ -68,6 +68,32 @@ class Item(_ItemBase):
         Read items from a list, invoking ``from_dict`` for each item in the list
         """
         return [cls.from_dict(item) for item in items or []]
+
+    @classmethod
+    async def from_page_object(cls, page_object):
+        """
+        Create item, populating all attributes from methods of
+        ``page_object`` class.
+        """
+        data = cls._data_from_page_object(page_object)
+        return cls.from_dict({
+            name: await maybe_await(value)
+            for name, value in data.items()
+        })
+
+    @classmethod
+    def from_page_object_sync(cls, page_object):
+        """Synchronous version of :meth:`from_page_object`.
+        """
+        return cls.from_dict(cls._data_from_page_object(page_object))
+
+    @classmethod
+    def _data_from_page_object(cls, page_object):
+        field_names = [
+            field.name for field in attrs.fields(cls)
+            if hasattr(page_object, field.name)
+        ]
+        return {name: getattr(page_object, name)() for name in field_names}
 
     @classmethod
     def _apply_field_types_to_sub_fields(cls, item: Dict):
