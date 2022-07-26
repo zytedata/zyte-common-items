@@ -104,7 +104,6 @@ class ProductVariant(Item):
     #: than ``regularPrice``.
     price: Optional[str] = None
 
-    # Redefined to extend the documentation.
     #: Product identifier, unique within an e-commerce website.
     #:
     #: It may come in the form of an SKU or any other identifier, a hash, or
