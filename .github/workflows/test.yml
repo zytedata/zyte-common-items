@@ -53,6 +53,7 @@ jobs:
     - name: tox
       run: |
         tox -e mypy
+        tox -e docs
     - name: pre-commit linters
       run: |
         pre-commit install && pre-commit run --all-files

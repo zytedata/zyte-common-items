@@ -23,14 +23,16 @@ def split_in_unknown_and_known_fields(data: Optional[dict], item_cls: Type) -> T
 
 
 def split_dict(dict: Dict, key_pred: Callable[[Any], Any]) -> Tuple[Dict, Dict]:
-    """
-    Splits the dictionary in two. The first dict contains the records
-    for which the key predicate is False and the second dict contains the rest
+    """Splits the dictionary in two.
+
+    The first dict contains the records for which the key predicate is False
+    and the second dict contains the rest.
 
     >>> split_dict({}, lambda k: False)
     ({}, {})
     >>> split_dict(dict(a=1, b=2, c=3), lambda k: k != 'a')
     ({'a': 1}, {'b': 2, 'c': 3})
+
     """  # noqa
     yes, no = {}, {}
     for k, v in dict.items():

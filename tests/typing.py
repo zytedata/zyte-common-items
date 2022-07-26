@@ -10,13 +10,13 @@ import attr
 
 
 def optional_type(cls):
-    """
-    If cls is Optional[X] it returns X else returns None
+    """If cls is Optional[X] it returns X else returns None.
 
     >>> optional_type(Optional[str])
     <class 'str'>
     >>> optional_type(Union[str, int])
     >>> optional_type(str)
+
     """
     types = [t for t in get_args(cls) if not issubclass(t, type(None))]
     if len(types) == 1:
@@ -24,14 +24,14 @@ def optional_type(cls):
 
 
 def get_generic_type(cls):
-    """
-    Return the type of generics (e.g. Offer for List[Offer])
+    """Return the type of generics (e.g. Offer for List[Offer]).
 
     >>> get_generic_type(list)
     >>> get_generic_type(List[str])
     <class 'str'>
     >>> get_generic_type(Tuple[int])
     <class 'int'>
+
     """
     args = get_args(cls)
     if args and len(args) == 1:

@@ -45,14 +45,7 @@ class Item(_ItemBase):
 
     @classmethod
     def from_dict(cls, item: Optional[Dict]):
-        """
-        Read an item from a dictionary.
-
-        Unknown attributes are kept in the dict ``_unknown_fields_dict``
-        so that other item adapters later on can include them in the resultant
-        item. This ensures it can support new fields from other sources even
-        though this item library is not in sync.
-        """
+        """Read an item from a dictionary."""
         if not item:
             return None
 
@@ -64,9 +57,7 @@ class Item(_ItemBase):
 
     @classmethod
     def from_list(cls, items: Optional[List[Dict]]) -> List:
-        """
-        Read items from a list, invoking ``from_dict`` for each item in the list
-        """
+        """Read items from a list."""
         return [cls.from_dict(item) for item in items or []]
 
     @classmethod

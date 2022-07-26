@@ -24,24 +24,24 @@ def _is_empty(value):
 
 
 class ZyteItemAdapter(AttrsAdapter):
-    """Adapter class for the itemadapter library that improves interaction with
-    :class:`zyte_common_items.Item` for itemadapter users like Scrapy.
+    """Adapter class that can be :ref:`configured <configuration>` into
+    itemadapter_ to improve interaction with :ref:`items <items>` for
+    itemadapter users like Scrapy_.
 
-    Configure it as early as possible in your code::
+    .. _itemadapter: https://github.com/scrapy/itemadapter#itemadapter
+    .. _Scrapy: https://scrapy.org/
 
-        from itemadapter import ItemAdapter
-        from zyte_common_items import ZyteItemAdapter
+    Features:
 
-        ItemAdapter.ADAPTER_CLASSES.appendleft(ZyteItemAdapter)
+    -   Allows interaction and serialization of fields not yet defined in an
+        :ref:`item <items>` but received as input, e.g. from `Zyte Data API`_.
 
-    This adapter:
-
-    -   Allows interaction and serialization of fields not yet defined in the
-        corresponding zyte-common-items item but received as input from Zyte
-        Data API.
+        .. _Zyte Data API: https://docs.zyte.com/zyte-api/get-started.html
 
     -   Removes keys with empty values from the output of
-        ``ItemAdapter.asdict()``, for a cleaner output.
+        `ItemAdapter.asdict()`_, for a cleaner output.
+
+        .. _ItemAdapter.asdict(): https://github.com/scrapy/itemadapter#asdict---dict
     """
 
     @classmethod
