@@ -4,7 +4,7 @@ import pytest
 from zyte_common_items.util import split_in_unknown_and_known_fields
 
 
-@attr.s(auto_attribs=True, slots=True)
+@attr.s(auto_attribs=True, slots=False)
 class _TestItem:
     k1: int
     k2: int

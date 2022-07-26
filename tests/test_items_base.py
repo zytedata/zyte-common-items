@@ -12,17 +12,17 @@ class NotConsideredAnItem:
     pass
 
 
-@attrs.define(slots=True)
+@attrs.define(slots=False)
 class SubItem(Item):
     name: str
 
 
-@attrs.define(slots=True)
+@attrs.define(slots=False)
 class BigItem(Item):
     sub_item: Optional[SubItem] = None
 
 
-@attrs.define(slots=True)
+@attrs.define(slots=False)
 class BigItemIncorrect(Item):
     """This item is particularly incorrect since the annotation for its field
     belongs to multiple types.
