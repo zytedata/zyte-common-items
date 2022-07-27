@@ -12,4 +12,5 @@ zyte-common-items |version| documentation
    setup
    usage
    reference/index
+   changelog
    contributing
