@@ -115,3 +115,23 @@ AttributeError: 'str' object has no attribute 'items'
 Traceback (most recent call last):
 ...
 TypeError: 'int' object is not iterable
+
+
+Defining custom items
+=====================
+
+You can subclass :class:`~zyte_common_items.base.Item` or any :ref:`item
+subclass <items>` to define your own item.
+
+:class:`~zyte_common_items.base.Item` is a `slotted attrs class`_, and
+subclasses should also be slotted attrs classes. For example:
+
+>>> import attrs
+>>> from zyte_common_items import Item
+>>> @attrs.define(slots=True)
+... class CustomItem(Item):
+...     foo: str
+
+Mind that slotted attrs classes do not support multiple inheritance.
+
+.. _slotted attrs class: https://www.attrs.org/en/stable/glossary.html#term-slotted-classes
