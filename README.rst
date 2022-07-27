@@ -23,12 +23,10 @@ zyte-common-items
 ``zyte-common-items`` is a Python 3.7+ library of item classes used by Zyte_ to
 normalize different types of data extracted from websites.
 
-It can be used, for example, to load item data from `Zyte Automatic
-Extraction`_. But it can also be used in custom data extraction code for
-normalization purposes, maximizing opportunities for code reuse.
+It can be used in custom data extraction code for normalization purposes,
+maximizing opportunities for code reuse.
 
 .. _Zyte: https://www.zyte.com/
-.. _Zyte Automatic Extraction: https://docs.zyte.com/automatic-extraction-get-started.html
 
 .. description ends
 
