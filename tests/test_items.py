@@ -128,39 +128,6 @@ def test_product_missing_fields():
             Product(**incomplete_kwargs)
 
 
-def test_product_unknown_input():
-    product = Product.from_dict(
-        dict(
-            a="b",
-            additionalProperties=[{"name": "a", "value": "b", "max": 10}],
-            aggregateRating=dict(worstRating=0),
-            brand={"name": "Zyte", "slug": "zyte"},
-            breadcrumbs=[{"children": [{"name": "foo"}, {"url": "bar"}]}],
-            gtin=[{"type": "gtin8", "value": "00000000", "checkPass": False}],
-            images=[{"url": "http://example.com/image1.png", "format": "PNG"}],
-            mainImage={
-                "url": "http://example.com/image1.jpeg",
-                "format": "JPEG",
-            },
-            metadata=dict(
-                author="Guido",
-            ),
-            url="https://example.com/?product=product22",
-            variants=[dict(position=1)],
-        )
-    )
-    assert product._unknown_fields_dict["a"] == "b"
-    assert product.additionalProperties[0]._unknown_fields_dict["max"] == 10
-    assert product.aggregateRating._unknown_fields_dict["worstRating"] == 0
-    assert product.brand._unknown_fields_dict["slug"] == "zyte"
-    assert product.breadcrumbs[0]._unknown_fields_dict["children"] == [{"name": "foo"}, {"url": "bar"}]
-    assert product.gtin[0]._unknown_fields_dict["checkPass"] is False
-    assert product.images[0]._unknown_fields_dict["format"] == "PNG"
-    assert product.mainImage._unknown_fields_dict["format"] == "JPEG"
-    assert product.metadata._unknown_fields_dict["author"] == "Guido"
-    assert product.variants[0]._unknown_fields_dict["position"] == 1
-
-
 def test_product_list_all_fields():
     product_list = ProductList(**_PRODUCT_LIST_ALL_KWARGS)
     for field in list(_PRODUCT_LIST_ALL_KWARGS):
@@ -181,24 +148,6 @@ def test_product_list_missing_fields():
         del incomplete_kwargs[required_field]
         with pytest.raises(TypeError):
             ProductList(**incomplete_kwargs)
-
-
-def test_product_list_unknown_input():
-    product_list = ProductList.from_dict(
-        dict(
-            a="b",
-            breadcrumbs=[{"children": [{"name": "foo"}, {"url": "bar"}]}],
-            metadata=dict(
-                author="Guido",
-            ),
-            url="https://example.com/?product=product22",
-            products=[dict(position=1)],
-        )
-    )
-    assert product_list._unknown_fields_dict["a"] == "b"
-    assert product_list.breadcrumbs[0]._unknown_fields_dict["children"] == [{"name": "foo"}, {"url": "bar"}]
-    assert product_list.metadata._unknown_fields_dict["author"] == "Guido"
-    assert product_list.products[0]._unknown_fields_dict["position"] == 1
 
 
 def test_product_list_item_all_fields():
