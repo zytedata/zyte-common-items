@@ -31,6 +31,4 @@ maximizing opportunities for code reuse.
 .. description ends
 
 * Documentation: https://zyte-common-items.readthedocs.io/en/latest/
-* Source code: https://github.com/zytedata/zyte-common-items
-* Issue tracker: https://github.com/zytedata/zyte-common-items/issues
 * License: BSD 3-clause

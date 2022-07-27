@@ -2,18 +2,46 @@
 Contributing
 ============
 
-Set up your local Python environment via:
+You can contribute to this project with code.
 
-1. ``pip install -r requirements-dev.txt``
+To prepare your development environment:
 
-2. ``pre-commit install``
+#.  Clone the `source code`_:
 
-Now every time you perform a ``git commit``, these tools will run against the
-staged files:
+    .. code-block:: bash
 
-* ``black``
-* ``isort``
-* ``flake8``
+        git clone https://github.com/zytedata/zyte-common-items.git
+        cd zyte-common-items
 
-You can also directly invoke ``pre-commit run --all-files`` to run them without
-performing a commit.
+#.  Create and activate a :ref:`Python virtual environment <tut-venv>`:
+
+    .. code-block:: bash
+
+        python -m venv venv
+        . venv/bin/activate
+
+#.  Install the packages needed for development:
+
+    .. code-block:: bash
+
+        pip install -r requirements-dev.txt
+
+#.  Configure our `Git pre-commit hooks`_:
+
+    .. code-block:: bash
+
+        pre-commit install
+
+You can search our `issue tracker`_ for pending work, and start a pull request
+for any pending issue that is not actively being worked on already, no need to
+ask for permission first.
+
+If there is something else you wish to implement, please open an issue first to
+open a discussion about it, before you work on a pull request. You probably do
+not want to spend time on a pull request to later be told that the feature does
+not fit the project plans in the first place.
+
+
+.. _Git pre-commit hooks: https://pre-commit.com/
+.. _issue tracker: https://github.com/zytedata/zyte-common-items/issues
+.. _source code: https://github.com/zytedata/zyte-common-items
