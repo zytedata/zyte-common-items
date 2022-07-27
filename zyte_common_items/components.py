@@ -7,7 +7,7 @@ import attrs
 from zyte_common_items.base import Item
 
 
-@attrs.define(slots=False)
+@attrs.define(slots=True)
 class AdditionalProperty(Item):
     """A name-value pair.
 
@@ -22,7 +22,7 @@ class AdditionalProperty(Item):
     value: str
 
 
-@attrs.define(slots=False, kw_only=True)
+@attrs.define(slots=True, kw_only=True)
 class AggregateRating(Item):
     """Aggregate data about reviews and ratings.
 
@@ -42,7 +42,7 @@ class AggregateRating(Item):
     reviewCount: Optional[int] = None
 
 
-@attrs.define(slots=False)
+@attrs.define(slots=True)
 class Brand(Item):
     """Brand.
 
@@ -53,7 +53,7 @@ class Brand(Item):
     name: str
 
 
-@attrs.define(slots=False, kw_only=True)
+@attrs.define(slots=True, kw_only=True)
 class Breadcrumb(Item):
     """A breadcrumb from the `breadcrumb trail`_ of a webpage.
 
@@ -69,7 +69,7 @@ class Breadcrumb(Item):
     url: Optional[str] = None
 
 
-@attrs.define(slots=False)
+@attrs.define(slots=True)
 class Gtin(Item):
     """GTIN_ type-value pair.
 
@@ -90,7 +90,7 @@ class Gtin(Item):
     value: str
 
 
-@attrs.define(slots=False)
+@attrs.define(slots=True)
 class Image(Item):
     """Image.
 
@@ -110,7 +110,7 @@ class Image(Item):
     url: str
 
 
-@attrs.define(slots=False, kw_only=True)
+@attrs.define(slots=True, kw_only=True)
 class Link(Item):
     """A link from a webpage to another webpage."""
 
@@ -121,7 +121,7 @@ class Link(Item):
     url: Optional[str] = None
 
 
-@attrs.define(slots=False, kw_only=True)
+@attrs.define(slots=True, kw_only=True)
 class Metadata(Item):
     """Data extraction process metadata.
 

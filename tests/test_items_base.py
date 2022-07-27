@@ -12,17 +12,17 @@ class NotConsideredAnItem:
     pass
 
 
-@attrs.define(slots=False)
+@attrs.define(slots=True)
 class SubItem(Item):
     name: str
 
 
-@attrs.define(slots=False)
+@attrs.define(slots=True)
 class BigItem(Item):
     sub_item: Optional[SubItem] = None
 
 
-@attrs.define(slots=False)
+@attrs.define(slots=True)
 class BigItemIncorrect(Item):
     """This item is particularly incorrect since the annotation for its field
     belongs to multiple types.
@@ -75,3 +75,9 @@ def test_item_unknown_input():
     assert product._unknown_fields_dict["a"] == "b"
     assert product.aggregateRating._unknown_fields_dict["worstRating"] == 0
     assert product.additionalProperties[0]._unknown_fields_dict["max"] == 10
+
+
+def test_item_attribute_error():
+    foo = SubItem(name="foo")
+    with pytest.raises(AttributeError):
+        foo.value = "bar"

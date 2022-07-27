@@ -120,7 +120,7 @@ class EmptyCollection(Collection):
     ),
 )
 def test_asdict_empty_collection(value):
-    @attrs.define(slots=False)
+    @attrs.define(slots=True)
     class _Item(Item):
         children: CollectionType[Item]
 
@@ -147,7 +147,7 @@ def test_asdict_unknown_fields():
 def test_field_meta():
     metadata = {"b": "c"}
 
-    @attrs.define(slots=False)
+    @attrs.define(slots=True)
     class _Item(Item):
         a = attrs.field(default=None, metadata=metadata)
 
@@ -177,7 +177,7 @@ def test_field_meta_unknown_field():
 
 
 def test_field_names():
-    @attrs.define(slots=False)
+    @attrs.define(slots=True)
     class _Item(Item):
         a: int
         b: Optional[int] = None

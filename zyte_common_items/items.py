@@ -15,7 +15,7 @@ from zyte_common_items.components import (
 )
 
 
-@attrs.define(slots=False, kw_only=True)
+@attrs.define(slots=True, kw_only=True)
 class ProductVariant(Item):
     """:class:`Product` variant.
 
@@ -156,7 +156,7 @@ class ProductVariant(Item):
     url: Optional[str] = None
 
 
-@attrs.define(slots=False, kw_only=True)
+@attrs.define(slots=True, kw_only=True)
 class Product(Item):
     """Product from an e-commerce website.
 
@@ -378,7 +378,7 @@ class Product(Item):
     variants: Optional[List[ProductVariant]] = None
 
 
-@attrs.define(slots=False, kw_only=True)
+@attrs.define(slots=True, kw_only=True)
 class ProductListItem(Item):
     """Product from a product list from a product listing page of an e-commerce
     webpage.
@@ -440,7 +440,7 @@ class ProductListItem(Item):
     url: Optional[str] = None
 
 
-@attrs.define(slots=False, kw_only=True)
+@attrs.define(slots=True, kw_only=True)
 class ProductList(Item):
     """Product list from a product listing page of an e-commerce webpage.
 

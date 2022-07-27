@@ -38,7 +38,7 @@ class _ItemBase:
     __slots__ = ("_unknown_fields_dict",)
 
 
-@attrs.define(slots=False)
+@attrs.define(slots=True)
 class Item(_ItemBase):
     def __attrs_post_init__(self):
         self._unknown_fields_dict = {}
