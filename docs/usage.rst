@@ -70,7 +70,7 @@ beyond those they define:
 >>> product = Product(url="https://example.com", foo="bar")
 Traceback (most recent call last):
 ...
-TypeError: Product.__init__() got an unexpected keyword argument 'foo'
+TypeError: ... got an unexpected keyword argument 'foo'
 >>> product = Product(url="https://example.com")
 >>> product.foo = "bar"
 Traceback (most recent call last):
