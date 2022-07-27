@@ -128,7 +128,7 @@ subclasses should also be slotted attrs classes. For example:
 
 >>> import attrs
 >>> from zyte_common_items import Item
->>> @attrs.define(slots=True)
+>>> @attrs.define
 ... class CustomItem(Item):
 ...     foo: str
 

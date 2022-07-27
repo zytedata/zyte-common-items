@@ -7,7 +7,7 @@ import attrs
 from zyte_common_items.base import Item
 
 
-@attrs.define(slots=True)
+@attrs.define
 class AdditionalProperty(Item):
     """A name-value pair.
 
@@ -42,7 +42,7 @@ class AggregateRating(Item):
     reviewCount: Optional[int] = None
 
 
-@attrs.define(slots=True)
+@attrs.define
 class Brand(Item):
     """Brand.
 
@@ -70,7 +70,7 @@ class Breadcrumb(Item):
     url: Optional[str] = None
 
 
-@attrs.define(slots=True)
+@attrs.define
 class Gtin(Item):
     """GTIN_ type-value pair.
 
@@ -91,7 +91,7 @@ class Gtin(Item):
     value: str
 
 
-@attrs.define(slots=True)
+@attrs.define
 class Image(Item):
     """Image.
 
