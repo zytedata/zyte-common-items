@@ -14,7 +14,7 @@ from zyte_common_items.components import (
 )
 
 
-@attrs.define(slots=True, kw_only=True)
+@attrs.define(kw_only=True)
 class _ProductBase(Item):
     """Base class to avoid repeating attributes shared by :class:`Product` and
     :class:`ProductVariant`."""
@@ -148,7 +148,7 @@ class _ProductBase(Item):
     style: Optional[str] = None
 
 
-@attrs.define(slots=True, kw_only=True)
+@attrs.define(kw_only=True)
 class ProductVariant(_ProductBase):
     """:class:`Product` variant.
 
@@ -161,7 +161,7 @@ class ProductVariant(_ProductBase):
     url: Optional[str] = None
 
 
-@attrs.define(slots=True, kw_only=True)
+@attrs.define(kw_only=True)
 class Product(_ProductBase):
     """Product from an e-commerce website.
 

@@ -22,7 +22,7 @@ class AdditionalProperty(Item):
     value: str
 
 
-@attrs.define(slots=True, kw_only=True)
+@attrs.define(kw_only=True)
 class AggregateRating(Item):
     """Aggregate data about reviews and ratings.
 
@@ -53,7 +53,7 @@ class Brand(Item):
     name: str
 
 
-@attrs.define(slots=True, kw_only=True)
+@attrs.define(kw_only=True)
 class Breadcrumb(Item):
     """A breadcrumb from the `breadcrumb trail`_ of a webpage.
 
@@ -111,7 +111,7 @@ class Image(Item):
     url: str
 
 
-@attrs.define(slots=True, kw_only=True)
+@attrs.define(kw_only=True)
 class Metadata(Item):
     """Data extraction process metadata.
 
