@@ -63,9 +63,24 @@ file, database, etc.
 Handling unknown fields
 =======================
 
-Fields that are not defined in :ref:`items <items>` **won't cause an error**.
-Instead, they are placed inside the
-:attr:`~zyte_common_items.base.Item._unknown_fields_dict` attribute:
+:ref:`Items <items>` and :ref:`components <components>` do not allow attributes
+beyond those they define:
+
+>>> from zyte_common_items import Product
+>>> product = Product(url="https://example.com", foo="bar")
+Traceback (most recent call last):
+...
+TypeError: Product.__init__() got an unexpected keyword argument 'foo'
+>>> product = Product(url="https://example.com")
+>>> product.foo = "bar"
+Traceback (most recent call last):
+...
+AttributeError: 'Product' object has no attribute 'foo'
+
+However, when using :meth:`~zyte_common_items.base.Item.from_dict` and
+:meth:`~zyte_common_items.base.Item.from_list`, unknown fields assigned to
+items and components **won't cause an error**. Instead, they are placed inside
+the :attr:`~zyte_common_items.base.Item._unknown_fields_dict` attribute:
 
 >>> from zyte_common_items import Product
 >>> data = {
@@ -79,15 +94,24 @@ Instead, they are placed inside the
 This allows compatibility with future field changes in the input data, which
 could cause backwards incompatibility issues.
 
-However, if a known field has an incorrect data structure,
-:exc:`AttributeError` is raised:
+Note, however, that unknown fields are only supported within items and
+components. Input processing can still fail for other types of unexpected
+input:
 
 >>> from zyte_common_items import Product
 >>> data = {
 ...     'url': 'https://example.com/',
-...     'mainImage': 'this should be a dictionary, not a string',
+...     'mainImage': 'not a dictionary',
 ... }
 >>> product = Product.from_dict(data)
 Traceback (most recent call last):
 ...
 AttributeError: 'str' object has no attribute 'items'
+>>> data = {
+...     'url': 'https://example.com/',
+...     'breadcrumbs': 3,
+... }
+>>> product = Product.from_dict(data)
+Traceback (most recent call last):
+...
+TypeError: 'int' object is not iterable

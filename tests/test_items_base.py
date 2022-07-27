@@ -61,3 +61,8 @@ def test_item_from_dict_value_error():
     """
     with pytest.raises(ValueError):
         BigItemIncorrect.from_dict({"sub_item": {"name": "hello"}})
+
+
+def test_item_unknown_field_init():
+    with pytest.raises(TypeError):
+        SubItem(name="foo", value="bar")
