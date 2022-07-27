@@ -83,7 +83,7 @@ _PRODUCT_ALL_KWARGS = {
     "variants": [ProductVariant()],
 }
 _PRODUCT_LIST_MIN_KWARGS = {
-    "url": "https://example.com/?product=product22",
+    "url": "https://example.com/swiss-watches?sort=new-first",
 }
 _PRODUCT_LIST_ALL_KWARGS = {
     **_PRODUCT_LIST_MIN_KWARGS,
@@ -91,14 +91,17 @@ _PRODUCT_LIST_ALL_KWARGS = {
         Breadcrumb(name="Level 1", url="http://example.com/level1"),
         Breadcrumb(name="Level 2", url="http://example.com/level1/level2"),
     ],
-    "canonicalUrl": "https://example.com/product22",
+    "canonicalUrl": "https://example.com/swiss-watches",
     "categoryName": "Swiss Watches",
     "metadata": Metadata(
         dateDownloaded="2022-12-31T13:01:54Z",
         probability=1.0,
     ),
     "pageNumber": 1,
-    "paginationNext": Link(text="foo", url="https://example.com"),
+    "paginationNext": Link(
+        text="foo",
+        url="https://example.com/swiss-watches?sort=new-first&page=2",
+    ),
     "products": [ProductListItem()],
 }
 
