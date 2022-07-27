@@ -16,7 +16,6 @@ def optional_type(cls):
     <class 'str'>
     >>> optional_type(Union[str, int])
     >>> optional_type(str)
-
     """
     types = [t for t in get_args(cls) if not issubclass(t, type(None))]
     if len(types) == 1:
@@ -31,7 +30,6 @@ def get_generic_type(cls):
     <class 'str'>
     >>> get_generic_type(Tuple[int])
     <class 'int'>
-
     """
     args = get_args(cls)
     if args and len(args) == 1:

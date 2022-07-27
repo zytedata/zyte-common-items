@@ -32,7 +32,6 @@ def split_dict(dict: Dict, key_pred: Callable[[Any], Any]) -> Tuple[Dict, Dict]:
     ({}, {})
     >>> split_dict(dict(a=1, b=2, c=3), lambda k: k != 'a')
     ({'a': 1}, {'b': 2, 'c': 3})
-
     """  # noqa
     yes, no = {}, {}
     for k, v in dict.items():
