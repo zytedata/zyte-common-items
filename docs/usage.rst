@@ -123,8 +123,9 @@ Defining custom items
 You can subclass :class:`~zyte_common_items.base.Item` or any :ref:`item
 subclass <items>` to define your own item.
 
-:class:`~zyte_common_items.base.Item` is a `slotted attrs class`_, and
-subclasses should also be slotted attrs classes. For example:
+:class:`~zyte_common_items.base.Item` is a `slotted attrs class`_ and, to enjoy
+the benefits of that, subclasses should also be slotted attrs classes. For
+example:
 
 >>> import attrs
 >>> from zyte_common_items import Item
