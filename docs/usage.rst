@@ -80,9 +80,11 @@ AttributeError: 'Product' object has no attribute 'foo'
 However, when using :meth:`~zyte_common_items.base.Item.from_dict` and
 :meth:`~zyte_common_items.base.Item.from_list`, unknown fields assigned to
 items and components **won't cause an error**. Instead, they are placed inside
-the :attr:`~zyte_common_items.base.Item._unknown_fields_dict` attribute:
+the :attr:`~zyte_common_items.base.Item._unknown_fields_dict` attribute, and
+can be accessed the same way as known fields using
+:class:`~zyte_common_items.ZyteItemAdapter`:
 
->>> from zyte_common_items import Product
+>>> from zyte_common_items import Product, ZyteItemAdapter
 >>> data = {
 ...     'url': 'https://example.com/',
 ...     'unknown_field': True,
@@ -90,6 +92,9 @@ the :attr:`~zyte_common_items.base.Item._unknown_fields_dict` attribute:
 >>> product = Product.from_dict(data)
 >>> product._unknown_fields_dict
 {'unknown_field': True}
+>>> adapter = ZyteItemAdapter(product)
+>>> adapter['unknown_field']
+True
 
 This allows compatibility with future field changes in the input data, which
 could cause backwards incompatibility issues.
