@@ -17,6 +17,19 @@ Product
    :members:
    :inherited-members:
 
+Product List
+============
+
+.. class:: zyte_common_items.ProductList(**kwargs)
+.. autoclass:: zyte_common_items.items.ProductList(**kwargs)
+   :members:
+   :inherited-members:
+
+.. class:: zyte_common_items.ProductFromList(**kwargs)
+.. autoclass:: zyte_common_items.items.ProductFromList(**kwargs)
+   :members:
+   :inherited-members:
+
 
 Custom items
 ============

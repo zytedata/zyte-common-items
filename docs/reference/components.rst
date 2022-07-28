@@ -31,6 +31,10 @@ tied to any specific item type.
 .. autoclass:: zyte_common_items.components.Image(**kwargs)
    :members:
 
+.. class:: zyte_common_items.Link(**kwargs)
+.. autoclass:: zyte_common_items.components.Link(**kwargs)
+   :members:
+
 .. class:: zyte_common_items.Metadata(**kwargs)
 .. autoclass:: zyte_common_items.components.Metadata(**kwargs)
    :members:

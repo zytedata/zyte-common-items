@@ -112,6 +112,17 @@ class Image(Item):
 
 
 @attrs.define(kw_only=True)
+class Link(Item):
+    """A link from a webpage to another webpage."""
+
+    #: Displayed text.
+    text: Optional[str] = None
+
+    #: Target URL.
+    url: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
 class Metadata(Item):
     """Data extraction process metadata.
 
