@@ -12,12 +12,12 @@ from zyte_common_items import (
     Link,
     Metadata,
     Product,
+    ProductFromList,
     ProductList,
-    ProductListItem,
     ProductVariant,
 )
 
-_PRODUCT_LIST_ITEM_ALL_KWARGS = {
+_PRODUCT_FROM_LIST_ALL_KWARGS = {
     "currency": "USD",
     "currencyRaw": "$",
     "mainImage": Image("http://example.com/image1.png"),
@@ -102,7 +102,7 @@ _PRODUCT_LIST_ALL_KWARGS = {
         text="foo",
         url="https://example.com/swiss-watches?sort=new-first&page=2",
     ),
-    "products": [ProductListItem()],
+    "products": [ProductFromList()],
 }
 
 
@@ -150,16 +150,16 @@ def test_product_list_missing_fields():
             ProductList(**incomplete_kwargs)
 
 
-def test_product_list_item_all_fields():
-    product_list_item = ProductListItem(**_PRODUCT_LIST_ITEM_ALL_KWARGS)
-    for field in list(_PRODUCT_LIST_ITEM_ALL_KWARGS):
-        assert getattr(product_list_item, field) == _PRODUCT_LIST_ITEM_ALL_KWARGS[field]
+def test_product_from_list_all_fields():
+    product_from_list = ProductFromList(**_PRODUCT_FROM_LIST_ALL_KWARGS)
+    for field in list(_PRODUCT_FROM_LIST_ALL_KWARGS):
+        assert getattr(product_from_list, field) == _PRODUCT_FROM_LIST_ALL_KWARGS[field]
 
 
-def test_product_list_item_min_fields():
-    product_list_item = ProductListItem()
-    for field in list(_PRODUCT_LIST_ITEM_ALL_KWARGS):
-        assert getattr(product_list_item, field) is None
+def test_product_from_list_min_fields():
+    product_from_list = ProductFromList()
+    for field in list(_PRODUCT_FROM_LIST_ALL_KWARGS):
+        assert getattr(product_from_list, field) is None
 
 
 def test_product_variant_all_fields():

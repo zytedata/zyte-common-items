@@ -379,7 +379,7 @@ class Product(Item):
 
 
 @attrs.define(slots=True, kw_only=True)
-class ProductListItem(Item):
+class ProductFromList(Item):
     """Product from a product list from a product listing page of an e-commerce
     webpage.
 
@@ -490,7 +490,7 @@ class ProductList(Item):
     #: The order of the products reflects their position on the rendered page.
     #: Product order is top-to-bottom, and left-to-right or right-to-left
     #: depending on the webpage locale.
-    products: Optional[List[ProductListItem]] = None
+    products: Optional[List[ProductFromList]] = None
 
     #: Main URL from which the data has been extracted.
     #:

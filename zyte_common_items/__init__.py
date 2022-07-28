@@ -11,4 +11,4 @@ from .components import (
     Link,
     Metadata,
 )
-from .items import Product, ProductList, ProductListItem, ProductVariant
+from .items import Product, ProductFromList, ProductList, ProductVariant
