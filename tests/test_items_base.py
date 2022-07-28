@@ -3,7 +3,7 @@ from typing import Optional, Union
 import attrs
 import pytest
 
-from zyte_common_items import Item, is_data_container
+from zyte_common_items import Item, Product, is_data_container
 
 
 class NotConsideredAnItem:
@@ -61,3 +61,23 @@ def test_item_from_dict_value_error():
     """
     with pytest.raises(ValueError):
         BigItemIncorrect.from_dict({"sub_item": {"name": "hello"}})
+
+
+def test_item_unknown_input():
+    product = Product.from_dict(
+        dict(
+            a="b",
+            additionalProperties=[{"name": "a", "value": "b", "max": 10}],
+            aggregateRating=dict(worstRating=0),
+            url="https://example.com/?product=product22",
+        )
+    )
+    assert product._unknown_fields_dict["a"] == "b"
+    assert product.aggregateRating._unknown_fields_dict["worstRating"] == 0
+    assert product.additionalProperties[0]._unknown_fields_dict["max"] == 10
+
+
+def test_item_attribute_error():
+    foo = SubItem(name="foo")
+    with pytest.raises(AttributeError):
+        foo.value = "bar"

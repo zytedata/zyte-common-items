@@ -8,6 +8,7 @@ from .components import (
     Breadcrumb,
     Gtin,
     Image,
+    Link,
     Metadata,
 )
-from .items import Product, ProductVariant
+from .items import Product, ProductFromList, ProductList, ProductVariant
