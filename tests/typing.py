@@ -10,8 +10,7 @@ import attr
 
 
 def optional_type(cls):
-    """
-    If cls is Optional[X] it returns X else returns None
+    """If cls is Optional[X] it returns X else returns None.
 
     >>> optional_type(Optional[str])
     <class 'str'>
@@ -24,8 +23,7 @@ def optional_type(cls):
 
 
 def get_generic_type(cls):
-    """
-    Return the type of generics (e.g. Offer for List[Offer])
+    """Return the type of generics (e.g. Offer for List[Offer]).
 
     >>> get_generic_type(list)
     >>> get_generic_type(List[str])

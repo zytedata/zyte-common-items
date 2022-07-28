@@ -12,17 +12,17 @@ class NotConsideredAnItem:
     pass
 
 
-@attrs.define(slots=True)
+@attrs.define
 class SubItem(Item):
     name: str
 
 
-@attrs.define(slots=True)
+@attrs.define
 class BigItem(Item):
     sub_item: Optional[SubItem] = None
 
 
-@attrs.define(slots=True)
+@attrs.define
 class BigItemIncorrect(Item):
     """This item is particularly incorrect since the annotation for its field
     belongs to multiple types.
@@ -81,3 +81,8 @@ def test_item_attribute_error():
     foo = SubItem(name="foo")
     with pytest.raises(AttributeError):
         foo.value = "bar"
+
+
+def test_item_unknown_field_init():
+    with pytest.raises(TypeError):
+        SubItem(name="foo", value="bar")

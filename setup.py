@@ -1,8 +1,13 @@
+from os.path import dirname, join
+
 from setuptools import find_packages, setup
+
+with open(join(dirname(__file__), "zyte_common_items/VERSION"), "rb") as f:
+    version = f.read().decode("ascii").strip()
 
 setup(
     name="zyte-common-items",
-    version="0.1.0",
+    version=version,
     description="Item definitions for Zyte API schema",
     long_description=open("README.rst").read(),
     long_description_content_type="text/x-rst",
@@ -14,8 +19,10 @@ setup(
             "tests",
         ]
     ),
+    include_package_data=True,
     install_requires=[
         "attrs>=21.3.0",
+        "itemadapter>=0.2.0",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",

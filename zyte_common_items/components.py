@@ -7,12 +7,12 @@ import attrs
 from zyte_common_items.base import Item
 
 
-@attrs.define(slots=True)
+@attrs.define
 class AdditionalProperty(Item):
     """A name-value pair.
 
     See :attr:`Product.additionalProperties
-    <zyte_common_items.Product.additionalProperties>`.
+    <zyte_common_items.items.Product.additionalProperties>`.
     """
 
     #: Name.
@@ -22,14 +22,14 @@ class AdditionalProperty(Item):
     value: str
 
 
-@attrs.define(slots=True, kw_only=True)
+@attrs.define(kw_only=True)
 class AggregateRating(Item):
     """Aggregate data about reviews and ratings.
 
     At least one of :attr:`ratingValue` or :attr:`reviewCount` is required.
 
     See :attr:`Product.aggregateRating
-    <zyte_common_items.Product.aggregateRating>`.
+    <zyte_common_items.items.Product.aggregateRating>`.
     """
 
     #: Maximum value of the rating system.
@@ -42,22 +42,23 @@ class AggregateRating(Item):
     reviewCount: Optional[int] = None
 
 
-@attrs.define(slots=True)
+@attrs.define
 class Brand(Item):
     """Brand.
 
-    See :attr:`Product.brand <zyte_common_items.Product.brand`.
+    See :attr:`Product.brand <zyte_common_items.items.Product.brand`.
     """
 
     #: Name as it appears on the source webpage (no post-processing).
     name: str
 
 
-@attrs.define(slots=True, kw_only=True)
+@attrs.define(kw_only=True)
 class Breadcrumb(Item):
     """A breadcrumb from the `breadcrumb trail`_ of a webpage.
 
-    See :attr:`Product.breadcrumbs <zyte_common_items.Product.breadcrumbs`.
+    See :attr:`Product.breadcrumbs
+    <zyte_common_items.items.Product.breadcrumbs>`.
 
     .. _breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
     """
@@ -69,11 +70,11 @@ class Breadcrumb(Item):
     url: Optional[str] = None
 
 
-@attrs.define(slots=True)
+@attrs.define
 class Gtin(Item):
     """GTIN_ type-value pair.
 
-    See :class:`Product.gtin <zyte_common_items.Product.gtin>`.
+    See :class:`Product.gtin <zyte_common_items.items.Product.gtin>`.
 
     .. _GTIN: https://en.wikipedia.org/wiki/Global_Trade_Item_Number
     """
@@ -90,12 +91,12 @@ class Gtin(Item):
     value: str
 
 
-@attrs.define(slots=True)
+@attrs.define
 class Image(Item):
     """Image.
 
-    See :class:`Product.images <zyte_common_items.Product.images>` and
-    :class:`Product.mainImage <zyte_common_items.Product.mainImage>`.
+    See :class:`Product.images <zyte_common_items.items.Product.images>` and
+    :class:`Product.mainImage <zyte_common_items.items.Product.mainImage>`.
     """
 
     #: URL.
@@ -110,7 +111,7 @@ class Image(Item):
     url: str
 
 
-@attrs.define(slots=True, kw_only=True)
+@attrs.define(kw_only=True)
 class Link(Item):
     """A link from a webpage to another webpage."""
 
@@ -121,11 +122,11 @@ class Link(Item):
     url: Optional[str] = None
 
 
-@attrs.define(slots=True, kw_only=True)
+@attrs.define(kw_only=True)
 class Metadata(Item):
     """Data extraction process metadata.
 
-    See :class:`Product.metadata <zyte_common_items.Product.metadata>`.
+    See :class:`Product.metadata <zyte_common_items.items.Product.metadata>`.
     """
 
     #: Date and time when the product data was downloaded, in UTC timezone and
