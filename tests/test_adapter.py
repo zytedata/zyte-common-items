@@ -25,7 +25,7 @@ def configured_adapter():
 
 
 def test_asdict_all_fields():
-    product = Product(**_PRODUCT_ALL_KWARGS)
+    product = Product(**_PRODUCT_ALL_KWARGS)  # type: ignore[arg-type]
     with configured_adapter():
         adapter = ItemAdapter(product)
         actual_dict = adapter.asdict()
@@ -77,7 +77,7 @@ def test_asdict_all_fields():
 
 
 def test_product_asdict_min():
-    product = Product(**_PRODUCT_MIN_KWARGS)
+    product = Product(**_PRODUCT_MIN_KWARGS)  # type: ignore[arg-type]
     with configured_adapter():
         adapter = ItemAdapter(product)
         actual_dict = adapter.asdict()
@@ -88,7 +88,7 @@ def test_product_asdict_min():
 
 
 def test_product_asdict_tuple():
-    product = Product(**_PRODUCT_MIN_KWARGS, variants=({},))
+    product = Product(**_PRODUCT_MIN_KWARGS, variants=({},))  # type: ignore[arg-type]
     with configured_adapter():
         adapter = ItemAdapter(product)
         actual_dict = adapter.asdict()
