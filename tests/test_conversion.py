@@ -26,7 +26,7 @@ from zyte_common_items import (
 )
 def test_webpoet_URL_classes(cls, fields):
     """Ensure that the URL classes from web-poet are properly converted into
-    ``str`` when instantiating.
+    URL strings when instantiating.
     """
     url = "https://www.some-url.com"
     response = HttpResponse(url, b"")
@@ -43,9 +43,16 @@ def test_webpoet_URL_classes(cls, fields):
         obj = cls(**data)
 
         for field in fields:
+            # The URL classes should be converted to strings on instantiation
             attribute = getattr(obj, field)
-            assert attribute == str(url_obj)
             assert type(attribute) == str
+            assert attribute == str(url_obj)
+
+            # The conversion should also work via field assignment
+            setattr(obj, field, response.urljoin("/somewhere"))
+            attribute = getattr(obj, field)
+            assert type(attribute) == str
+            assert attribute == "https://www.some-url.com/somewhere"
 
 
 @pytest.mark.parametrize("cls", [ProductVariant, Product, ProductFromList])
@@ -59,9 +66,17 @@ def test_webpoet_URL_mainImage(cls):
     }
     assert type(data["mainImage"]["url"]) == RequestUrl
 
+    # The URL classes should be converted to strings on instantiation
     obj = cls.from_dict(data)
     assert type(obj.mainImage) == Image
     assert obj.mainImage.url == "https://www.some-page/img1.png"
+
+    # The conversion should also work via field assignment
+    img_url = response.urljoin("/different-img.png")
+    assert type(img_url) == RequestUrl
+    obj.mainImage.url = img_url
+    assert type(obj.mainImage) == Image
+    assert obj.mainImage.url == "https://www.some-page/different-img.png"
 
 
 @pytest.mark.parametrize("cls", [ProductVariant, Product])
@@ -76,9 +91,17 @@ def test_webpoet_URL_images(cls):
     }
     assert type(data["images"][0]["url"]) == RequestUrl
 
+    # The URL classes should be converted to strings on instantiation
     obj = cls.from_dict(data)
     assert type(obj.images[0]) == Image
     assert [img.url for img in obj.images] == [
         "https://www.some-page/img1.png",
         "https://www.some-page/img2.png",
     ]
+
+    # The conversion should also work via field assignment
+    img_url = response.urljoin("/different-img.png")
+    assert type(img_url) == RequestUrl
+    obj.images[0].url = img_url
+    assert type(obj.images[0]) == Image
+    assert obj.images[0].url == "https://www.some-page/different-img.png"
