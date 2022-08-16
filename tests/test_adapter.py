@@ -25,7 +25,7 @@ def configured_adapter():
 
 
 def test_asdict_all_fields():
-    product = Product(**_PRODUCT_ALL_KWARGS)  # type: ignore[arg-type]
+    product = Product(**_PRODUCT_ALL_KWARGS)
     with configured_adapter():
         adapter = ItemAdapter(product)
         actual_dict = adapter.asdict()
@@ -77,7 +77,7 @@ def test_asdict_all_fields():
 
 
 def test_product_asdict_min():
-    product = Product(**_PRODUCT_MIN_KWARGS)  # type: ignore[arg-type]
+    product = Product(**_PRODUCT_MIN_KWARGS)
     with configured_adapter():
         adapter = ItemAdapter(product)
         actual_dict = adapter.asdict()
@@ -87,14 +87,14 @@ def test_product_asdict_min():
     assert actual_dict == expected_dict
 
 
-def test_product_asdict_tuple():
-    product = Product(**_PRODUCT_MIN_KWARGS, variants=({},))  # type: ignore[arg-type]
+def test_product_asdict_list():
+    product = Product(**_PRODUCT_MIN_KWARGS, variants=[{}])  # type: ignore[list-item]
     with configured_adapter():
         adapter = ItemAdapter(product)
         actual_dict = adapter.asdict()
     expected_dict = {
         "url": "https://example.com/?product=product22",
-        "variants": ({},),
+        "variants": [{}],
     }
     assert actual_dict == expected_dict
 

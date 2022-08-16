@@ -17,7 +17,7 @@ from zyte_common_items import (
     ProductVariant,
 )
 
-_PRODUCT_FROM_LIST_ALL_KWARGS = {
+_PRODUCT_FROM_LIST_ALL_KWARGS: dict = {
     "currency": "USD",
     "currencyRaw": "$",
     "mainImage": Image("http://example.com/image1.png"),
@@ -31,7 +31,7 @@ _PRODUCT_FROM_LIST_ALL_KWARGS = {
     "regularPrice": "11999.99",
     "url": "https://example.com/?product=product22",
 }
-_PRODUCT_VARIANT_ALL_KWARGS = {
+_PRODUCT_VARIANT_ALL_KWARGS: dict = {
     "additionalProperties": [AdditionalProperty("foo", "bar")],
     "availability": "InStock",
     "canonicalUrl": "https://example.com/product22",
@@ -53,10 +53,10 @@ _PRODUCT_VARIANT_ALL_KWARGS = {
     "style": "polka dots",
     "url": "https://example.com/?product=product22",
 }
-_PRODUCT_MIN_KWARGS = {
+_PRODUCT_MIN_KWARGS: dict = {
     "url": "https://example.com/?product=product22",
 }
-_PRODUCT_ALL_KWARGS = {
+_PRODUCT_ALL_KWARGS: dict = {
     **_PRODUCT_MIN_KWARGS,
     **_PRODUCT_VARIANT_ALL_KWARGS,
     "aggregateRating": AggregateRating(
@@ -82,10 +82,10 @@ _PRODUCT_ALL_KWARGS = {
     ),
     "variants": [ProductVariant()],
 }
-_PRODUCT_LIST_MIN_KWARGS = {
+_PRODUCT_LIST_MIN_KWARGS: dict = {
     "url": "https://example.com/swiss-watches?sort=new-first",
 }
-_PRODUCT_LIST_ALL_KWARGS = {
+_PRODUCT_LIST_ALL_KWARGS: dict = {
     **_PRODUCT_LIST_MIN_KWARGS,
     "breadcrumbs": [
         Breadcrumb(name="Level 1", url="http://example.com/level1"),
@@ -107,13 +107,13 @@ _PRODUCT_LIST_ALL_KWARGS = {
 
 
 def test_product_all_fields():
-    product = Product(**_PRODUCT_ALL_KWARGS)  # type: ignore[arg-type]
+    product = Product(**_PRODUCT_ALL_KWARGS)
     for field in list(_PRODUCT_ALL_KWARGS):
         assert getattr(product, field) == _PRODUCT_ALL_KWARGS[field]
 
 
 def test_product_min_fields():
-    product = Product(**_PRODUCT_MIN_KWARGS)  # type: ignore[arg-type]
+    product = Product(**_PRODUCT_MIN_KWARGS)
     for field in list(_PRODUCT_ALL_KWARGS):
         if field in _PRODUCT_MIN_KWARGS:
             continue
@@ -122,20 +122,20 @@ def test_product_min_fields():
 
 def test_product_missing_fields():
     for required_field in list(_PRODUCT_MIN_KWARGS):
-        incomplete_kwargs = copy(_PRODUCT_MIN_KWARGS)
+        incomplete_kwargs: dict = copy(_PRODUCT_MIN_KWARGS)
         del incomplete_kwargs[required_field]
         with pytest.raises(TypeError):
-            Product(**incomplete_kwargs)  # type: ignore[arg-type]
+            Product(**incomplete_kwargs)
 
 
 def test_product_list_all_fields():
-    product_list = ProductList(**_PRODUCT_LIST_ALL_KWARGS)  # type: ignore[arg-type]
+    product_list = ProductList(**_PRODUCT_LIST_ALL_KWARGS)
     for field in list(_PRODUCT_LIST_ALL_KWARGS):
         assert getattr(product_list, field) == _PRODUCT_LIST_ALL_KWARGS[field]
 
 
 def test_product_list_min_fields():
-    product_list = ProductList(**_PRODUCT_LIST_MIN_KWARGS)  # type: ignore[arg-type]
+    product_list = ProductList(**_PRODUCT_LIST_MIN_KWARGS)
     for field in list(_PRODUCT_LIST_MIN_KWARGS):
         if field in _PRODUCT_LIST_MIN_KWARGS:
             continue
@@ -144,14 +144,14 @@ def test_product_list_min_fields():
 
 def test_product_list_missing_fields():
     for required_field in list(_PRODUCT_LIST_MIN_KWARGS):
-        incomplete_kwargs = copy(_PRODUCT_LIST_MIN_KWARGS)
+        incomplete_kwargs: dict = copy(_PRODUCT_LIST_MIN_KWARGS)
         del incomplete_kwargs[required_field]
         with pytest.raises(TypeError):
-            ProductList(**incomplete_kwargs)  # type: ignore[arg-type]
+            ProductList(**incomplete_kwargs)
 
 
 def test_product_from_list_all_fields():
-    product_from_list = ProductFromList(**_PRODUCT_FROM_LIST_ALL_KWARGS)  # type: ignore[arg-type]
+    product_from_list = ProductFromList(**_PRODUCT_FROM_LIST_ALL_KWARGS)
     for field in list(_PRODUCT_FROM_LIST_ALL_KWARGS):
         assert getattr(product_from_list, field) == _PRODUCT_FROM_LIST_ALL_KWARGS[field]
 
@@ -163,7 +163,7 @@ def test_product_from_list_min_fields():
 
 
 def test_product_variant_all_fields():
-    product_variant = ProductVariant(**_PRODUCT_VARIANT_ALL_KWARGS)  # type: ignore[arg-type]
+    product_variant = ProductVariant(**_PRODUCT_VARIANT_ALL_KWARGS)
     for field in list(_PRODUCT_VARIANT_ALL_KWARGS):
         assert getattr(product_variant, field) == _PRODUCT_VARIANT_ALL_KWARGS[field]
 
