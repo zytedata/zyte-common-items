@@ -80,9 +80,9 @@ def test_item_unknown_input():
 def test_item_attribute_error():
     foo = SubItem(name="foo")
     with pytest.raises(AttributeError):
-        foo.value = "bar"
+        foo.value = "bar"  # type: ignore[attr-defined]
 
 
 def test_item_unknown_field_init():
     with pytest.raises(TypeError):
-        SubItem(name="foo", value="bar")
+        SubItem(name="foo", value="bar")  # type: ignore[call-arg]

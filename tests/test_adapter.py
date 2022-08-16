@@ -87,14 +87,14 @@ def test_product_asdict_min():
     assert actual_dict == expected_dict
 
 
-def test_product_asdict_tuple():
-    product = Product(**_PRODUCT_MIN_KWARGS, variants=({},))
+def test_product_asdict_list():
+    product = Product(**_PRODUCT_MIN_KWARGS, variants=[{}])  # type: ignore[list-item]
     with configured_adapter():
         adapter = ItemAdapter(product)
         actual_dict = adapter.asdict()
     expected_dict = {
         "url": "https://example.com/?product=product22",
-        "variants": ({},),
+        "variants": [{}],
     }
     assert actual_dict == expected_dict
 
