@@ -13,6 +13,7 @@ from zyte_common_items.components import (
     Link,
     Metadata,
 )
+from zyte_common_items.util import str_or_none
 
 
 @attrs.define(kw_only=True)
@@ -42,7 +43,7 @@ class ProductVariant(Item):
     #: Canonical form of the URL, as indicated by the website.
     #:
     #: See also ``url``.
-    canonicalUrl: Optional[str] = None
+    canonicalUrl: Optional[str] = attrs.field(default=None, converter=str_or_none, kw_only=True)
 
     #: Color.
     #:
@@ -153,7 +154,7 @@ class ProductVariant(Item):
     #: Main URL from which the product variant data could be extracted.
     #:
     #: See also ``canonicalUrl``.
-    url: Optional[str] = None
+    url: Optional[str] = attrs.field(default=None, converter=str_or_none, kw_only=True)
 
 
 @attrs.define(kw_only=True)
@@ -195,7 +196,7 @@ class Product(Item):
     #: Canonical form of the URL, as indicated by the website.
     #:
     #: See also ``url``.
-    canonicalUrl: Optional[str] = None
+    canonicalUrl: Optional[str] = attrs.field(default=None, converter=str_or_none, kw_only=True)
 
     #: Color.
     #:
@@ -348,7 +349,7 @@ class Product(Item):
     #: Main URL from which the data has been extracted.
     #:
     #: See also ``canonicalUrl``.
-    url: str
+    url: str = attrs.field(converter=str)
 
     #: List of variants.
     #:
@@ -437,7 +438,7 @@ class ProductFromList(Item):
     regularPrice: Optional[str] = None
 
     #: Main URL from which the product data could be extracted.
-    url: Optional[str] = None
+    url: Optional[str] = attrs.field(default=None, converter=str_or_none, kw_only=True)
 
 
 @attrs.define(slots=True, kw_only=True)
@@ -458,7 +459,7 @@ class ProductList(Item):
     #: Canonical form of the URL, as indicated by the website.
     #:
     #: See also ``url``.
-    canonicalUrl: Optional[str] = None
+    canonicalUrl: Optional[str] = attrs.field(default=None, converter=str_or_none, kw_only=True)
 
     #: Name of the product listing as it appears on the webpage
     #: (no post-processing).
@@ -495,4 +496,4 @@ class ProductList(Item):
     #: Main URL from which the data has been extracted.
     #:
     #: See also ``canonicalUrl``.
-    url: str
+    url: str = attrs.field(converter=str)

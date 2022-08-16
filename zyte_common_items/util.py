@@ -54,3 +54,9 @@ def get_origin(tp) -> Tuple:
     typing.get_origin(tp) is only available startingo on 3.8.
     """
     return getattr(tp, "__origin__", ())
+
+
+def str_or_none(value: Any) -> Optional[str]:
+    if value is None:
+        return None
+    return str(value)
