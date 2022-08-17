@@ -31,75 +31,123 @@ response = HttpResponse("https://www.some-page/", b"")
 
 @pytest.mark.mypy_testing
 def test_assignment_image():
-    img = Image(url=response.url)
-    img.url = response.url
-    img.url = str(response.url)
-    img.url = 123  # E: Incompatible types in assignment (expression has type "int", variable has type "str")
+    img_1 = Image(url=response.url)
+    img_1.url = response.url
+
+    img_2 = Image(url=response.url)
+    img_2.url = str(response.url)
+
+    img_3 = Image(url=response.url)
+    img_3.url = 123  # E: Incompatible types in assignment (expression has type "int", variable has type "str")
 
 
 @pytest.mark.mypy_testing
 def test_assignment_breadcrumb():
-    bc = Breadcrumb(url=response.url)
-    bc.url = response.url
-    bc.url = str(response.url)
-    bc.url = 123  # E: Incompatible types in assignment (expression has type "int", variable has type "Optional[str]")
+    bc_1 = Breadcrumb(url=response.url)
+    bc_1.url = response.url
+
+    bc_2 = Breadcrumb(url=response.url)
+    bc_2.url = str(response.url)
+
+    bc_3 = Breadcrumb(url=response.url)
+    bc_3.url = 123  # E: Incompatible types in assignment (expression has type "int", variable has type "Optional[str]")
 
 
 @pytest.mark.mypy_testing
 def test_assignment_link():
-    link = Link(url=response.url)
-    link.url = response.url
-    link.url = str(response.url)
-    link.url = 123  # E: Incompatible types in assignment (expression has type "int", variable has type "Optional[str]")
+    link_1 = Link(url=response.url)
+    link_1.url = response.url
+
+    link_2 = Link(url=response.url)
+    link_2.url = str(response.url)
+
+    link_3 = Link(url=response.url)
+    link_3.url = (
+        123  # E: Incompatible types in assignment (expression has type "int", variable has type "Optional[str]")
+    )
 
 
 @pytest.mark.mypy_testing
 def test_assignment_product():
-    product = Product(url=response.url)
-    product.url = response.url
-    product.url = str(response.url)
-    product.url = 123  # E: Incompatible types in assignment (expression has type "int", variable has type "str")
-    product.canonicalUrl = response.url
-    product.canonicalUrl = str(response.url)
-    product.canonicalUrl = (
+    product_1 = Product(url=response.url)
+    product_1.url = response.url
+
+    product_2 = Product(url=response.url)
+    product_2.url = str(response.url)
+
+    product_3 = Product(url=response.url)
+    product_3.url = 123  # E: Incompatible types in assignment (expression has type "int", variable has type "str")
+
+    product_4 = Product(url=response.url)
+    product_4.canonicalUrl = response.url
+
+    product_5 = Product(url=response.url)
+    product_5.canonicalUrl = str(response.url)
+
+    product_6 = Product(url=response.url)
+    product_6.canonicalUrl = (
         123  # E: Incompatible types in assignment (expression has type "int", variable has type "Optional[str]")
     )
 
 
 @pytest.mark.mypy_testing
 def test_assignment_product_list():
-    product_list = ProductList(url=response.url)
-    product_list.url = response.url
-    product_list.url = str(response.url)
-    product_list.url = 123  # E: Incompatible types in assignment (expression has type "int", variable has type "str")
-    product_list.canonicalUrl = response.url
-    product_list.canonicalUrl = str(response.url)
-    product_list.canonicalUrl = (
+    product_list_1 = ProductList(url=response.url)
+    product_list_1.url = response.url
+
+    product_list_2 = ProductList(url=response.url)
+    product_list_2.url = str(response.url)
+
+    product_list_3 = ProductList(url=response.url)
+    product_list_3.url = 123  # E: Incompatible types in assignment (expression has type "int", variable has type "str")
+
+    product_list_4 = ProductList(url=response.url)
+    product_list_4.canonicalUrl = response.url
+
+    product_list_5 = ProductList(url=response.url)
+    product_list_5.canonicalUrl = str(response.url)
+
+    product_list_6 = ProductList(url=response.url)
+    product_list_6.canonicalUrl = (
         123  # E: Incompatible types in assignment (expression has type "int", variable has type "Optional[str]")
     )
 
 
 @pytest.mark.mypy_testing
 def test_assignment_product_from_list():
-    product_from_list = ProductFromList(url=response.url)
-    product_from_list.url = response.url
-    product_from_list.url = str(response.url)
-    product_from_list.url = (
+    product_from_list_1 = ProductFromList(url=response.url)
+    product_from_list_1.url = response.url
+
+    product_from_list_2 = ProductFromList(url=response.url)
+    product_from_list_2.url = str(response.url)
+
+    product_from_list_3 = ProductFromList(url=response.url)
+    product_from_list_3.url = (
         123  # E: Incompatible types in assignment (expression has type "int", variable has type "Optional[str]")
     )
 
 
 @pytest.mark.mypy_testing
 def test_assignment_product_variant():
-    product_variant = ProductVariant(url=response.url)
-    product_variant.url = response.url
-    product_variant.url = str(response.url)
-    product_variant.url = (
+    product_variant_1 = ProductVariant(url=response.url)
+    product_variant_1.url = response.url
+
+    product_variant_2 = ProductVariant(url=response.url)
+    product_variant_2.url = str(response.url)
+
+    product_variant_3 = ProductVariant(url=response.url)
+    product_variant_3.url = (
         123  # E: Incompatible types in assignment (expression has type "int", variable has type "Optional[str]")
     )
-    product_variant.canonicalUrl = response.url
-    product_variant.canonicalUrl = str(response.url)
-    product_variant.canonicalUrl = (
+
+    product_variant_4 = ProductVariant(url=response.url)
+    product_variant_4.canonicalUrl = response.url
+
+    product_variant_5 = ProductVariant(url=response.url)
+    product_variant_5.canonicalUrl = str(response.url)
+
+    product_variant_6 = ProductVariant(url=response.url)
+    product_variant_6.canonicalUrl = (
         123  # E: Incompatible types in assignment (expression has type "int", variable has type "Optional[str]")
     )
 
