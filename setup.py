@@ -24,6 +24,7 @@ setup(
         "attrs>=21.3.0",
         "itemadapter>=0.2.0",
         "typing-extensions>=4.3.0",
+        "web-poet>=0.4.0",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
