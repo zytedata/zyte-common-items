@@ -23,7 +23,7 @@ setup(
     install_requires=[
         "attrs>=21.3.0",
         "itemadapter>=0.2.0",
-        "typing-extensions>=4.3.0;python_version<'3.9'",
+        "typing-extensions>=4.3.0;python_version<'3.10'",
         "web-poet @ git+https://git@github.com/scrapinghub/web-poet@facd6d0#egg=web-poet",
     ],
     classifiers=[
