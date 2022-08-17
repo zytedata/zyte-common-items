@@ -66,7 +66,7 @@ def is_url_obj(url: Union[str, _Url]) -> TypeGuard[_Url]:
     return True if isinstance(url, _Url) else False
 
 
-def url_to_str(url: Union[str, _Url]) -> object:
+def url_to_str(url: Union[str, _Url]) -> str:
     if is_url_obj(url):
         return str(url)
     elif isinstance(url, str):
