@@ -1,6 +1,7 @@
 repos:
   - hooks:
       - id: black
+        exclude: test_mypy\.py$ # https://github.com/davidfritzsche/pytest-mypy-testing/issues/29
         language_version: python3
     repo: https://github.com/ambv/black
     rev: 22.3.0

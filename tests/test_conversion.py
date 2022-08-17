@@ -58,12 +58,10 @@ def test_webpoet_URL_classes(cls, fields):
             assert type(attribute) == str
             assert attribute == "https://www.some-url.com/somewhere"
 
-            # Setting other values that are not strings or URL classes won't
-            # use the auto-conversion process.
-            setattr(obj, field, 123)
-            attribute = getattr(obj, field)
-            assert type(attribute) == int
-            assert attribute == 123
+            # Setting other values that are not strings or URL classes would
+            # raise a ValueError
+            with pytest.raises(ValueError):
+                setattr(obj, field, 123)
 
 
 @pytest.mark.parametrize("cls", [ProductVariant, Product, ProductFromList])
@@ -89,16 +87,14 @@ def test_webpoet_URL_mainImage(cls):
     assert type(obj.mainImage) == Image
     assert obj.mainImage.url == "https://www.some-page/different-img.png"
 
-    # Setting other values that are not strings or URL classes won't
-    # use the auto-conversion process.
-    data = {"mainImage": {"url": 123}, "url": 123}
-    obj = cls.from_dict(data)
-    assert type(obj.mainImage.url) == int
-    assert obj.mainImage.url == 123
+    # Setting other values that are not strings or URL classes would
+    # raise a ValueError
+    with pytest.raises(ValueError):
+        obj.mainImage.url = False
 
-    obj.mainImage.url = False
-    assert type(obj.mainImage) == Image
-    assert obj.mainImage.url is False
+    data = {"mainImage": {"url": 123}, "url": 123}
+    with pytest.raises(ValueError):
+        obj = cls.from_dict(data)
 
 
 @pytest.mark.parametrize("cls", [ProductVariant, Product])
@@ -128,8 +124,11 @@ def test_webpoet_URL_images(cls):
     assert type(obj.images[0]) == Image
     assert obj.images[0].url == "https://www.some-page/different-img.png"
 
-    # Setting other values that are not strings or URL classes won't
-    # use the auto-conversion process.
+    # Setting other values that are not strings or URL classes would
+    # raise a ValueError
+    with pytest.raises(ValueError):
+        obj.images[1].url = False
+
     data = {
         "images": [
             {"url": 123},
@@ -137,10 +136,5 @@ def test_webpoet_URL_images(cls):
         ],
         "url": 789,
     }
-    obj = cls.from_dict(data)
-    assert type(obj.images[0].url) == int
-    assert obj.images[0].url == 123
-
-    obj.images[1].url = False
-    assert type(obj.images[1]) == Image
-    assert obj.images[1].url is False
+    with pytest.raises(ValueError):
+        obj = cls.from_dict(data)

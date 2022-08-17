@@ -69,4 +69,6 @@ def is_url_obj(url: Union[str, _Url]) -> TypeGuard[_Url]:
 def url_to_str(url: Union[str, _Url]) -> object:
     if is_url_obj(url):
         return str(url)
-    return url
+    elif isinstance(url, str):
+        return url
+    raise ValueError(f"Value of {url} cannot be converted to string.")
