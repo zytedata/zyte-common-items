@@ -5,7 +5,7 @@ from typing import Optional
 import attrs
 
 from zyte_common_items.base import Item
-from zyte_common_items.util import str_or_none
+from zyte_common_items.util import url_to_str
 
 
 @attrs.define
@@ -68,7 +68,7 @@ class Breadcrumb(Item):
     name: Optional[str] = None
 
     #: Target URL.
-    url: Optional[str] = attrs.field(default=None, converter=str_or_none, kw_only=True)
+    url: Optional[str] = attrs.field(default=None, converter=attrs.converters.optional(url_to_str), kw_only=True)
 
 
 @attrs.define
@@ -109,7 +109,7 @@ class Image(Item):
     #: `Data URIs`_ are not allowed in this attribute.
     #:
     #: .. _Data URIs: https://en.wikipedia.org/wiki/Data_URI_scheme
-    url: str = attrs.field(converter=str)
+    url: str = attrs.field(converter=url_to_str)
 
 
 @attrs.define(kw_only=True)
@@ -120,7 +120,7 @@ class Link(Item):
     text: Optional[str] = None
 
     #: Target URL.
-    url: Optional[str] = attrs.field(default=None, converter=str_or_none, kw_only=True)
+    url: Optional[str] = attrs.field(default=None, converter=attrs.converters.optional(url_to_str), kw_only=True)
 
 
 @attrs.define(kw_only=True)

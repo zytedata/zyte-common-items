@@ -1,3 +1,7 @@
+"""This test file is ignored by mypy so don't rely on type assertions in this.
+
+Instead, take a look at the ``tests/test_mypy.py``.
+"""
 import pytest
 from web_poet import HttpResponse, RequestUrl, ResponseUrl
 
@@ -54,6 +58,13 @@ def test_webpoet_URL_classes(cls, fields):
             assert type(attribute) == str
             assert attribute == "https://www.some-url.com/somewhere"
 
+            # Setting other values that are not strings or URL classes won't
+            # use the auto-conversion process.
+            setattr(obj, field, 123)
+            attribute = getattr(obj, field)
+            assert type(attribute) == int
+            assert attribute == 123
+
 
 @pytest.mark.parametrize("cls", [ProductVariant, Product, ProductFromList])
 def test_webpoet_URL_mainImage(cls):
@@ -77,6 +88,17 @@ def test_webpoet_URL_mainImage(cls):
     obj.mainImage.url = img_url
     assert type(obj.mainImage) == Image
     assert obj.mainImage.url == "https://www.some-page/different-img.png"
+
+    # Setting other values that are not strings or URL classes won't
+    # use the auto-conversion process.
+    data = {"mainImage": {"url": 123}, "url": 123}
+    obj = cls.from_dict(data)
+    assert type(obj.mainImage.url) == int
+    assert obj.mainImage.url == 123
+
+    obj.mainImage.url = False
+    assert type(obj.mainImage) == Image
+    assert obj.mainImage.url is False
 
 
 @pytest.mark.parametrize("cls", [ProductVariant, Product])
@@ -105,3 +127,20 @@ def test_webpoet_URL_images(cls):
     obj.images[0].url = img_url
     assert type(obj.images[0]) == Image
     assert obj.images[0].url == "https://www.some-page/different-img.png"
+
+    # Setting other values that are not strings or URL classes won't
+    # use the auto-conversion process.
+    data = {
+        "images": [
+            {"url": 123},
+            {"url": 456},
+        ],
+        "url": 789,
+    }
+    obj = cls.from_dict(data)
+    assert type(obj.images[0].url) == int
+    assert obj.images[0].url == 123
+
+    obj.images[1].url = False
+    assert type(obj.images[1]) == Image
+    assert obj.images[1].url is False

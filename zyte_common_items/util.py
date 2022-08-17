@@ -1,7 +1,13 @@
-from typing import Any, Callable, Dict, Optional, Tuple, Type
+from typing import Any, Callable, Dict, Optional, Tuple, Type, Union
 from weakref import WeakKeyDictionary
 
 import attr
+from web_poet.page_inputs.url import _Url
+
+try:
+    from typing import TypeGuard  # for Python 3.9+
+except ImportError:
+    from typing_extensions import TypeGuard
 
 # Caches the attribute names for attr.s classes
 CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
@@ -56,7 +62,11 @@ def get_origin(tp) -> Tuple:
     return getattr(tp, "__origin__", ())
 
 
-def str_or_none(value: Any) -> Optional[str]:
-    if value is None:
-        return None
-    return str(value)
+def is_url_obj(url: Union[str, _Url]) -> TypeGuard[_Url]:
+    return True if isinstance(url, _Url) else False
+
+
+def url_to_str(url: Union[str, _Url]) -> object:
+    if is_url_obj(url):
+        return str(url)
+    return url
