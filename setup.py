@@ -19,7 +19,9 @@ setup(
             "tests",
         ]
     ),
-    include_package_data=True,
+    package_data={
+        "zyte_common_items": ["py.typed", "VERSION"],
+    },
     install_requires=[
         "attrs>=21.3.0",
         "itemadapter>=0.2.0",
