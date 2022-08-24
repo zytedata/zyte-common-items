@@ -1,7 +1,8 @@
-from typing import Any, Callable, Dict, Optional, Tuple, Type
+from typing import Any, Callable, Dict, Optional, Tuple, Type, Union
 from weakref import WeakKeyDictionary
 
 import attr
+from web_poet.page_inputs.url import _Url
 
 # Caches the attribute names for attr.s classes
 CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
@@ -54,3 +55,9 @@ def get_origin(tp) -> Tuple:
     typing.get_origin(tp) is only available startingo on 3.8.
     """
     return getattr(tp, "__origin__", ())
+
+
+def url_to_str(url: Union[str, _Url]) -> str:
+    if not isinstance(url, (str, _Url)):
+        raise ValueError(f"{url!r} is neither a string nor an instance of RequestURL or ResponseURL.")
+    return str(url)

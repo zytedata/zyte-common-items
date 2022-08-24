@@ -1,6 +1,16 @@
 [tool.black]
 line-length = 120
+exclude = 'test_mypy\.py'  # https://github.com/davidfritzsche/pytest-mypy-testing/issues/29
 
 [tool.isort]
 profile = "black"
 multi_line_output = 3
+
+[tool.mypy]
+check_untyped_defs = true
+ignore_missing_imports = true
+no_warn_no_return = true
+exclude = [
+    'test_mypy\.py$',
+    'test_conversion\.py$',
+]
