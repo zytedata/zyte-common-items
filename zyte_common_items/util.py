@@ -62,13 +62,7 @@ def get_origin(tp) -> Tuple:
     return getattr(tp, "__origin__", ())
 
 
-def is_url_obj(url: Union[str, _Url]) -> TypeGuard[_Url]:
-    return True if isinstance(url, _Url) else False
-
-
 def url_to_str(url: Union[str, _Url]) -> str:
-    if is_url_obj(url):
-        return str(url)
-    elif isinstance(url, str):
-        return url
-    raise ValueError(f"{url!r} is neither a string nor an instance of RequestURL or ResponseURL.")
+    if not isinstance(url, (str, _Url)):
+        raise ValueError(f"{url!r} is neither a string nor an instance of RequestURL or ResponseURL.")
+    return str(url)
