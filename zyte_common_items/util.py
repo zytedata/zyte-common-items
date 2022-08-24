@@ -4,11 +4,6 @@ from weakref import WeakKeyDictionary
 import attr
 from web_poet.page_inputs.url import _Url
 
-try:
-    from typing import TypeGuard  # for Python 3.10+
-except ImportError:
-    from typing_extensions import TypeGuard
-
 # Caches the attribute names for attr.s classes
 CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
 

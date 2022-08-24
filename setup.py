@@ -23,7 +23,6 @@ setup(
     install_requires=[
         "attrs>=21.3.0",
         "itemadapter>=0.2.0",
-        "typing-extensions>=4.3.0;python_version<'3.10'",
         "web-poet>=0.4.0",
     ],
     classifiers=[
