@@ -71,4 +71,4 @@ def url_to_str(url: Union[str, _Url]) -> str:
         return str(url)
     elif isinstance(url, str):
         return url
-    raise ValueError(f"Value of {url} cannot be converted to string.")
+    raise ValueError(f"{url!r} is neither a string nor an instance of RequestURL or ResponseURL.")
