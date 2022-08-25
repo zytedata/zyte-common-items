@@ -69,7 +69,9 @@ _PRODUCT_ALL_KWARGS: dict = {
         Breadcrumb(name="Level 1", url="http://example.com/level1"),
         Breadcrumb(name="Level 2", url="http://example.com/level1/level2"),
     ],
-    "description": ("Full freshness all over the fridge\n5 Conversion Modes on demand\nSuper Cooling Plus™"),
+    "description": (
+        "Full freshness all over the fridge\n5 Conversion Modes on demand\nSuper Cooling Plus™"
+    ),
     "descriptionHtml": (
         "<article><p>Full freshness all over the fridge</p>"
         "<p>5 Conversion Modes on demand</p>"

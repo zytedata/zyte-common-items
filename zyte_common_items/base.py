@@ -80,14 +80,18 @@ class Item(_ItemBase):
         """
         from_dict, from_list = {}, {}
 
-        annotations = ChainMap(*(c.__annotations__ for c in cls.__mro__ if "__annotations__" in c.__dict__))
+        annotations = ChainMap(
+            *(c.__annotations__ for c in cls.__mro__ if "__annotations__" in c.__dict__)
+        )
 
         for field, type_annotation in annotations.items():
             origin = get_origin(type_annotation)
             if origin == Union:
                 field_classes = get_args(type_annotation)
                 if len(field_classes) != 2 or not isinstance(None, field_classes[1]):
-                    raise ValueError("Field should only be annotated with one type (or optional).")
+                    raise ValueError(
+                        "Field should only be annotated with one type (or optional)."
+                    )
                 type_annotation = field_classes[0]
                 origin = get_origin(type_annotation)
 
@@ -100,7 +104,17 @@ class Item(_ItemBase):
 
         if from_dict or from_list:
             item = dict(**item)
-            item.update({key: cls.from_dict(item.get(key)) for key, cls in (from_dict or {}).items()})
-            item.update({key: cls.from_list(item.get(key, [])) for key, cls in (from_list or {}).items()})
+            item.update(
+                {
+                    key: cls.from_dict(item.get(key))
+                    for key, cls in (from_dict or {}).items()
+                }
+            )
+            item.update(
+                {
+                    key: cls.from_list(item.get(key, []))
+                    for key, cls in (from_list or {}).items()
+                }
+            )
 
         return item

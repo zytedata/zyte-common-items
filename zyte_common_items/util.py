@@ -8,7 +8,9 @@ from web_poet.page_inputs.url import _Url
 CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
 
 
-def split_in_unknown_and_known_fields(data: Optional[dict], item_cls: Type) -> Tuple[Dict, Dict]:
+def split_in_unknown_and_known_fields(
+    data: Optional[dict], item_cls: Type
+) -> Tuple[Dict, Dict]:
     """
     Return a pair of dicts. The first one contains those elements not belonging to the
     attr class ``item_cls``. The second one contains the rest. That is, those
@@ -59,5 +61,7 @@ def get_origin(tp) -> Tuple:
 
 def url_to_str(url: Union[str, _Url]) -> str:
     if not isinstance(url, (str, _Url)):
-        raise ValueError(f"{url!r} is neither a string nor an instance of RequestURL or ResponseURL.")
+        raise ValueError(
+            f"{url!r} is neither a string nor an instance of RequestURL or ResponseURL."
+        )
     return str(url)

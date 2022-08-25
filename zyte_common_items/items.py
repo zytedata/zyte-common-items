@@ -156,7 +156,9 @@ class ProductVariant(Item):
     #: Main URL from which the product variant data could be extracted.
     #:
     #: See also ``canonicalUrl``.
-    url: Optional[str] = attrs.field(default=None, converter=attrs.converters.optional(url_to_str), kw_only=True)
+    url: Optional[str] = attrs.field(
+        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    )
 
 
 @attrs.define(kw_only=True)
@@ -442,7 +444,9 @@ class ProductFromList(Item):
     regularPrice: Optional[str] = None
 
     #: Main URL from which the product data could be extracted.
-    url: Optional[str] = attrs.field(default=None, converter=attrs.converters.optional(url_to_str), kw_only=True)
+    url: Optional[str] = attrs.field(
+        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    )
 
 
 @attrs.define(slots=True, kw_only=True)

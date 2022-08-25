@@ -68,7 +68,9 @@ class Breadcrumb(Item):
     name: Optional[str] = None
 
     #: Target URL.
-    url: Optional[str] = attrs.field(default=None, converter=attrs.converters.optional(url_to_str), kw_only=True)
+    url: Optional[str] = attrs.field(
+        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    )
 
 
 @attrs.define
@@ -120,7 +122,9 @@ class Link(Item):
     text: Optional[str] = None
 
     #: Target URL.
-    url: Optional[str] = attrs.field(default=None, converter=attrs.converters.optional(url_to_str), kw_only=True)
+    url: Optional[str] = attrs.field(
+        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    )
 
 
 @attrs.define(kw_only=True)
