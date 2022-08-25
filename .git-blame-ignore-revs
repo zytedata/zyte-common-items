@@ -1,0 +1,5 @@
+# Contains commits to be ignored due to linting
+
+# https://github.com/zytedata/zyte-common-items/pull/14/
+0dfec59a36c93f543e26903ccfefa37e2f63b7fd
+3f18d5f2a13e641ed3068d9d82e2cc70fd7f4802
