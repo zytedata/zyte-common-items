@@ -4,7 +4,9 @@ from datetime import datetime
 
 def get_copyright(attribution, *, first_year):
     current_year = datetime.now().year
-    years = current_year if first_year == current_year else f"{first_year}-{current_year}"
+    years = (
+        current_year if first_year == current_year else f"{first_year}-{current_year}"
+    )
     return f"{years}, {attribution}"
 
 

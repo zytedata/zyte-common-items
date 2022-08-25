@@ -20,7 +20,11 @@ def _is_empty(value):
     *value* is assumed not to be a mapping, which should be treated as a
     non-empty value, but this function would treat as an empty value.
     """
-    return value is None or (not value and not isinstance(value, (bytes, str)) and isinstance(value, Collection))
+    return value is None or (
+        not value
+        and not isinstance(value, (bytes, str))
+        and isinstance(value, Collection)
+    )
 
 
 class ZyteItemAdapter(AttrsAdapter):
@@ -84,8 +88,14 @@ class ZyteItemAdapter(AttrsAdapter):
             )
 
     def __iter__(self) -> Iterator:
-        fields = [attr for attr in self._fields_dict if not _is_empty(getattr(self.item, attr))]
+        fields = [
+            attr
+            for attr in self._fields_dict
+            if not _is_empty(getattr(self.item, attr))
+        ]
         fields.extend(
-            attr for attr in self.item._unknown_fields_dict if not _is_empty(self.item._unknown_fields_dict[attr])
+            attr
+            for attr in self.item._unknown_fields_dict
+            if not _is_empty(self.item._unknown_fields_dict[attr])
         )
         return iter(fields)

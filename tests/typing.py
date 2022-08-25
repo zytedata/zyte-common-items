@@ -44,7 +44,8 @@ def assert_type_compliance(item, cls=None, attrib=None):
     item_cls = cls or type(item)
     if cls and not isinstance(item, cls):
         raise AssertionError(
-            f"Expecting an instance of type {cls} in attribute {attrib} " f"but {type(item)} were received instead"
+            f"Expecting an instance of type {cls} in attribute {attrib} "
+            f"but {type(item)} were received instead"
         )
     if not attr.has(item_cls):
         return
