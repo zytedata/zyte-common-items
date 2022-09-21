@@ -11,6 +11,7 @@ from web_poet import HttpResponse, RequestUrl, ResponseUrl
 from zyte_common_items import (
     Breadcrumb,
     Image,
+    Item,
     Link,
     Product,
     ProductFromList,
@@ -146,7 +147,7 @@ def test_webpoet_URL_images(cls):
 
 def test_use_converter_shortcuts():
     @attrs.define(field_transformer=use_converter_shortcuts)
-    class Data:
+    class Data(Item):
         x: Optional[str] = attrs.field(converter=lambda x: x.strip())
         y: Optional[str] = None
         z: Optional[str] = None
@@ -171,3 +172,21 @@ def test_use_converter_shortcuts():
 
     d.z = "  value "
     assert d.z == "value"
+
+    d = Data.from_dict({"x": " x ", "y": " y ", "z": " z "})
+    assert d.x == "x"
+    assert d.y == "y"
+    assert d.z == "z"
+
+    d = Data.from_list(
+        [
+            {"x": " x1 ", "y": " y1 ", "z": " z1 "},
+            {"x": " x2 ", "y": " y2 ", "z": " z2 "},
+        ]
+    )
+    assert d[0].x == "x1"
+    assert d[0].y == "y1"
+    assert d[0].z == "z1"
+    assert d[1].x == "x2"
+    assert d[1].y == "y2"
+    assert d[1].z == "z2"
