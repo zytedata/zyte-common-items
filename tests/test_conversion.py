@@ -6,6 +6,14 @@ from typing import Optional
 
 import attrs
 import pytest
+from itemloaders.processors import (
+    Compose,
+    Identity,
+    Join,
+    MapCompose,
+    SelectJmes,
+    TakeFirst,
+)
 from web_poet import HttpResponse, RequestUrl, ResponseUrl
 
 from zyte_common_items import (
@@ -190,3 +198,40 @@ def test_use_converter_shortcuts():
     assert d[1].x == "x2"
     assert d[1].y == "y2"
     assert d[1].z == "z2"
+
+
+def test_use_converter_shortcuts_with_itemloaders():
+    @attrs.define(field_transformer=use_converter_shortcuts)
+    class Data(Item):
+        mapcompose: str
+        mapcompose_in = MapCompose(str)
+
+        compose: str
+        compose_in = Compose(lambda x: x.strip(), str.upper)
+
+        takefirst: str
+        takefirst_in = TakeFirst()
+
+        identity: str
+        identity_in = Identity()
+
+        selectjmes: str
+        selectjmes_in = SelectJmes("x.y")
+
+        join: str
+        join_in = Join(":")
+
+    d = Data(
+        mapcompose=range(3),
+        compose=" value \n",
+        takefirst=range(5, 10),
+        identity=" value \n",
+        selectjmes={"x": {"y": "z"}},
+        join=["foo", "bar", "zen"],
+    )
+    assert d.mapcompose == ["0", "1", "2"]
+    assert d.compose == "VALUE"
+    assert d.takefirst == 5
+    assert d.identity == " value \n"
+    assert d.selectjmes == "z"
+    assert d.join == "foo:bar:zen"
