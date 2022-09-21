@@ -2,6 +2,9 @@
 
 Instead, take a look at the ``tests/test_mypy.py``.
 """
+from typing import Optional
+
+import attrs
 import pytest
 from web_poet import HttpResponse, RequestUrl, ResponseUrl
 
@@ -14,6 +17,7 @@ from zyte_common_items import (
     ProductList,
     ProductVariant,
 )
+from zyte_common_items.util import use_converter_shortcuts
 
 
 @pytest.mark.parametrize(
@@ -138,3 +142,32 @@ def test_webpoet_URL_images(cls):
     }
     with pytest.raises(ValueError):
         obj = cls.from_dict(data)
+
+
+def test_use_converter_shortcuts():
+    @attrs.define(field_transformer=use_converter_shortcuts)
+    class Data:
+        x: Optional[str] = attrs.field(converter=lambda x: x.strip())
+        y: Optional[str] = None
+        z: Optional[str] = None
+
+        y_in = lambda y: y.strip()  # noqa: E731
+
+        @staticmethod
+        def z_in(z):
+            return z.strip()
+
+    d = Data(x=" text ", y=" hi ", z=" asd \n")
+
+    assert d.x == "text"
+    assert d.y == "hi"
+    assert d.z == "asd"
+
+    d.x = " $32.88\n "
+    assert d.x == "$32.88"
+
+    d.y = " hello "
+    assert d.y == "hello"
+
+    d.z = "  value "
+    assert d.z == "value"

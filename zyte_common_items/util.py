@@ -65,3 +65,49 @@ def url_to_str(url: Union[str, _Url]) -> str:
             f"{url!r} is neither a string nor an instance of RequestURL or ResponseURL."
         )
     return str(url)
+
+
+def use_converter_shortcuts(cls, fields):
+    """Used in @attr.define's ``field_transformer`` parameter.
+
+    Here's an example:
+
+    .. code-block:: python
+
+        @attrs.define(field_transformer=use_converter_shortcuts)
+        class Data:
+            x: Optional[str] = attrs.field(converter=lambda x: x.strip())
+            y: Optional[str] = None
+            z: Optional[str] = None
+
+            y_in = lambda y: y.strip()
+
+            @staticmethod
+            def z_in(z):
+                return z.strip()
+
+        print(Data(x=" text ", y=" hi ", z=" asd \n"))  # Data(x='text', y='hi', z='asd')
+
+        d.x = " $32.88\n "
+        print(d.x)  # "$32.88"
+
+        d.y = " hello "
+        print(d.y)  # "hello"
+
+        d.z = "  value "
+        print(d.z)  # "value"
+
+    This creates a shortcut to create and declare converters using class variables
+    ending in the `*_in` suffix.
+    """
+    new_fields = []
+
+    for f in fields:
+        converter_shortcut = getattr(cls, f"{f.name}_in", None)
+        if converter_shortcut:
+            new_f = f.evolve(converter=converter_shortcut)
+            new_fields.append(new_f)
+        else:
+            new_fields.append(f)
+
+    return new_fields
