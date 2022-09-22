@@ -1,7 +1,7 @@
 from typing import Any, Callable, Dict, Optional, Tuple, Type, Union
 from weakref import WeakKeyDictionary
 
-import attr
+import attrs
 from web_poet.page_inputs.url import _Url
 
 # Caches the attribute names for attr.s classes
@@ -17,10 +17,10 @@ def split_in_unknown_and_known_fields(
     attributes not belonging to ``item_cls`` class
     """
     data = data or {}
-    if not attr.has(item_cls):
-        raise ValueError(f"The cls {item_cls} is not attr.s class")
+    if not attrs.has(item_cls):
+        raise ValueError(f"The cls {item_cls} is not attrs class")
     if item_cls not in CLASS_ATTRS:
-        CLASS_ATTRS[item_cls] = {field.name for field in attr.fields(item_cls)}
+        CLASS_ATTRS[item_cls] = {field.name for field in attrs.fields(item_cls)}
     unknown, known = split_dict(data, lambda k: k in CLASS_ATTRS[item_cls])
     return unknown, known
 

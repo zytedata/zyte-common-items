@@ -6,7 +6,7 @@ except ImportError:
     # Compliance with python 3.7
     from zyte_common_items.util import get_args
 
-import attr
+import attrs
 
 
 def optional_type(cls):
@@ -38,7 +38,7 @@ def get_generic_type(cls):
 
 def assert_type_compliance(item, cls=None, attrib=None):
     """
-    Assert recursively that the values of the attributes of an attr
+    Assert recursively that the values of the attributes of an attrs
     item are as defined
     """
     item_cls = cls or type(item)
@@ -47,9 +47,9 @@ def assert_type_compliance(item, cls=None, attrib=None):
             f"Expecting an instance of type {cls} in attribute {attrib} "
             f"but {type(item)} were received instead"
         )
-    if not attr.has(item_cls):
+    if not attrs.has(item_cls):
         return
-    for name, field in attr.fields_dict(item_cls).items():
+    for name, field in attrs.fields_dict(item_cls).items():
         value = getattr(item, name)
         if isinstance(value, (list, tuple)):
             expected_cls = get_generic_type(field.type)
