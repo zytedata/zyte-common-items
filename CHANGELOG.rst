@@ -6,7 +6,7 @@ Changelog
 ===========
 
 * Supports ``web_poet.RequestUrl`` and ``web_poet.ResponseUrl`` and
-  automatically converts them into a string on URL fields like
+  automatically convert them into a string on URL fields like
   ``Product.url``.
 * Bumps the ``web_poet`` dependency version from ``0.4.0`` to ``0.5.0``
   which fully supports type hints using the ``py.typed`` marker.
