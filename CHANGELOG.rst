@@ -2,8 +2,8 @@
 Changelog
 =========
 
-0.2.0 (TBD)
-===========
+0.2.0 (2022-09-22)
+==================
 
 * Supports ``web_poet.RequestUrl`` and ``web_poet.ResponseUrl`` and
   automatically convert them into a string on URL fields like
