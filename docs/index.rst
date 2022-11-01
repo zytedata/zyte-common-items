@@ -7,9 +7,27 @@ zyte-common-items |version| documentation
    :end-before: .. description ends
 
 .. toctree::
+   :caption: Getting started
+   :maxdepth: 1
 
    setup
-   usage
+
+.. toctree::
+   :caption: Usage
+   :maxdepth: 1
+
+   usage/items
+   usage/page-objects
+
+.. toctree::
+   :caption: Reference
+   :maxdepth: 1
+
    reference/index
    changelog
+
+.. toctree::
+   :caption: Contributing
+   :maxdepth: 1
+
    contributing

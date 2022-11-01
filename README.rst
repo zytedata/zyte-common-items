@@ -20,7 +20,7 @@ zyte-common-items
 
 .. description starts
 
-``zyte-common-items`` is a Python 3.7+ library of `page object`_ and item_
+``zyte-common-items`` is a Python 3.7+ library of item_ and `page object`_
 classes for web data extraction that we use at Zyte_ to maximize opportunities
 for code reuse.
 

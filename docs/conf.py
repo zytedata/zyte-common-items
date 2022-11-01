@@ -35,6 +35,8 @@ html_theme = "sphinx_rtd_theme"
 
 autodoc_member_order = "groupwise"
 
+intersphinx_disabled_reftypes = []
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
+    "web-poet": ("https://web-poet.readthedocs.io/en/stable", None),
 }

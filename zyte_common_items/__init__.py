@@ -12,3 +12,4 @@ from .components import (
     Metadata,
 )
 from .items import Product, ProductFromList, ProductList, ProductVariant
+from .page_objects import Page, ProductPage, ProductListPage

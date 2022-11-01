@@ -1,8 +1,8 @@
-.. _items:
+.. _item-api:
 
-=====
-Items
-=====
+========
+Item API
+========
 
 Product
 =======

@@ -6,19 +6,19 @@ try:
     from typing import get_args
 except ImportError:
     # Compliance with python 3.7
-    from zyte_common_items.util import get_args
+    from .util import get_args
 
 try:
     from typing import get_origin
 except ImportError:
     # Compliance with python 3.7
-    from zyte_common_items.util import get_origin
+    from .util import get_origin
 
 from typing import Dict, List, Optional, Union
 
 import attrs
 
-from zyte_common_items.util import split_in_unknown_and_known_fields
+from .util import split_in_unknown_and_known_fields
 
 
 def is_data_container(cls_or_obj):
