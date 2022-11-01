@@ -20,12 +20,12 @@ zyte-common-items
 
 .. description starts
 
-``zyte-common-items`` is a Python 3.7+ library of item classes used by Zyte_ to
-normalize different types of data extracted from websites.
+``zyte-common-items`` is a Python 3.7+ library of `page object`_ and item_
+classes for web data extraction that we use at Zyte_ to maximize opportunities
+for code reuse.
 
-It can be used in custom data extraction code for normalization purposes,
-maximizing opportunities for code reuse.
-
+.. _item: https://docs.scrapy.org/en/latest/topics/items.html
+.. _page object: https://web-poet.readthedocs.io/en/stable/
 .. _Zyte: https://www.zyte.com/
 
 .. description ends
