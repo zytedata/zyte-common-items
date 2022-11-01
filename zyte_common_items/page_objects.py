@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import attrs
-from web_poet import field, ItemPage, ResponseUrl, Returns
+from web_poet import ItemPage, ResponseUrl, Returns, field
 
 from .components import Metadata
 from .items import Product, ProductList

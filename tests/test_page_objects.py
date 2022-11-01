@@ -2,9 +2,9 @@ from datetime import datetime
 
 import attrs
 import pytest
-from web_poet import field, HttpResponse, ResponseUrl
+from web_poet import HttpResponse, ResponseUrl, field
 
-from zyte_common_items import ProductPage, ProductListPage
+from zyte_common_items import ProductListPage, ProductPage
 
 
 @pytest.mark.parametrize(
@@ -12,7 +12,7 @@ from zyte_common_items import ProductPage, ProductListPage
     (
         ProductPage,
         ProductListPage,
-    )
+    ),
 )
 def test_default(page_class):
     datetime_before = datetime.utcnow().replace(microsecond=0)
