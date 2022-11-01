@@ -7,7 +7,6 @@ zyte-common-items |version| documentation
    :end-before: .. description ends
 
 .. toctree::
-   :hidden:
 
    setup
    usage
