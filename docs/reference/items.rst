@@ -7,26 +7,22 @@ Items
 Product
 =======
 
-.. class:: zyte_common_items.Product(**kwargs)
-.. autoclass:: zyte_common_items.items.Product(**kwargs)
+.. autoclass:: zyte_common_items.Product(**kwargs)
    :members:
    :inherited-members:
 
-.. class:: zyte_common_items.ProductVariant(**kwargs)
-.. autoclass:: zyte_common_items.items.ProductVariant(**kwargs)
+.. autoclass:: zyte_common_items.ProductVariant(**kwargs)
    :members:
    :inherited-members:
 
 Product List
 ============
 
-.. class:: zyte_common_items.ProductList(**kwargs)
-.. autoclass:: zyte_common_items.items.ProductList(**kwargs)
+.. autoclass:: zyte_common_items.ProductList(**kwargs)
    :members:
    :inherited-members:
 
-.. class:: zyte_common_items.ProductFromList(**kwargs)
-.. autoclass:: zyte_common_items.items.ProductFromList(**kwargs)
+.. autoclass:: zyte_common_items.ProductFromList(**kwargs)
    :members:
    :inherited-members:
 
@@ -34,10 +30,9 @@ Product List
 Custom items
 ============
 
-Subclass :class:`~zyte_common_items.base.Item` to create your own item classes.
+Subclass :class:`~zyte_common_items.Item` to create your own item classes.
 
-.. class:: zyte_common_items.Item(**kwargs)
-.. autoclass:: zyte_common_items.base.Item(**kwargs)
+.. autoclass:: zyte_common_items.Item(**kwargs)
    :members:
 
    .. attribute:: _unknown_fields_dict
