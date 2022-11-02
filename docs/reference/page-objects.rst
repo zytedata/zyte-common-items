@@ -33,7 +33,7 @@ classes.
       Data extraction process metadata.
 
       :attr:`~zyte_common_items.Metadata.dateDownloaded` is set to the current
-      date.
+      UTC date and time.
 
       :attr:`~zyte_common_items.Metadata.probability` is not set.
 

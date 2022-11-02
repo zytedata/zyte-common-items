@@ -13,7 +13,6 @@ class Page(ItemPage):
 
     @field
     def metadata(self) -> Metadata:
-        """…"""
         return Metadata(
             dateDownloaded=f"{datetime.utcnow().isoformat(timespec='seconds')}Z",
         )
