@@ -52,7 +52,7 @@ async def test_example():
     """
     response = HttpResponse(url=url, body=html)
 
-    item = await BookPage(url=url, response=response).to_item()
+    item = await BookPage(_url=url, response=response).to_item()
 
     assert item.url == str(url)
     assert item.name == "Foo"
