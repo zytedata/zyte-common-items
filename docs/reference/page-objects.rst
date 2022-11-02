@@ -35,7 +35,7 @@ classes.
       :attr:`~zyte_common_items.Metadata.dateDownloaded` is set to the current
       UTC date and time.
 
-      :attr:`~zyte_common_items.Metadata.probability` is not set.
+      :attr:`~zyte_common_items.Metadata.probability` is set to ``1.0``.
 
    .. data:: url
       :type: web_poet.page_inputs.http.ResponseUrl

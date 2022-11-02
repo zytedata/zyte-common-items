@@ -15,6 +15,7 @@ class Page(ItemPage):
     def metadata(self) -> Metadata:
         return Metadata(
             dateDownloaded=f"{datetime.utcnow().isoformat(timespec='seconds')}Z",
+            probability=1.0,
         )
 
     @field

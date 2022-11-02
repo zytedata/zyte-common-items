@@ -19,7 +19,7 @@ def test_default(page_class):
 
     page = page_class(url="https://example.com")
 
-    assert page.metadata.probability is None
+    assert page.metadata.probability == 1.0
     assert page.url == "https://example.com"
 
     page_datetime_string = page.metadata.dateDownloaded
@@ -56,6 +56,7 @@ async def test_example():
 
     assert item.url == str(url)
     assert item.name == "Foo"
+    assert item.metadata.probability == 1.0
 
     item_datetime_string = item.metadata.dateDownloaded
     assert item_datetime_string.endswith("Z")
