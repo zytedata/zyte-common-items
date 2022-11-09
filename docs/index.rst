@@ -17,7 +17,7 @@ zyte-common-items |version| documentation
    :maxdepth: 1
 
    usage/items
-   usage/page-objects
+   usage/pages
 
 .. toctree::
    :caption: Reference

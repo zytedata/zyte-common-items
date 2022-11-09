@@ -4,7 +4,35 @@ import attrs
 import pytest
 from web_poet import HttpResponse, ResponseUrl, field
 
-from zyte_common_items import ProductListPage, ProductPage
+from zyte_common_items import (
+    BaseProductListPage,
+    BaseProductPage,
+    ProductListPage,
+    ProductPage,
+)
+
+
+@pytest.mark.parametrize(
+    "page_class",
+    (
+        BaseProductPage,
+        BaseProductListPage,
+    ),
+)
+def test_base_pages_default(page_class):
+    datetime_before = datetime.utcnow().replace(microsecond=0)
+
+    page = page_class(url=ResponseUrl("https://example.com"))
+
+    assert page.metadata.probability == 1.0
+    assert page.url == "https://example.com"
+    assert isinstance(page.url, str)
+
+    page_datetime_string = page.metadata.dateDownloaded
+    assert page_datetime_string.endswith("Z")
+    page_datetime = datetime.fromisoformat(page_datetime_string[:-1])
+    datetime_after = datetime.utcnow().replace(microsecond=0)
+    assert datetime_before <= page_datetime <= datetime_after
 
 
 @pytest.mark.parametrize(
@@ -14,13 +42,25 @@ from zyte_common_items import ProductListPage, ProductPage
         ProductListPage,
     ),
 )
-def test_default(page_class):
+def test_pages_default(page_class):
     datetime_before = datetime.utcnow().replace(microsecond=0)
 
-    page = page_class(url="https://example.com")
+    url = ResponseUrl("https://example.com")
+    html = b"""
+    <!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Foo</h1>
+        </body>
+    </html>
+    """
+    response = HttpResponse(url=url, body=html)
+
+    page = page_class(response=response)
 
     assert page.metadata.probability == 1.0
     assert page.url == "https://example.com"
+    assert isinstance(page.url, str)
 
     page_datetime_string = page.metadata.dateDownloaded
     assert page_datetime_string.endswith("Z")
@@ -35,8 +75,6 @@ async def test_example():
 
     @attrs.define
     class BookPage(ProductPage):
-        response: HttpResponse
-
         @field
         def name(self):
             return self.response.css("h1::text").get()
@@ -52,7 +90,7 @@ async def test_example():
     """
     response = HttpResponse(url=url, body=html)
 
-    item = await BookPage(url=url, response=response).to_item()
+    item = await BookPage(response=response).to_item()
 
     assert item.url == str(url)
     assert item.name == "Foo"

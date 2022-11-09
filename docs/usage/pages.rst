@@ -28,12 +28,10 @@ whose ``to_item`` method returns an instance of
 .. code-block:: python
 
    import attrs
-   from web_poet import HttpResponse
    from zyte_common_items import ProductPage
 
     @attrs.define
     class CustomProductPage(ProductPage):
-        response: HttpResponse
 
         @field
         def name(self):

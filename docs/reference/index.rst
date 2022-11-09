@@ -5,6 +5,6 @@ Reference
 .. toctree::
 
    items
-   page-objects
+   pages
    components
    adapter
