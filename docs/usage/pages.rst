@@ -35,4 +35,4 @@ whose ``to_item`` method returns an instance of
 
         @field
         def name(self):
-            return self.response.css("h1::text").get()
+            return self.css("h1::text").get()

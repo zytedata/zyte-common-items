@@ -77,7 +77,7 @@ async def test_example():
     class BookPage(ProductPage):
         @field
         def name(self):
-            return self.response.css("h1::text").get()
+            return self.css("h1::text").get()
 
     url = ResponseUrl("https://example.com/books/1")
     html = b"""
