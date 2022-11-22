@@ -30,7 +30,6 @@ whose ``to_item`` method returns an instance of
    import attrs
    from zyte_common_items import ProductPage
 
-    @attrs.define
     class CustomProductPage(ProductPage):
 
         @field
