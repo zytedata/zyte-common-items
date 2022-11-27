@@ -25,7 +25,8 @@ setup(
     install_requires=[
         "attrs>=21.3.0",
         "itemadapter>=0.2.0",
-        "web-poet>=0.5.0",
+        # https://github.com/scrapinghub/web-poet/pull/109
+        "web-poet @ git+https://github.com/Gallaecio/web-poet.git@mixin-support",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",

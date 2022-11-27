@@ -7,9 +7,9 @@ from .components import Metadata
 from .items import Product, ProductList
 
 
-@attrs.define
-class BasePage(ItemPage):
-    _url: ResponseUrl
+class _BaseMixin:
+    def _get_response_url(self):
+        raise NotImplementedError
 
     @field
     def metadata(self) -> Metadata:
@@ -20,7 +20,15 @@ class BasePage(ItemPage):
 
     @field
     def url(self) -> str:
-        return str(self._url)
+        return str(self._get_response_url())
+
+
+@attrs.define
+class BasePage(_BaseMixin, ItemPage):
+    _url: ResponseUrl
+
+    def _get_response_url(self):
+        return self._url
 
 
 class BaseProductPage(BasePage, Returns[Product]):
@@ -32,17 +40,9 @@ class BaseProductListPage(BasePage, Returns[ProductList]):
 
 
 @attrs.define
-class Page(WebPage):
-    @field
-    def metadata(self) -> Metadata:
-        return Metadata(
-            dateDownloaded=f"{datetime.utcnow().isoformat(timespec='seconds')}Z",
-            probability=1.0,
-        )
-
-    @field
-    def url(self) -> str:
-        return str(self.response.url)
+class Page(_BaseMixin, WebPage):
+    def _get_response_url(self):
+        return self.response.url
 
 
 class ProductPage(Page, Returns[Product]):
