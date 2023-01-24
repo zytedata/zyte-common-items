@@ -17,6 +17,7 @@ except ImportError:
 from typing import Dict, List, Optional, Union
 
 import attrs
+from web_poet import UnsetType
 
 from .util import split_in_unknown_and_known_fields
 
@@ -88,9 +89,12 @@ class Item(_ItemBase):
             origin = get_origin(type_annotation)
             if origin == Union:
                 field_classes = get_args(type_annotation)
-                if len(field_classes) != 2 or not isinstance(None, field_classes[1]):
+                if len(field_classes) != 2 and not {UnsetType, type(None)} <= set(
+                    field_classes
+                ):
                     raise ValueError(
-                        "Field should only be annotated with one type (or optional)."
+                        "Field should only be annotated with one type "
+                        "(or either None or Unset)."
                     )
                 type_annotation = field_classes[0]
                 origin = get_origin(type_annotation)

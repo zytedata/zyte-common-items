@@ -1,8 +1,9 @@
 """Classes for data nested within items."""
 
-from typing import Optional
+from typing import Union
 
 import attrs
+from web_poet import Unset, UnsetType
 
 from zyte_common_items.base import Item
 from zyte_common_items.util import url_to_str
@@ -34,13 +35,13 @@ class AggregateRating(Item):
     """
 
     #: Maximum value of the rating system.
-    bestRating: Optional[float] = None
+    bestRating: Union[float, None, UnsetType] = Unset
 
     #: Average value of all ratings.
-    ratingValue: Optional[float] = None
+    ratingValue: Union[float, None, UnsetType] = Unset
 
     #: Review count.
-    reviewCount: Optional[int] = None
+    reviewCount: Union[int, None, UnsetType] = Unset
 
 
 @attrs.define
@@ -65,11 +66,11 @@ class Breadcrumb(Item):
     """
 
     #: Displayed name.
-    name: Optional[str] = None
+    name: Union[str, None, UnsetType] = Unset
 
     #: Target URL.
-    url: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    url: Union[str, None, UnsetType] = attrs.field(
+        default=Unset, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
 
 
@@ -119,11 +120,11 @@ class Link(Item):
     """A link from a webpage to another webpage."""
 
     #: Displayed text.
-    text: Optional[str] = None
+    text: Union[str, None, UnsetType] = Unset
 
     #: Target URL.
-    url: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    url: Union[str, None, UnsetType] = attrs.field(
+        default=Unset, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
 
 
@@ -136,7 +137,7 @@ class Metadata(Item):
 
     #: Date and time when the product data was downloaded, in UTC timezone and
     #: the following format: ``YYYY-MM-DDThh:mm:ssZ``.
-    dateDownloaded: Optional[str] = None
+    dateDownloaded: Union[str, None, UnsetType] = Unset
 
     #: The probability (0 for 0%, 1 for 100%) that the webpage features the
     #: requested data type.
@@ -147,4 +148,4 @@ class Metadata(Item):
     #: webpage features a job listing instead of a product, the value should be
     #: `0`. When there is no complete certainty, the value could be anything in
     #: between (e.g. `0.96`).
-    probability: Optional[float] = None
+    probability: Union[str, None, UnsetType] = Unset

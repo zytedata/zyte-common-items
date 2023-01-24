@@ -2,6 +2,12 @@
 Changelog
 =========
 
+TBD
+===
+
+* Use ``web_poet.Unset`` sentinel value which represents fields which hasn't been
+  assigned with any value. This is to differentiate values which are ``None``.
+
 0.2.0 (2022-09-22)
 ==================
 

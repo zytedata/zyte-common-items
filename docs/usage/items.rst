@@ -36,6 +36,7 @@ nested data, such as :class:`~zyte_common_items.components.Image` and
 >>> product.mainImage
 Image(url='https://example.com/image.png')
 >>> product.canonicalUrl
+Unset
 >>> product.gtin
 [Gtin(type='gtin13', value='9504000059446')]
 

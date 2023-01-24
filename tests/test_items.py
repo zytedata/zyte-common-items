@@ -1,6 +1,7 @@
 from copy import copy
 
 import pytest
+from web_poet import Unset
 
 from zyte_common_items import (
     AdditionalProperty,
@@ -119,7 +120,7 @@ def test_product_min_fields():
     for field in list(_PRODUCT_ALL_KWARGS):
         if field in _PRODUCT_MIN_KWARGS:
             continue
-        assert getattr(product, field) is None
+        assert getattr(product, field) is Unset
 
 
 def test_product_missing_fields():
@@ -141,7 +142,7 @@ def test_product_list_min_fields():
     for field in list(_PRODUCT_LIST_MIN_KWARGS):
         if field in _PRODUCT_LIST_MIN_KWARGS:
             continue
-        assert getattr(product_list, field) is None
+        assert getattr(product_list, field) is Unset
 
 
 def test_product_list_missing_fields():
@@ -161,7 +162,7 @@ def test_product_from_list_all_fields():
 def test_product_from_list_min_fields():
     product_from_list = ProductFromList()
     for field in list(_PRODUCT_FROM_LIST_ALL_KWARGS):
-        assert getattr(product_from_list, field) is None
+        assert getattr(product_from_list, field) is Unset
 
 
 def test_product_variant_all_fields():
@@ -173,4 +174,4 @@ def test_product_variant_all_fields():
 def test_product_variant_min_fields():
     product_variant = ProductVariant()
     for field in list(_PRODUCT_VARIANT_ALL_KWARGS):
-        assert getattr(product_variant, field) is None
+        assert getattr(product_variant, field) is Unset
