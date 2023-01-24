@@ -187,28 +187,28 @@ def test_assignment_product_variant():
 @pytest.mark.mypy_testing
 def test_instantiation_image():
     with pytest.raises(ValueError):
-        Image(url=123)  # E: Argument "url" to "Image" has incompatible type "int"; expected "Union[str, _Url]"
+        Image(url=123)  # E: Argument "url" to "Image" has incompatible type "int"; expected "Union[str, _Url, UnsetType]"
 
 
 @pytest.mark.mypy_testing
 def test_instantiation_breadcrumb():
     with pytest.raises(ValueError):
-        Breadcrumb(url=123)  # E: Argument "url" to "Breadcrumb" has incompatible type "int"; expected "Union[str, _Url, None]"
+        Breadcrumb(url=123)  # E: Argument "url" to "Breadcrumb" has incompatible type "int"; expected "Union[str, _Url, UnsetType, None]"
 
 
 @pytest.mark.mypy_testing
 def test_instantiation_link():
     with pytest.raises(ValueError):
-        Link(url=123)  # E: Argument "url" to "Link" has incompatible type "int"; expected "Union[str, _Url, None]"
+        Link(url=123)  # E: Argument "url" to "Link" has incompatible type "int"; expected "Union[str, _Url, UnsetType, None]"
 
 
 @pytest.mark.mypy_testing
 def test_instantiation_product_list():
     with pytest.raises(ValueError):
-        ProductList(url=123)  # E: Argument "url" to "ProductList" has incompatible type "int"; expected "Union[str, _Url]"
+        ProductList(url=123)  # E: Argument "url" to "ProductList" has incompatible type "int"; expected "Union[str, _Url, UnsetType]"
     with pytest.raises(ValueError):
         ProductList(
-            url="https://www.example.com", canonicalUrl=123  # E: Argument "canonicalUrl" to "ProductList" has incompatible type "int"; expected "Union[str, _Url, None]"
+            url="https://www.example.com", canonicalUrl=123  # E: Argument "canonicalUrl" to "ProductList" has incompatible type "int"; expected "Union[str, _Url, UnsetType, None]"
         )
 
 
@@ -216,7 +216,7 @@ def test_instantiation_product_list():
 def test_instantiation_product_from_list():
     with pytest.raises(ValueError):
         ProductFromList(
-            url=123  # E: Argument "url" to "ProductFromList" has incompatible type "int"; expected "Union[str, _Url, None]"
+            url=123  # E: Argument "url" to "ProductFromList" has incompatible type "int"; expected "Union[str, _Url, UnsetType, None]"
         )
 
 
@@ -224,9 +224,9 @@ def test_instantiation_product_from_list():
 def test_instantiation_product_variant():
     with pytest.raises(ValueError):
         ProductVariant(
-            url=123  # E: Argument "url" to "ProductVariant" has incompatible type "int"; expected "Union[str, _Url, None]"
+            url=123  # E: Argument "url" to "ProductVariant" has incompatible type "int"; expected "Union[str, _Url, UnsetType, None]"
         )
     with pytest.raises(ValueError):
         ProductVariant(
-            url="https://www.example.com", canonicalUrl=123  # E: Argument "canonicalUrl" to "ProductVariant" has incompatible type "int"; expected "Union[str, _Url, None]"
+            url="https://www.example.com", canonicalUrl=123  # E: Argument "canonicalUrl" to "ProductVariant" has incompatible type "int"; expected "Union[str, _Url, UnsetType, None]"
         )

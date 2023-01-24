@@ -12,3 +12,11 @@ from .components import (
     Metadata,
 )
 from .items import Product, ProductFromList, ProductList, ProductVariant
+from .pages import (
+    BasePage,
+    BaseProductListPage,
+    BaseProductPage,
+    Page,
+    ProductListPage,
+    ProductPage,
+)

@@ -1,3 +1,5 @@
+from web_poet import Unset
+
 from zyte_common_items import AggregateRating, Breadcrumb, Link, Metadata
 
 
@@ -19,5 +21,5 @@ def test_link_optional_fields():
 
 def test_metadata_default_values():
     metadata = Metadata()
-    assert metadata.dateDownloaded is None
-    assert metadata.probability is None
+    assert metadata.dateDownloaded is Unset
+    assert metadata.probability is Unset

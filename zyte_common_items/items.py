@@ -1,6 +1,7 @@
-from typing import List, Optional
+from typing import List, Union
 
 import attrs
+from web_poet import Unset, UnsetType
 
 from zyte_common_items.base import Item
 from zyte_common_items.components import (
@@ -33,18 +34,18 @@ class ProductVariant(Item):
     #: extracted.
     #:
     #: See also ``features``.
-    additionalProperties: Optional[List[AdditionalProperty]] = None
+    additionalProperties: Union[List[AdditionalProperty], None, UnsetType] = Unset
 
     #: Availability status.
     #:
     #: The value is expected to be one of: ``"InStock"``, ``"OutOfStock"``.
-    availability: Optional[str] = None
+    availability: Union[str, None, UnsetType] = Unset
 
     #: Canonical form of the URL, as indicated by the website.
     #:
     #: See also ``url``.
-    canonicalUrl: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    canonicalUrl: Union[str, None, UnsetType] = attrs.field(
+        default=Unset, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
 
     #: Color.
@@ -52,20 +53,20 @@ class ProductVariant(Item):
     #: It is extracted as displayed (e.g. ``"white"``).
     #:
     #: See also ``size``, ``style``.
-    color: Optional[str] = None
+    color: Union[str, None, UnsetType] = Unset
 
     #: Price currency `ISO 4217`_ alphabetic code (e.g. ``"USD"``).
     #:
     #: See also ``currencyRaw``.
     #:
     #: .. _ISO 4217: https://en.wikipedia.org/wiki/ISO_4217
-    currency: Optional[str] = None
+    currency: Union[str, None, UnsetType] = Unset
 
     #: Price currency as it appears on the webpage (no post-processing), e.g.
     #: ``"$"``.
     #:
     #: See also ``currency``.
-    currencyRaw: Optional[str] = None
+    currencyRaw: Union[str, None, UnsetType] = Unset
 
     #: List of standardized GTIN_ product identifiers associated with the
     #: product, which are unique for the product across different sellers.
@@ -73,17 +74,17 @@ class ProductVariant(Item):
     #: See also: ``mpn``, ``productId``, ``sku``.
     #:
     #: .. _GTIN: https://en.wikipedia.org/wiki/Global_Trade_Item_Number
-    gtin: Optional[List[Gtin]] = None
+    gtin: Union[List[Gtin], None, UnsetType] = Unset
 
     #: All product images.
     #:
     #: The main image (see ``mainImage``) should be first in the list.
     #:
     #: Images only displayed as part of the product description are excluded.
-    images: Optional[List[Image]] = None
+    images: Union[List[Image], None, UnsetType] = Unset
 
     #: Main product image.
-    mainImage: Optional[Image] = None
+    mainImage: Union[Image, None, UnsetType] = Unset
 
     #: `Manufacturer part number (MPN)`_.
     #:
@@ -92,10 +93,10 @@ class ProductVariant(Item):
     #: See also: ``gtin``, ``productId``, ``sku``.
     #:
     #: .. _Manufacturer part number (MPN): https://en.wikipedia.org/wiki/Part_number
-    mpn: Optional[str] = None
+    mpn: Union[str, None, UnsetType] = Unset
 
     #: Name as it appears on the webpage (no post-processing).
-    name: Optional[str] = None
+    name: Union[str, None, UnsetType] = Unset
 
     #: Price at which the product is being offered.
     #:
@@ -105,7 +106,7 @@ class ProductVariant(Item):
     #:
     #: If ``regularPrice`` is not ``None``, ``price`` should always be lower
     #: than ``regularPrice``.
-    price: Optional[str] = None
+    price: Union[str, None, UnsetType] = Unset
 
     #: Product identifier, unique within an e-commerce website.
     #:
@@ -113,7 +114,7 @@ class ProductVariant(Item):
     #: even a URL.
     #:
     #: See also: ``gtin``, ``mpn``, ``sku``.
-    productId: Optional[str] = None
+    productId: Union[str, None, UnsetType] = Unset
 
     #: Price at which the product was being offered in the past, and which is
     #: presented as a reference next to the current price.
@@ -125,7 +126,7 @@ class ProductVariant(Item):
     #:
     #: If ``regularPrice`` is not ``None``, it should always be higher than
     #: ``price``.
-    regularPrice: Optional[str] = None
+    regularPrice: Union[str, None, UnsetType] = Unset
 
     #: Size or dimensions.
     #:
@@ -134,7 +135,7 @@ class ProductVariant(Item):
     #: It is extracted as displayed (e.g. ``"XL"``).
     #:
     #: See also ``color``, ``style``.
-    size: Optional[str] = None
+    size: Union[str, None, UnsetType] = Unset
 
     #: `Stock keeping unit (SKU)`_ identifier, i.e. a merchant-specific product
     #: identifier.
@@ -142,7 +143,7 @@ class ProductVariant(Item):
     #: See also: ``gtin``, ``mpn``, ``productId``.
     #:
     #: .. _Stock keeping unit (SKU): https://en.wikipedia.org/wiki/Stock_keeping_unit
-    sku: Optional[str] = None
+    sku: Union[str, None, UnsetType] = Unset
 
     #: Style.
     #:
@@ -151,13 +152,13 @@ class ProductVariant(Item):
     #: It is extracted as displayed (e.g. ``"polka dots"``).
     #:
     #: See also ``color``, ``size``.
-    style: Optional[str] = None
+    style: Union[str, None, UnsetType] = Unset
 
     #: Main URL from which the product variant data could be extracted.
     #:
     #: See also ``canonicalUrl``.
-    url: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    url: Union[str, None, UnsetType] = attrs.field(
+        default=Unset, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
 
 
@@ -179,29 +180,29 @@ class Product(Item):
     #: extracted.
     #:
     #: See also ``features``.
-    additionalProperties: Optional[List[AdditionalProperty]] = None
+    additionalProperties: Union[List[AdditionalProperty], None, UnsetType] = Unset
 
     #: Aggregate data about reviews and ratings.
-    aggregateRating: Optional[AggregateRating] = None
+    aggregateRating: Union[AggregateRating, None, UnsetType] = Unset
 
     #: Availability status.
     #:
     #: The value is expected to be one of: ``"InStock"``, ``"OutOfStock"``.
-    availability: Optional[str] = None
+    availability: Union[str, None, UnsetType] = Unset
 
     #: Brand.
-    brand: Optional[Brand] = None
+    brand: Union[Brand, None, UnsetType] = Unset
 
     #: Webpage `breadcrumb trail`_.
     #:
     #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
-    breadcrumbs: Optional[List[Breadcrumb]] = None
+    breadcrumbs: Union[List[Breadcrumb], None, UnsetType] = Unset
 
     #: Canonical form of the URL, as indicated by the website.
     #:
     #: See also ``url``.
-    canonicalUrl: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    canonicalUrl: Union[str, None, UnsetType] = attrs.field(
+        default=Unset, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
 
     #: Color.
@@ -209,20 +210,20 @@ class Product(Item):
     #: It is extracted as displayed (e.g. ``"white"``).
     #:
     #: See also ``size``, ``style``.
-    color: Optional[str] = None
+    color: Union[str, None, UnsetType] = Unset
 
     #: Price currency `ISO 4217`_ alphabetic code (e.g. ``"USD"``).
     #:
     #: See also ``currencyRaw``.
     #:
     #: .. _ISO 4217: https://en.wikipedia.org/wiki/ISO_4217
-    currency: Optional[str] = None
+    currency: Union[str, None, UnsetType] = Unset
 
     #: Price currency as it appears on the webpage (no post-processing), e.g.
     #: ``"$"``.
     #:
     #: See also ``currency``.
-    currencyRaw: Optional[str] = None
+    currencyRaw: Union[str, None, UnsetType] = Unset
 
     #: Plain-text description.
     #:
@@ -243,7 +244,7 @@ class Product(Item):
     #: -   There should be no whitespace at the beginning or end.
     #:
     #: See also ``descriptionHtml``.
-    description: Optional[str] = None
+    description: Union[str, None, UnsetType] = Unset
 
     #: HTML description.
     #:
@@ -253,14 +254,14 @@ class Product(Item):
     #: normalization specification`_ for details.
     #:
     #: .. _HTML normalization specification: https://docs.zyte.com/automatic-extraction/article.html#format-of-articlebodyhtml-field
-    descriptionHtml: Optional[str] = None
+    descriptionHtml: Union[str, None, UnsetType] = Unset
 
     #: List of features.
     #:
     #: They are usually listed as bullet points in product webpages.
     #:
     #: See also ``additionalProperties``.
-    features: Optional[List[str]] = None
+    features: Union[List[str], None, UnsetType] = Unset
 
     #: List of standardized GTIN_ product identifiers associated with the
     #: product, which are unique for the product across different sellers.
@@ -268,20 +269,20 @@ class Product(Item):
     #: See also: ``mpn``, ``productId``, ``sku``.
     #:
     #: .. _GTIN: https://en.wikipedia.org/wiki/Global_Trade_Item_Number
-    gtin: Optional[List[Gtin]] = None
+    gtin: Union[List[Gtin], None, UnsetType] = Unset
 
     #: All product images.
     #:
     #: The main image (see ``mainImage``) should be first in the list.
     #:
     #: Images only displayed as part of the product description are excluded.
-    images: Optional[List[Image]] = None
+    images: Union[List[Image], None, UnsetType] = Unset
 
     #: Main product image.
-    mainImage: Optional[Image] = None
+    mainImage: Union[Image, None, UnsetType] = Unset
 
     #: Data extraction process metadata.
-    metadata: Optional[Metadata] = None
+    metadata: Union[Metadata, None, UnsetType] = Unset
 
     #: `Manufacturer part number (MPN)`_.
     #:
@@ -290,10 +291,10 @@ class Product(Item):
     #: See also: ``gtin``, ``productId``, ``sku``.
     #:
     #: .. _Manufacturer part number (MPN): https://en.wikipedia.org/wiki/Part_number
-    mpn: Optional[str] = None
+    mpn: Union[str, None, UnsetType] = Unset
 
     #: Name as it appears on the webpage (no post-processing).
-    name: Optional[str] = None
+    name: Union[str, None, UnsetType] = Unset
 
     #: Price at which the product is being offered.
     #:
@@ -303,7 +304,7 @@ class Product(Item):
     #:
     #: If ``regularPrice`` is not ``None``, ``price`` should always be lower
     #: than ``regularPrice``.
-    price: Optional[str] = None
+    price: Union[str, None, UnsetType] = Unset
 
     # Redefined to extend the documentation.
     #: Product identifier, unique within an e-commerce website.
@@ -312,7 +313,7 @@ class Product(Item):
     #: even a URL.
     #:
     #: See also: ``gtin``, ``mpn``, ``sku``.
-    productId: Optional[str] = None
+    productId: Union[str, None, UnsetType] = Unset
 
     #: Price at which the product was being offered in the past, and which is
     #: presented as a reference next to the current price.
@@ -324,7 +325,7 @@ class Product(Item):
     #:
     #: If ``regularPrice`` is not ``None``, it should always be higher than
     #: ``price``.
-    regularPrice: Optional[str] = None
+    regularPrice: Union[str, None, UnsetType] = Unset
 
     #: Size or dimensions.
     #:
@@ -333,7 +334,7 @@ class Product(Item):
     #: It is extracted as displayed (e.g. ``"XL"``).
     #:
     #: See also ``color``, ``style``.
-    size: Optional[str] = None
+    size: Union[str, None, UnsetType] = Unset
 
     #: `Stock keeping unit (SKU)`_ identifier, i.e. a merchant-specific product
     #: identifier.
@@ -341,7 +342,7 @@ class Product(Item):
     #: See also: ``gtin``, ``mpn``, ``productId``.
     #:
     #: .. _Stock keeping unit (SKU): https://en.wikipedia.org/wiki/Stock_keeping_unit
-    sku: Optional[str] = None
+    sku: Union[str, None, UnsetType] = Unset
 
     #: Style.
     #:
@@ -350,7 +351,7 @@ class Product(Item):
     #: It is extracted as displayed (e.g. ``"polka dots"``).
     #:
     #: See also ``color``, ``size``.
-    style: Optional[str] = None
+    style: Union[str, None, UnsetType] = Unset
 
     #: Main URL from which the data has been extracted.
     #:
@@ -382,7 +383,7 @@ class Product(Item):
     #:
     #: Product variant details may not include those that require multiple
     #: additional requests (e.g. 1 or more requests per variant).
-    variants: Optional[List[ProductVariant]] = None
+    variants: Union[List[ProductVariant], None, UnsetType] = Unset
 
 
 @attrs.define(slots=True, kw_only=True)
@@ -398,22 +399,22 @@ class ProductFromList(Item):
     #: See also ``currencyRaw``.
     #:
     #: .. _ISO 4217: https://en.wikipedia.org/wiki/ISO_4217
-    currency: Optional[str] = None
+    currency: Union[str, None, UnsetType] = Unset
 
     #: Price currency as it appears on the webpage (no post-processing), e.g.
     #: ``"$"``.
     #:
     #: See also ``currency``.
-    currencyRaw: Optional[str] = None
+    currencyRaw: Union[str, None, UnsetType] = Unset
 
     #: Main product image.
-    mainImage: Optional[Image] = None
+    mainImage: Union[Image, None, UnsetType] = Unset
 
     #: Data extraction process metadata.
-    metadata: Optional[Metadata] = None
+    metadata: Union[Metadata, None, UnsetType] = Unset
 
     #: Name as it appears on the webpage (no post-processing).
-    name: Optional[str] = None
+    name: Union[str, None, UnsetType] = Unset
 
     #: Price at which the product is being offered.
     #:
@@ -423,13 +424,13 @@ class ProductFromList(Item):
     #:
     #: If ``regularPrice`` is not ``None``, ``price`` should always be lower
     #: than ``regularPrice``.
-    price: Optional[str] = None
+    price: Union[str, None, UnsetType] = Unset
 
     #: Product identifier, unique within an e-commerce website.
     #:
     #: It may come in the form of an SKU or any other identifier, a hash, or
     #: even a URL.
-    productId: Optional[str] = None
+    productId: Union[str, None, UnsetType] = Unset
 
     #: Price at which the product was being offered in the past, and which is
     #: presented as a reference next to the current price.
@@ -441,11 +442,11 @@ class ProductFromList(Item):
     #:
     #: If ``regularPrice`` is not ``None``, it should always be higher than
     #: ``price``.
-    regularPrice: Optional[str] = None
+    regularPrice: Union[str, None, UnsetType] = Unset
 
     #: Main URL from which the product data could be extracted.
-    url: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    url: Union[str, None, UnsetType] = attrs.field(
+        default=Unset, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
 
 
@@ -462,13 +463,13 @@ class ProductList(Item):
     #: Webpage `breadcrumb trail`_.
     #:
     #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
-    breadcrumbs: Optional[List[Breadcrumb]] = None
+    breadcrumbs: Union[List[Breadcrumb], None, UnsetType] = Unset
 
     #: Canonical form of the URL, as indicated by the website.
     #:
     #: See also ``url``.
-    canonicalUrl: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    canonicalUrl: Union[str, None, UnsetType] = attrs.field(
+        default=Unset, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
 
     #: Name of the product listing as it appears on the webpage
@@ -476,10 +477,10 @@ class ProductList(Item):
     #:
     #: For example, if the webpage is one of the pages of the Robots category,
     #: ``categoryName`` is ``'Robots'``.
-    categoryName: Optional[str] = None
+    categoryName: Union[str, None, UnsetType] = Unset
 
     #: Data extraction process metadata.
-    metadata: Optional[Metadata] = None
+    metadata: Union[Metadata, None, UnsetType] = Unset
 
     #: Number of the current page.
     #:
@@ -487,10 +488,10 @@ class ProductList(Item):
     #:
     #: It must be 1-based. For example, if the first page of a listing is
     #: numbered as 0 on the website, it should be extracted as `1` nonetheless.
-    pageNumber: Optional[int] = None
+    pageNumber: Union[int, None, UnsetType] = Unset
 
     #: Link to the next page.
-    paginationNext: Optional[Link] = None
+    paginationNext: Union[Link, None, UnsetType] = Unset
 
     #: List of products.
     #:
@@ -501,7 +502,7 @@ class ProductList(Item):
     #: The order of the products reflects their position on the rendered page.
     #: Product order is top-to-bottom, and left-to-right or right-to-left
     #: depending on the webpage locale.
-    products: Optional[List[ProductFromList]] = None
+    products: Union[List[ProductFromList], None, UnsetType] = Unset
 
     #: Main URL from which the data has been extracted.
     #:

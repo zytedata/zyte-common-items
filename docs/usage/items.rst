@@ -1,6 +1,11 @@
+.. _items:
+
 =====
-Usage
+Items
 =====
+
+The :ref:`provided item classes <item-api>` can be used to map data extracted
+from web pages, e.g. using :ref:`page objects <page-objects>`.
 
 Creating items from dictionaries
 ================================
@@ -31,6 +36,7 @@ nested data, such as :class:`~zyte_common_items.components.Image` and
 >>> product.mainImage
 Image(url='https://example.com/image.png')
 >>> product.canonicalUrl
+Unset
 >>> product.gtin
 [Gtin(type='gtin13', value='9504000059446')]
 

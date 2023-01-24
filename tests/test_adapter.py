@@ -9,6 +9,7 @@ from typing import Optional
 import attrs
 import pytest
 from itemadapter import ItemAdapter
+from web_poet import Unset
 
 from zyte_common_items import Item, Product, ZyteItemAdapter
 
@@ -202,7 +203,7 @@ def test_known_field_get_missing():
     product = Product(url=url)
     with configured_adapter():
         adapter = ItemAdapter(product)
-        assert adapter["canonicalUrl"] is None
+        assert adapter["canonicalUrl"] is Unset
 
 
 def test_known_field_set():

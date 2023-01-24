@@ -25,7 +25,7 @@ setup(
     install_requires=[
         "attrs>=21.3.0",
         "itemadapter>=0.2.0",
-        "web-poet>=0.5.0",
+        "web-poet @ git+https://git@github.com/scrapinghub/web-poet@feat-unset#egg=web-poet",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
