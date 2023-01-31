@@ -2,7 +2,7 @@ from datetime import datetime
 
 import attrs
 import pytest
-from web_poet import HttpResponse, ResponseUrl, field
+from web_poet import HttpResponse, RequestUrl, ResponseUrl, field
 
 from zyte_common_items import (
     BaseProductListPage,
@@ -22,7 +22,7 @@ from zyte_common_items import (
 def test_base_pages_default(page_class):
     datetime_before = datetime.utcnow().replace(microsecond=0)
 
-    page = page_class(url=ResponseUrl("https://example.com"))
+    page = page_class(request_url=RequestUrl("https://example.com"))
 
     assert page.metadata.probability == 1.0
     assert page.url == "https://example.com"

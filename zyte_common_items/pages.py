@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import attrs
-from web_poet import ItemPage, ResponseUrl, Returns, WebPage, field
+from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
 
 from .components import Metadata
 from .items import Product, ProductList
@@ -25,10 +25,10 @@ class _BaseMixin:
 
 @attrs.define
 class BasePage(_BaseMixin, ItemPage):
-    _url: ResponseUrl
+    request_url: RequestUrl
 
     def _get_response_url(self):
-        return self._url
+        return self.request_url
 
 
 class BaseProductPage(BasePage, Returns[Product]):
