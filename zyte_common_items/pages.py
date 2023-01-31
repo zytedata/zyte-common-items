@@ -8,9 +8,6 @@ from .items import Product, ProductList
 
 
 class _BaseMixin:
-    def _get_response_url(self):
-        raise NotImplementedError
-
     @field
     def metadata(self) -> Metadata:
         return Metadata(
@@ -18,17 +15,14 @@ class _BaseMixin:
             probability=1.0,
         )
 
-    @field
-    def url(self) -> str:
-        return str(self._get_response_url())
-
 
 @attrs.define
 class BasePage(_BaseMixin, ItemPage):
     request_url: RequestUrl
 
-    def _get_response_url(self):
-        return self.request_url
+    @field
+    def url(self) -> str:
+        return str(self.request_url)
 
 
 class BaseProductPage(BasePage, Returns[Product]):
@@ -41,8 +35,9 @@ class BaseProductListPage(BasePage, Returns[ProductList]):
 
 @attrs.define
 class Page(_BaseMixin, WebPage):
-    def _get_response_url(self):
-        return self.response.url
+    @field
+    def url(self) -> str:
+        return str(self.response.url)
 
 
 class ProductPage(Page, Returns[Product]):
