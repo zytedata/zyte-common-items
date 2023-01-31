@@ -7,34 +7,26 @@ Components
 These classes are used to map data within :ref:`items <items>`, and are not
 tied to any specific item type.
 
-.. class:: zyte_common_items.AdditionalProperty(**kwargs)
-.. autoclass:: zyte_common_items.components.AdditionalProperty(**kwargs)
+.. autoclass:: zyte_common_items.AdditionalProperty(**kwargs)
    :members:
 
-.. class:: zyte_common_items.AggregateRating(**kwargs)
-.. autoclass:: zyte_common_items.components.AggregateRating(**kwargs)
+.. autoclass:: zyte_common_items.AggregateRating(**kwargs)
    :members:
 
-.. class:: zyte_common_items.Brand(**kwargs)
-.. autoclass:: zyte_common_items.components.Brand(**kwargs)
+.. autoclass:: zyte_common_items.Brand(**kwargs)
    :members:
 
-.. class:: zyte_common_items.Breadcrumb(**kwargs)
-.. autoclass:: zyte_common_items.components.Breadcrumb(**kwargs)
+.. autoclass:: zyte_common_items.Breadcrumb(**kwargs)
    :members:
 
-.. class:: zyte_common_items.Gtin(**kwargs)
-.. autoclass:: zyte_common_items.components.Gtin(**kwargs)
+.. autoclass:: zyte_common_items.Gtin(**kwargs)
    :members:
 
-.. class:: zyte_common_items.Image(**kwargs)
-.. autoclass:: zyte_common_items.components.Image(**kwargs)
+.. autoclass:: zyte_common_items.Image(**kwargs)
    :members:
 
-.. class:: zyte_common_items.Link(**kwargs)
-.. autoclass:: zyte_common_items.components.Link(**kwargs)
+.. autoclass:: zyte_common_items.Link(**kwargs)
    :members:
 
-.. class:: zyte_common_items.Metadata(**kwargs)
-.. autoclass:: zyte_common_items.components.Metadata(**kwargs)
+.. autoclass:: zyte_common_items.Metadata(**kwargs)
    :members:

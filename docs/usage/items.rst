@@ -1,6 +1,11 @@
+.. _items:
+
 =====
-Usage
+Items
 =====
+
+The :ref:`provided item classes <item-api>` can be used to map data extracted
+from web pages, e.g. using :ref:`page objects <page-objects>`.
 
 Creating items from dictionaries
 ================================
