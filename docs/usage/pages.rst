@@ -12,7 +12,7 @@ They provide the following base line:
 
 -   They declare the :ref:`item class <items>` that they return, allowing for
     their ``to_item`` method to automatically build an instance of it from
-    ``@field``-decorated methods. See :ref:`web-poet-fields`.
+    ``@field``-decorated methods. See :ref:`fields`.
 
 -   They provide a default implementation for their
     :attr:`~zyte_common_items.Page.metadata` and
