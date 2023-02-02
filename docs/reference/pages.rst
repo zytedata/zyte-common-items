@@ -37,7 +37,7 @@ inherit from :class:`~zyte_common_items.BasePage` instead.
    :show-inheritance:
 
    Base class for page object classes that has
-   :class:`~zyte_common_items.ResponseUrl` as a dependency.
+   :class:`~zyte_common_items.RequestUrl` as a dependency.
 
    .. data:: metadata
       :type: zyte_common_items.Metadata
@@ -50,7 +50,7 @@ inherit from :class:`~zyte_common_items.BasePage` instead.
       :attr:`~zyte_common_items.Metadata.probability` is set to ``1.0``.
 
    .. data:: url
-      :type: web_poet.page_inputs.http.ResponseUrl
+      :type: str
 
       Main URL from which the data has been extracted.
 
@@ -71,6 +71,6 @@ inherit from :class:`~zyte_common_items.BasePage` instead.
       :attr:`~zyte_common_items.Metadata.probability` is set to ``1.0``.
 
    .. data:: url
-      :type: web_poet.page_inputs.http.ResponseUrl
+      :type: str
 
       Main URL from which the data has been extracted.
