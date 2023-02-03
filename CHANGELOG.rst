@@ -2,8 +2,8 @@
 Changelog
 =========
 
-0.3.0 (to be released)
-======================
+0.3.0 (2023-02-03)
+==================
 
 * Added :ref:`page object classes <page-objects>` for e-commerce product detail
   and product list pages.
