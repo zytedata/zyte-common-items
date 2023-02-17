@@ -116,7 +116,7 @@ input:
 >>> product = Product.from_dict(data)
 Traceback (most recent call last):
 ...
-AttributeError: 'str' object has no attribute 'items'
+ValueError: Expected 'mainImage' to be a dict with fields from zyte_common_items.components.Image, got 'not a dictionary'.
 >>> data = {
 ...     'url': 'https://example.com/',
 ...     'breadcrumbs': 3,
@@ -124,7 +124,7 @@ AttributeError: 'str' object has no attribute 'items'
 >>> product = Product.from_dict(data)
 Traceback (most recent call last):
 ...
-TypeError: 'int' object is not iterable
+ValueError: Expected 'breadcrumbs' to be a list of dicts with fields from zyte_common_items.components.Breadcrumb, got 3.
 
 
 Defining custom items
