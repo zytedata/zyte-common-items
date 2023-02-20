@@ -104,17 +104,23 @@ class Item(_ItemBase):
 
         if from_dict or from_list:
             item = dict(**item)
-            item.update(
-                {
-                    key: cls.from_dict(item.get(key))
-                    for key, cls in (from_dict or {}).items()
-                }
-            )
-            item.update(
-                {
-                    key: cls.from_list(item.get(key, []))
-                    for key, cls in (from_list or {}).items()
-                }
-            )
+            for key, cls in (from_dict or {}).items():
+                value = item.get(key)
+                if value is not None and not isinstance(value, dict):
+                    path = f"{cls.__module__}.{cls.__qualname__}"
+                    raise ValueError(
+                        f"Expected {key!r} to be a dict with fields from "
+                        f"{path}, got {value!r}."
+                    )
+                item[key] = cls.from_dict(value)
+            for key, cls in (from_list or {}).items():
+                value = item.get(key)
+                if value is not None and not isinstance(value, list):
+                    path = f"{cls.__module__}.{cls.__qualname__}"
+                    raise ValueError(
+                        f"Expected {key!r} to be a list of dicts with fields "
+                        f"from {path}, got {value!r}."
+                    )
+                item[key] = cls.from_list(value)
 
         return item
