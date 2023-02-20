@@ -102,11 +102,6 @@ class Item(_ItemBase):
             elif is_data_container(type_annotation):
                 from_dict[field] = type_annotation
 
-        def cls_path(cls):
-            if cls.__module__ == "builtins":
-                return cls.__qualname__
-            return f"{cls.__module__}.{cls.__qualname__}"
-
         if from_dict or from_list:
             item = dict(**item)
             for key, cls in (from_dict or {}).items():
