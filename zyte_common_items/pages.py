@@ -8,8 +8,7 @@ from .items import Product, ProductList
 
 
 class _BaseMixin:
-    @field
-    def metadata(self) -> Metadata:
+    def _metadata(self) -> Metadata:
         return Metadata(
             dateDownloaded=f"{datetime.utcnow().isoformat(timespec='seconds')}Z",
             probability=1.0,
@@ -23,6 +22,10 @@ class BasePage(_BaseMixin, ItemPage):
     @field
     def url(self) -> str:
         return str(self.request_url)
+
+    @field
+    def metadata(self) -> Metadata:
+        return self._metadata()
 
 
 class BaseProductPage(BasePage, Returns[Product]):
@@ -38,6 +41,10 @@ class Page(_BaseMixin, WebPage):
     @field
     def url(self) -> str:
         return str(self.response.url)
+
+    @field
+    def metadata(self) -> Metadata:
+        return self._metadata()
 
 
 class ProductPage(Page, Returns[Product]):
