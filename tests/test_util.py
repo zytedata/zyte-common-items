@@ -1,7 +1,7 @@
 import attrs
 import pytest
 
-from zyte_common_items.util import split_in_unknown_and_known_fields
+from zyte_common_items.util import split_in_unknown_and_known_fields, validate_timezone
 
 
 @attrs.define(auto_attribs=True, slots=True)
@@ -26,3 +26,14 @@ def test_split_in_unknown_and_known_fields():
 
     with pytest.raises(ValueError):
         split_in_unknown_and_known_fields(input, str)
+
+
+def test_validate_timezone():
+    # valid timezones
+    validate_timezone("Europe/London")
+    validate_timezone("Pacific/Honolulu")
+    validate_timezone()
+
+    with pytest.raises(ValueError):
+        validate_timezone("+3")
+        validate_timezone("UTC +3")

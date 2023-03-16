@@ -1,6 +1,7 @@
 build/
 dist/
 .coverage
+.idea/
 __pycache__/
 .tox/
 zyte_common_items.egg-info

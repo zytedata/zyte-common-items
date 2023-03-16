@@ -1,5 +1,6 @@
 from typing import Any, Callable, Dict, Optional, Tuple, Type, Union
 from weakref import WeakKeyDictionary
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 import attrs
 from web_poet.page_inputs.url import _Url
@@ -65,3 +66,15 @@ def url_to_str(url: Union[str, _Url]) -> str:
             f"{url!r} is neither a string nor an instance of RequestURL or ResponseURL."
         )
     return str(url)
+
+
+def validate_timezone(value: Optional[str] = None):
+    """Validates the value against valid ZoneInfo or optional"""
+    if not value:
+        return None
+    try:
+        _ = ZoneInfo(value)
+    except ZoneInfoNotFoundError:
+        raise ValueError(f"{value} is not a valid timezone")
+
+    return str(value)
