@@ -1,8 +1,8 @@
 from typing import Any, Callable, Dict, Optional, Tuple, Type, Union
 from weakref import WeakKeyDictionary
-from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 import attrs
+import pytz
 from web_poet.page_inputs.url import _Url
 
 # Caches the attribute names for attr.s classes
@@ -73,8 +73,8 @@ def validate_timezone(value: Optional[str] = None):
     if not value:
         return None
     try:
-        _ = ZoneInfo(value)
-    except ZoneInfoNotFoundError:
+        _ = pytz.timezone(value)
+    except pytz.UnknownTimeZoneError:
         raise ValueError(f"{value} is not a valid timezone")
 
     return str(value)

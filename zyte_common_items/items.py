@@ -597,7 +597,7 @@ class BusinessPlace(Item):
     #: How is the price range of the place viewed by its customers (from z to zzzz).
     priceRange: Optional[str] = attrs.field(
         default=None,
-        validator=attrs.validators.optional(attrs.validators.matches_re("^{1,4}$")),
+        validator=attrs.validators.optional(attrs.validators.matches_re("^z{1,4}$")),
     )
 
     #: Which timezone is the place situated in.
