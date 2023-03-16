@@ -4,7 +4,7 @@ import attrs
 from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
 
 from .components import Metadata
-from .items import Product, ProductList
+from .items import BusinessPlace, Product, ProductList
 
 
 class _BaseMixin:
@@ -45,4 +45,8 @@ class ProductPage(Page, Returns[Product]):
 
 
 class ProductListPage(Page, Returns[ProductList]):
+    pass
+
+
+class BusinessPlacePage(Page, Returns[BusinessPlace]):
     pass
