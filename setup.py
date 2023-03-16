@@ -22,11 +22,7 @@ setup(
     package_data={
         "zyte_common_items": ["py.typed", "VERSION"],
     },
-    install_requires=[
-        "attrs>=21.3.0",
-        "itemadapter>=0.2.0",
-        "web-poet>=0.7.0",
-    ],
+    install_requires=["attrs>=21.3.0", "itemadapter>=0.2.0", "web-poet>=0.7.0", "pytz"],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
