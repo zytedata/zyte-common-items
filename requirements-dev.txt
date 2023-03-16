@@ -4,3 +4,4 @@ pytest
 mypy
 tox
 pytz
+types-pytz
