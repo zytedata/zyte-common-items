@@ -8,7 +8,6 @@ from zyte_common_items.components import (
     Address,
     AggregateRating,
     Amenity,
-    Anchor,
     Brand,
     Breadcrumb,
     BusinessPlaceMetadata,
@@ -16,6 +15,7 @@ from zyte_common_items.components import (
     Image,
     Link,
     Metadata,
+    NamedLink,
     OpeningHours,
     ParentPlace,
     StarRating,
@@ -539,7 +539,7 @@ class BusinessPlace(Item):
     name: Optional[str] = None
 
     #: List of actions that can be performed directly from the URLs on the place page, including URLs.
-    actions: Optional[List[Anchor]] = None
+    actions: Optional[List[NamedLink]] = None
 
     #: List of name-value pais of any unmapped additional properties specific to the place
     additionalProperties: Optional[List[AdditionalProperty]] = None
@@ -550,7 +550,7 @@ class BusinessPlace(Item):
     #: The details of the reservation action,
     #: e.g. table reservation in case of restaurants
     #: or room reservation in case of hotels.
-    reservationAction: Optional[Anchor] = None
+    reservationAction: Optional[NamedLink] = None
 
     #: List of categories the place belongs to.
     categories: Optional[List[str]] = None
@@ -589,7 +589,7 @@ class BusinessPlace(Item):
     openingHours: Optional[List[OpeningHours]] = None
 
     #: List of partner review sites.
-    reviewSites: Optional[List[Anchor]] = None
+    reviewSites: Optional[List[NamedLink]] = None
 
     #: The phone number associated with the place, as it appears on the page.
     telephone: Optional[str] = None

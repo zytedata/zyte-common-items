@@ -7,7 +7,6 @@ from zyte_common_items import (
     Address,
     AggregateRating,
     Amenity,
-    Anchor,
     Brand,
     Breadcrumb,
     BusinessPlace,
@@ -16,6 +15,7 @@ from zyte_common_items import (
     Image,
     Link,
     Metadata,
+    NamedLink,
     OpeningHours,
     ParentPlace,
     Product,
@@ -115,27 +115,25 @@ _PRODUCT_LIST_ALL_KWARGS: dict = {
     "products": [ProductFromList()],
 }
 
-_BUSINESS_PLACE_MIN_KWARGS: dict = {
-    "url": "https://www.google.com/maps?cid=8273826543880430215"
-}
+_BUSINESS_PLACE_MIN_KWARGS: dict = {"url": "https://place-listing.example/place/12345"}
 
 _BUSINESS_PLACE_ALL_KWARGS: dict = {
     **_BUSINESS_PLACE_MIN_KWARGS,
     "placeId": "ChIJ02PI3bsaB3wRh-IwsWeJ0nI",
     "name": "Sheraton Kauai Resort",
     "actions": [
-        Anchor(name="Reserve Table", url="https://example.com"),
-        Anchor(name="Book Room", url="https://example.com"),
+        NamedLink(name="Reserve Table", url="https://example.com"),
+        NamedLink(name="Book Room", url="https://example.com"),
     ],
     "additionalProperties": [
         AdditionalProperty(name="Popular for", value="Lunch,Dinner")
     ],
     "address": Address(addressRaw="2440 Hoonani Rd, Koloa, HI 96756, US"),
-    "reservationAction": Anchor(name="Reserve a table", url="https://example.com"),
+    "reservationAction": NamedLink(name="Reserve a table", url="https://example.com"),
     "categories": ["Hotel", "Wedding venue"],
     "description": "Oceanfront resort offering Hawaiian dining, plus 2 outdoor pools & a fitness center.",
     "features": ["Pool", "Free Parking"],
-    "map": "https://www.google.com/maps?cid=8273826543880430215",
+    "map": "https://map.example/place/12345",
     "images": [
         Image("http://example.com/image1.png"),
     ],
@@ -148,7 +146,7 @@ _BUSINESS_PLACE_ALL_KWARGS: dict = {
     "starRating": StarRating(raw="4-star Hotel"),
     "containedInPlace": ParentPlace(name="Gateway Plaza", placeId="ChIJCVDfcE_GBtq"),
     "openingHours": [OpeningHours(dayOfWeek="Monday", opens="10:00")],
-    "reviewSites": [Anchor(name="Expedia", url="https://example.com")],
+    "reviewSites": [NamedLink(name="Expedia", url="https://example.com")],
     "telephone": "(808) 742-1661",
     "priceRange": "zz",
     "timezone": "Pacific/Honolulu",

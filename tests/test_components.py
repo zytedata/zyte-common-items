@@ -6,6 +6,7 @@ from zyte_common_items import (
     BusinessPlaceMetadata,
     Link,
     Metadata,
+    NamedLink,
     OpeningHours,
     ParentPlace,
     StarRating,
@@ -34,9 +35,9 @@ def test_metadata_default_values():
     assert metadata.probability is None
 
 
-def test_anchor_optional_fields():
-    Link(text="foo")
-    Link(url="https://example.com")
+def test_named_link_optional_fields():
+    NamedLink(name="foo")
+    NamedLink(url="https://example.com")
 
 
 def test_business_place_metadata_default_values():
@@ -53,7 +54,8 @@ def test_address():
     Address(addressLocality="Poipu")
     Address(addressRegion="Kauaʻi County")
     Address(addressCountry="US")
-    Address(postalCode="HI 96756")
+    Address(postalCode="96756")
+    Address(postalCodeAux="HI")
     Address(latitude=21.8768183)
     Address(longitude=-159.3620652)
 

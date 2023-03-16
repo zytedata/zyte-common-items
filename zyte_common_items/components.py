@@ -129,14 +129,8 @@ class Link(Item):
 
 
 @attrs.define(kw_only=True)
-class Anchor(Item):
-    """A link from a webpage to another webpage.
-
-    Only difference between :class:`Link <zyte_common_items.components.Link> and this class
-    is the attributes "name" and "text".
-
-    Can be merged in the future but require changing the standard schemas.
-    """
+class NamedLink(Item):
+    """A link from a webpage to another webpage."""
 
     #: The name of the link.
     name: Optional[str] = None
