@@ -7,10 +7,12 @@ Changelog
 
 * Fixed fields from :class:`~zyte_common_items.BasePage` subclasses leaking
   across subclasses.
+  (`#29 <https://github.com/zytedata/zyte-common-items/pull/29>`_,
+  `#30 <https://github.com/zytedata/zyte-common-items/pull/30>`_)
 
 * Improved how the :meth:`~zyte_common_items.Item.from_dict` and
   :meth:`~zyte_common_items.Item.from_list` methods report issues in the input
-  data.
+  data. (`#25 <https://github.com/zytedata/zyte-common-items/pull/25>`_)
 
 
 0.3.0 (2023-02-03)
