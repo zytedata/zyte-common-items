@@ -2,8 +2,8 @@
 Changelog
 =========
 
-0.3.1 (to be released)
-======================
+0.3.1 (2023-03-17)
+==================
 
 * Fixed fields from :class:`~zyte_common_items.BasePage` subclasses leaking
   across subclasses.
