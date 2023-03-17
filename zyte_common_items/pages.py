@@ -2,12 +2,13 @@ from datetime import datetime
 
 import attrs
 from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
+from web_poet.fields import FieldsMixin
 
 from .components import Metadata
 from .items import Product, ProductList
 
 
-class _BaseMixin:
+class _BaseMixin(FieldsMixin):
     @field
     def metadata(self) -> Metadata:
         return Metadata(
