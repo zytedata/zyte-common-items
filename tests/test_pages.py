@@ -101,3 +101,23 @@ async def test_example():
     item_datetime = datetime.fromisoformat(item_datetime_string[:-1])
     datetime_after = datetime.utcnow().replace(microsecond=0)
     assert datetime_before <= item_datetime <= datetime_after
+
+
+@pytest.mark.asyncio
+async def test_mixin_leak():
+    """https://github.com/zytedata/zyte-common-items/pull/29"""
+
+    class MyProductListPage(ProductListPage):
+        @field
+        def products(self):
+            return [{"name": "foo"}, {"name": "bar"}]
+
+    class MyProductPage(ProductPage):
+        @field
+        def brand(self):
+            return "baz"
+
+    from web_poet.fields import get_fields_dict
+
+    assert set(get_fields_dict(MyProductListPage)) == {"metadata", "products", "url"}
+    assert set(get_fields_dict(MyProductPage)) == {"brand", "metadata", "url"}
