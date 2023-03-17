@@ -248,7 +248,7 @@ class ParentPlace(Item):
 
 @attrs.define(kw_only=True)
 class OpeningHoursItem(Item):
-    """specification of opening hours of a business place."""
+    """Specification of opening hours of a business place."""
 
     #: English weekday name.
     dayOfWeek: Optional[str] = None
