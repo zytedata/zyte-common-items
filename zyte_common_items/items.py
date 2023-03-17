@@ -16,7 +16,7 @@ from zyte_common_items.components import (
     Link,
     Metadata,
     NamedLink,
-    OpeningHours,
+    OpeningHoursItem,
     ParentPlace,
     StarRating,
 )
@@ -531,17 +531,15 @@ class BusinessPlace(Item):
     #:
     #: In case there is no product data on the page or the page was not reached, the returned "empty"
     #: item would still contain url field and metadata field with dateDownloaded.
-    #:
-    #: example: https://www.google.com/maps?cid=8273826543880430215
     url: str = attrs.field(converter=url_to_str)
 
-    #: The name of the place
+    #: The name of the place.
     name: Optional[str] = None
 
     #: List of actions that can be performed directly from the URLs on the place page, including URLs.
     actions: Optional[List[NamedLink]] = None
 
-    #: List of name-value pais of any unmapped additional properties specific to the place
+    #: List of name-value pais of any unmapped additional properties specific to the place.
     additionalProperties: Optional[List[AdditionalProperty]] = None
 
     #: The address details of the place.
@@ -557,7 +555,7 @@ class BusinessPlace(Item):
 
     #: The description of the place
     #:
-    #: Stripped of white spaces
+    #: Stripped of white spaces.
     description: Optional[str] = attrs.field(
         default=None, converter=attrs.converters.optional(lambda x: x.strip())
     )
@@ -586,7 +584,7 @@ class BusinessPlace(Item):
     containedInPlace: Optional[ParentPlace] = None
 
     #: Ordered specification of opening hours, including data for opening and closing time for each day of the week.
-    openingHours: Optional[List[OpeningHours]] = None
+    openingHours: Optional[List[OpeningHoursItem]] = None
 
     #: List of partner review sites.
     reviewSites: Optional[List[NamedLink]] = None
@@ -595,10 +593,7 @@ class BusinessPlace(Item):
     telephone: Optional[str] = None
 
     #: How is the price range of the place viewed by its customers (from z to zzzz).
-    priceRange: Optional[str] = attrs.field(
-        default=None,
-        validator=attrs.validators.optional(attrs.validators.matches_re("^z{1,4}$")),
-    )
+    priceRange: Optional[str] = None
 
     #: Which timezone is the place situated in.
     #:

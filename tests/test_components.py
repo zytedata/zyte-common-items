@@ -7,7 +7,7 @@ from zyte_common_items import (
     Link,
     Metadata,
     NamedLink,
-    OpeningHours,
+    OpeningHoursItem,
     ParentPlace,
     StarRating,
 )
@@ -75,4 +75,4 @@ def test_parent_place():
 
 
 def test_opening_hours():
-    OpeningHours(dayOfWeek="Sunday", opens="9:00", closes="12:00")
+    OpeningHoursItem(dayOfWeek="Sunday", opens="9:00", closes="12:00")

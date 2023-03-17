@@ -1,6 +1,4 @@
 """Classes for data nested within items."""
-
-import calendar
 from typing import Optional
 
 import attrs
@@ -196,14 +194,15 @@ class Address(Item):
 
     #: The country the place is located in.
     #:
-    #: The country name or the two-letter ISO 3166-1 alpha-2 country code.
-    #: https://en.wikipedia.org/wiki/ISO_3166-1
+    #: The country name or the `ISO 3166-1 alpha-2 country code
+    #: <https://en.wikipedia.org/wiki/ISO_3166-1>`__.
     addressCountry: Optional[str] = None
 
     #: The postal code of the address.
     postalCode: Optional[str] = None
 
     #: The auxiliary part of the postal code.
+    #:
     #: It may include a state abbreviation or town name, depending on local standards.
     postalCodeAux: Optional[str] = None
 
@@ -221,7 +220,7 @@ class Amenity(Item):
     #: Name of amenity.
     name: str
 
-    #: Availability of the amenity
+    #: Availability of the amenity.
     value: bool
 
 
@@ -248,30 +247,17 @@ class ParentPlace(Item):
 
 
 @attrs.define(kw_only=True)
-class OpeningHours(Item):
+class OpeningHoursItem(Item):
     """specification of opening hours of a business place."""
 
     #: English weekday name.
-    dayOfWeek: Optional[str] = attrs.field(
-        default=None,
-        validator=attrs.validators.optional(attrs.validators.in_(calendar.day_name)),
-    )
+    dayOfWeek: Optional[str] = None
 
     #: Opening time in ISO 8601 format, local time.
-    opens: Optional[str] = attrs.field(
-        default=None,
-        validator=attrs.validators.optional(
-            attrs.validators.matches_re("[0-9]{1,2}:[0-9]{2}")
-        ),
-    )
+    opens: Optional[str] = None
 
     #: Closing time in ISO 8601 format, local time.
-    closes: Optional[str] = attrs.field(
-        default=None,
-        validator=attrs.validators.optional(
-            attrs.validators.matches_re("[0-9]{1,2}:[0-9]{2}")
-        ),
-    )
+    closes: Optional[str] = None
 
     #: Day of the week, as it appears on the page, without processing.
     rawDayOfWeek: Optional[str] = None

@@ -14,7 +14,7 @@ from .components import (
     Link,
     Metadata,
     NamedLink,
-    OpeningHours,
+    OpeningHoursItem,
     ParentPlace,
     StarRating,
 )
