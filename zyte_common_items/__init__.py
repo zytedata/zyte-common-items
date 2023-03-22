@@ -20,6 +20,7 @@ from .components import (
 )
 from .items import BusinessPlace, Product, ProductFromList, ProductList, ProductVariant
 from .pages import (
+    BaseBusinessPlacePage,
     BasePage,
     BaseProductListPage,
     BaseProductPage,

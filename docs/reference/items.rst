@@ -26,6 +26,12 @@ Product List
    :members:
    :inherited-members:
 
+BusinessPlace
+=============
+
+.. autoclass:: zyte_common_items.BusinessPlace(**kwargs)
+   :members:
+   :inherited-members:
 
 Custom items
 ============

@@ -24,6 +24,16 @@ Product List
    :show-inheritance:
 
 
+Business Place
+==============
+
+.. autoclass:: zyte_common_items.BaseBusinessPlacePage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.BusinessPlacePage(**kwargs)
+   :show-inheritance:
+
+
 Custom page objects
 ===================
 
