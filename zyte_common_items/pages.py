@@ -33,6 +33,10 @@ class BaseProductListPage(BasePage, Returns[ProductList]):
     pass
 
 
+class BaseBusinessPlacePage(BasePage, Returns[BusinessPlace]):
+    pass
+
+
 @attrs.define
 class Page(_BaseMixin, WebPage):
     @field
