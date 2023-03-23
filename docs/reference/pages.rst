@@ -14,7 +14,7 @@ Product
    :show-inheritance:
 
 
-Product List
+Product list
 ============
 
 .. autoclass:: zyte_common_items.BaseProductListPage(**kwargs)
@@ -24,7 +24,7 @@ Product List
    :show-inheritance:
 
 
-Business Place
+Business place
 ==============
 
 .. autoclass:: zyte_common_items.BaseBusinessPlacePage(**kwargs)

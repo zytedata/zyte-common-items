@@ -115,10 +115,11 @@ _PRODUCT_LIST_ALL_KWARGS: dict = {
     "products": [ProductFromList()],
 }
 
-_BUSINESS_PLACE_MIN_KWARGS: dict = {"url": "https://place-listing.example/place/12345"}
+_BUSINESS_PLACE_MIN_KWARGS: dict = {}
 
 _BUSINESS_PLACE_ALL_KWARGS: dict = {
     **_BUSINESS_PLACE_MIN_KWARGS,
+    "url": "https://place-listing.example/place/12345",
     "placeId": "ChIJ02PI3bsaB3wRh-IwsWeJ0nI",
     "name": "Sheraton Kauai Resort",
     "actions": [

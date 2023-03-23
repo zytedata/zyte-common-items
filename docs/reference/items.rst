@@ -15,7 +15,7 @@ Product
    :members:
    :inherited-members:
 
-Product List
+Product list
 ============
 
 .. autoclass:: zyte_common_items.ProductList(**kwargs)
@@ -26,8 +26,8 @@ Product List
    :members:
    :inherited-members:
 
-BusinessPlace
-=============
+Business place
+==============
 
 .. autoclass:: zyte_common_items.BusinessPlace(**kwargs)
    :members:

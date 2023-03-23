@@ -518,7 +518,8 @@ class ProductList(Item):
 
 @attrs.define(slots=True, kw_only=True)
 class BusinessPlace(Item):
-    """Business Place from a Google Maps Search."""
+    """Business place, with properties typically seen on maps or business
+    listings."""
 
     #: Unique identifier of the place on the website.
     placeId: Optional[str] = None
@@ -527,11 +528,11 @@ class BusinessPlace(Item):
     #:
     #: The URL of the final response, after any redirects.
     #:
-    #: Required attribute.
-    #:
     #: In case there is no product data on the page or the page was not reached, the returned "empty"
     #: item would still contain url field and metadata field with dateDownloaded.
-    url: str = attrs.field(converter=url_to_str)
+    url: Optional[str] = attrs.field(
+        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    )
 
     #: The name of the place.
     name: Optional[str] = None
@@ -553,7 +554,7 @@ class BusinessPlace(Item):
     #: List of categories the place belongs to.
     categories: Optional[List[str]] = None
 
-    #: The description of the place
+    #: The description of the place.
     #:
     #: Stripped of white spaces.
     description: Optional[str] = attrs.field(
