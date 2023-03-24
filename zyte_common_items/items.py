@@ -557,9 +557,7 @@ class BusinessPlace(Item):
     #: The description of the place.
     #:
     #: Stripped of white spaces.
-    description: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(lambda x: x.strip())
-    )
+    description: Optional[str] = None
 
     #: List of frequently mentioned features of this place.
     features: Optional[List[str]] = None
