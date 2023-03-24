@@ -1,5 +1,4 @@
 """Classes for data nested within items."""
-
 from typing import Optional
 
 import attrs
@@ -128,6 +127,19 @@ class Link(Item):
 
 
 @attrs.define(kw_only=True)
+class NamedLink(Item):
+    """A link from a webpage to another webpage."""
+
+    #: The name of the link.
+    name: Optional[str] = None
+
+    #: Target URL.
+    url: Optional[str] = attrs.field(
+        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    )
+
+
+@attrs.define(kw_only=True)
 class Metadata(Item):
     """Data extraction process metadata.
 
@@ -148,3 +160,110 @@ class Metadata(Item):
     #: `0`. When there is no complete certainty, the value could be anything in
     #: between (e.g. `0.96`).
     probability: Optional[float] = None
+
+
+@attrs.define(kw_only=True)
+class BusinessPlaceMetadata(Metadata):
+    """Data extraction process metadata.
+
+    See :class:`BusinessPlace.metadata <zyte_common_items.items.BusinessPlace.metadata>`.
+    """
+
+    #: The search text the place was found with.
+    searchText: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
+class Address(Item):
+    """Address item."""
+
+    #: The raw address information, as it appears on the website.
+    addressRaw: Optional[str] = None
+
+    #: The street address of the place.
+    streetAddress: Optional[str] = None
+
+    #: The city the place is located in.
+    addressCity: Optional[str] = None
+
+    #: The locality to which the place belongs.
+    addressLocality: Optional[str] = None
+
+    #: The region of the place.
+    addressRegion: Optional[str] = None
+
+    #: The country the place is located in.
+    #:
+    #: The country name or the `ISO 3166-1 alpha-2 country code
+    #: <https://en.wikipedia.org/wiki/ISO_3166-1>`__.
+    addressCountry: Optional[str] = None
+
+    #: The postal code of the address.
+    postalCode: Optional[str] = None
+
+    #: The auxiliary part of the postal code.
+    #:
+    #: It may include a state abbreviation or town name, depending on local standards.
+    postalCodeAux: Optional[str] = None
+
+    #: Geographical latitude of the place.
+    latitude: Optional[float] = None
+
+    #: Geographical longitude of the place.
+    longitude: Optional[float] = None
+
+
+@attrs.define(kw_only=True)
+class Amenity(Item):
+    """An amenity that a business place has"""
+
+    #: Name of amenity.
+    name: str
+
+    #: Availability of the amenity.
+    value: bool
+
+
+@attrs.define(kw_only=True)
+class StarRating(Item):
+    """Official star rating of a place."""
+
+    #: Star rating of the place, as it appears on the page, without processing.
+    raw: Optional[str] = None
+
+    #: Star rating value of the place.
+    ratingValue: Optional[float] = None
+
+
+@attrs.define(kw_only=True)
+class ParentPlace(Item):
+    """If the place is located inside another place, these are the details of the parent place."""
+
+    #: Name of the parent place.
+    name: str
+
+    #: Identifier of the parent place.
+    placeId: str
+
+
+@attrs.define(kw_only=True)
+class OpeningHoursItem(Item):
+    """Specification of opening hours of a business place."""
+
+    #: English weekday name.
+    dayOfWeek: Optional[str] = None
+
+    #: Opening time in ISO 8601 format, local time.
+    opens: Optional[str] = None
+
+    #: Closing time in ISO 8601 format, local time.
+    closes: Optional[str] = None
+
+    #: Day of the week, as it appears on the page, without processing.
+    rawDayOfWeek: Optional[str] = None
+
+    #: Opening time, as it appears on the page, without processing.
+    rawOpens: Optional[str] = None
+
+    #: Closing time, as it appears on the page, without processing.
+    rawCloses: Optional[str] = None

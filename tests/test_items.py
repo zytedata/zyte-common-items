@@ -4,17 +4,25 @@ import pytest
 
 from zyte_common_items import (
     AdditionalProperty,
+    Address,
     AggregateRating,
+    Amenity,
     Brand,
     Breadcrumb,
+    BusinessPlace,
+    BusinessPlaceMetadata,
     Gtin,
     Image,
     Link,
     Metadata,
+    NamedLink,
+    OpeningHoursItem,
+    ParentPlace,
     Product,
     ProductFromList,
     ProductList,
     ProductVariant,
+    StarRating,
 )
 
 _PRODUCT_FROM_LIST_ALL_KWARGS: dict = {
@@ -107,6 +115,50 @@ _PRODUCT_LIST_ALL_KWARGS: dict = {
     "products": [ProductFromList()],
 }
 
+_BUSINESS_PLACE_MIN_KWARGS: dict = {}
+
+_BUSINESS_PLACE_ALL_KWARGS: dict = {
+    **_BUSINESS_PLACE_MIN_KWARGS,
+    "url": "https://place-listing.example/place/12345",
+    "placeId": "ChIJ02PI3bsaB3wRh-IwsWeJ0nI",
+    "name": "Sheraton Kauai Resort",
+    "actions": [
+        NamedLink(name="Reserve Table", url="https://example.com"),
+        NamedLink(name="Book Room", url="https://example.com"),
+    ],
+    "additionalProperties": [
+        AdditionalProperty(name="Popular for", value="Lunch,Dinner")
+    ],
+    "address": Address(addressRaw="2440 Hoonani Rd, Koloa, HI 96756, US"),
+    "reservationAction": NamedLink(name="Reserve a table", url="https://example.com"),
+    "categories": ["Hotel", "Wedding venue"],
+    "description": "Oceanfront resort offering Hawaiian dining, plus 2 outdoor pools & a fitness center.",
+    "features": ["Pool", "Free Parking"],
+    "map": "https://map.example/place/12345",
+    "images": [
+        Image("http://example.com/image1.png"),
+    ],
+    "amenityFeatures": [Amenity(name="Free WiFi", value=True)],
+    "aggregateRating": AggregateRating(
+        bestRating=5.0,
+        ratingValue=2.5,
+        reviewCount=123,
+    ),
+    "starRating": StarRating(raw="4-star Hotel"),
+    "containedInPlace": ParentPlace(name="Gateway Plaza", placeId="ChIJCVDfcE_GBtq"),
+    "openingHours": [OpeningHoursItem(dayOfWeek="Monday", opens="10:00")],
+    "reviewSites": [NamedLink(name="Expedia", url="https://example.com")],
+    "telephone": "(808) 742-1661",
+    "priceRange": "zz",
+    "timezone": "Pacific/Honolulu",
+    "isVerified": True,
+    "website": "https://example.com",
+    "tags": ["Dogs", "Family"],
+    "metadata": BusinessPlaceMetadata(
+        searchText="hotel", dateDownloaded="2022-12-31T13L01L54Z", probability=0.95
+    ),
+}
+
 
 def test_product_all_fields():
     product = Product(**_PRODUCT_ALL_KWARGS)
@@ -174,3 +226,25 @@ def test_product_variant_min_fields():
     product_variant = ProductVariant()
     for field in list(_PRODUCT_VARIANT_ALL_KWARGS):
         assert getattr(product_variant, field) is None
+
+
+def test_business_place_all_fields():
+    place = BusinessPlace(**_BUSINESS_PLACE_ALL_KWARGS)
+    for field in list(_BUSINESS_PLACE_ALL_KWARGS):
+        assert getattr(place, field) == _BUSINESS_PLACE_ALL_KWARGS[field]
+
+
+def test_business_place_min_fields():
+    place = BusinessPlace(**_BUSINESS_PLACE_MIN_KWARGS)
+    for field in list(_BUSINESS_PLACE_ALL_KWARGS):
+        if field in _BUSINESS_PLACE_MIN_KWARGS:
+            continue
+        assert getattr(place, field) is None
+
+
+def test_business_place_missing_fields():
+    for required_field in list(_BUSINESS_PLACE_MIN_KWARGS):
+        incomplete_kwargs: dict = copy(_BUSINESS_PLACE_MIN_KWARGS)
+        del incomplete_kwargs[required_field]
+        with pytest.raises(TypeError):
+            BusinessPlace(**incomplete_kwargs)

@@ -5,7 +5,7 @@ from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
 from web_poet.fields import FieldsMixin
 
 from .components import Metadata
-from .items import Product, ProductList
+from .items import BusinessPlace, Product, ProductList
 
 
 class _BaseMixin(FieldsMixin):
@@ -34,6 +34,10 @@ class BaseProductListPage(BasePage, Returns[ProductList]):
     pass
 
 
+class BaseBusinessPlacePage(BasePage, Returns[BusinessPlace]):
+    pass
+
+
 @attrs.define
 class Page(_BaseMixin, WebPage):
     @field
@@ -46,4 +50,8 @@ class ProductPage(Page, Returns[Product]):
 
 
 class ProductListPage(Page, Returns[ProductList]):
+    pass
+
+
+class BusinessPlacePage(Page, Returns[BusinessPlace]):
     pass
