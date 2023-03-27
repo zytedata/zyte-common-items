@@ -2,8 +2,8 @@
 Changelog
 =========
 
-0.4.0 (to be released)
-======================
+0.4.0 (2023-03-27)
+==================
 
 * Added support for business places.
 
