@@ -127,14 +127,15 @@ class Item(_ItemBase):
             if origin == Union:
                 field_classes = get_args(type_annotation)
                 if len(field_classes) != 2 or not isinstance(None, field_classes[1]):
-                    field_breadcrumbs = f"{_get_import_path(cls)}.{field}"
+                    path = f"{_get_import_path(cls)}.{field}"
                     raise ValueError(
-                        f"{field_breadcrumbs} is annotated with "
-                        f"{type_annotation}. Fields should only be annotated "
-                        f"with one type (or optional)."
+                        f"{path} is annotated with {type_annotation}. Fields "
+                        f"should only be annotated with one type (or "
+                        f"optional)."
                     )
-                if len(field_classes) == 2 and isinstance(None, field_classes[1]):
-                    is_optional = True
+                is_optional = len(field_classes) == 2 and isinstance(
+                    None, field_classes[1]
+                )
                 type_annotation = field_classes[0]
                 origin = get_origin(type_annotation)
 
