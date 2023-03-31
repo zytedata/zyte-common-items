@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import List, Optional, Union
 
 import attrs
 import pytest
@@ -22,15 +22,6 @@ class BigItem(Item):
     sub_item: Optional[SubItem] = None
 
 
-@attrs.define
-class BigItemIncorrect(Item):
-    """This item is particularly incorrect since the annotation for its field
-    belongs to multiple types.
-    """
-
-    sub_item: Union[SubItem, int, str]
-
-
 def test_is_data_container():
     """It should be able to discern if a given class/instance is a data container
     that is defined inside this repository.
@@ -44,7 +35,7 @@ def test_is_data_container():
     assert not is_data_container(NotConsideredAnItem())
 
 
-def test_item_from_dict():
+def test_from_dict():
     """Tests the annotation-aware behavior for correcty deriving the correct type
     in the sub fields.
     """
@@ -55,12 +46,69 @@ def test_item_from_dict():
     type(item.sub_item) == SubItem  # noqa: B015
 
 
-def test_item_from_dict_value_error():
+def test_from_dict_bad_annotation():
     """Items with fields annotated with a Union of multiple different types should
     error out.
     """
-    with pytest.raises(ValueError):
-        BigItemIncorrect.from_dict({"sub_item": {"name": "hello"}})
+
+    @attrs.define
+    class A(Item):
+        a: Union[int, str]
+
+    pattern = (
+        r"^tests\.\S+\.A\.a is annotated with typing\.Union\[int, str\]\. "
+        r"Fields should only be annotated with one type \(or optional\)\.$"
+    )
+    with pytest.raises(ValueError, match=pattern):
+        A.from_dict({"a": 1})
+
+
+def test_from_dict_non_dict():
+    @attrs.define
+    class A(Item):
+        a: str
+
+    pattern = r"Expected a dict with fields from tests\.\S+?\.A, got 'a'\."
+    with pytest.raises(ValueError, match=pattern):
+        A.from_dict("a")  # type: ignore
+
+
+def test_from_dict_non_dict_field():
+    @attrs.define
+    class B(Item):
+        b: str
+
+    @attrs.define
+    class A(Item):
+        a: B
+
+    pattern = r"Expected a to be a dict with fields from tests\.\S+?\.B, got 'b'\."
+    with pytest.raises(ValueError, match=pattern):
+        A.from_dict({"a": "b"})
+
+
+def test_from_dict_from_list_non_list_field():
+    @attrs.define
+    class A(Item):
+        a: List[str]
+
+    pattern = r"Expected a to be a list, got 'b'\."
+    with pytest.raises(ValueError, match=pattern):
+        A.from_dict({"a": "b"})
+
+
+def test_from_dict_from_list_non_dict_field():
+    @attrs.define
+    class B(Item):
+        b: str
+
+    @attrs.define
+    class A(Item):
+        a: List[B]
+
+    pattern = r"Expected a\[0\] to be a dict with fields from tests\.\S+?\.B, got 'b'\."
+    with pytest.raises(ValueError, match=pattern):
+        A.from_dict({"a": ["b"]})
 
 
 def test_item_unknown_input():
