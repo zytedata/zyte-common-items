@@ -44,7 +44,7 @@ def _get_import_path(obj: type):
     return f"{obj.__module__}.{obj.__qualname__}"
 
 
-def _extend_breadcrumbs(breadcrumbs: Optional[str], key: Union[int, str]):
+def _extend_breadcrumbs(breadcrumbs: Breadcrumbs, key: Union[int, str]):
     if isinstance(key, str):
         if not breadcrumbs:
             breadcrumbs = key
