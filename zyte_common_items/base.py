@@ -20,7 +20,7 @@ import attrs
 
 from .util import split_in_unknown_and_known_fields
 
-Breadcrumbs = Optional[str]
+_Trail = Optional[str]
 
 
 def is_data_container(cls_or_obj):
@@ -44,20 +44,20 @@ def _get_import_path(obj: type):
     return f"{obj.__module__}.{obj.__qualname__}"
 
 
-def _extend_breadcrumbs(breadcrumbs: Breadcrumbs, key: Union[int, str]):
+def _extend_trail(trail: _Trail, key: Union[int, str]):
     if isinstance(key, str):
-        if not breadcrumbs:
-            breadcrumbs = key
+        if not trail:
+            trail = key
         else:
-            breadcrumbs += f".{key}"
+            trail += f".{key}"
     else:
         assert isinstance(key, int)
         item = f"[{key}]"
-        if not breadcrumbs:
-            breadcrumbs = item
+        if not trail:
+            trail = item
         else:
-            breadcrumbs += item
-    return breadcrumbs
+            trail += item
+    return trail
 
 
 @attrs.define
@@ -66,40 +66,44 @@ class Item(_ItemBase):
         self._unknown_fields_dict = {}
 
     @classmethod
-    def from_dict(cls, item: Optional[Dict], *, breadcrumbs: Breadcrumbs = None):
+    def from_dict(cls, item: Optional[Dict]):
+        return cls._from_dict(item)
+
+    @classmethod
+    def _from_dict(cls, item: Optional[Dict], *, trail: _Trail = None):
         """Read an item from a dictionary."""
         if not item:
             return None
 
         if not isinstance(item, dict):
             path = _get_import_path(cls)
-            if not breadcrumbs:
+            if not trail:
                 prefix = "Expected"
             else:
-                prefix = f"Expected {breadcrumbs} to be"
+                prefix = f"Expected {trail} to be"
             raise ValueError(f"{prefix} a dict with fields from {path}, got {item!r}.")
 
-        item = cls._apply_field_types_to_sub_fields(item, breadcrumbs=breadcrumbs)
+        item = cls._apply_field_types_to_sub_fields(item, trail=trail)
         unknown_fields, known_fields = split_in_unknown_and_known_fields(item, cls)
         obj = cls(**known_fields)  # type: ignore
         obj._unknown_fields_dict = unknown_fields
         return obj
 
     @classmethod
-    def from_list(
-        cls, items: Optional[List[Dict]], *, breadcrumbs: Breadcrumbs = None
-    ) -> List:
+    def from_list(cls, items: Optional[List[Dict]], *, trail: _Trail = None) -> List:
+        return cls._from_list(items)
+
+    @classmethod
+    def _from_list(cls, items: Optional[List[Dict]], *, trail: _Trail = None) -> List:
         """Read items from a list."""
         result = []
         for index, item in enumerate(items or []):
-            index_breadcrumbs = _extend_breadcrumbs(breadcrumbs, index)
-            result.append(cls.from_dict(item, breadcrumbs=index_breadcrumbs))
+            index_trail = _extend_trail(trail, index)
+            result.append(cls._from_dict(item, trail=index_trail))
         return result
 
     @classmethod
-    def _apply_field_types_to_sub_fields(
-        cls, item: Dict, breadcrumbs: Breadcrumbs = None
-    ):
+    def _apply_field_types_to_sub_fields(cls, item: Dict, trail: _Trail = None):
         """This applies the correct data container class for some of the fields
         that need them.
 
@@ -107,7 +111,7 @@ class Item(_ItemBase):
         data container class based on the type annotations. This could handle both
         ``list`` and ``object`` type requirements. For example:
 
-            * Article having ``breadcrumbs: List[Breadcrumb]``
+            * Article having ``trail: List[Breadcrumb]``
             * Product having ``brand: Optional[Brand]``
 
         Moreover, fields that are not defined to be part of data container
@@ -142,9 +146,9 @@ class Item(_ItemBase):
             if origin is list:
                 value = item.get(field)
                 if not isinstance(value, list) and not (is_optional and value is None):
-                    field_breadcrumbs = _extend_breadcrumbs(breadcrumbs, field)
+                    field_trail = _extend_trail(trail, field)
                     raise ValueError(
-                        f"Expected {field_breadcrumbs} to be a list, got " f"{value!r}."
+                        f"Expected {field_trail} to be a list, got " f"{value!r}."
                     )
                 type_annotation = get_args(type_annotation)[0]
                 if is_data_container(type_annotation):
@@ -155,24 +159,24 @@ class Item(_ItemBase):
         if from_dict or from_list:
             item = dict(**item)
             for key, cls in (from_dict or {}).items():
-                key_breadcrumbs = _extend_breadcrumbs(breadcrumbs, key)
+                key_trail = _extend_trail(trail, key)
                 value = item.get(key)
                 if value is not None and not isinstance(value, dict):
                     path = _get_import_path(cls)
                     raise ValueError(
-                        f"Expected {key_breadcrumbs} to be a dict with fields "
+                        f"Expected {key_trail} to be a dict with fields "
                         f"from {path}, got {value!r}."
                     )
-                item[key] = cls.from_dict(value, breadcrumbs=key_breadcrumbs)
+                item[key] = cls._from_dict(value, trail=key_trail)
             for key, cls in (from_list or {}).items():
-                key_breadcrumbs = _extend_breadcrumbs(breadcrumbs, key)
+                key_trail = _extend_trail(trail, key)
                 value = item.get(key)
                 if value is not None and not isinstance(value, list):
                     path = _get_import_path(cls)
                     raise ValueError(
-                        f"Expected {key_breadcrumbs} to be a list of dicts "
+                        f"Expected {key_trail} to be a list of dicts "
                         f"with fields from {path}, got {value!r}."
                     )
-                item[key] = cls.from_list(value, breadcrumbs=key_breadcrumbs)
+                item[key] = cls._from_list(value, trail=key_trail)
 
         return item
