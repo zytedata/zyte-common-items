@@ -113,7 +113,7 @@ class Item(_ItemBase):
         data container class based on the type annotations. This could handle both
         ``list`` and ``object`` type requirements. For example:
 
-            * Article having ``trail: List[Breadcrumb]``
+            * Article having ``breadcrumbs: List[Breadcrumb]``
             * Product having ``brand: Optional[Brand]``
 
         Moreover, fields that are not defined to be part of data container
