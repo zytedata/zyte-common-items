@@ -67,6 +67,7 @@ class Item(_ItemBase):
 
     @classmethod
     def from_dict(cls, item: Optional[Dict]):
+        """Read an item from a dictionary."""
         return cls._from_dict(item)
 
     @classmethod
@@ -91,6 +92,7 @@ class Item(_ItemBase):
 
     @classmethod
     def from_list(cls, items: Optional[List[Dict]], *, trail: _Trail = None) -> List:
+        """Read items from a list."""
         return cls._from_list(items)
 
     @classmethod
