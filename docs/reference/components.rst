@@ -51,3 +51,6 @@ tied to any specific item type.
 
 .. autoclass:: zyte_common_items.StarRating(**kwargs)
    :members:
+
+.. autoclass:: zyte_common_items.RealEstateArea(**kwargs)
+   :members:

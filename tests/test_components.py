@@ -9,6 +9,7 @@ from zyte_common_items import (
     NamedLink,
     OpeningHoursItem,
     ParentPlace,
+    RealEstateArea,
     StarRating,
 )
 
@@ -76,3 +77,10 @@ def test_parent_place():
 
 def test_opening_hours():
     OpeningHoursItem(dayOfWeek="Sunday", opens="9:00", closes="12:00")
+
+
+def test_real_estate_area():
+    RealEstateArea(value=123.45, unitCode="SQMT", raw="123.45 square meters")
+    RealEstateArea(
+        value=123.45, unitCode="SQMT", raw="123.45 square meters", areaType="LOT"
+    )

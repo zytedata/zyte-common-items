@@ -22,6 +22,8 @@ from zyte_common_items import (
     ProductFromList,
     ProductList,
     ProductVariant,
+    RealEstateArea,
+    RealEstateListing,
     StarRating,
 )
 
@@ -159,6 +161,56 @@ _BUSINESS_PLACE_ALL_KWARGS: dict = {
     ),
 }
 
+_REAL_ESTATE_LISTING_MIN_KWARGS: dict = {
+    "url": "https://example.com/real-estate-listing/12345",
+}
+
+_REAL_ESTATE_LISTING_ALL_KWARGS: dict = {
+    **_REAL_ESTATE_LISTING_MIN_KWARGS,
+    "breadcrumbs": [
+        Breadcrumb(name="Level 1", url="http://example.com/level1"),
+        Breadcrumb(name="Level 2", url="http://example.com/level1/level2"),
+    ],
+    "realEstateId": "12345",
+    "name": "Beautiful 2 bedroom apartment",
+    "datePublished": "2022-12-31T13:01:54Z",
+    "datePublishedRaw": "2022-12-31",
+    "description": "Beautiful 2 bedroom apartment in the heart of the city",
+    "mainImage": Image("http://example.com/image1.png"),
+    "images": [
+        Image("http://example.com/image1.png"),
+        Image("http://example.com/image2.png"),
+    ],
+    "address": Address(addressRaw="2440 Hoonani Rd, Koloa, HI 96756, US"),
+    "area": RealEstateArea(
+        value=100,
+        unitCode="SQMT",
+        areaType="LOT",
+        raw="100 sqm",
+    ),
+    "numberOfBathroomsTotal": 2,
+    "numberOfFullBathrooms": 1,
+    "numberOfPartialBathrooms": 1,
+    "numberOfBedrooms": 2,
+    "numberOfRooms": 2,
+    "tradeType": "RENT",
+    "price": "456456",
+    "rentalPeriod": "MONTH",
+    "currency": "USD",
+    "currencyRaw": "$",
+    "additionalProperties": [
+        AdditionalProperty(name="Parking", value="Garage"),
+        AdditionalProperty(name="Pets", value="Allowed"),
+    ],
+    "propertyType": "flat",
+    "yearBuilt": 1997,
+    "virtualTourUrl": "https://example.com",
+    "metadata": Metadata(
+        dateDownloaded="2022-12-31T13:01:54Z",
+        probability=1.0,
+    ),
+}
+
 
 def test_product_all_fields():
     product = Product(**_PRODUCT_ALL_KWARGS)
@@ -248,3 +300,25 @@ def test_business_place_missing_fields():
         del incomplete_kwargs[required_field]
         with pytest.raises(TypeError):
             BusinessPlace(**incomplete_kwargs)
+
+
+def test_real_estate_listing_all_fields():
+    listing = RealEstateListing(**_REAL_ESTATE_LISTING_ALL_KWARGS)
+    for field in list(_REAL_ESTATE_LISTING_ALL_KWARGS):
+        assert getattr(listing, field) == _REAL_ESTATE_LISTING_ALL_KWARGS[field]
+
+
+def test_real_estate_listing_min_fields():
+    listing = RealEstateListing(**_REAL_ESTATE_LISTING_MIN_KWARGS)
+    for field in list(_REAL_ESTATE_LISTING_ALL_KWARGS):
+        if field in _REAL_ESTATE_LISTING_MIN_KWARGS:
+            continue
+        assert getattr(listing, field) is None
+
+
+def test_real_estate_listing_missing_fields():
+    for required_field in list(_REAL_ESTATE_LISTING_MIN_KWARGS):
+        incomplete_kwargs: dict = copy(_REAL_ESTATE_LISTING_MIN_KWARGS)
+        del incomplete_kwargs[required_field]
+        with pytest.raises(TypeError):
+            RealEstateListing(**incomplete_kwargs)

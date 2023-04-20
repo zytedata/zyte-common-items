@@ -33,6 +33,15 @@ Business place
 .. autoclass:: zyte_common_items.BusinessPlacePage(**kwargs)
    :show-inheritance:
 
+Real estate listing
+==============
+
+.. autoclass:: zyte_common_items.BaseRealEstateListingPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.RealEstateListingPage(**kwargs)
+   :show-inheritance:
+
 
 Custom page objects
 ===================

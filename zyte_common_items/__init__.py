@@ -16,16 +16,26 @@ from .components import (
     NamedLink,
     OpeningHoursItem,
     ParentPlace,
+    RealEstateArea,
     StarRating,
 )
-from .items import BusinessPlace, Product, ProductFromList, ProductList, ProductVariant
+from .items import (
+    BusinessPlace,
+    Product,
+    ProductFromList,
+    ProductList,
+    ProductVariant,
+    RealEstateListing,
+)
 from .pages import (
     BaseBusinessPlacePage,
     BasePage,
     BaseProductListPage,
     BaseProductPage,
+    BaseRealEstateListingPage,
     BusinessPlacePage,
     Page,
     ProductListPage,
     ProductPage,
+    RealEstateListingPage,
 )
