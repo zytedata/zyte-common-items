@@ -34,7 +34,7 @@ Business place
    :inherited-members:
 
 Real estate listing
-==============
+===================
 
 .. autoclass:: zyte_common_items.RealEstateListing(**kwargs)
    :members:

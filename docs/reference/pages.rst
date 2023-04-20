@@ -34,7 +34,7 @@ Business place
    :show-inheritance:
 
 Real estate listing
-==============
+===================
 
 .. autoclass:: zyte_common_items.BaseRealEstateListingPage(**kwargs)
    :show-inheritance:
