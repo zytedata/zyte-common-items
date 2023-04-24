@@ -276,10 +276,8 @@ class RealEstateArea(Item):
     #: Area
     value: float
 
-    #: Unit of areaUnit of the area, one of:
-    # - "SQMT" (square meter),
-    # - "SQFT" (square foot),
-    # - "ACRE" (acre).
+    #: Unit of the value field, one of: SQMT (square meters), SQFT (square
+    #: feet), ACRE (acres).
     unitCode: str
 
     #: Type of area, one of: LOT, FLOOR

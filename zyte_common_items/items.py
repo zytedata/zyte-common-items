@@ -632,7 +632,9 @@ class RealEstateListing(Item):
     name: Optional[str] = None
 
     #: Publication date of the real estate offer.
+    #:
     #: Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
+    #:
     #: With timezone, if available.
     datePublished: Optional[str] = None
 
@@ -640,11 +642,17 @@ class RealEstateListing(Item):
     datePublishedRaw: Optional[str] = None
 
     #: The description of the real estate.
+    #:
     #: Format:
+    #:
     #: - trimmed (no whitespace at the beginning or the end of the description string),
+    #:
     #: - line breaks included,
+    #:
     #: - no length limit,
+    #:
     #: - no normalization of Unicode characters,
+    #:
     #: - no concatenation of description from different parts of the page.
     description: Optional[str] = None
 
@@ -657,7 +665,7 @@ class RealEstateListing(Item):
     #: The details of the address of the real estate.
     address: Optional[Address] = None
 
-    #: A structured area data of the real estate.
+    #: Real estate area details.
     area: Optional[RealEstateArea] = None
 
     #: The total number of bathrooms in the real estate.
