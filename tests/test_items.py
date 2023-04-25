@@ -161,12 +161,12 @@ _BUSINESS_PLACE_ALL_KWARGS: dict = {
     ),
 }
 
-_REAL_ESTATE_LISTING_MIN_KWARGS: dict = {
-    "url": "https://example.com/real-estate-listing/12345",
+_REAL_ESTATE_MIN_KWARGS: dict = {
+    "url": "https://example.com/real-estate/12345",
 }
 
-_REAL_ESTATE_LISTING_ALL_KWARGS: dict = {
-    **_REAL_ESTATE_LISTING_MIN_KWARGS,
+_REAL_ESTATE_ALL_KWARGS: dict = {
+    **_REAL_ESTATE_MIN_KWARGS,
     "breadcrumbs": [
         Breadcrumb(name="Level 1", url="http://example.com/level1"),
         Breadcrumb(name="Level 2", url="http://example.com/level1/level2"),
@@ -302,23 +302,23 @@ def test_business_place_missing_fields():
             BusinessPlace(**incomplete_kwargs)
 
 
-def test_real_estate_listing_all_fields():
-    listing = RealEstate(**_REAL_ESTATE_LISTING_ALL_KWARGS)
-    for field in list(_REAL_ESTATE_LISTING_ALL_KWARGS):
-        assert getattr(listing, field) == _REAL_ESTATE_LISTING_ALL_KWARGS[field]
+def test_real_estate_all_fields():
+    real_estate = RealEstate(**_REAL_ESTATE_ALL_KWARGS)
+    for field in list(_REAL_ESTATE_ALL_KWARGS):
+        assert getattr(real_estate, field) == _REAL_ESTATE_ALL_KWARGS[field]
 
 
-def test_real_estate_listing_min_fields():
-    listing = RealEstate(**_REAL_ESTATE_LISTING_MIN_KWARGS)
-    for field in list(_REAL_ESTATE_LISTING_ALL_KWARGS):
-        if field in _REAL_ESTATE_LISTING_MIN_KWARGS:
+def test_real_estate_min_fields():
+    real_estate = RealEstate(**_REAL_ESTATE_MIN_KWARGS)
+    for field in list(_REAL_ESTATE_ALL_KWARGS):
+        if field in _REAL_ESTATE_MIN_KWARGS:
             continue
-        assert getattr(listing, field) is None
+        assert getattr(real_estate, field) is None
 
 
-def test_real_estate_listing_missing_fields():
-    for required_field in list(_REAL_ESTATE_LISTING_MIN_KWARGS):
-        incomplete_kwargs: dict = copy(_REAL_ESTATE_LISTING_MIN_KWARGS)
+def test_real_estate_missing_fields():
+    for required_field in list(_REAL_ESTATE_MIN_KWARGS):
+        incomplete_kwargs: dict = copy(_REAL_ESTATE_MIN_KWARGS)
         del incomplete_kwargs[required_field]
         with pytest.raises(TypeError):
             RealEstate(**incomplete_kwargs)
