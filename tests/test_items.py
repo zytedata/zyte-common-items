@@ -22,8 +22,8 @@ from zyte_common_items import (
     ProductFromList,
     ProductList,
     ProductVariant,
+    RealEstate,
     RealEstateArea,
-    RealEstateListing,
     StarRating,
 )
 
@@ -303,13 +303,13 @@ def test_business_place_missing_fields():
 
 
 def test_real_estate_listing_all_fields():
-    listing = RealEstateListing(**_REAL_ESTATE_LISTING_ALL_KWARGS)
+    listing = RealEstate(**_REAL_ESTATE_LISTING_ALL_KWARGS)
     for field in list(_REAL_ESTATE_LISTING_ALL_KWARGS):
         assert getattr(listing, field) == _REAL_ESTATE_LISTING_ALL_KWARGS[field]
 
 
 def test_real_estate_listing_min_fields():
-    listing = RealEstateListing(**_REAL_ESTATE_LISTING_MIN_KWARGS)
+    listing = RealEstate(**_REAL_ESTATE_LISTING_MIN_KWARGS)
     for field in list(_REAL_ESTATE_LISTING_ALL_KWARGS):
         if field in _REAL_ESTATE_LISTING_MIN_KWARGS:
             continue
@@ -321,4 +321,4 @@ def test_real_estate_listing_missing_fields():
         incomplete_kwargs: dict = copy(_REAL_ESTATE_LISTING_MIN_KWARGS)
         del incomplete_kwargs[required_field]
         with pytest.raises(TypeError):
-            RealEstateListing(**incomplete_kwargs)
+            RealEstate(**incomplete_kwargs)
