@@ -25,17 +25,17 @@ from .items import (
     ProductFromList,
     ProductList,
     ProductVariant,
-    RealEstateListing,
+    RealEstate,
 )
 from .pages import (
     BaseBusinessPlacePage,
     BasePage,
     BaseProductListPage,
     BaseProductPage,
-    BaseRealEstateListingPage,
+    BaseRealEstatePage,
     BusinessPlacePage,
     Page,
     ProductListPage,
     ProductPage,
-    RealEstateListingPage,
+    RealEstatePage,
 )

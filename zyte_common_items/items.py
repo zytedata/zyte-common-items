@@ -616,7 +616,7 @@ class BusinessPlace(Item):
 
 
 @attrs.define(slots=True, kw_only=True)
-class RealEstateListing(Item):
+class RealEstate(Item):
     #: The url of the final response, after any redirects.
     url: str = attrs.field(converter=url_to_str)
 
