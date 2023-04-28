@@ -25,6 +25,9 @@ from zyte_common_items import (
     RealEstate,
     RealEstateArea,
     StarRating,
+    ProductNavigation,
+    Navigation,
+    Header,
 )
 
 _PRODUCT_FROM_LIST_ALL_KWARGS: dict = {
@@ -211,6 +214,62 @@ _REAL_ESTATE_ALL_KWARGS: dict = {
     ),
 }
 
+_PRODUCT_NAVIGATION_MIN_KWARGS: dict = {"url": "https://example.com/real-estate/12345"}
+
+_PRODUCT_NAVIGATION_ALL_KWARGS: dict = {
+    **_PRODUCT_NAVIGATION_MIN_KWARGS,
+    "categoryName": "Swiss Watches",
+    "subCategories": [
+        Navigation(
+            **{
+                "url": "http://books.toscrape.com/catalogue/category/books/",
+                "method": "POST",
+                "body": "YmFzZTY0LWVuY29kZWQ=",
+                "headers": [Header(name="content-type", value="text/json")],
+                "name": "Travel",
+                "metadata": Metadata(probability=0.99),
+            }
+        ),
+        Navigation(
+            **{
+                "url": "http://books.toscrape.com/catalogue/category/books/mystery_3/index.html",
+                "name": "Mystery",
+                "metadata": Metadata(probability=0.97),
+            }
+        ),
+    ],
+    "items": [
+        Navigation(
+            **{
+                "url": "http://books.toscrape.com/catalogue/in-her-wake_980",
+                "method": "POST",
+                "body": "YmFzZTY0LWVuY29kZWQ=",
+                "headers": [Header(name="content-type", value="text/json")],
+                "name": "In Her Wake",
+                "metadata": Metadata(probability=0.99),
+            }
+        ),
+        Navigation(
+            **{
+                "url": "http://books.toscrape.com/catalogue/how-music-works_979/index.html",
+                "name": "How Music Works",
+                "metadata": Metadata(probability=0.98),
+            }
+        ),
+    ],
+    "nextPage": Navigation(
+        **{
+            "url": "http://books.toscrape.com/catalogue/page-3.html",
+            "name": "Next page",
+            "method": "POST",
+            "body": "Im9rIg==",
+            "headers": [Header(name="content-type", value="text/json")],
+        }
+    ),
+    "pageNumber": 5,
+    "metadata": Metadata(dateDownloaded="2022-12-31T13:01:54Z"),
+}
+
 
 def test_product_all_fields():
     product = Product(**_PRODUCT_ALL_KWARGS)
@@ -322,3 +381,27 @@ def test_real_estate_missing_fields():
         del incomplete_kwargs[required_field]
         with pytest.raises(TypeError):
             RealEstate(**incomplete_kwargs)
+
+
+def test_product_navigation_all_fields():
+    product_navigation = ProductNavigation(**_PRODUCT_NAVIGATION_ALL_KWARGS)
+    for field in list(_PRODUCT_NAVIGATION_ALL_KWARGS):
+        assert (
+            getattr(product_navigation, field) == _PRODUCT_NAVIGATION_ALL_KWARGS[field]
+        )
+
+
+def test_product_navigation_min_fields():
+    product_navigation = ProductNavigation(**_PRODUCT_NAVIGATION_MIN_KWARGS)
+    for field in list(_PRODUCT_NAVIGATION_ALL_KWARGS):
+        if field in _PRODUCT_NAVIGATION_MIN_KWARGS:
+            continue
+        assert getattr(product_navigation, field) is None
+
+
+def test_product_navigation_missing_fields():
+    for required_field in list(_PRODUCT_NAVIGATION_MIN_KWARGS):
+        incomplete_kwargs: dict = copy(_PRODUCT_NAVIGATION_MIN_KWARGS)
+        del incomplete_kwargs[required_field]
+        with pytest.raises(TypeError):
+            ProductNavigation(**incomplete_kwargs)

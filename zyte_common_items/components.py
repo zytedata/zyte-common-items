@@ -1,5 +1,5 @@
 """Classes for data nested within items."""
-from typing import Optional
+from typing import Optional, List, NewType
 
 import attrs
 
@@ -285,3 +285,42 @@ class RealEstateArea(Item):
 
     #: Area in the raw format, as it appears on the website.
     raw: str
+
+
+@attrs.define(kw_only=True)
+class Header(Item):
+    """A http header value"""
+
+    #: Name of header
+    name: str
+
+    #: Value of the header
+    value: str
+
+
+@attrs.define(kw_only=True)
+class Navigation(Item):
+    """Describe a HTTP request to load a page"""
+
+    #: Name of the category/page to which the navigation takes
+    name: Optional[str] = None
+
+    #: HTTP URL
+    url: str = attrs.field(converter=url_to_str)
+
+    #: HTTP Method
+    #:
+    #: Values: "GET" "POST" "PUT" "DELETE" "OPTIONS" "TRACE" "PATCH"
+    method: str = "GET"
+
+    #: HTTP Request Body
+    #:
+    #: Format:
+    #: - Base64 Encoded
+    body: Optional[str] = None
+
+    #: HTTP Headers
+    headers: Optional[List[Header]] = None
+
+    #: Data extraction process metadata.
+    metadata: Optional[Metadata] = None

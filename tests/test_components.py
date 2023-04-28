@@ -11,6 +11,8 @@ from zyte_common_items import (
     ParentPlace,
     RealEstateArea,
     StarRating,
+    Header,
+    Navigation,
 )
 
 
@@ -83,4 +85,24 @@ def test_real_estate_area():
     RealEstateArea(value=123.45, unitCode="SQMT", raw="123.45 square meters")
     RealEstateArea(
         value=123.45, unitCode="SQMT", raw="123.45 square meters", areaType="LOT"
+    )
+
+
+def test_headers():
+    Header(name="Connection", value="keep-alive")
+    Header(name="Content-Type", value="text/html; charset=utf-8")
+
+
+def test_navigation():
+    Navigation(url="https://example.com")
+    headers = [
+        Header(name="Content-Type", value="application/x-www-form-urlencoded"),
+        Header(name="Host", value="foo.example"),
+    ]
+    Navigation(
+        name="Post Test",
+        url="https://example.com/test",
+        method="POST",
+        body="field1=value1&field2=value2",
+        headers=headers,
     )

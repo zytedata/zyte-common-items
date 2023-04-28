@@ -20,6 +20,7 @@ from zyte_common_items.components import (
     ParentPlace,
     RealEstateArea,
     StarRating,
+    Navigation
 )
 from zyte_common_items.util import url_to_str
 
@@ -711,4 +712,38 @@ class RealEstate(Item):
     virtualTourUrl: Optional[str] = None
 
     #: Contains metadata about the data extraction process.
+    metadata: Optional[Metadata] = None
+
+@attrs.define(kw_only=True)
+class ProductNavigation(Item):
+    """Represents navigations for a page of product listings on a e-commerce website """
+
+    #: Main URL from which the data has been extracted.
+    url: str = attrs.field(converter=url_to_str)
+
+    #: Name of the category/page with the product list.
+    #:
+    #: Format:
+    #:
+    #: - trimmed (no whitespace at the beginning or the end of the description string),
+    categoryName: Optional[str] = None
+
+    #: List of sub-catetegory links found on the page. The order of the links reflects their position on the page.
+    subCategories: Optional[List[Navigation]] = None
+
+    #: List of product links found on the page which belond to the page category. The order of the links reflects their position on the page.
+    items: Optional[List[Navigation]] = None
+
+    #: The navigation to the next page, if available.
+    nextPage: Optional[Navigation] = None
+
+    #: Number of the current page.
+    #:
+    #: It should only be extracted if the webpage shows a page number.
+    #:
+    #: It must be 1-based. For example, if the first page of a listing is
+    #: numbered as 0 on the website, it should be extracted as `1` nonetheless.
+    pageNumber: Optional[int] = None
+
+    #: Data extraction process metadata.
     metadata: Optional[Metadata] = None
