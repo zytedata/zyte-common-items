@@ -22,17 +22,14 @@ class _BasePage(ItemPage[ItemT]):
         )
 
     def no_item_found(self) -> ItemT:
-        """ Return an item with the current url and probability=0,
+        """Return an item with the current url and probability=0,
         indicating that the passed URL doesn't contain the expected item.
 
         Use it in your .validate_input implementation.
         """
         return self.item_cls(  # type: ignore
             url=self.url,  # type: ignore[attr-defined]
-            metadata=Metadata(
-                probability=0,
-                dateDownloaded=_date_downloaded_now()
-            )
+            metadata=Metadata(probability=0, dateDownloaded=_date_downloaded_now()),
         )
 
 

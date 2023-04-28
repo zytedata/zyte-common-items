@@ -125,7 +125,6 @@ async def test_mixin_leak():
 
 @pytest.mark.asyncio
 async def test_no_item_found_Page():
-
     class MyProductPage(ProductPage):
         def validate_input(self):
             return self.no_item_found()
@@ -140,7 +139,6 @@ async def test_no_item_found_Page():
 
 @pytest.mark.asyncio
 async def test_no_item_found_BasePage():
-
     class MyProductPage(BaseProductPage):
         def validate_input(self):
             return self.no_item_found()
