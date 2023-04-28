@@ -121,3 +121,32 @@ async def test_mixin_leak():
 
     assert set(get_fields_dict(MyProductListPage)) == {"metadata", "products", "url"}
     assert set(get_fields_dict(MyProductPage)) == {"brand", "metadata", "url"}
+
+
+@pytest.mark.asyncio
+async def test_no_item_found_Page():
+
+    class MyProductPage(ProductPage):
+        def validate_input(self):
+            return self.no_item_found()
+
+    response = HttpResponse(url="http://example.com", body=b"<html></html>")
+    page = MyProductPage(response=response)
+
+    item = await page.to_item()
+    assert item.metadata.probability == 0
+    assert item.url == "http://example.com"
+
+
+@pytest.mark.asyncio
+async def test_no_item_found_BasePage():
+
+    class MyProductPage(BaseProductPage):
+        def validate_input(self):
+            return self.no_item_found()
+
+    page = MyProductPage(request_url="http://example.com")
+
+    item = await page.to_item()
+    assert item.metadata.probability == 0
+    assert item.url == "http://example.com"

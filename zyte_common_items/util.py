@@ -65,3 +65,7 @@ def url_to_str(url: Union[str, _Url]) -> str:
             f"{url!r} is neither a string nor an instance of RequestURL or ResponseURL."
         )
     return str(url)
+
+
+def format_datetime(dt):
+    return f"{dt.isoformat(timespec='seconds')}Z"
