@@ -145,7 +145,7 @@ async def test_no_item_found_BasePage():
         def validate_input(self):
             return self.no_item_found()
 
-    page = MyProductPage(request_url="http://example.com")
+    page = MyProductPage(request_url=RequestUrl("http://example.com"))
 
     item = await page.to_item()
     assert item.metadata.probability == 0
