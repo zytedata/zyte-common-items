@@ -221,50 +221,40 @@ _PRODUCT_NAVIGATION_ALL_KWARGS: dict = {
     "categoryName": "Swiss Watches",
     "subCategories": [
         Navigation(
-            **{
-                "url": "http://books.toscrape.com/catalogue/category/books/",
-                "method": "POST",
-                "body": "YmFzZTY0LWVuY29kZWQ=",
-                "headers": [Header(name="content-type", value="text/json")],
-                "name": "Travel",
-                "metadata": Metadata(probability=0.99),
-            }
+            url="http://books.toscrape.com/catalogue/category/books/",
+            method="POST",
+            body="YmFzZTY0LWVuY29kZWQ=",
+            headers=[Header(name="content-type", value="text/json")],
+            name="Travel",
+            metadata=Metadata(probability=0.99),
         ),
         Navigation(
-            **{
-                "url": "http://books.toscrape.com/catalogue/category/books/mystery_3/index.html",
-                "name": "Mystery",
-                "metadata": Metadata(probability=0.97),
-            }
+            url="http://books.toscrape.com/catalogue/category/books/mystery_3/index.html",
+            name="Mystery",
+            metadata=Metadata(probability=0.97),
         ),
     ],
     "items": [
         Navigation(
-            **{
-                "url": "http://books.toscrape.com/catalogue/in-her-wake_980",
-                "method": "POST",
-                "body": "YmFzZTY0LWVuY29kZWQ=",
-                "headers": [Header(name="content-type", value="text/json")],
-                "name": "In Her Wake",
-                "metadata": Metadata(probability=0.99),
-            }
+            url="http://books.toscrape.com/catalogue/in-her-wake_980",
+            method="POST",
+            body="YmFzZTY0LWVuY29kZWQ=",
+            headers=[Header(name="content-type", value="text/json")],
+            name="In Her Wake",
+            metadata=Metadata(probability=0.99),
         ),
         Navigation(
-            **{
-                "url": "http://books.toscrape.com/catalogue/how-music-works_979/index.html",
-                "name": "How Music Works",
-                "metadata": Metadata(probability=0.98),
-            }
+            url="http://books.toscrape.com/catalogue/how-music-works_979/index.html",
+            name="How Music Works",
+            metadata=Metadata(probability=0.98),
         ),
     ],
     "nextPage": Navigation(
-        **{
-            "url": "http://books.toscrape.com/catalogue/page-3.html",
-            "name": "Next page",
-            "method": "POST",
-            "body": "Im9rIg==",
-            "headers": [Header(name="content-type", value="text/json")],
-        }
+        url="http://books.toscrape.com/catalogue/page-3.html",
+        name="Next page",
+        method="POST",
+        body="Im9rIg==",
+        headers=[Header(name="content-type", value="text/json")],
     ),
     "pageNumber": 5,
     "metadata": Metadata(dateDownloaded="2022-12-31T13:01:54Z"),
