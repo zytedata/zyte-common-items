@@ -10,25 +10,25 @@ from .components import (
     Breadcrumb,
     BusinessPlaceMetadata,
     Gtin,
+    Header,
     Image,
     Link,
     Metadata,
     NamedLink,
+    Navigation,
     OpeningHoursItem,
     ParentPlace,
     RealEstateArea,
     StarRating,
-    Header,
-    Navigation,
 )
 from .items import (
     BusinessPlace,
     Product,
     ProductFromList,
     ProductList,
+    ProductNavigation,
     ProductVariant,
     RealEstate,
-    ProductNavigation,
 )
 from .pages import (
     BaseBusinessPlacePage,
@@ -39,7 +39,7 @@ from .pages import (
     BusinessPlacePage,
     Page,
     ProductListPage,
+    ProductNavigationPage,
     ProductPage,
     RealEstatePage,
-    ProductNavigationPage
 )

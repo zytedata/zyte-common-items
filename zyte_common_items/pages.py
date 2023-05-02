@@ -5,7 +5,7 @@ from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
 from web_poet.fields import FieldsMixin
 
 from .components import Metadata
-from .items import BusinessPlace, Product, ProductList, RealEstate, ProductNavigation
+from .items import BusinessPlace, Product, ProductList, ProductNavigation, RealEstate
 
 
 class _BaseMixin(FieldsMixin):

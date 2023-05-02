@@ -16,11 +16,11 @@ from zyte_common_items.components import (
     Link,
     Metadata,
     NamedLink,
+    Navigation,
     OpeningHoursItem,
     ParentPlace,
     RealEstateArea,
     StarRating,
-    Navigation
 )
 from zyte_common_items.util import url_to_str
 
@@ -714,9 +714,10 @@ class RealEstate(Item):
     #: Contains metadata about the data extraction process.
     metadata: Optional[Metadata] = None
 
+
 @attrs.define(kw_only=True)
 class ProductNavigation(Item):
-    """Represents navigations for a page of product listings on a e-commerce website """
+    """Represents navigations for a page of product listings on a e-commerce website"""
 
     #: Main URL from which the data has been extracted.
     url: str = attrs.field(converter=url_to_str)

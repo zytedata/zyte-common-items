@@ -4,15 +4,15 @@ from zyte_common_items import (
     Amenity,
     Breadcrumb,
     BusinessPlaceMetadata,
+    Header,
     Link,
     Metadata,
     NamedLink,
+    Navigation,
     OpeningHoursItem,
     ParentPlace,
     RealEstateArea,
     StarRating,
-    Header,
-    Navigation,
 )
 
 
