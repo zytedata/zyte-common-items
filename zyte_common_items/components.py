@@ -1,5 +1,5 @@
 """Classes for data nested within items."""
-from typing import Optional, List, NewType
+from typing import Optional, List
 
 import attrs
 
