@@ -1,5 +1,5 @@
 # flake8: noqa
-from .adapter import ZyteItemAdapter
+from .adapter import ZyteItemAdapter, ZyteKeepEmptyAdapter
 from .base import Item, is_data_container
 from .components import (
     AdditionalProperty,

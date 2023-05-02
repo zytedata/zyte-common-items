@@ -11,13 +11,14 @@ import pytest
 from itemadapter import ItemAdapter
 
 from zyte_common_items import Item, Product, ZyteItemAdapter
+from zyte_common_items.adapter import ZyteKeepEmptyAdapter, ZyteKeepEmptyItemAdapter
 
 from .test_items import _PRODUCT_ALL_KWARGS, _PRODUCT_MIN_KWARGS
 
 
 @contextmanager
-def configured_adapter():
-    ItemAdapter.ADAPTER_CLASSES.appendleft(ZyteItemAdapter)
+def configured_adapter(adapter=ZyteItemAdapter):
+    ItemAdapter.ADAPTER_CLASSES.appendleft(adapter)
     try:
         yield
     finally:
@@ -368,3 +369,26 @@ def test_unknown_field_remove_missing():
         adapter = ItemAdapter(product)
         with pytest.raises(KeyError):
             del adapter["a"]
+
+
+def test_keep_empty_adapter_global():
+    @attrs.define
+    class _Item(Item):
+        children: CollectionType[Item]
+
+    item = _Item([])
+    with configured_adapter(ZyteKeepEmptyAdapter):
+        adapter = ItemAdapter(item)
+        actual_dict = adapter.asdict()
+    assert actual_dict == {"children": []}
+
+
+def test_keep_empty_adapter_local():
+    @attrs.define
+    class _Item(Item):
+        children: CollectionType[Item]
+
+    item = _Item([])
+    adapter = ZyteKeepEmptyItemAdapter(item)
+    actual_dict = adapter.asdict()
+    assert actual_dict == {"children": []}

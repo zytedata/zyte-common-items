@@ -1,10 +1,10 @@
 """This module offers better integration with the itemadapter package."""
-
-
+from collections import deque
 from types import MappingProxyType
-from typing import Any, Collection, Iterator, KeysView
+from typing import Any, Collection, Deque, Iterator, KeysView, Type
 
-from itemadapter.adapter import AttrsAdapter
+from itemadapter import ItemAdapter
+from itemadapter.adapter import AdapterInterface, AttrsAdapter
 
 from zyte_common_items.base import Item
 
@@ -99,3 +99,22 @@ class ZyteItemAdapter(AttrsAdapter):
             if not _is_empty(self.item._unknown_fields_dict[attr])
         )
         return iter(fields)
+
+
+class ZyteKeepEmptyAdapter(ZyteItemAdapter):
+    """Similar to :class:`~.ZyteItemAdapter` but doesn't remove empty values.
+
+    It is intended to be used in tests and other use cases where it's important
+    to differentiate between empty and missing fields.
+    """
+
+    def __iter__(self) -> Iterator:
+        fields = [attr for attr in self._fields_dict if hasattr(self.item, attr)]
+        fields.extend(self.item._unknown_fields_dict)
+        return iter(fields)
+
+
+class ZyteKeepEmptyItemAdapter(ItemAdapter):
+    ADAPTER_CLASSES: Deque[Type[AdapterInterface]] = (
+        deque([ZyteKeepEmptyAdapter]) + ItemAdapter.ADAPTER_CLASSES
+    )
