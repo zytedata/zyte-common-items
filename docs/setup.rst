@@ -28,6 +28,8 @@ itemadapter.ItemAdapter.ADAPTER_CLASSES_ as early as possible in your code::
 
 Alternatively, make your own subclass of :class:`itemadapter.ItemAdapter`::
 
+    from collections import deque
+
     from itemadapter import ItemAdapter
     from zyte_common_items import ZyteItemAdapter
 
