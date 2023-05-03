@@ -5,11 +5,12 @@ from contextlib import contextmanager
 # In Python ≤ 3.8 you cannot annotate with “collections.abc.Collection[Item]”,
 # so we need to import typing.Collection for annotation instead.
 from typing import Collection as CollectionType
-from typing import Optional
+from typing import Deque, Optional, Type, cast
 
 import attrs
 import pytest
 from itemadapter import ItemAdapter
+from itemadapter.adapter import AdapterInterface
 
 from zyte_common_items import Item, Product, ZyteItemAdapter
 from zyte_common_items.adapter import ZyteItemKeepEmptyAdapter
@@ -391,7 +392,8 @@ def test_keep_empty_adapter_local():
 
     class TestAdapter(ItemAdapter):
         ADAPTER_CLASSES = (
-            deque([ZyteItemKeepEmptyAdapter]) + ItemAdapter.ADAPTER_CLASSES
+            cast(Deque[Type[AdapterInterface]], deque([ZyteItemKeepEmptyAdapter]))
+            + ItemAdapter.ADAPTER_CLASSES
         )
 
     item = _Item([])
