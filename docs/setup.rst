@@ -17,7 +17,7 @@ Configuration
 
 To allow itemadapter_ users, like Scrapy_, to interact with :ref:`items
 <items>`, prepend :class:`~zyte_common_items.ZyteItemAdapter` or
-:class:`~zyte_common_items.ZyteKeepEmptyAdapter` to
+:class:`~zyte_common_items.ZyteItemKeepEmptyAdapter` to
 itemadapter.ItemAdapter.ADAPTER_CLASSES_ as early as possible in your code::
 
     from itemadapter import ItemAdapter
