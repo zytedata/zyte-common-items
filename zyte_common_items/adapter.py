@@ -99,7 +99,7 @@ class ZyteItemAdapter(AttrsAdapter):
         return iter(fields)
 
 
-class ZyteKeepEmptyAdapter(ZyteItemAdapter):
+class ZyteItemKeepEmptyAdapter(ZyteItemAdapter):
     """Similar to :class:`~.ZyteItemAdapter` but doesn't remove empty values.
 
     It is intended to be used in tests and other use cases where it's important
