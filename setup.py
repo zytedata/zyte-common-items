@@ -24,7 +24,7 @@ setup(
     },
     install_requires=[
         "attrs>=21.3.0",
-        "itemadapter>=0.2.0",
+        "itemadapter>=0.8.0",
         "web-poet>=0.7.0",
     ],
     classifiers=[

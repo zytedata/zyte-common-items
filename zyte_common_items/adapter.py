@@ -1,6 +1,4 @@
 """This module offers better integration with the itemadapter package."""
-
-
 from types import MappingProxyType
 from typing import Any, Collection, Iterator, KeysView
 
@@ -98,4 +96,17 @@ class ZyteItemAdapter(AttrsAdapter):
             for attr in self.item._unknown_fields_dict
             if not _is_empty(self.item._unknown_fields_dict[attr])
         )
+        return iter(fields)
+
+
+class ZyteItemKeepEmptyAdapter(ZyteItemAdapter):
+    """Similar to :class:`~.ZyteItemAdapter` but doesn't remove empty values.
+
+    It is intended to be used in tests and other use cases where it's important
+    to differentiate between empty and missing fields.
+    """
+
+    def __iter__(self) -> Iterator:
+        fields = [attr for attr in self._fields_dict if hasattr(self.item, attr)]
+        fields.extend(self.item._unknown_fields_dict)
         return iter(fields)
