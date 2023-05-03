@@ -1,3 +1,4 @@
+from collections import deque
 from collections.abc import Collection
 from contextlib import contextmanager
 
@@ -11,7 +12,7 @@ import pytest
 from itemadapter import ItemAdapter
 
 from zyte_common_items import Item, Product, ZyteItemAdapter
-from zyte_common_items.adapter import ZyteKeepEmptyAdapter, ZyteKeepEmptyItemAdapter
+from zyte_common_items.adapter import ZyteKeepEmptyAdapter
 
 from .test_items import _PRODUCT_ALL_KWARGS, _PRODUCT_MIN_KWARGS
 
@@ -388,7 +389,10 @@ def test_keep_empty_adapter_local():
     class _Item(Item):
         children: CollectionType[Item]
 
+    class TestAdapter(ItemAdapter):
+        ADAPTER_CLASSES = deque([ZyteKeepEmptyAdapter]) + ItemAdapter.ADAPTER_CLASSES
+
     item = _Item([])
-    adapter = ZyteKeepEmptyItemAdapter(item)
+    adapter = TestAdapter(item)
     actual_dict = adapter.asdict()
     assert actual_dict == {"children": []}

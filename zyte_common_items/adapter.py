@@ -1,10 +1,8 @@
 """This module offers better integration with the itemadapter package."""
-from collections import deque
 from types import MappingProxyType
-from typing import Any, Collection, Deque, Iterator, KeysView, Type
+from typing import Any, Collection, Iterator, KeysView
 
-from itemadapter import ItemAdapter
-from itemadapter.adapter import AdapterInterface, AttrsAdapter
+from itemadapter.adapter import AttrsAdapter
 
 from zyte_common_items.base import Item
 
@@ -112,9 +110,3 @@ class ZyteKeepEmptyAdapter(ZyteItemAdapter):
         fields = [attr for attr in self._fields_dict if hasattr(self.item, attr)]
         fields.extend(self.item._unknown_fields_dict)
         return iter(fields)
-
-
-class ZyteKeepEmptyItemAdapter(ItemAdapter):
-    ADAPTER_CLASSES: Deque[Type[AdapterInterface]] = (
-        deque([ZyteKeepEmptyAdapter]) + ItemAdapter.ADAPTER_CLASSES
-    )
