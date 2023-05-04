@@ -103,6 +103,6 @@ def test_navigation():
         name="Post Test",
         url="https://example.com/test",
         method="POST",
-        body="field1=value1&field2=value2",
+        body="ZmllbGQxPXZhbHVlMSZmaWVsZDI9dmFsdWUy",
         headers=headers,
     )
