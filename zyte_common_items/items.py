@@ -719,7 +719,7 @@ class RealEstate(Item):
 class ProductNavigation(Item):
     """Represents navigations for a page of product listings on a e-commerce website"""
 
-    #: Main URL from which the data has been extracted.
+    #: Main URL from which the data is extracted.
     url: str = attrs.field(converter=url_to_str)
 
     #: Name of the category/page with the product list.
@@ -729,10 +729,10 @@ class ProductNavigation(Item):
     #: - trimmed (no whitespace at the beginning or the end of the description string),
     categoryName: Optional[str] = None
 
-    #: List of sub-catetegory links found on the page. The order of the links reflects their position on the page.
+    #: List of sub-category links ordered by their position in the page.
     subCategories: Optional[List[Navigation]] = None
 
-    #: List of product links found on the page which belond to the page category. The order of the links reflects their position on the page.
+    #: List of product links found on the page category ordered by their position in the page.
     items: Optional[List[Navigation]] = None
 
     #: The navigation to the next page, if available.

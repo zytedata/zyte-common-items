@@ -302,7 +302,7 @@ class Header(Item):
 class Navigation(Item):
     """Describe a HTTP request to load a page"""
 
-    #: Name of the category/page to which the navigation takes
+    #: Name of the page which describes the URL.
     name: Optional[str] = None
 
     #: HTTP URL
