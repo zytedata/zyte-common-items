@@ -310,7 +310,7 @@ class Navigation(Item):
 
     #: HTTP Method
     #:
-    #: Values: "GET" "POST" "PUT" "DELETE" "OPTIONS" "TRACE" "PATCH"
+    #: Values: "GET" "POST" "PUT" "DELETE" "OPTIONS" "TRACE" "PATCH" "HEAD" "CONNECT"
     method: str = "GET"
 
     #: HTTP Request Body
