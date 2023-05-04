@@ -110,7 +110,7 @@ def test_navigation():
     )
 
     navigation = Navigation(
-        name="Post Test",
+        name="Get with RequestURL object",
         url=RequestUrl("https://example.com/test"),
     )
 
