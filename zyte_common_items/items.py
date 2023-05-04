@@ -726,7 +726,7 @@ class ProductNavigation(Item):
     #:
     #: Format:
     #:
-    #: - trimmed (no whitespace at the beginning or the end of the description string),
+    #: - trimmed (no whitespace at the beginning or the end of the description string)
     categoryName: Optional[str] = None
 
     #: List of sub-category links ordered by their position in the page.

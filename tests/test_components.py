@@ -1,3 +1,5 @@
+from web_poet import RequestUrl
+
 from zyte_common_items import (
     Address,
     AggregateRating,
@@ -106,3 +108,10 @@ def test_navigation():
         body="ZmllbGQxPXZhbHVlMSZmaWVsZDI9dmFsdWUy",
         headers=headers,
     )
+
+    navigation = Navigation(
+        name="Post Test",
+        url=RequestUrl("https://example.com/test"),
+    )
+
+    assert navigation.url == "https://example.com/test"
