@@ -1,23 +1,26 @@
+from collections import deque
 from collections.abc import Collection
 from contextlib import contextmanager
 
 # In Python ≤ 3.8 you cannot annotate with “collections.abc.Collection[Item]”,
 # so we need to import typing.Collection for annotation instead.
 from typing import Collection as CollectionType
-from typing import Optional
+from typing import Deque, Optional, Type, cast
 
 import attrs
 import pytest
 from itemadapter import ItemAdapter
+from itemadapter.adapter import AdapterInterface
 
 from zyte_common_items import Item, Product, ZyteItemAdapter
+from zyte_common_items.adapter import ZyteItemKeepEmptyAdapter
 
 from .test_items import _PRODUCT_ALL_KWARGS, _PRODUCT_MIN_KWARGS
 
 
 @contextmanager
-def configured_adapter():
-    ItemAdapter.ADAPTER_CLASSES.appendleft(ZyteItemAdapter)
+def configured_adapter(adapter=ZyteItemAdapter):
+    ItemAdapter.ADAPTER_CLASSES.appendleft(adapter)
     try:
         yield
     finally:
@@ -368,3 +371,32 @@ def test_unknown_field_remove_missing():
         adapter = ItemAdapter(product)
         with pytest.raises(KeyError):
             del adapter["a"]
+
+
+def test_keep_empty_adapter_global():
+    @attrs.define
+    class _Item(Item):
+        children: CollectionType[Item]
+
+    item = _Item([])
+    with configured_adapter(ZyteItemKeepEmptyAdapter):
+        adapter = ItemAdapter(item)
+        actual_dict = adapter.asdict()
+    assert actual_dict == {"children": []}
+
+
+def test_keep_empty_adapter_local():
+    @attrs.define
+    class _Item(Item):
+        children: CollectionType[Item]
+
+    class TestAdapter(ItemAdapter):
+        ADAPTER_CLASSES = (
+            cast(Deque[Type[AdapterInterface]], deque([ZyteItemKeepEmptyAdapter]))
+            + ItemAdapter.ADAPTER_CLASSES
+        )
+
+    item = _Item([])
+    adapter = TestAdapter(item)
+    actual_dict = adapter.asdict()
+    assert actual_dict == {"children": []}
