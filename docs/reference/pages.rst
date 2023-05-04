@@ -24,6 +24,26 @@ Product list
    :show-inheritance:
 
 
+Article
+=======
+
+.. autoclass:: zyte_common_items.BaseArticlePage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.ArticlePage(**kwargs)
+   :show-inheritance:
+
+
+Article list
+============
+
+.. autoclass:: zyte_common_items.BaseArticleListPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.ArticleListPage(**kwargs)
+   :show-inheritance:
+
+
 Business place
 ==============
 

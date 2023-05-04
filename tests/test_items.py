@@ -117,6 +117,21 @@ _PRODUCT_LIST_ALL_KWARGS: dict = {
     "products": [ProductFromList()],
 }
 
+_ARTICLE_MIN_KWARGS: dict = {
+    "url": "https://www.zyte.com/blog/product-data-extraction-automatic",
+}
+_ARTICLE_ALL_KWARGS: dict = {
+    **_ARTICLE_MIN_KWARGS,
+    "headline": "Guarantee the best results for product data extraction",
+    "datePublished": "2022-08-26T20:56:16Z",
+    "datePublishedRaw": "August 26, 2022",
+    "dateModified": "2022-08-27T21:48:55Z",
+    "dateModifiedRaw": "August 25, 2022",
+    "authors": [...],
+}
+_ARTICLE_LIST_MIN_KWARGS: dict = {...}
+_ARTICLE_LIST_ALL_KWARGS: dict = {...}
+
 _BUSINESS_PLACE_MIN_KWARGS: dict = {}
 
 _BUSINESS_PLACE_ALL_KWARGS: dict = {
