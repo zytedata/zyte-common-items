@@ -299,7 +299,7 @@ class Header(Item):
 
 
 @attrs.define(kw_only=True)
-class Navigation(Item):
+class Request(Item):
     """Describe a HTTP request to load a page"""
 
     #: Name of the page which describes the URL.

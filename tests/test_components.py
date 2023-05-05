@@ -10,10 +10,10 @@ from zyte_common_items import (
     Link,
     Metadata,
     NamedLink,
-    Navigation,
     OpeningHoursItem,
     ParentPlace,
     RealEstateArea,
+    Request,
     StarRating,
 )
 
@@ -96,12 +96,12 @@ def test_headers():
 
 
 def test_navigation():
-    Navigation(url="https://example.com")
+    Request(url="https://example.com")
     headers = [
         Header(name="Content-Type", value="application/x-www-form-urlencoded"),
         Header(name="Host", value="foo.example"),
     ]
-    Navigation(
+    Request(
         name="Post Test",
         url="https://example.com/test",
         method="POST",
@@ -109,9 +109,9 @@ def test_navigation():
         headers=headers,
     )
 
-    navigation = Navigation(
+    request = Request(
         name="Get with RequestURL object",
         url=RequestUrl("https://example.com/test"),
     )
 
-    assert navigation.url == "https://example.com/test"
+    assert request.url == "https://example.com/test"

@@ -15,10 +15,10 @@ from .components import (
     Link,
     Metadata,
     NamedLink,
-    Navigation,
     OpeningHoursItem,
     ParentPlace,
     RealEstateArea,
+    Request,
     StarRating,
 )
 from .items import (

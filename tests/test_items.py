@@ -17,7 +17,6 @@ from zyte_common_items import (
     Link,
     Metadata,
     NamedLink,
-    Navigation,
     OpeningHoursItem,
     ParentPlace,
     Product,
@@ -27,6 +26,7 @@ from zyte_common_items import (
     ProductVariant,
     RealEstate,
     RealEstateArea,
+    Request,
     StarRating,
 )
 
@@ -220,7 +220,7 @@ _PRODUCT_NAVIGATION_ALL_KWARGS: dict = {
     **_PRODUCT_NAVIGATION_MIN_KWARGS,
     "categoryName": "Swiss Watches",
     "subCategories": [
-        Navigation(
+        Request(
             url="http://books.toscrape.com/catalogue/category/books/",
             method="POST",
             body="YmFzZTY0LWVuY29kZWQ=",
@@ -228,14 +228,14 @@ _PRODUCT_NAVIGATION_ALL_KWARGS: dict = {
             name="Travel",
             metadata=Metadata(probability=0.99),
         ),
-        Navigation(
+        Request(
             url="http://books.toscrape.com/catalogue/category/books/mystery_3/index.html",
             name="Mystery",
             metadata=Metadata(probability=0.97),
         ),
     ],
     "items": [
-        Navigation(
+        Request(
             url="http://books.toscrape.com/catalogue/in-her-wake_980",
             method="POST",
             body="YmFzZTY0LWVuY29kZWQ=",
@@ -243,13 +243,13 @@ _PRODUCT_NAVIGATION_ALL_KWARGS: dict = {
             name="In Her Wake",
             metadata=Metadata(probability=0.99),
         ),
-        Navigation(
+        Request(
             url="http://books.toscrape.com/catalogue/how-music-works_979/index.html",
             name="How Music Works",
             metadata=Metadata(probability=0.98),
         ),
     ],
-    "nextPage": Navigation(
+    "nextPage": Request(
         url="http://books.toscrape.com/catalogue/page-3.html",
         name="Next page",
         method="POST",

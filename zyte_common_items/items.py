@@ -16,10 +16,10 @@ from zyte_common_items.components import (
     Link,
     Metadata,
     NamedLink,
-    Navigation,
     OpeningHoursItem,
     ParentPlace,
     RealEstateArea,
+    Request,
     StarRating,
 )
 from zyte_common_items.util import url_to_str
@@ -730,13 +730,13 @@ class ProductNavigation(Item):
     categoryName: Optional[str] = None
 
     #: List of sub-category links ordered by their position in the page.
-    subCategories: Optional[List[Navigation]] = None
+    subCategories: Optional[List[Request]] = None
 
     #: List of product links found on the page category ordered by their position in the page.
-    items: Optional[List[Navigation]] = None
+    items: Optional[List[Request]] = None
 
     #: The navigation to the next page, if available.
-    nextPage: Optional[Navigation] = None
+    nextPage: Optional[Request] = None
 
     #: Number of the current page.
     #:
