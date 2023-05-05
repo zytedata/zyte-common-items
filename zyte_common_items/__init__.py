@@ -34,6 +34,7 @@ from .pages import (
     BaseBusinessPlacePage,
     BasePage,
     BaseProductListPage,
+    BaseProductNavigationPage,
     BaseProductPage,
     BaseRealEstatePage,
     BusinessPlacePage,

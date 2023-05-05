@@ -23,6 +23,14 @@ Product list
 .. autoclass:: zyte_common_items.ProductListPage(**kwargs)
    :show-inheritance:
 
+Product Navigation
+==================
+
+.. autoclass:: zyte_common_items.BaseProductNavigationPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.ProductNavigationPage(**kwargs)
+   :show-inheritance:
 
 Business place
 ==============
