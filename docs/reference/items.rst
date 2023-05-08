@@ -26,7 +26,7 @@ Product list
    :members:
    :inherited-members:
 
-Product Navigation
+Product navigation
 ==================
 
 .. autoclass:: zyte_common_items.ProductNavigation(**kwargs)

@@ -23,7 +23,7 @@ Product list
 .. autoclass:: zyte_common_items.ProductListPage(**kwargs)
    :show-inheritance:
 
-Product Navigation
+Product navigation
 ==================
 
 .. autoclass:: zyte_common_items.BaseProductNavigationPage(**kwargs)

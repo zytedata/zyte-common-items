@@ -289,9 +289,9 @@ class RealEstateArea(Item):
 
 @attrs.define(kw_only=True)
 class Header(Item):
-    """A http header value"""
+    """An HTTP header"""
 
-    #: Name of header
+    #: Name of the header
     name: str
 
     #: Value of the header
@@ -300,26 +300,21 @@ class Header(Item):
 
 @attrs.define(kw_only=True)
 class Request(Item):
-    """Describe a HTTP request to load a page"""
+    """Describe a web request to load a page"""
 
-    #: Name of the page which describes the URL.
+    #: Name of the page being requested.
     name: Optional[str] = None
 
     #: HTTP URL
     url: str = attrs.field(converter=url_to_str)
 
-    #: HTTP Method
-    #:
-    #: Values: "GET" "POST" "PUT" "DELETE" "OPTIONS" "TRACE" "PATCH" "HEAD" "CONNECT"
+    #: HTTP method
     method: str = "GET"
 
-    #: HTTP Request Body
-    #:
-    #: Format:
-    #: - Base64 Encoded
+    #: HTTP request body, Base64-encoded
     body: Optional[str] = None
 
-    #: HTTP Headers
+    #: HTTP headers
     headers: Optional[List[Header]] = None
 
     #: Data extraction process metadata.

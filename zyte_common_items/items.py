@@ -717,7 +717,8 @@ class RealEstate(Item):
 
 @attrs.define(kw_only=True)
 class ProductNavigation(Item):
-    """Represents navigations for a page of product listings on a e-commerce website"""
+    """Represents the navigational aspects of a product listing page on an 
+    e-commerce website"""
 
     #: Main URL from which the data is extracted.
     url: str = attrs.field(converter=url_to_str)
@@ -735,7 +736,7 @@ class ProductNavigation(Item):
     #: List of product links found on the page category ordered by their position in the page.
     items: Optional[List[Request]] = None
 
-    #: The navigation to the next page, if available.
+    #: A link to the next page, if available.
     nextPage: Optional[Request] = None
 
     #: Number of the current page.

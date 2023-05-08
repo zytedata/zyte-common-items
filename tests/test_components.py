@@ -95,7 +95,7 @@ def test_headers():
     Header(name="Content-Type", value="text/html; charset=utf-8")
 
 
-def test_navigation():
+def test_request():
     Request(url="https://example.com")
     headers = [
         Header(name="Content-Type", value="application/x-www-form-urlencoded"),
