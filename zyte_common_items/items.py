@@ -717,7 +717,7 @@ class RealEstate(Item):
 
 @attrs.define(kw_only=True)
 class ProductNavigation(Item):
-    """Represents the navigational aspects of a product listing page on an 
+    """Represents the navigational aspects of a product listing page on an
     e-commerce website"""
 
     #: Main URL from which the data is extracted.
