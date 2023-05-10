@@ -2,6 +2,22 @@
 Changelog
 =========
 
+0.5.0 (YYYY-MM-DD)
+==================
+
+* Now requires ``itemadapter >= 0.8.0``.
+
+* Added :class:`~zyte_common_items.RealEstate`.
+
+* Added the :meth:`zyte_common_items.BasePage.no_item_found` and
+  :meth:`zyte_common_items.Page.no_item_found` methods.
+
+* Improved the error message for invalid input.
+
+* Added :class:`~zyte_common_items.ZyteItemKeepEmptyAdapter` and documented how
+  to use it and :class:`~zyte_common_items.ZyteItemAdapter` in custom
+  subclasses of :class:`itemadapter.ItemAdapter`.
+
 0.4.0 (2023-03-27)
 ==================
 

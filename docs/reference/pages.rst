@@ -54,6 +54,7 @@ inherit from :class:`~zyte_common_items.BasePage` instead.
 
 .. autoclass:: zyte_common_items.BasePage(**kwargs)
    :show-inheritance:
+   :members: no_item_found
 
    Base class for page object classes that has
    :class:`~zyte_common_items.RequestUrl` as a dependency.
@@ -75,6 +76,7 @@ inherit from :class:`~zyte_common_items.BasePage` instead.
 
 .. autoclass:: zyte_common_items.Page(**kwargs)
    :show-inheritance:
+   :members: no_item_found
 
    Base class for page object classes that has
    :class:`~zyte_common_items.HttpResponse` as a dependency.
