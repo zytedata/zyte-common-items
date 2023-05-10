@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.5.0 (YYYY-MM-DD)
+0.5.0 (2023-05-10)
 ==================
 
 * Now requires ``itemadapter >= 0.8.0``.
