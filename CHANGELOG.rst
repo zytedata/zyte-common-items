@@ -9,7 +9,8 @@ Changelog
 
 * Added :class:`~zyte_common_items.RealEstate`.
 
-* Added the :meth:`zyte_common_items.BasePage.no_item_found` method.
+* Added the :meth:`zyte_common_items.BasePage.no_item_found` and
+  :meth:`zyte_common_items.Page.no_item_found` methods.
 
 * Improved the error message for invalid input.
 
