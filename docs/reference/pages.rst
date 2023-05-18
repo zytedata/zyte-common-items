@@ -74,6 +74,7 @@ you can inherit from :class:`~zyte_common_items.BasePage` instead.
 
 .. autoclass:: zyte_common_items.BasePage(**kwargs)
    :show-inheritance:
+   :members: no_item_found
 
    Base class for page object classes that has
    :class:`~web_poet.page_inputs.http.RequestUrl` as a dependency.
@@ -95,6 +96,7 @@ you can inherit from :class:`~zyte_common_items.BasePage` instead.
 
 .. autoclass:: zyte_common_items.Page(**kwargs)
    :show-inheritance:
+   :members: no_item_found
 
    Base class for page object classes that has
    :class:`~web_poet.page_inputs.http.HttpResponse` as a dependency.
