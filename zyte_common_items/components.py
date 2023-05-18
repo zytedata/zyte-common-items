@@ -26,7 +26,7 @@ class AdditionalProperty(Item):
     """A name-value pair.
 
     See :attr:`Product.additionalProperties
-    <zyte_common_items.items.Product.additionalProperties>`.
+    <zyte_common_items.Product.additionalProperties>`.
     """
 
     #: Name.
@@ -43,7 +43,7 @@ class AggregateRating(Item):
     At least one of :attr:`ratingValue` or :attr:`reviewCount` is required.
 
     See :attr:`Product.aggregateRating
-    <zyte_common_items.items.Product.aggregateRating>`.
+    <zyte_common_items.Product.aggregateRating>`.
     """
 
     #: Maximum value of the rating system.
@@ -60,7 +60,7 @@ class AggregateRating(Item):
 class Audio(_Media):
     """Audio.
 
-    See :class:`Article.audios <zyte_common_items.items.Article.audios>`.
+    See :class:`Article.audios <zyte_common_items.Article.audios>`.
     """
 
 
@@ -68,7 +68,7 @@ class Audio(_Media):
 class Author(Item):
     """Author of an article.
 
-    See :attr:`Article.authors <zyte_common_items.items.Article.authors>`.
+    See :attr:`Article.authors <zyte_common_items.Article.authors>`.
     """
 
     #: Email.
@@ -82,7 +82,7 @@ class Author(Item):
     #: Full name.
     name: Optional[str] = None
 
-    #: Text from which :attr:`~zyte_common_items.items.Author.name>` was
+    #: Text from which :attr:`~zyte_common_items.Author.name` was
     #: extracted.
     nameRaw: Optional[str] = None
 
@@ -91,7 +91,7 @@ class Author(Item):
 class Brand(Item):
     """Brand.
 
-    See :attr:`Product.brand <zyte_common_items.items.Product.brand`.
+    See :attr:`Product.brand <zyte_common_items.Product.brand>`.
     """
 
     #: Name as it appears on the source webpage (no post-processing).
@@ -103,7 +103,7 @@ class Breadcrumb(Item):
     """A breadcrumb from the `breadcrumb trail`_ of a webpage.
 
     See :attr:`Product.breadcrumbs
-    <zyte_common_items.items.Product.breadcrumbs>`.
+    <zyte_common_items.Product.breadcrumbs>`.
 
     .. _breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
     """
@@ -121,7 +121,7 @@ class Breadcrumb(Item):
 class Gtin(Item):
     """GTIN_ type-value pair.
 
-    See :class:`Product.gtin <zyte_common_items.items.Product.gtin>`.
+    See :class:`Product.gtin <zyte_common_items.Product.gtin>`.
 
     .. _GTIN: https://en.wikipedia.org/wiki/Global_Trade_Item_Number
     """
@@ -143,8 +143,8 @@ class Image(_Media):
     """Image.
 
     See for example
-    :class:`Product.images <zyte_common_items.items.Product.images>` and
-    :class:`Product.mainImage <zyte_common_items.items.Product.mainImage>`.
+    :class:`Product.images <zyte_common_items.Product.images>` and
+    :class:`Product.mainImage <zyte_common_items.Product.mainImage>`.
     """
 
 
@@ -179,7 +179,7 @@ class DateDownloadedMetadata(Item):
     """Data extraction process metadata that only indicates the download date.
 
     See
-    :class:`ArticleList.metadata <zyte_common_items.items.ArticleList.metadata>`.
+    :class:`ArticleList.metadata <zyte_common_items.ArticleList.metadata>`.
     """
 
     #: Date and time when the product data was downloaded, in UTC timezone and
@@ -205,7 +205,7 @@ class Metadata(DateDownloadedMetadata):
 class BusinessPlaceMetadata(Metadata):
     """Data extraction process metadata.
 
-    See :class:`BusinessPlace.metadata <zyte_common_items.items.BusinessPlace.metadata>`.
+    See :class:`BusinessPlace.metadata <zyte_common_items.BusinessPlace.metadata>`.
     """
 
     #: The search text the place was found with.
@@ -330,5 +330,5 @@ class RealEstateArea(Item):
 class Video(_Media):
     """Video.
 
-    See :class:`Article.videos <zyte_common_items.items.Article.videos>`.
+    See :class:`Article.videos <zyte_common_items.Article.videos>`.
     """
