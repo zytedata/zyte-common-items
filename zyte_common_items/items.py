@@ -62,7 +62,7 @@ class ArticleFromList(Item):
     datePublished: Optional[str] = None
 
     #: Same date as
-    #: :attr:`~zyte_common_items.items.ArticleFromList.datePublished`, but
+    #: :attr:`~zyte_common_items.ArticleFromList.datePublished`, but
     #: :before parsing/normalization, i.e. as it appears on the website.
     datePublishedRaw: Optional[str] = None
 
@@ -104,11 +104,11 @@ class Article(Item):
     #: With timezone, if available.
     #:
     #: If the actual publication date is not found, the value of
-    #: :attr:`~zyte_common_items.items.Article.dateModified` is used instead.
+    #: :attr:`~zyte_common_items.Article.dateModified` is used instead.
     datePublished: Optional[str] = None
 
     #: Same date as
-    #: :attr:`~zyte_common_items.items.Article.datePublished`, but
+    #: :attr:`~zyte_common_items.Article.datePublished`, but
     #: :before parsing/normalization, i.e. as it appears on the website.
     datePublishedRaw: Optional[str] = None
 
@@ -121,7 +121,7 @@ class Article(Item):
     dateModified: Optional[str] = None
 
     #: Same date as
-    #: :attr:`~zyte_common_items.items.Article.dateModified`, but
+    #: :attr:`~zyte_common_items.Article.dateModified`, but
     #: :before parsing/normalization, i.e. as it appears on the website.
     dateModifiedRaw: Optional[str] = None
 

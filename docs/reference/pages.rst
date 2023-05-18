@@ -67,16 +67,16 @@ Custom page objects
 ===================
 
 Subclass :class:`~zyte_common_items.Page` to create your own page object
-classes that rely on :class:`~zyte_common_items.HttpResponse`.
+classes that rely on :class:`~web_poet.page_inputs.http.HttpResponse`.
 
-If you do not want :class:`~zyte_common_items.HttpResponse` as input, you can
-inherit from :class:`~zyte_common_items.BasePage` instead.
+If you do not want :class:`~web_poet.page_inputs.http.HttpResponse` as input,
+you can inherit from :class:`~zyte_common_items.BasePage` instead.
 
 .. autoclass:: zyte_common_items.BasePage(**kwargs)
    :show-inheritance:
 
    Base class for page object classes that has
-   :class:`~zyte_common_items.RequestUrl` as a dependency.
+   :class:`~web_poet.page_inputs.http.RequestUrl` as a dependency.
 
    .. data:: metadata
       :type: zyte_common_items.Metadata
@@ -97,7 +97,7 @@ inherit from :class:`~zyte_common_items.BasePage` instead.
    :show-inheritance:
 
    Base class for page object classes that has
-   :class:`~zyte_common_items.HttpResponse` as a dependency.
+   :class:`~web_poet.page_inputs.http.HttpResponse` as a dependency.
 
    .. data:: metadata
       :type: zyte_common_items.Metadata
