@@ -8,6 +8,20 @@ from zyte_common_items.util import url_to_str
 
 
 @attrs.define
+class _Media(Item):
+
+    #: URL.
+    #:
+    #: When multiple URLs exist for a given media element, pointing to
+    #: different-quality versions, the highest-quality URL should be used.
+    #:
+    #: `Data URIs`_ are not allowed in this attribute.
+    #:
+    #: .. _Data URIs: https://en.wikipedia.org/wiki/Data_URI_scheme
+    url: str = attrs.field(converter=url_to_str)
+
+
+@attrs.define
 class AdditionalProperty(Item):
     """A name-value pair.
 
@@ -40,6 +54,37 @@ class AggregateRating(Item):
 
     #: Review count.
     reviewCount: Optional[int] = None
+
+
+@attrs.define
+class Audio(_Media):
+    """Audio.
+
+    See :class:`Article.audios <zyte_common_items.items.Article.audios>`.
+    """
+
+
+@attrs.define(kw_only=True)
+class Author(Item):
+    """Author of an article.
+
+    See :attr:`Article.authors <zyte_common_items.items.Article.authors>`.
+    """
+
+    #: Email.
+    email: Optional[str] = None
+
+    #: URL of the details page of the author.
+    url: Optional[str] = attrs.field(
+        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    )
+
+    #: Full name.
+    name: Optional[str] = None
+
+    #: Text from which :attr:`~zyte_common_items.items.Author.name>` was
+    #: extracted.
+    nameRaw: Optional[str] = None
 
 
 @attrs.define
@@ -94,23 +139,13 @@ class Gtin(Item):
 
 
 @attrs.define
-class Image(Item):
+class Image(_Media):
     """Image.
 
-    See :class:`Product.images <zyte_common_items.items.Product.images>` and
+    See for example
+    :class:`Product.images <zyte_common_items.items.Product.images>` and
     :class:`Product.mainImage <zyte_common_items.items.Product.mainImage>`.
     """
-
-    #: URL.
-    #:
-    #: When multiple URLs exist for a given image, and those URLs point to
-    #: image files that are different-quality versions of that image, the URL
-    #: of the highest-quality image file should be used.
-    #:
-    #: `Data URIs`_ are not allowed in this attribute.
-    #:
-    #: .. _Data URIs: https://en.wikipedia.org/wiki/Data_URI_scheme
-    url: str = attrs.field(converter=url_to_str)
 
 
 @attrs.define(kw_only=True)
@@ -140,16 +175,20 @@ class NamedLink(Item):
 
 
 @attrs.define(kw_only=True)
-class Metadata(Item):
-    """Data extraction process metadata.
+class DateDownloadedMetadata(Item):
+    """Data extraction process metadata that only indicates the download date.
 
-    See :class:`Product.metadata <zyte_common_items.items.Product.metadata>`.
+    See
+    :class:`ArticleList.metadata <zyte_common_items.items.ArticleList.metadata>`.
     """
 
     #: Date and time when the product data was downloaded, in UTC timezone and
     #: the following format: ``YYYY-MM-DDThh:mm:ssZ``.
     dateDownloaded: Optional[str] = None
 
+
+@attrs.define(kw_only=True)
+class Metadata(DateDownloadedMetadata):
     #: The probability (0 for 0%, 1 for 100%) that the webpage features the
     #: requested data type.
     #:
@@ -285,3 +324,11 @@ class RealEstateArea(Item):
 
     #: Area in the raw format, as it appears on the website.
     raw: str
+
+
+@attrs.define
+class Video(_Media):
+    """Video.
+
+    See :class:`Article.videos <zyte_common_items.items.Article.videos>`.
+    """

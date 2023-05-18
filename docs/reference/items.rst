@@ -40,6 +40,10 @@ Article list
    :members:
    :inherited-members:
 
+.. autoclass:: zyte_common_items.ArticleFromList(**kwargs)
+   :members:
+   :inherited-members:
+
 Business place
 ==============
 
