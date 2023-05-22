@@ -231,14 +231,6 @@ class ArticleList(Item):
     #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
     breadcrumbs: Optional[List[Breadcrumb]] = None
 
-    #: Link to the next page.
-    paginationNext: Optional[Link] = None
-
-    #: Current page number, if displayed explicitly on the list page.
-    #:
-    #: Numeration starts with 1.
-    pageNumber: Optional[int] = None
-
     #: Data extraction process metadata.
     metadata: Optional[DateDownloadedMetadata] = None
 

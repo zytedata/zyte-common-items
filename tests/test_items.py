@@ -139,11 +139,6 @@ _ARTICLE_LIST_ALL_KWARGS: dict = {
             url="https://www.zyte.com/blog/extract-summit-blog/",
         ),
     ],
-    "paginationNext": Link(
-        url="https://www.zyte.com/blog/extract-summit-blog/page/2/",
-        text="Next »",
-    ),
-    "pageNumber": 1,
     "metadata": DateDownloadedMetadata(
         dateDownloaded="2022-12-31T13:01:54Z",
     ),
