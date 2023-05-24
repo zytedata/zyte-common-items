@@ -35,7 +35,7 @@ class ZyteItemAdapter(AttrsAdapter):
     In extends AttrsAdapter_ with the following features:
 
     -   Allows interaction and serialization of fields from
-        :attr:`~zyte_common_items.base.Item._unknown_fields_dict` as if they
+        :attr:`~zyte_common_items.Item._unknown_fields_dict` as if they
         were regular item fields.
 
     -   Removes keys with empty values from the output of

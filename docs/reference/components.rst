@@ -19,6 +19,12 @@ tied to any specific item type.
 .. autoclass:: zyte_common_items.Amenity(**kwargs)
    :members:
 
+.. autoclass:: zyte_common_items.Audio(**kwargs)
+   :members: url
+
+.. autoclass:: zyte_common_items.Author(**kwargs)
+   :members:
+
 .. autoclass:: zyte_common_items.Brand(**kwargs)
    :members:
 
@@ -26,19 +32,22 @@ tied to any specific item type.
    :members:
 
 .. autoclass:: zyte_common_items.BusinessPlaceMetadata(**kwargs)
-   :members:
+   :members: dateDownloaded, probability, searchText
+
+.. autoclass:: zyte_common_items.DateDownloadedMetadata(**kwargs)
+   :members: dateDownloaded
 
 .. autoclass:: zyte_common_items.Gtin(**kwargs)
    :members:
 
 .. autoclass:: zyte_common_items.Image(**kwargs)
-   :members:
+   :members: url
 
 .. autoclass:: zyte_common_items.Link(**kwargs)
    :members:
 
 .. autoclass:: zyte_common_items.Metadata(**kwargs)
-   :members:
+   :members: dateDownloaded, probability
 
 .. autoclass:: zyte_common_items.NamedLink(**kwargs)
    :members:
@@ -51,6 +60,9 @@ tied to any specific item type.
 
 .. autoclass:: zyte_common_items.RealEstateArea(**kwargs)
    :members:
-   
+
 .. autoclass:: zyte_common_items.StarRating(**kwargs)
    :members:
+
+.. autoclass:: zyte_common_items.Video(**kwargs)
+   :members: url

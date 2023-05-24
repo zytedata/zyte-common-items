@@ -26,6 +26,24 @@ Product list
    :members:
    :inherited-members:
 
+Article
+=======
+
+.. autoclass:: zyte_common_items.Article(**kwargs)
+   :members:
+   :inherited-members:
+
+Article list
+============
+
+.. autoclass:: zyte_common_items.ArticleList(**kwargs)
+   :members:
+   :inherited-members:
+
+.. autoclass:: zyte_common_items.ArticleFromList(**kwargs)
+   :members:
+   :inherited-members:
+
 Business place
 ==============
 

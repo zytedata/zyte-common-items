@@ -11,9 +11,9 @@ Creating items from dictionaries
 ================================
 
 You can create an :ref:`item <items>` from any :class:`dict`-like object via
-the :meth:`~zyte_common_items.base.Item.from_dict` method.
+the :meth:`~zyte_common_items.Item.from_dict` method.
 
-For example, to create a :class:`~zyte_common_items.items.Product`:
+For example, to create a :class:`~zyte_common_items.Product`:
 
 >>> from zyte_common_items import Product
 >>> data = {
@@ -27,7 +27,7 @@ For example, to create a :class:`~zyte_common_items.items.Product`:
 ... }
 >>> product = Product.from_dict(data)
 
-:meth:`~zyte_common_items.base.Item.from_dict` applies the right classes to
+:meth:`~zyte_common_items.Item.from_dict` applies the right classes to
 nested data, such as :class:`~zyte_common_items.components.Image` and
 :class:`~zyte_common_items.components.Gtin` for the input above.
 
@@ -44,7 +44,7 @@ Creating items from lists
 =========================
 
 You can create items in bulk using the
-:meth:`~zyte_common_items.base.Item.from_list` method:
+:meth:`~zyte_common_items.Item.from_list` method:
 
 >>> from zyte_common_items import Product
 >>> data_list = [
@@ -82,10 +82,10 @@ Traceback (most recent call last):
 ...
 AttributeError: 'Product' object has no attribute 'foo'
 
-However, when using :meth:`~zyte_common_items.base.Item.from_dict` and
-:meth:`~zyte_common_items.base.Item.from_list`, unknown fields assigned to
+However, when using :meth:`~zyte_common_items.Item.from_dict` and
+:meth:`~zyte_common_items.Item.from_list`, unknown fields assigned to
 items and components **won't cause an error**. Instead, they are placed inside
-the :attr:`~zyte_common_items.base.Item._unknown_fields_dict` attribute, and
+the :attr:`~zyte_common_items.Item._unknown_fields_dict` attribute, and
 can be accessed the same way as known fields using
 :class:`~zyte_common_items.ZyteItemAdapter`:
 
@@ -130,10 +130,10 @@ ValueError: Expected breadcrumbs to be a list, got 3.
 Defining custom items
 =====================
 
-You can subclass :class:`~zyte_common_items.base.Item` or any :ref:`item
+You can subclass :class:`~zyte_common_items.Item` or any :ref:`item
 subclass <items>` to define your own item.
 
-:class:`~zyte_common_items.base.Item` is a `slotted attrs class`_ and, to enjoy
+:class:`~zyte_common_items.Item` is a `slotted attrs class`_ and, to enjoy
 the benefits of that, subclasses should also be slotted attrs classes. For
 example:
 
