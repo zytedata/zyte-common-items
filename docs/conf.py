@@ -34,6 +34,11 @@ extensions = [
 html_theme = "sphinx_rtd_theme"
 
 autodoc_member_order = "groupwise"
+nitpick_ignore = [
+    ("py:class", "itemadapter.ItemAdapter"),
+    ("py:class", "web_poet.pages.ItemT"),
+    ("py:class", "zyte_common_items.pages._BasePage"),
+]
 
 intersphinx_disabled_reftypes = []
 intersphinx_mapping = {

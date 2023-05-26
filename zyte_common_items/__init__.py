@@ -6,9 +6,12 @@ from .components import (
     Address,
     AggregateRating,
     Amenity,
+    Audio,
+    Author,
     Brand,
     Breadcrumb,
     BusinessPlaceMetadata,
+    DateDownloadedMetadata,
     Gtin,
     Header,
     Image,
@@ -20,8 +23,12 @@ from .components import (
     RealEstateArea,
     Request,
     StarRating,
+    Video,
 )
 from .items import (
+    Article,
+    ArticleFromList,
+    ArticleList,
     BusinessPlace,
     Product,
     ProductFromList,
@@ -31,6 +38,10 @@ from .items import (
     RealEstate,
 )
 from .pages import (
+    ArticleListPage,
+    ArticlePage,
+    BaseArticleListPage,
+    BaseArticlePage,
     BaseBusinessPlacePage,
     BasePage,
     BaseProductListPage,

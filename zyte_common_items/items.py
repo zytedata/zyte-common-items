@@ -8,9 +8,12 @@ from zyte_common_items.components import (
     Address,
     AggregateRating,
     Amenity,
+    Audio,
+    Author,
     Brand,
     Breadcrumb,
     BusinessPlaceMetadata,
+    DateDownloadedMetadata,
     Gtin,
     Image,
     Link,
@@ -21,8 +24,216 @@ from zyte_common_items.components import (
     RealEstateArea,
     Request,
     StarRating,
+    Video,
 )
 from zyte_common_items.util import url_to_str
+
+
+@attrs.define(slots=True, kw_only=True)
+class ArticleFromList(Item):
+    """Article from an article list from an article listing page.
+
+    See :class:`ArticleList`.
+    """
+
+    #: Clean text of the article, including sub-headings, with newline
+    #: separators.
+    #:
+    #: Format:
+    #:
+    #: - trimmed (no whitespace at the beginning or the end of the body
+    #:   string),
+    #: - line breaks included,
+    #: - no length limit,
+    #: - no normalization of Unicode characters.
+    articleBody: Optional[str] = None
+
+    #: All authors of the article.
+    authors: Optional[List[Author]] = None
+
+    #: Publication date of the article.
+    #:
+    #: Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ" or
+    #: "YYYY-MM-DDThh:mm:ss±zz:zz".
+    #:
+    #: With timezone, if available.
+    #:
+    #: If the actual publication date is not found, the date of the last
+    #: modification is used instead.
+    datePublished: Optional[str] = None
+
+    #: Same date as
+    #: :attr:`~zyte_common_items.ArticleFromList.datePublished`, but
+    #: :before parsing/normalization, i.e. as it appears on the website.
+    datePublishedRaw: Optional[str] = None
+
+    #: Headline or title.
+    headline: Optional[str] = None
+
+    #: Language of the article, as an ISO 639-1 language code.
+    #:
+    #: Sometimes the article language is not the same as the web page overall
+    #: language.
+    inLanguage: Optional[str] = None
+
+    #: Main image.
+    mainImage: Optional[Image] = None
+
+    #: All images.
+    images: Optional[List[Image]] = None
+
+    #: The probability (0 for 0%, 1 for 100%) that this record represents an
+    #: actual article.
+    probability: Optional[float] = None
+
+    #: Main URL.
+    url: Optional[str] = attrs.field(
+        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    )
+
+
+@attrs.define(kw_only=True)
+class Article(Item):
+    #: Headline or title.
+    headline: Optional[str] = None
+
+    #: Publication date of the article.
+    #:
+    #: Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ" or
+    #: "YYYY-MM-DDThh:mm:ss±zz:zz".
+    #:
+    #: With timezone, if available.
+    #:
+    #: If the actual publication date is not found, the value of
+    #: :attr:`~zyte_common_items.Article.dateModified` is used instead.
+    datePublished: Optional[str] = None
+
+    #: Same date as
+    #: :attr:`~zyte_common_items.Article.datePublished`, but
+    #: :before parsing/normalization, i.e. as it appears on the website.
+    datePublishedRaw: Optional[str] = None
+
+    #: Date when the article was most recently modified.
+    #:
+    #: Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ" or
+    #: "YYYY-MM-DDThh:mm:ss±zz:zz".
+    #:
+    #: With timezone, if available.
+    dateModified: Optional[str] = None
+
+    #: Same date as
+    #: :attr:`~zyte_common_items.Article.dateModified`, but
+    #: :before parsing/normalization, i.e. as it appears on the website.
+    dateModifiedRaw: Optional[str] = None
+
+    #: All authors of the article.
+    authors: Optional[List[Author]] = None
+
+    #: Webpage `breadcrumb trail`_.
+    #:
+    #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
+    breadcrumbs: Optional[List[Breadcrumb]] = None
+
+    #: Language of the article, as an ISO 639-1 language code.
+    #:
+    #: Sometimes the article language is not the same as the web page overall
+    #: language.
+    inLanguage: Optional[str] = None
+
+    #: Main image.
+    mainImage: Optional[Image] = None
+
+    #: All images.
+    images: Optional[List[Image]] = None
+
+    #: A short summary of the article.
+    #:
+    #: It can be either human-provided (if available), or auto-generated.
+    description: Optional[str] = None
+
+    #: Clean text of the article, including sub-headings, with newline
+    #: separators.
+    #:
+    #: Format:
+    #:
+    #: - trimmed (no whitespace at the beginning or the end of the body
+    #:   string),
+    #: - line breaks included,
+    #: - no length limit,
+    #: - no normalization of Unicode characters.
+    articleBody: Optional[str] = None
+
+    #: Simplified and standardized HTML of the article, including sub-headings,
+    #: image captions and embedded content (videos, tweets, etc.).
+    #:
+    #: Format: HTML string normalized in a consistent way.
+    articleBodyHtml: Optional[str] = None
+
+    #: All videos.
+    videos: Optional[List[Video]] = None
+
+    #: All audios.
+    audios: Optional[List[Audio]] = None
+
+    #: Canonical form of the URL, as indicated by the website.
+    #:
+    #: See also ``url``.
+    canonicalUrl: Optional[str] = attrs.field(
+        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    )
+
+    #: The main URL of the article page.
+    #:
+    #: The URL of the final response, after any redirects.
+    #:
+    #: Required attribute.
+    #:
+    #: In case there is no article data on the page or the page was not
+    #: reached, the returned "empty" item would still contain this URL field.
+    url: str = attrs.field(converter=url_to_str)
+
+    #: Data extraction process metadata.
+    metadata: Optional[DateDownloadedMetadata] = None
+
+
+@attrs.define(slots=True, kw_only=True)
+class ArticleList(Item):
+    """Article list from an article listing page.
+
+    The :attr:`url` attribute is the only required attribute, all other fields
+    are optional.
+    """
+
+    #: The main URL of the article list.
+    #:
+    #: The URL of the final response, after any redirects.
+    #:
+    #: Required attribute.
+    #:
+    #: In case there is no article list data on the page or the page was not
+    #: reached, the returned item still contain this URL field and all the
+    #: other available datapoints.
+    url: str = attrs.field(converter=url_to_str)
+
+    #: Canonical form of the URL, as indicated by the website.
+    #:
+    #: See also ``url``.
+    canonicalUrl: Optional[str] = attrs.field(
+        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    )
+
+    #: List of article details found on the page.
+    #:
+    #: The order of the articles reflects their position on the page.
+    articles: Optional[List[ArticleFromList]] = None
+
+    #: Webpage `breadcrumb trail`_.
+    #:
+    #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
+    breadcrumbs: Optional[List[Breadcrumb]] = None
+
+    #: Data extraction process metadata.
+    metadata: Optional[DateDownloadedMetadata] = None
 
 
 @attrs.define(kw_only=True)
@@ -490,12 +701,9 @@ class ProductList(Item):
     #: Data extraction process metadata.
     metadata: Optional[Metadata] = None
 
-    #: Number of the current page.
+    #: Current page number, if displayed explicitly on the list page.
     #:
-    #: It should only be extracted if the webpage shows a page number.
-    #:
-    #: It must be 1-based. For example, if the first page of a listing is
-    #: numbered as 0 on the website, it should be extracted as `1` nonetheless.
+    #: Numeration starts with 1.
     pageNumber: Optional[int] = None
 
     #: Link to the next page.

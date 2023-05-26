@@ -5,7 +5,15 @@ from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
 from web_poet.pages import ItemT
 
 from .components import Metadata
-from .items import BusinessPlace, Product, ProductList, ProductNavigation, RealEstate
+from .items import (
+    Article,
+    ArticleList,
+    BusinessPlace,
+    Product,
+    ProductList,
+    ProductNavigation,
+    RealEstate,
+)
 from .util import format_datetime
 
 
@@ -42,15 +50,23 @@ class BasePage(_BasePage):
         return str(self.request_url)
 
 
+class BaseArticlePage(BasePage, Returns[Article]):
+    pass
+
+
+class BaseArticleListPage(BasePage, Returns[ArticleList]):
+    pass
+
+
+class BaseBusinessPlacePage(BasePage, Returns[BusinessPlace]):
+    pass
+
+
 class BaseProductPage(BasePage, Returns[Product]):
     pass
 
 
 class BaseProductListPage(BasePage, Returns[ProductList]):
-    pass
-
-
-class BaseBusinessPlacePage(BasePage, Returns[BusinessPlace]):
     pass
 
 
@@ -69,15 +85,23 @@ class Page(_BasePage, WebPage):
         return str(self.response.url)
 
 
+class ArticlePage(Page, Returns[Article]):
+    pass
+
+
+class ArticleListPage(Page, Returns[ArticleList]):
+    pass
+
+
+class BusinessPlacePage(Page, Returns[BusinessPlace]):
+    pass
+
+
 class ProductPage(Page, Returns[Product]):
     pass
 
 
 class ProductListPage(Page, Returns[ProductList]):
-    pass
-
-
-class BusinessPlacePage(Page, Returns[BusinessPlace]):
     pass
 
 
