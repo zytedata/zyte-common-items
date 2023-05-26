@@ -956,4 +956,4 @@ class ProductNavigation(Item):
     pageNumber: Optional[int] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[Metadata] = None
+    metadata: Optional[DateDownloadedMetadata] = None

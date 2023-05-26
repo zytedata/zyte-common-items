@@ -374,7 +374,7 @@ _PRODUCT_NAVIGATION_ALL_KWARGS: dict = {
         headers=[Header(name="content-type", value="text/json")],
     ),
     "pageNumber": 5,
-    "metadata": Metadata(dateDownloaded="2022-12-31T13:01:54Z"),
+    "metadata": DateDownloadedMetadata(dateDownloaded="2022-12-31T13:01:54Z"),
 }
 
 

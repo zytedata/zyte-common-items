@@ -40,6 +40,9 @@ tied to any specific item type.
 .. autoclass:: zyte_common_items.Gtin(**kwargs)
    :members:
 
+.. autoclass:: zyte_common_items.Header(**kwargs)
+   :members:
+
 .. autoclass:: zyte_common_items.Image(**kwargs)
    :members: url
 
@@ -59,6 +62,9 @@ tied to any specific item type.
    :members:
 
 .. autoclass:: zyte_common_items.RealEstateArea(**kwargs)
+   :members:
+
+.. autoclass:: zyte_common_items.Request(**kwargs)
    :members:
 
 .. autoclass:: zyte_common_items.StarRating(**kwargs)
