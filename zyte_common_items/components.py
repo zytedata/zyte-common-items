@@ -176,7 +176,7 @@ class NamedLink(Item):
 
 @attrs.define(kw_only=True)
 class DateDownloadedMetadata(Item):
-    """Data extraction process metadata that only indicates the download date.
+    """Data extraction process metadata that indicates the download date.
 
     See
     :class:`ArticleList.metadata <zyte_common_items.ArticleList.metadata>`.
@@ -188,9 +188,28 @@ class DateDownloadedMetadata(Item):
 
 
 @attrs.define(kw_only=True)
+class ProbabilityMetadata(Item):
+    """Data extraction process metadata that indicates a probability."""
+
+    #: The probability (0 for 0%, 1 for 100%) that the resource features the
+    #: expected data type.
+    #:
+    #: For example, if the extraction of a product from a given URL is
+    #: requested, and that URL points to the webpage of a product with complete
+    #: certainty, the value should be `1`. If with complete certainty the
+    #: webpage features a job listing instead of a product, the value should be
+    #: `0`. When there is no complete certainty, the value could be anything in
+    #: between (e.g. `0.96`).
+    probability: Optional[float] = None
+
+
+@attrs.define(kw_only=True)
 class Metadata(DateDownloadedMetadata):
-    #: The probability (0 for 0%, 1 for 100%) that the webpage features the
-    #: requested data type.
+    """Data extraction process metadata that indicates the download date and a
+    probability."""
+
+    #: The probability (0 for 0%, 1 for 100%) that the resource features the
+    #: expected data type.
     #:
     #: For example, if the extraction of a product from a given URL is
     #: requested, and that URL points to the webpage of a product with complete
@@ -356,8 +375,13 @@ class Request(Item):
     #: HTTP headers
     headers: Optional[List[Header]] = None
 
+
+@attrs.define(kw_only=True)
+class ProbabilityRequest(Request):
+    """A :class:`Request` that includes a probability value."""
+
     #: Data extraction process metadata.
-    metadata: Optional[Metadata] = None
+    metadata: Optional[ProbabilityMetadata] = None
 
 
 @attrs.define

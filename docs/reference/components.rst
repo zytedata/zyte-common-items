@@ -61,6 +61,12 @@ tied to any specific item type.
 .. autoclass:: zyte_common_items.ParentPlace(**kwargs)
    :members:
 
+.. autoclass:: zyte_common_items.ProbabilityMetadata(**kwargs)
+   :members:
+
+.. autoclass:: zyte_common_items.ProbabilityRequest(**kwargs)
+   :members:
+
 .. autoclass:: zyte_common_items.RealEstateArea(**kwargs)
    :members:
 

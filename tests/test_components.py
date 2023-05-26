@@ -12,6 +12,8 @@ from zyte_common_items import (
     NamedLink,
     OpeningHoursItem,
     ParentPlace,
+    ProbabilityMetadata,
+    ProbabilityRequest,
     RealEstateArea,
     Request,
     StarRating,
@@ -93,6 +95,29 @@ def test_real_estate_area():
 def test_headers():
     Header(name="Connection", value="keep-alive")
     Header(name="Content-Type", value="text/html; charset=utf-8")
+
+
+def test_probability_request():
+    ProbabilityRequest(url="https://example.com")
+    headers = [
+        Header(name="Content-Type", value="application/x-www-form-urlencoded"),
+        Header(name="Host", value="foo.example"),
+    ]
+    ProbabilityRequest(
+        name="Post Test",
+        url="https://example.com/test",
+        method="POST",
+        body="ZmllbGQxPXZhbHVlMSZmaWVsZDI9dmFsdWUy",
+        headers=headers,
+        metadata=ProbabilityMetadata(probability=0.5),
+    )
+
+    request = ProbabilityRequest(
+        name="Get with RequestURL object",
+        url=RequestUrl("https://example.com/test"),
+    )
+
+    assert request.url == "https://example.com/test"
 
 
 def test_request():

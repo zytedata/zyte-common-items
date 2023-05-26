@@ -25,6 +25,8 @@ from zyte_common_items import (
     NamedLink,
     OpeningHoursItem,
     ParentPlace,
+    ProbabilityMetadata,
+    ProbabilityRequest,
     Product,
     ProductFromList,
     ProductList,
@@ -337,33 +339,33 @@ _PRODUCT_NAVIGATION_ALL_KWARGS: dict = {
     **_PRODUCT_NAVIGATION_MIN_KWARGS,
     "categoryName": "Swiss Watches",
     "subCategories": [
-        Request(
+        ProbabilityRequest(
             url="http://books.toscrape.com/catalogue/category/books/",
             method="POST",
             body="YmFzZTY0LWVuY29kZWQ=",
             headers=[Header(name="content-type", value="text/json")],
             name="Travel",
-            metadata=Metadata(probability=0.99),
+            metadata=ProbabilityMetadata(probability=0.99),
         ),
-        Request(
+        ProbabilityRequest(
             url="http://books.toscrape.com/catalogue/category/books/mystery_3/index.html",
             name="Mystery",
-            metadata=Metadata(probability=0.97),
+            metadata=ProbabilityMetadata(probability=0.97),
         ),
     ],
     "items": [
-        Request(
+        ProbabilityRequest(
             url="http://books.toscrape.com/catalogue/in-her-wake_980",
             method="POST",
             body="YmFzZTY0LWVuY29kZWQ=",
             headers=[Header(name="content-type", value="text/json")],
             name="In Her Wake",
-            metadata=Metadata(probability=0.99),
+            metadata=ProbabilityMetadata(probability=0.99),
         ),
-        Request(
+        ProbabilityRequest(
             url="http://books.toscrape.com/catalogue/how-music-works_979/index.html",
             name="How Music Works",
-            metadata=Metadata(probability=0.98),
+            metadata=ProbabilityMetadata(probability=0.98),
         ),
     ],
     "nextPage": Request(

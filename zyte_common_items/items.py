@@ -21,6 +21,7 @@ from zyte_common_items.components import (
     NamedLink,
     OpeningHoursItem,
     ParentPlace,
+    ProbabilityRequest,
     RealEstateArea,
     Request,
     StarRating,
@@ -939,10 +940,10 @@ class ProductNavigation(Item):
     categoryName: Optional[str] = None
 
     #: List of sub-category links ordered by their position in the page.
-    subCategories: Optional[List[Request]] = None
+    subCategories: Optional[List[ProbabilityRequest]] = None
 
     #: List of product links found on the page category ordered by their position in the page.
-    items: Optional[List[Request]] = None
+    items: Optional[List[ProbabilityRequest]] = None
 
     #: A link to the next page, if available.
     nextPage: Optional[Request] = None

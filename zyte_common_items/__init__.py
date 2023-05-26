@@ -20,6 +20,8 @@ from .components import (
     NamedLink,
     OpeningHoursItem,
     ParentPlace,
+    ProbabilityMetadata,
+    ProbabilityRequest,
     RealEstateArea,
     Request,
     StarRating,
