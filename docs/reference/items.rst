@@ -44,6 +44,13 @@ Article list
    :members:
    :inherited-members:
 
+Article navigation
+==================
+
+.. autoclass:: zyte_common_items.ArticleNavigation(**kwargs)
+   :members:
+   :inherited-members:
+
 Business place
 ==============
 

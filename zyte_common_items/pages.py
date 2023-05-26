@@ -5,7 +5,15 @@ from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
 from web_poet.pages import ItemT
 
 from .components import Metadata
-from .items import Article, ArticleList, BusinessPlace, Product, ProductList, RealEstate
+from .items import (
+    Article,
+    ArticleList,
+    ArticleNavigation,
+    BusinessPlace,
+    Product,
+    ProductList,
+    RealEstate,
+)
 from .util import format_datetime
 
 
@@ -50,6 +58,10 @@ class BaseArticleListPage(BasePage, Returns[ArticleList]):
     pass
 
 
+class BaseArticleNavigationPage(BasePage, Returns[ArticleNavigation]):
+    pass
+
+
 class BaseBusinessPlacePage(BasePage, Returns[BusinessPlace]):
     pass
 
@@ -78,6 +90,10 @@ class ArticlePage(Page, Returns[Article]):
 
 
 class ArticleListPage(Page, Returns[ArticleList]):
+    pass
+
+
+class ArticleNavigationPage(Page, Returns[ArticleNavigation]):
     pass
 
 

@@ -22,6 +22,7 @@ from zyte_common_items.components import (
     OpeningHoursItem,
     ParentPlace,
     RealEstateArea,
+    Request,
     StarRating,
     Video,
 )
@@ -920,3 +921,41 @@ class RealEstate(Item):
 
     #: Contains metadata about the data extraction process.
     metadata: Optional[Metadata] = None
+
+
+@attrs.define(kw_only=True)
+class ArticleNavigation(Item):
+    """Represents the navigational aspects of an article listing webpage.
+
+    See :class:`ArticleList`.
+    """
+
+    #: Main URL from which the data is extracted.
+    url: str = attrs.field(converter=url_to_str)
+
+    #: Name of the category/page.
+    #:
+    #: Format:
+    #:
+    #: - trimmed (no whitespace at the beginning or the end of the description string)
+    categoryName: Optional[str] = None
+
+    #: List of sub-category links ordered by their position in the page.
+    subCategories: Optional[List[Request]] = None
+
+    #: Links to listed items in order of appearance.
+    items: Optional[List[Request]] = None
+
+    #: A link to the next page, if available.
+    nextPage: Optional[Request] = None
+
+    #: Number of the current page.
+    #:
+    #: It should only be extracted if the webpage shows a page number.
+    #:
+    #: It must be 1-based. For example, if the first page of a listing is
+    #: numbered as 0 on the website, it should be extracted as `1` nonetheless.
+    pageNumber: Optional[int] = None
+
+    #: Data extraction process metadata.
+    metadata: Optional[DateDownloadedMetadata] = None

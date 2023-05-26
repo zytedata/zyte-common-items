@@ -1,5 +1,5 @@
 """Classes for data nested within items."""
-from typing import Optional
+from typing import List, Optional
 
 import attrs
 
@@ -332,3 +332,37 @@ class Video(_Media):
 
     See :class:`Article.videos <zyte_common_items.Article.videos>`.
     """
+
+
+@attrs.define(kw_only=True)
+class Header(Item):
+    """An HTTP header"""
+
+    #: Name of the header
+    name: str
+
+    #: Value of the header
+    value: str
+
+
+@attrs.define(kw_only=True)
+class Request(Item):
+    """Describe a web request to load a page"""
+
+    #: Name of the page being requested.
+    name: Optional[str] = None
+
+    #: HTTP URL
+    url: str = attrs.field(converter=url_to_str)
+
+    #: HTTP method
+    method: str = "GET"
+
+    #: HTTP request body, Base64-encoded
+    body: Optional[str] = None
+
+    #: HTTP headers
+    headers: Optional[List[Header]] = None
+
+    #: Data extraction process metadata.
+    metadata: Optional[Metadata] = None

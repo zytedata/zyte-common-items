@@ -1,15 +1,19 @@
+from web_poet import RequestUrl
+
 from zyte_common_items import (
     Address,
     AggregateRating,
     Amenity,
     Breadcrumb,
     BusinessPlaceMetadata,
+    Header,
     Link,
     Metadata,
     NamedLink,
     OpeningHoursItem,
     ParentPlace,
     RealEstateArea,
+    Request,
     StarRating,
 )
 
@@ -84,3 +88,30 @@ def test_real_estate_area():
     RealEstateArea(
         value=123.45, unitCode="SQMT", raw="123.45 square meters", areaType="LOT"
     )
+
+
+def test_headers():
+    Header(name="Connection", value="keep-alive")
+    Header(name="Content-Type", value="text/html; charset=utf-8")
+
+
+def test_request():
+    Request(url="https://example.com")
+    headers = [
+        Header(name="Content-Type", value="application/x-www-form-urlencoded"),
+        Header(name="Host", value="foo.example"),
+    ]
+    Request(
+        name="Post Test",
+        url="https://example.com/test",
+        method="POST",
+        body="ZmllbGQxPXZhbHVlMSZmaWVsZDI9dmFsdWUy",
+        headers=headers,
+    )
+
+    request = Request(
+        name="Get with RequestURL object",
+        url=RequestUrl("https://example.com/test"),
+    )
+
+    assert request.url == "https://example.com/test"

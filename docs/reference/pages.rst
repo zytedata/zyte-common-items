@@ -44,6 +44,16 @@ Article list
    :show-inheritance:
 
 
+Article navigation
+==================
+
+.. autoclass:: zyte_common_items.BaseArticleNavigationPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.ArticleNavigationPage(**kwargs)
+   :show-inheritance:
+
+
 Business place
 ==============
 

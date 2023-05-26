@@ -13,6 +13,7 @@ from .components import (
     BusinessPlaceMetadata,
     DateDownloadedMetadata,
     Gtin,
+    Header,
     Image,
     Link,
     Metadata,
@@ -20,6 +21,7 @@ from .components import (
     OpeningHoursItem,
     ParentPlace,
     RealEstateArea,
+    Request,
     StarRating,
     Video,
 )
@@ -27,6 +29,7 @@ from .items import (
     Article,
     ArticleFromList,
     ArticleList,
+    ArticleNavigation,
     BusinessPlace,
     Product,
     ProductFromList,
@@ -36,8 +39,10 @@ from .items import (
 )
 from .pages import (
     ArticleListPage,
+    ArticleNavigationPage,
     ArticlePage,
     BaseArticleListPage,
+    BaseArticleNavigationPage,
     BaseArticlePage,
     BaseBusinessPlacePage,
     BasePage,
