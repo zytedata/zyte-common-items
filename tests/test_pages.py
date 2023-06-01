@@ -148,3 +148,47 @@ async def test_no_item_found_BasePage():
     item = await page.to_item()
     assert item.metadata.probability == 0
     assert item.url == "http://example.com"
+
+
+def test_page_pairs():
+    """For every page a base page, for every base page a page."""
+    import zyte_common_items
+
+    pages = {
+        obj_name
+        for obj_name in zyte_common_items.__dict__
+        if (
+            not obj_name.startswith("Base")
+            and obj_name.endswith("Page")
+            and obj_name != "Page"
+        )
+    }
+    actual_base_pages = {
+        obj_name
+        for obj_name in zyte_common_items.__dict__
+        if (
+            obj_name.startswith("Base")
+            and obj_name.endswith("Page")
+            and obj_name != "BasePage"
+        )
+    }
+    expected_base_pages = {f"Base{page}" for page in pages}
+    assert actual_base_pages == expected_base_pages
+
+
+def test_matching_items():
+    """For every page, an item."""
+    import zyte_common_items
+
+    pages = {
+        obj_name
+        for obj_name in zyte_common_items.__dict__
+        if (
+            not obj_name.startswith("Base")
+            and obj_name.endswith("Page")
+            and obj_name != "Page"
+        )
+    }
+    for page in pages:
+        item = page[:-4]
+        assert item in zyte_common_items.__dict__
