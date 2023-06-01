@@ -62,7 +62,24 @@ def _get_metadata_class(obj):
     return None
 
 
+def cast_metadata(metadata, page):
+    output = page.metadata_cls()
+    input_attributes = {
+        attribute.name for attribute in attrs.fields(metadata.__class__)
+    }
+    output_attributes = {
+        attribute.name for attribute in attrs.fields(page.metadata_cls)
+    }
+    shared_attributes = input_attributes & output_attributes
+    for attribute in shared_attributes:
+        setattr(output, attribute, getattr(metadata, attribute))
+    return output
+
+
 class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
+    class Processors:
+        metadata = [cast_metadata]
+
     @field
     def metadata(self) -> MetadataT:
         value = self.metadata_cls()

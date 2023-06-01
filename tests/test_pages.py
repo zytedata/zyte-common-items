@@ -8,7 +8,9 @@ import zyte_common_items
 from zyte_common_items import (
     BaseProductListPage,
     BaseProductPage,
+    Metadata,
     ProductListPage,
+    ProductMetadata,
     ProductPage,
 )
 
@@ -259,3 +261,29 @@ def test_metadata():
         base_page_cls = getattr(zyte_common_items, base_page)
         base_page_kwargs = {"request_url": RequestUrl("https://example.com")}
         check_default_metadata(base_page_cls, base_page_kwargs, item_name)
+
+
+def test_metadata_generic():
+    """Ensure that when a subclass returns an instance of the generic Metadata
+    class, it gets replaced by the corresponding, more specific metadata
+    class."""
+
+    class CustomProductPage(ProductPage):
+        @field
+        def metadata(self):
+            return Metadata(dateDownloaded="foo", probability=0.5)
+
+    url = ResponseUrl("https://example.com")
+    html = b"""
+    <!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Foo</h1>
+        </body>
+    </html>
+    """
+    page = CustomProductPage(response=HttpResponse(url=url, body=html))
+    metadata = page.metadata
+    assert type(metadata) == ProductMetadata
+    assert metadata.dateDownloaded == "foo"
+    assert metadata.probability == 0.5
