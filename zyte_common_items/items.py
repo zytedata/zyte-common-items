@@ -23,8 +23,11 @@ from zyte_common_items.components import (
     OpeningHoursItem,
     ParentPlace,
     ProbabilityRequest,
+    ProductListMetadata,
+    ProductMetadata,
     ProductNavigationMetadata,
     RealEstateArea,
+    RealEstateMetadata,
     Request,
     StarRating,
     Video,
@@ -504,7 +507,7 @@ class Product(Item):
     mainImage: Optional[Image] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[Metadata] = None
+    metadata: Optional[ProductMetadata] = None
 
     #: `Manufacturer part number (MPN)`_.
     #:
@@ -702,7 +705,7 @@ class ProductList(Item):
     categoryName: Optional[str] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[Metadata] = None
+    metadata: Optional[ProductListMetadata] = None
 
     #: Current page number, if displayed explicitly on the list page.
     #:
@@ -923,7 +926,7 @@ class RealEstate(Item):
     virtualTourUrl: Optional[str] = None
 
     #: Contains metadata about the data extraction process.
-    metadata: Optional[Metadata] = None
+    metadata: Optional[RealEstateMetadata] = None
 
 
 @attrs.define(kw_only=True)

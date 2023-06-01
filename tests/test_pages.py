@@ -183,15 +183,15 @@ METADATA_FIELDS = {
 }
 
 
-def check_default_metadata(cls, kwargs, base_name):
+def check_default_metadata(cls, kwargs, item_name):
     start = datetime.utcnow().replace(microsecond=0)
 
     obj = cls(**kwargs)
 
-    metadata_cls = zyte_common_items.__dict__[f"{base_name}Metadata"]
+    metadata_cls = zyte_common_items.__dict__[f"{item_name}Metadata"]
     assert type(obj.metadata) == metadata_cls
 
-    expected_fields = METADATA_FIELDS[base_name]
+    expected_fields = METADATA_FIELDS[item_name]
     actual_fields = {
         field
         for field in dir(obj.metadata)
@@ -218,13 +218,16 @@ def check_default_metadata(cls, kwargs, base_name):
 
 
 def test_metadata():
-    """Test metadata expectations for pages and items.
+    """Test metadata expectations for pages.
 
-    For every type-specific page, base page and item:
+    For every type-specific page and base page:
 
     -   There must be a matching metadata class.
 
     -   The metadata attribute must be of that metadata class.
+
+    -   The default value of metadata must have dateDownloaded and probability
+        filled if available in the metadata class.
     """
     pages = {
         obj_name
@@ -237,7 +240,7 @@ def test_metadata():
     }
 
     for page in pages:
-        base_name = page[:-4]
+        item_name = page[:-4]
 
         page_cls = getattr(zyte_common_items, page)
         response_url = ResponseUrl("https://example.com")
@@ -250,9 +253,9 @@ def test_metadata():
         </html>
         """
         page_kwargs = {"response": HttpResponse(url=response_url, body=html)}
-        check_default_metadata(page_cls, page_kwargs, base_name)
+        check_default_metadata(page_cls, page_kwargs, item_name)
 
         base_page = f"Base{page}"
         base_page_cls = getattr(zyte_common_items, base_page)
         base_page_kwargs = {"request_url": RequestUrl("https://example.com")}
-        check_default_metadata(base_page_cls, base_page_kwargs, base_name)
+        check_default_metadata(base_page_cls, base_page_kwargs, item_name)

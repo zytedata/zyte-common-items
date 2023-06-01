@@ -2,6 +2,7 @@ from copy import copy
 
 import pytest
 
+import zyte_common_items
 from zyte_common_items import (
     AdditionalProperty,
     Address,
@@ -571,3 +572,29 @@ def test_product_navigation_missing_fields():
         del incomplete_kwargs[required_field]
         with pytest.raises(TypeError):
             ProductNavigation(**incomplete_kwargs)
+
+
+def test_metadata():
+    """Test metadata expectations for items.
+
+    For every item:
+
+    -   There must be a matching metadata class.
+
+    -   The metadata attribute must be of that metadata class.
+    """
+    item_names = {
+        obj_name[:-4]
+        for obj_name in zyte_common_items.__dict__
+        if (
+            not obj_name.startswith("Base")
+            and obj_name.endswith("Page")
+            and obj_name != "Page"
+        )
+    }
+    for item_name in item_names:
+        cls = zyte_common_items.__dict__[item_name]
+        obj = cls.from_dict(
+            {"url": "https://example.com", "metadata": {"dateDownloaded": "foo"}}
+        )
+        assert type(obj.metadata) == zyte_common_items.__dict__[f"{item_name}Metadata"]
