@@ -18,10 +18,10 @@ from zyte_common_items.components import (
     Gtin,
     Image,
     Link,
-    Metadata,
     NamedLink,
     OpeningHoursItem,
     ParentPlace,
+    ProbabilityMetadata,
     ProbabilityRequest,
     ProductListMetadata,
     ProductMetadata,
@@ -642,7 +642,7 @@ class ProductFromList(Item):
     mainImage: Optional[Image] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[Metadata] = None
+    metadata: Optional[ProbabilityMetadata] = None
 
     #: Name as it appears on the webpage (no post-processing).
     name: Optional[str] = None
