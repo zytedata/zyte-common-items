@@ -69,3 +69,25 @@ def url_to_str(url: Union[str, _Url]) -> str:
 
 def format_datetime(dt):
     return f"{dt.isoformat(timespec='seconds')}Z"
+
+
+def cast_metadata(value, cls):
+    new_value = cls()
+    input_attributes = {attribute.name for attribute in attrs.fields(value.__class__)}
+    output_attributes = {attribute.name for attribute in attrs.fields(cls)}
+    shared_attributes = input_attributes & output_attributes
+    for attribute in shared_attributes:
+        setattr(new_value, attribute, getattr(value, attribute))
+    return new_value
+
+
+def metadata_processor(metadata, page):
+    return cast_metadata(metadata, page.metadata_cls)
+
+
+class MetadataCaster:
+    def __init__(self, target):
+        self._target = target
+
+    def __call__(self, value):
+        return cast_metadata(value, self._target)

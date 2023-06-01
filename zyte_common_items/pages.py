@@ -23,7 +23,7 @@ from .items import (
     ProductNavigation,
     RealEstate,
 )
-from .util import format_datetime
+from .util import format_datetime, metadata_processor
 
 try:
     from typing import get_args as _get_args
@@ -62,23 +62,9 @@ def _get_metadata_class(obj):
     return None
 
 
-def cast_metadata(metadata, page):
-    output = page.metadata_cls()
-    input_attributes = {
-        attribute.name for attribute in attrs.fields(metadata.__class__)
-    }
-    output_attributes = {
-        attribute.name for attribute in attrs.fields(page.metadata_cls)
-    }
-    shared_attributes = input_attributes & output_attributes
-    for attribute in shared_attributes:
-        setattr(output, attribute, getattr(metadata, attribute))
-    return output
-
-
 class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
     class Processors:
-        metadata = [cast_metadata]
+        metadata = [metadata_processor]
 
     @field
     def metadata(self) -> MetadataT:

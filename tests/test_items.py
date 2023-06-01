@@ -12,6 +12,7 @@ from zyte_common_items import (
     ArticleFromList,
     ArticleList,
     ArticleListMetadata,
+    ArticleMetadata,
     Audio,
     Author,
     Brand,
@@ -31,11 +32,14 @@ from zyte_common_items import (
     Product,
     ProductFromList,
     ProductList,
+    ProductListMetadata,
+    ProductMetadata,
     ProductNavigation,
     ProductNavigationMetadata,
     ProductVariant,
     RealEstate,
     RealEstateArea,
+    RealEstateMetadata,
     Request,
     StarRating,
     Video,
@@ -116,7 +120,7 @@ _ARTICLE_ALL_KWARGS: dict = {
     ],
     "canonicalUrl": "https://www.zyte.com/blog/product-data-extraction-automatic/",
     "url": "https://www.zyte.com/blog/product-data-extraction-automatic",
-    "metadata": Metadata(
+    "metadata": ArticleMetadata(
         dateDownloaded="2022-12-31T13:01:54Z",
         probability=1.0,
     ),
@@ -256,7 +260,7 @@ _PRODUCT_ALL_KWARGS: dict = {
         "<p>Super Cooling Plus&trade;</p></article>"
     ),
     "features": ["Easily store fragile products.", "Bluetooth connectivity."],
-    "metadata": Metadata(
+    "metadata": ProductMetadata(
         dateDownloaded="2022-12-31T13:01:54Z",
         probability=1.0,
     ),
@@ -273,9 +277,8 @@ _PRODUCT_LIST_ALL_KWARGS: dict = {
     ],
     "canonicalUrl": "https://example.com/swiss-watches",
     "categoryName": "Swiss Watches",
-    "metadata": Metadata(
+    "metadata": ProductListMetadata(
         dateDownloaded="2022-12-31T13:01:54Z",
-        probability=1.0,
     ),
     "pageNumber": 1,
     "paginationNext": Link(
@@ -329,7 +332,7 @@ _REAL_ESTATE_ALL_KWARGS: dict = {
     "propertyType": "flat",
     "yearBuilt": 1997,
     "virtualTourUrl": "https://example.com",
-    "metadata": Metadata(
+    "metadata": RealEstateMetadata(
         dateDownloaded="2022-12-31T13:01:54Z",
         probability=1.0,
     ),
@@ -582,6 +585,9 @@ def test_metadata():
     -   There must be a matching metadata class.
 
     -   The metadata attribute must be of that metadata class.
+
+    -   If the generic Metadata object is assigned as input, it gets converted
+        into an object of the right, more specific metadata class.
     """
     item_names = {
         obj_name[:-4]
@@ -594,7 +600,17 @@ def test_metadata():
     }
     for item_name in item_names:
         cls = zyte_common_items.__dict__[item_name]
-        obj = cls.from_dict(
+        metadata_cls = zyte_common_items.__dict__[f"{item_name}Metadata"]
+
+        obj1 = cls.from_dict(
             {"url": "https://example.com", "metadata": {"dateDownloaded": "foo"}}
         )
-        assert type(obj.metadata) == zyte_common_items.__dict__[f"{item_name}Metadata"]
+        assert type(obj1.metadata) == metadata_cls
+        assert obj1.metadata.dateDownloaded == "foo"
+
+        obj2 = cls(url="https://example.com", metadata=Metadata(dateDownloaded="foo"))
+        assert type(obj2.metadata) == metadata_cls
+        assert obj2.metadata.dateDownloaded == "foo"
+        obj2.metadata = Metadata(dateDownloaded="foo")
+        assert type(obj2.metadata) == metadata_cls
+        assert obj2.metadata.dateDownloaded == "foo"

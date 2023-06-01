@@ -32,7 +32,7 @@ from zyte_common_items.components import (
     StarRating,
     Video,
 )
-from zyte_common_items.util import url_to_str
+from zyte_common_items.util import MetadataCaster, url_to_str
 
 
 @attrs.define(slots=True, kw_only=True)
@@ -199,7 +199,9 @@ class Article(Item):
     url: str = attrs.field(converter=url_to_str)
 
     #: Data extraction process metadata.
-    metadata: Optional[ArticleMetadata] = None
+    metadata: Optional[ArticleMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ArticleMetadata)), kw_only=True  # type: ignore
+    )
 
 
 @attrs.define(slots=True, kw_only=True)
@@ -239,7 +241,9 @@ class ArticleList(Item):
     breadcrumbs: Optional[List[Breadcrumb]] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[ArticleListMetadata] = None
+    metadata: Optional[ArticleListMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ArticleListMetadata)), kw_only=True  # type: ignore
+    )
 
 
 @attrs.define(kw_only=True)
@@ -507,7 +511,9 @@ class Product(Item):
     mainImage: Optional[Image] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[ProductMetadata] = None
+    metadata: Optional[ProductMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ProductMetadata)), kw_only=True  # type: ignore
+    )
 
     #: `Manufacturer part number (MPN)`_.
     #:
@@ -705,7 +711,9 @@ class ProductList(Item):
     categoryName: Optional[str] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[ProductListMetadata] = None
+    metadata: Optional[ProductListMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ProductListMetadata)), kw_only=True  # type: ignore
+    )
 
     #: Current page number, if displayed explicitly on the list page.
     #:
@@ -827,7 +835,9 @@ class BusinessPlace(Item):
     tags: Optional[List[str]] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[BusinessPlaceMetadata] = None
+    metadata: Optional[BusinessPlaceMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(BusinessPlaceMetadata)), kw_only=True  # type: ignore
+    )
 
 
 @attrs.define(slots=True, kw_only=True)
@@ -926,7 +936,9 @@ class RealEstate(Item):
     virtualTourUrl: Optional[str] = None
 
     #: Contains metadata about the data extraction process.
-    metadata: Optional[RealEstateMetadata] = None
+    metadata: Optional[RealEstateMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(RealEstateMetadata)), kw_only=True  # type: ignore
+    )
 
 
 @attrs.define(kw_only=True)
@@ -962,4 +974,6 @@ class ProductNavigation(Item):
     pageNumber: Optional[int] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[ProductNavigationMetadata] = None
+    metadata: Optional[ProductNavigationMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ProductNavigationMetadata)), kw_only=True  # type: ignore
+    )
