@@ -1,4 +1,5 @@
 from typing import Any, Callable, Dict, Optional, Tuple, Type, Union
+from warnings import warn
 from weakref import WeakKeyDictionary
 
 import attrs
@@ -78,6 +79,20 @@ def cast_metadata(value, cls):
     shared_attributes = input_attributes & output_attributes
     for attribute in shared_attributes:
         setattr(new_value, attribute, getattr(value, attribute))
+    removed_nonempty_attributes = {
+        attribute
+        for attribute in (input_attributes - output_attributes)
+        if getattr(value, attribute) is not None
+    }
+    if removed_nonempty_attributes:
+        warn(
+            (
+                f"Conversion of {value} into {cls} is dropping the non-empty "
+                f"values of the following attributes: "
+                f"{removed_nonempty_attributes}."
+            ),
+            RuntimeWarning,
+        )
     return new_value
 
 

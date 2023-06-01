@@ -1,4 +1,6 @@
+import warnings
 from datetime import datetime
+from warnings import catch_warnings
 
 import attrs
 import pytest
@@ -282,8 +284,22 @@ def test_metadata_generic():
         </body>
     </html>
     """
-    page = CustomProductPage(response=HttpResponse(url=url, body=html))
-    metadata = page.metadata
-    assert type(metadata) == ProductMetadata
-    assert metadata.dateDownloaded == "foo"
-    assert metadata.probability == 0.5
+    page1 = CustomProductPage(response=HttpResponse(url=url, body=html))
+    with catch_warnings():
+        warnings.simplefilter("error")
+        metadata1 = page1.metadata
+    assert type(metadata1) == ProductMetadata
+    assert metadata1.dateDownloaded == "foo"
+    assert metadata1.probability == 0.5
+
+    class WarningProductPage(ProductPage):
+        @field
+        def metadata(self):
+            return Metadata(dateDownloaded="foo", probability=0.5, searchText="bar")
+
+    page2 = WarningProductPage(response=HttpResponse(url=url, body=html))
+    with pytest.warns(RuntimeWarning, match=r"dropping the non-empty values"):
+        metadata2 = page2.metadata
+    assert type(metadata2) == ProductMetadata
+    assert metadata2.dateDownloaded == "foo"
+    assert metadata2.probability == 0.5
