@@ -6,6 +6,105 @@ import attrs
 from zyte_common_items.base import Item
 from zyte_common_items.util import url_to_str
 
+# Metadata ####################################################################
+
+
+@attrs.define(kw_only=True)
+class ProbabilityMetadata(Item):
+    """Data extraction process metadata that indicates a probability."""
+
+    #: The probability (0 for 0%, 1 for 100%) that the resource features the
+    #: expected data type.
+    #:
+    #: For example, if the extraction of a product from a given URL is
+    #: requested, and that URL points to the webpage of a product with complete
+    #: certainty, the value should be `1`. If with complete certainty the
+    #: webpage features a job listing instead of a product, the value should be
+    #: `0`. When there is no complete certainty, the value could be anything in
+    #: between (e.g. `0.96`).
+    probability: Optional[float] = None
+
+
+@attrs.define(kw_only=True)
+class _ListMetadata(Item):
+    """Data extraction process metadata that indicates the download date.
+
+    See
+    :class:`ArticleList.metadata <zyte_common_items.ArticleList.metadata>`.
+    """
+
+    #: Date and time when the product data was downloaded, in UTC timezone and
+    #: the following format: ``YYYY-MM-DDThh:mm:ssZ``.
+    dateDownloaded: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
+class _DetailsMetadata(_ListMetadata):
+    """Data extraction process metadata that indicates the download date and a
+    probability."""
+
+    #: The probability (0 for 0%, 1 for 100%) that the resource features the
+    #: expected data type.
+    #:
+    #: For example, if the extraction of a product from a given URL is
+    #: requested, and that URL points to the webpage of a product with complete
+    #: certainty, the value should be `1`. If with complete certainty the
+    #: webpage features a job listing instead of a product, the value should be
+    #: `0`. When there is no complete certainty, the value could be anything in
+    #: between (e.g. `0.96`).
+    probability: Optional[float] = None
+
+
+@attrs.define(kw_only=True)
+class Metadata(_DetailsMetadata):
+    """Generic metadata class.
+
+    It defines all attributes of metadata classes for specific item types, so
+    that it can be used during extraction instead of a more specific class, and
+    later converted to the corresponding, more specific metadata class.
+    """
+
+    #: The search text used to find the item.
+    searchText: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
+class ArticleMetadata(_DetailsMetadata):
+    pass
+
+
+@attrs.define(kw_only=True)
+class ArticleListMetadata(_ListMetadata):
+    pass
+
+
+@attrs.define(kw_only=True)
+class BusinessPlaceMetadata(Metadata):
+    pass
+
+
+@attrs.define(kw_only=True)
+class ProductMetadata(_DetailsMetadata):
+    pass
+
+
+@attrs.define(kw_only=True)
+class ProductListMetadata(_ListMetadata):
+    pass
+
+
+@attrs.define(kw_only=True)
+class ProductNavigationMetadata(_ListMetadata):
+    pass
+
+
+@attrs.define(kw_only=True)
+class RealEstateMetadata(_DetailsMetadata):
+    pass
+
+
+###############################################################################
+
 
 @attrs.define
 class _Media(Item):
@@ -325,99 +424,6 @@ class Video(_Media):
 
     See :class:`Article.videos <zyte_common_items.Article.videos>`.
     """
-
-
-# Metadata ####################################################################
-
-
-@attrs.define(kw_only=True)
-class DateDownloadedMetadata(Item):
-    """Data extraction process metadata that indicates the download date.
-
-    See
-    :class:`ArticleList.metadata <zyte_common_items.ArticleList.metadata>`.
-    """
-
-    #: Date and time when the product data was downloaded, in UTC timezone and
-    #: the following format: ``YYYY-MM-DDThh:mm:ssZ``.
-    dateDownloaded: Optional[str] = None
-
-
-@attrs.define(kw_only=True)
-class ProbabilityMetadata(Item):
-    """Data extraction process metadata that indicates a probability."""
-
-    #: The probability (0 for 0%, 1 for 100%) that the resource features the
-    #: expected data type.
-    #:
-    #: For example, if the extraction of a product from a given URL is
-    #: requested, and that URL points to the webpage of a product with complete
-    #: certainty, the value should be `1`. If with complete certainty the
-    #: webpage features a job listing instead of a product, the value should be
-    #: `0`. When there is no complete certainty, the value could be anything in
-    #: between (e.g. `0.96`).
-    probability: Optional[float] = None
-
-
-@attrs.define(kw_only=True)
-class Metadata(DateDownloadedMetadata):
-    """Data extraction process metadata that indicates the download date and a
-    probability."""
-
-    #: The probability (0 for 0%, 1 for 100%) that the resource features the
-    #: expected data type.
-    #:
-    #: For example, if the extraction of a product from a given URL is
-    #: requested, and that URL points to the webpage of a product with complete
-    #: certainty, the value should be `1`. If with complete certainty the
-    #: webpage features a job listing instead of a product, the value should be
-    #: `0`. When there is no complete certainty, the value could be anything in
-    #: between (e.g. `0.96`).
-    probability: Optional[float] = None
-
-
-@attrs.define(kw_only=True)
-class ArticleMetadata(Item):
-    pass
-
-
-@attrs.define(kw_only=True)
-class ArticleListMetadata(Item):
-    pass
-
-
-@attrs.define(kw_only=True)
-class BusinessPlaceMetadata(Metadata):
-    """Data extraction process metadata.
-
-    See :class:`BusinessPlace.metadata <zyte_common_items.BusinessPlace.metadata>`.
-    """
-
-    #: The search text the place was found with.
-    searchText: Optional[str] = None
-
-
-@attrs.define(kw_only=True)
-class ProductMetadata(Item):
-    pass
-
-
-@attrs.define(kw_only=True)
-class ProductListMetadata(Item):
-    pass
-
-
-@attrs.define(kw_only=True)
-class ProductNavigationMetadata(Item):
-    pass
-
-
-@attrs.define(kw_only=True)
-class RealEstateMetadata(Item):
-    pass
-
-
-###############################################################################
 
 
 @attrs.define(kw_only=True)

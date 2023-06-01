@@ -10,13 +10,13 @@ from zyte_common_items import (
     Article,
     ArticleFromList,
     ArticleList,
+    ArticleListMetadata,
     Audio,
     Author,
     Brand,
     Breadcrumb,
     BusinessPlace,
     BusinessPlaceMetadata,
-    DateDownloadedMetadata,
     Gtin,
     Header,
     Image,
@@ -31,6 +31,7 @@ from zyte_common_items import (
     ProductFromList,
     ProductList,
     ProductNavigation,
+    ProductNavigationMetadata,
     ProductVariant,
     RealEstate,
     RealEstateArea,
@@ -144,7 +145,7 @@ _ARTICLE_LIST_ALL_KWARGS: dict = {
             url="https://www.zyte.com/blog/extract-summit-blog/",
         ),
     ],
-    "metadata": DateDownloadedMetadata(
+    "metadata": ArticleListMetadata(
         dateDownloaded="2022-12-31T13:01:54Z",
     ),
 }
@@ -376,7 +377,7 @@ _PRODUCT_NAVIGATION_ALL_KWARGS: dict = {
         headers=[Header(name="content-type", value="text/json")],
     ),
     "pageNumber": 5,
-    "metadata": DateDownloadedMetadata(dateDownloaded="2022-12-31T13:01:54Z"),
+    "metadata": ProductNavigationMetadata(dateDownloaded="2022-12-31T13:01:54Z"),
 }
 
 

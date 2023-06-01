@@ -8,12 +8,13 @@ from zyte_common_items.components import (
     Address,
     AggregateRating,
     Amenity,
+    ArticleListMetadata,
+    ArticleMetadata,
     Audio,
     Author,
     Brand,
     Breadcrumb,
     BusinessPlaceMetadata,
-    DateDownloadedMetadata,
     Gtin,
     Image,
     Link,
@@ -22,6 +23,7 @@ from zyte_common_items.components import (
     OpeningHoursItem,
     ParentPlace,
     ProbabilityRequest,
+    ProductNavigationMetadata,
     RealEstateArea,
     Request,
     StarRating,
@@ -194,7 +196,7 @@ class Article(Item):
     url: str = attrs.field(converter=url_to_str)
 
     #: Data extraction process metadata.
-    metadata: Optional[DateDownloadedMetadata] = None
+    metadata: Optional[ArticleMetadata] = None
 
 
 @attrs.define(slots=True, kw_only=True)
@@ -234,7 +236,7 @@ class ArticleList(Item):
     breadcrumbs: Optional[List[Breadcrumb]] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[DateDownloadedMetadata] = None
+    metadata: Optional[ArticleListMetadata] = None
 
 
 @attrs.define(kw_only=True)
@@ -957,4 +959,4 @@ class ProductNavigation(Item):
     pageNumber: Optional[int] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[DateDownloadedMetadata] = None
+    metadata: Optional[ProductNavigationMetadata] = None

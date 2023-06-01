@@ -4,6 +4,7 @@ import attrs
 import pytest
 from web_poet import HttpResponse, RequestUrl, ResponseUrl, field
 
+import zyte_common_items
 from zyte_common_items import (
     BaseProductListPage,
     BaseProductPage,
@@ -20,19 +21,10 @@ from zyte_common_items import (
     ),
 )
 def test_base_pages_default(page_class):
-    datetime_before = datetime.utcnow().replace(microsecond=0)
-
     page = page_class(request_url=RequestUrl("https://example.com"))
-
-    assert page.metadata.probability == 1.0
     assert page.url == "https://example.com"
     assert isinstance(page.url, str)
-
-    page_datetime_string = page.metadata.dateDownloaded
-    assert page_datetime_string.endswith("Z")
-    page_datetime = datetime.fromisoformat(page_datetime_string[:-1])
-    datetime_after = datetime.utcnow().replace(microsecond=0)
-    assert datetime_before <= page_datetime <= datetime_after
+    # NOTE: test_metadata covers .metadata
 
 
 @pytest.mark.parametrize(
@@ -43,8 +35,6 @@ def test_base_pages_default(page_class):
     ),
 )
 def test_pages_default(page_class):
-    datetime_before = datetime.utcnow().replace(microsecond=0)
-
     url = ResponseUrl("https://example.com")
     html = b"""
     <!DOCTYPE html>
@@ -55,18 +45,10 @@ def test_pages_default(page_class):
     </html>
     """
     response = HttpResponse(url=url, body=html)
-
     page = page_class(response=response)
-
-    assert page.metadata.probability == 1.0
     assert page.url == "https://example.com"
     assert isinstance(page.url, str)
-
-    page_datetime_string = page.metadata.dateDownloaded
-    assert page_datetime_string.endswith("Z")
-    page_datetime = datetime.fromisoformat(page_datetime_string[:-1])
-    datetime_after = datetime.utcnow().replace(microsecond=0)
-    assert datetime_before <= page_datetime <= datetime_after
+    # NOTE: test_metadata covers .metadata
 
 
 @pytest.mark.asyncio
@@ -152,8 +134,6 @@ async def test_no_item_found_BasePage():
 
 def test_page_pairs():
     """For every page a base page, for every base page a page."""
-    import zyte_common_items
-
     pages = {
         obj_name
         for obj_name in zyte_common_items.__dict__
@@ -178,8 +158,6 @@ def test_page_pairs():
 
 def test_matching_items():
     """For every page, an item."""
-    import zyte_common_items
-
     pages = {
         obj_name
         for obj_name in zyte_common_items.__dict__
@@ -192,3 +170,89 @@ def test_matching_items():
     for page in pages:
         item = page[:-4]
         assert item in zyte_common_items.__dict__
+
+
+METADATA_FIELDS = {
+    "Article": {"dateDownloaded", "probability"},
+    "ArticleList": {"dateDownloaded"},
+    "BusinessPlace": {"dateDownloaded", "probability", "searchText"},
+    "Product": {"dateDownloaded", "probability"},
+    "ProductList": {"dateDownloaded"},
+    "ProductNavigation": {"dateDownloaded"},
+    "RealEstate": {"dateDownloaded", "probability"},
+}
+
+
+def check_default_metadata(cls, kwargs, base_name):
+    start = datetime.utcnow().replace(microsecond=0)
+
+    obj = cls(**kwargs)
+
+    metadata_cls = zyte_common_items.__dict__[f"{base_name}Metadata"]
+    assert type(obj.metadata) == metadata_cls
+
+    expected_fields = METADATA_FIELDS[base_name]
+    actual_fields = {
+        field
+        for field in dir(obj.metadata)
+        if not field.startswith("_") and not field.startswith("from_")
+    }
+    error_message = (
+        f"{metadata_cls}: actual fields ({actual_fields}) != expected fields "
+        f"({expected_fields})"
+    )
+    assert actual_fields == expected_fields, error_message
+
+    if "dateDownloaded" in actual_fields:
+        assert isinstance(
+            obj.metadata.dateDownloaded, str
+        ), f"{cls} does not get dateDownloaded set by default"
+        assert obj.metadata.dateDownloaded.endswith("Z")
+        actual = datetime.fromisoformat(obj.metadata.dateDownloaded[:-1])
+        end = datetime.utcnow().replace(microsecond=0)
+        assert start <= actual <= end
+
+    if "probability" in actual_fields:
+        assert isinstance(obj.metadata.probability, float)
+        assert obj.metadata.probability == 1.0
+
+
+def test_metadata():
+    """Test metadata expectations for pages and items.
+
+    For every type-specific page, base page and item:
+
+    -   There must be a matching metadata class.
+
+    -   The metadata attribute must be of that metadata class.
+    """
+    pages = {
+        obj_name
+        for obj_name in zyte_common_items.__dict__
+        if (
+            not obj_name.startswith("Base")
+            and obj_name.endswith("Page")
+            and obj_name != "Page"
+        )
+    }
+
+    for page in pages:
+        base_name = page[:-4]
+
+        page_cls = getattr(zyte_common_items, page)
+        response_url = ResponseUrl("https://example.com")
+        html = b"""
+        <!DOCTYPE html>
+        <html>
+            <body>
+                <h1>Foo</h1>
+            </body>
+        </html>
+        """
+        page_kwargs = {"response": HttpResponse(url=response_url, body=html)}
+        check_default_metadata(page_cls, page_kwargs, base_name)
+
+        base_page = f"Base{page}"
+        base_page_cls = getattr(zyte_common_items, base_page)
+        base_page_kwargs = {"request_url": RequestUrl("https://example.com")}
+        check_default_metadata(base_page_cls, base_page_kwargs, base_name)

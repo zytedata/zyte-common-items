@@ -80,6 +80,10 @@ classes that rely on :class:`~web_poet.page_inputs.http.HttpResponse`.
 If you do not want :class:`~web_poet.page_inputs.http.HttpResponse` as input,
 you can inherit from :class:`~zyte_common_items.BasePage` instead.
 
+Your subclasses should also inherit generic classes
+:class:`web_poet.pages.Returns` and :class:`zyte_common_items.HasMetadata` to
+indicate their item and metadata classes.
+
 .. autoclass:: zyte_common_items.BasePage(**kwargs)
    :show-inheritance:
    :members: no_item_found
@@ -88,7 +92,6 @@ you can inherit from :class:`~zyte_common_items.BasePage` instead.
    :class:`~web_poet.page_inputs.http.RequestUrl` as a dependency.
 
    .. data:: metadata
-      :type: zyte_common_items.Metadata
 
       Data extraction process metadata.
 
@@ -123,3 +126,7 @@ you can inherit from :class:`~zyte_common_items.BasePage` instead.
       :type: str
 
       Main URL from which the data has been extracted.
+
+.. autoclass:: zyte_common_items.HasMetadata
+
+.. autodata:: zyte_common_items.MetadataT
