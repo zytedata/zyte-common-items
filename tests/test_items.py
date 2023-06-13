@@ -65,7 +65,9 @@ _ARTICLE_FROM_LIST_ALL_KWARGS: dict = {
     "mainImage": Image(
         "https://www.zyte.com/wp-content/uploads/2021/10/Extract-Summit-2021_Blog-Summary_Header-85.png"
     ),
-    "probability": 0.8437236322711676,
+    "metadata": ProbabilityMetadata(
+        probability=0.8437236322711676,
+    ),
     "url": "https://www.zyte.com/blog/reflecting-on-the-2022-web-data-extraction-summit-zyte/",
 }
 _ARTICLE_MIN_KWARGS: dict = {
@@ -203,8 +205,7 @@ _PRODUCT_FROM_LIST_ALL_KWARGS: dict = {
     "currency": "USD",
     "currencyRaw": "$",
     "mainImage": Image("http://example.com/image1.png"),
-    "metadata": Metadata(
-        dateDownloaded="2022-12-31T13:01:54Z",
+    "metadata": ProbabilityMetadata(
         probability=1.0,
     ),
     "name": "White two-door refrigerator",

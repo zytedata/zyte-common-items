@@ -88,9 +88,8 @@ class ArticleFromList(Item):
     #: All images.
     images: Optional[List[Image]] = None
 
-    #: The probability (0 for 0%, 1 for 100%) that this record represents an
-    #: actual article.
-    probability: Optional[float] = None
+    #: Data extraction process metadata.
+    metadata: Optional[ProbabilityMetadata] = None
 
     #: Main URL.
     url: Optional[str] = attrs.field(
