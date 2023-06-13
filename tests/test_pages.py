@@ -1,5 +1,6 @@
 import warnings
 from datetime import datetime
+from typing import Optional
 from warnings import catch_warnings
 
 import attrs
@@ -10,6 +11,7 @@ import zyte_common_items
 from zyte_common_items import (
     BaseProductListPage,
     BaseProductPage,
+    HasMetadata,
     Metadata,
     ProductListPage,
     ProductMetadata,
@@ -303,3 +305,30 @@ def test_metadata_generic():
     assert type(metadata2) == ProductMetadata
     assert metadata2.dateDownloaded == "foo"
     assert metadata2.probability == 0.5
+
+
+def test_metadata_override():
+    """Test using HasMetadata to override the metadata class."""
+
+    @attrs.define(kw_only=True)
+    class CustomProductMetadata(ProductMetadata):
+        new_field: Optional[str] = None
+
+    class CustomProductPage(ProductPage, HasMetadata[CustomProductMetadata]):
+        @field
+        def metadata(self):
+            return Metadata(dateDownloaded="foo", probability=0.5)
+
+    url = ResponseUrl("https://example.com")
+    html = b"""
+    <!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Foo</h1>
+        </body>
+    </html>
+    """
+    page = CustomProductPage(response=HttpResponse(url=url, body=html))
+    metadata = page.metadata
+    assert type(metadata) == CustomProductMetadata
+    assert metadata.new_field is None
