@@ -73,6 +73,8 @@ def format_datetime(dt):
 
 
 def copy_attributes(value: Any, new_cls: type) -> Any:
+    if type(value) == new_cls:
+        return value
     input_attributes = {attribute.name for attribute in attrs.fields(value.__class__)}
     output_attributes = {attribute.name for attribute in attrs.fields(new_cls)}
     shared_attributes = input_attributes & output_attributes
