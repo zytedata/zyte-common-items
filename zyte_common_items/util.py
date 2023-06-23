@@ -72,13 +72,13 @@ def format_datetime(dt):
     return f"{dt.isoformat(timespec='seconds')}Z"
 
 
-def cast_metadata(value, cls):
-    new_value = cls()
+def copy_attributes(value: Any, new_cls: type) -> Any:
     input_attributes = {attribute.name for attribute in attrs.fields(value.__class__)}
-    output_attributes = {attribute.name for attribute in attrs.fields(cls)}
+    output_attributes = {attribute.name for attribute in attrs.fields(new_cls)}
     shared_attributes = input_attributes & output_attributes
-    for attribute in shared_attributes:
-        setattr(new_value, attribute, getattr(value, attribute))
+    new_value = new_cls(
+        **{attribute: getattr(value, attribute) for attribute in shared_attributes}
+    )
     removed_nonempty_attributes = {
         attribute
         for attribute in (input_attributes - output_attributes)
@@ -87,12 +87,17 @@ def cast_metadata(value, cls):
     if removed_nonempty_attributes:
         warn(
             (
-                f"Conversion of {value} into {cls} is dropping the non-empty "
+                f"Conversion of {value} into {new_cls} is dropping the non-empty "
                 f"values of the following attributes: "
                 f"{removed_nonempty_attributes}."
             ),
             RuntimeWarning,
         )
+    return new_value
+
+
+def cast_metadata(value, cls):
+    new_value = copy_attributes(value, cls)
     return new_value
 
 

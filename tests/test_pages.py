@@ -10,12 +10,15 @@ from web_poet import HttpResponse, RequestUrl, ResponseUrl, field
 import zyte_common_items
 from zyte_common_items import (
     BaseProductListPage,
+    BaseProductNavigationPage,
     BaseProductPage,
     HasMetadata,
     Metadata,
+    ProbabilityRequest,
     ProductListPage,
     ProductMetadata,
     ProductPage,
+    Request,
 )
 
 
@@ -332,3 +335,28 @@ def test_metadata_override():
     metadata = page.metadata
     assert type(metadata) == CustomProductMetadata
     assert metadata.new_field is None
+
+
+def test_request():
+    """Test Request class conversion"""
+
+    class CustomNavPage(BaseProductNavigationPage):
+        @field
+        def subCategories(self):
+            return [Request(url="https://example.com")]
+
+        @field
+        def items(self):
+            return [Request(url="https://example.com")]
+
+        @field
+        def nextPage(self):
+            return Request(url="https://example.com")
+
+    url = RequestUrl("https://example.com")
+    page = CustomNavPage(url)
+    for request in [page.subCategories[0], page.items[0]]:
+        assert type(request) == ProbabilityRequest
+        assert request.metadata is not None
+        assert request.metadata.probability == 1.0
+    assert type(page.nextPage) == Request

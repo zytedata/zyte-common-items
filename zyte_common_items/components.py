@@ -1,10 +1,10 @@
 """Classes for data nested within items."""
-from typing import List, Optional
+from typing import List, Optional, Type
 
 import attrs
 
 from zyte_common_items.base import Item
-from zyte_common_items.util import url_to_str
+from zyte_common_items.util import copy_attributes, url_to_str
 
 # Metadata ####################################################################
 
@@ -424,6 +424,17 @@ class Video(_Media):
 
     See :class:`Article.videos <zyte_common_items.Article.videos>`.
     """
+
+
+def cast_request(value: Request, cls: Type[Request]) -> Request:
+    new_value = copy_attributes(value, cls)
+    if type(value) is Request and cls is ProbabilityRequest:
+        new_value.metadata = ProbabilityMetadata(probability=1.0)
+    return new_value
+
+
+def request_list_processor(request_list):
+    return [cast_request(request, ProbabilityRequest) for request in request_list]
 
 
 @attrs.define(kw_only=True)

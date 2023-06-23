@@ -31,6 +31,7 @@ from zyte_common_items.components import (
     Request,
     StarRating,
     Video,
+    cast_request,
 )
 from zyte_common_items.util import MetadataCaster, url_to_str
 
@@ -940,6 +941,14 @@ class RealEstate(Item):
     )
 
 
+class RequestListCaster:
+    def __init__(self, target):
+        self._target = target
+
+    def __call__(self, value):
+        return [cast_request(item, self._target) for item in value]
+
+
 @attrs.define(kw_only=True)
 class ProductNavigation(Item):
     """Represents the navigational aspects of a product listing page on an
@@ -956,10 +965,14 @@ class ProductNavigation(Item):
     categoryName: Optional[str] = None
 
     #: List of sub-category links ordered by their position in the page.
-    subCategories: Optional[List[ProbabilityRequest]] = None
+    subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
+        default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
+    )
 
     #: List of product links found on the page category ordered by their position in the page.
-    items: Optional[List[ProbabilityRequest]] = None
+    items: Optional[List[ProbabilityRequest]] = attrs.field(
+        default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
+    )
 
     #: A link to the next page, if available.
     nextPage: Optional[Request] = None

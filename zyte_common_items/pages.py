@@ -13,6 +13,7 @@ from .components import (
     ProductMetadata,
     ProductNavigationMetadata,
     RealEstateMetadata,
+    request_list_processor,
 )
 from .items import (
     Article,
@@ -132,7 +133,9 @@ class BaseProductListPage(
 class BaseProductNavigationPage(
     BasePage, Returns[ProductNavigation], HasMetadata[ProductNavigationMetadata]
 ):
-    pass
+    class Processors:
+        subCategories = [request_list_processor]
+        items = [request_list_processor]
 
 
 class BaseRealEstatePage(

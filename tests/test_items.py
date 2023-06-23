@@ -615,3 +615,20 @@ def test_metadata():
         obj2.metadata = Metadata(dateDownloaded="foo")
         assert type(obj2.metadata) == metadata_cls
         assert obj2.metadata.dateDownloaded == "foo"
+
+
+def test_request():
+    """Test request class conversion on assignment"""
+
+    product_navigation = ProductNavigation(**_PRODUCT_NAVIGATION_MIN_KWARGS)
+    product_navigation.subCategories = [
+        Request(  # type: ignore[list-item]
+            url="http://books.toscrape.com/catalogue/category/books/mystery_3/index.html",
+            name="Mystery",
+        ),
+    ]
+    assert product_navigation.subCategories[0] == ProbabilityRequest(
+        url="http://books.toscrape.com/catalogue/category/books/mystery_3/index.html",
+        name="Mystery",
+        metadata=ProbabilityMetadata(probability=1.0),
+    )
