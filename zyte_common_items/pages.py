@@ -80,11 +80,13 @@ class Page(_BasePage, WebPage):
 
 
 class ArticlePage(Page, Returns[Article]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class ArticleListPage(Page, Returns[ArticleList]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class BusinessPlacePage(Page, Returns[BusinessPlace]):
@@ -92,12 +94,15 @@ class BusinessPlacePage(Page, Returns[BusinessPlace]):
 
 
 class ProductPage(Page, Returns[Product]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class ProductListPage(Page, Returns[ProductList]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class RealEstatePage(Page, Returns[RealEstate]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
