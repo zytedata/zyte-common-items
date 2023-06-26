@@ -72,7 +72,7 @@ def format_datetime(dt):
     return f"{dt.isoformat(timespec='seconds')}Z"
 
 
-def copy_attributes(value: Any, new_cls: type) -> Any:
+def convert_to_class(value: Any, new_cls: type) -> Any:
     if type(value) == new_cls:
         return value
     input_attributes = {attribute.name for attribute in attrs.fields(value.__class__)}
@@ -99,7 +99,7 @@ def copy_attributes(value: Any, new_cls: type) -> Any:
 
 
 def cast_metadata(value, cls):
-    new_value = copy_attributes(value, cls)
+    new_value = convert_to_class(value, cls)
     return new_value
 
 

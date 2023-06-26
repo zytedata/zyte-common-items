@@ -4,7 +4,7 @@ from typing import List, Optional, Type
 import attrs
 
 from zyte_common_items.base import Item
-from zyte_common_items.util import copy_attributes, url_to_str
+from zyte_common_items.util import convert_to_class, url_to_str
 
 # Metadata ####################################################################
 
@@ -427,7 +427,7 @@ class Video(_Media):
 
 
 def cast_request(value: Request, cls: Type[Request]) -> Request:
-    new_value = copy_attributes(value, cls)
+    new_value = convert_to_class(value, cls)
     if type(value) is Request and cls is ProbabilityRequest:
         new_value.metadata = ProbabilityMetadata(probability=1.0)
     return new_value
