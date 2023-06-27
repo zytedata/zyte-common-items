@@ -1,11 +1,18 @@
-from typing import Any, List
+from typing import Any, List, Optional
 
 from lxml.html import HtmlElement
 from parsel import Selector, SelectorList
+from web_poet.mixins import ResponseShortcutsMixin
 from zyte_parsers import Breadcrumb as zp_Breadcrumb
 from zyte_parsers import extract_breadcrumbs
 
 from .items import Breadcrumb
+
+
+def _get_base_url(page: Any) -> Optional[str]:
+    if isinstance(page, ResponseShortcutsMixin):
+        return page.base_url
+    return getattr(page, "url", None)
 
 
 def breadcrumbs_processor(value: Any, page: Any) -> Any:
@@ -18,8 +25,7 @@ def breadcrumbs_processor(value: Any, page: Any) -> Any:
         value = value[0]
 
     if isinstance(value, (Selector, HtmlElement)):
-        base_url = getattr(page, "url", None)
-        zp_breadcrumbs = extract_breadcrumbs(value, base_url=base_url)
+        zp_breadcrumbs = extract_breadcrumbs(value, base_url=_get_base_url(page))
         return (
             [_from_zp_breadcrumb(b) for b in zp_breadcrumbs] if zp_breadcrumbs else None
         )
