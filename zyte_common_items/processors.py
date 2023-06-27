@@ -12,7 +12,9 @@ def breadcrumbs_processor(value: Any, page: Any) -> Any:
     def _from_zp_breadcrumb(value: zp_Breadcrumb) -> Breadcrumb:
         return Breadcrumb(name=value.name, url=value.url)
 
-    if isinstance(value, SelectorList) and len(value) > 0:
+    if isinstance(value, SelectorList):
+        if len(value) == 0:
+            return None
         value = value[0]
 
     if isinstance(value, (Selector, HtmlElement)):

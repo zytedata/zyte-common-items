@@ -1,6 +1,6 @@
 import pytest
 from lxml.html import fromstring
-from parsel import Selector
+from parsel import Selector, SelectorList
 from web_poet import HttpResponse, field
 from zyte_parsers import Breadcrumb as zp_Breadcrumb
 
@@ -23,18 +23,26 @@ breadcrumbs_expected = [
 
 
 @pytest.mark.parametrize(
-    "input_value",
-    (
-        breadcrumbs_expected,
-        fromstring(breadcrumbs_html),
-        Selector(text=breadcrumbs_html),
-        [
-            zp_Breadcrumb(name="Home", url="http://www.example.com/blog/"),
-            zp_Breadcrumb(name="About", url="http://www.example.com/blog/about/"),
-        ],
-    ),
+    "input_value,expected_value",
+    [
+        (None, None),
+        ([], []),
+        ("foo", "foo"),
+        (Selector(text="<html></html>"), None),
+        (SelectorList([]), None),
+        (breadcrumbs_expected, breadcrumbs_expected),
+        (fromstring(breadcrumbs_html), breadcrumbs_expected),
+        (Selector(text=breadcrumbs_html), breadcrumbs_expected),
+        (
+            [
+                zp_Breadcrumb(name="Home", url="http://www.example.com/blog/"),
+                zp_Breadcrumb(name="About", url="http://www.example.com/blog/about/"),
+            ],
+            breadcrumbs_expected,
+        ),
+    ],
 )
-def test_breadcrumbs(input_value):
+def test_breadcrumbs(input_value, expected_value):
     base_url = "http://www.example.com/blog/"
 
     class BreadcrumbsPage(BasePage):
@@ -43,7 +51,7 @@ def test_breadcrumbs(input_value):
             return input_value
 
     page = BreadcrumbsPage(base_url)  # type: ignore[arg-type]
-    assert page.breadcrumbs == breadcrumbs_expected
+    assert page.breadcrumbs == expected_value
 
 
 def test_breadcrumbs_page():
