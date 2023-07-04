@@ -22,7 +22,7 @@ class ProbabilityMetadata(Item):
     #: webpage features a job listing instead of a product, the value should be
     #: `0`. When there is no complete certainty, the value could be anything in
     #: between (e.g. `0.96`).
-    probability: Optional[float] = None
+    probability: Optional[float] = 1.0
 
 
 @attrs.define(kw_only=True)
@@ -52,7 +52,7 @@ class _DetailsMetadata(_ListMetadata):
     #: webpage features a job listing instead of a product, the value should be
     #: `0`. When there is no complete certainty, the value could be anything in
     #: between (e.g. `0.96`).
-    probability: Optional[float] = None
+    probability: Optional[float] = 1.0
 
 
 @attrs.define(kw_only=True)

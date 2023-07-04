@@ -39,7 +39,7 @@ def test_link_optional_fields():
 def test_metadata_default_values():
     metadata = Metadata()
     assert metadata.dateDownloaded is None
-    assert metadata.probability is None
+    assert metadata.probability == 1.0
 
 
 def test_named_link_optional_fields():
@@ -50,7 +50,7 @@ def test_named_link_optional_fields():
 def test_business_place_metadata_default_values():
     metadata = BusinessPlaceMetadata()
     assert metadata.dateDownloaded is None
-    assert metadata.probability is None
+    assert metadata.probability == 1.0
     assert metadata.searchText is None
 
 
