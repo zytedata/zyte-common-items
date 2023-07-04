@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Generic, Type, TypeVar
+from typing import Generic, Type, TypeVar, get_args
 
 import attrs
 from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
@@ -26,14 +26,6 @@ from .items import (
 )
 from .util import format_datetime, metadata_processor
 
-try:
-    from typing import get_args as _get_args
-except ImportError:
-
-    def _get_args(base):  # type: ignore
-        return getattr(base, "__args__", ())
-
-
 #: Generic type for metadata classes for specific item types.
 MetadataT = TypeVar("MetadataT")
 
@@ -59,7 +51,7 @@ def _get_metadata_class(obj):
             continue
         if origin != HasMetadata:
             continue
-        return _get_args(base)[0]
+        return get_args(base)[0]
     return None
 
 
