@@ -1,10 +1,4 @@
-from typing import List, Optional, Tuple, Union  # noqa
-
-try:
-    from typing import get_args
-except ImportError:
-    # Compliance with python 3.7
-    from zyte_common_items.util import get_args
+from typing import List, Optional, Tuple, Union, get_args  # noqa
 
 import attrs
 
