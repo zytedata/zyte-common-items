@@ -81,3 +81,33 @@ def test_breadcrumbs_page_zyte_parsers():
     )
     page = MyProductPage(response=response)
     assert page.breadcrumbs == breadcrumbs_expected
+
+
+def test_breadcrumbs_base_url():
+    class MyProductPage(ProductPage):
+        @field
+        def breadcrumbs(self):
+            return self.css(".pagesbar")
+
+    breadcrumbs_html_base = """
+    <html>
+    <head>
+        <base href="http://www.example.com/blog/">
+    </head>
+    <body>
+    <div class="pagesbar">
+      <ul>
+        <li><a href=".">Home</a></li>
+        <li><a href="about/">About</a></li>
+      </ul>
+    </div>
+    </body>
+    </html>
+    """
+
+    response = HttpResponse(
+        url="http://www.example.com/",
+        body=breadcrumbs_html_base.encode(),
+    )
+    page = MyProductPage(response=response)
+    assert page.breadcrumbs == breadcrumbs_expected
