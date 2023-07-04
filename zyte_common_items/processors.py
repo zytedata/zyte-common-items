@@ -1,3 +1,4 @@
+from collections.abc import Iterable
 from typing import Any, List, Optional
 
 from lxml.html import HtmlElement
@@ -16,6 +17,14 @@ def _get_base_url(page: Any) -> Optional[str]:
 
 
 def breadcrumbs_processor(value: Any, page: Any) -> Any:
+    """Convert the data into a list of Breadcrumb objects if possible.
+
+    Supported inputs are :class:`~parsel.Selector`,
+    :class:`~parsel.SelectorList`, :class:`~lxml.html.HtmlElement` and an
+    iterable of :class:`zyte_parsers.Breadcrumb` objects. Other inputs are
+    returned as is.
+    """
+
     def _from_zp_breadcrumb(value: zp_Breadcrumb) -> Breadcrumb:
         return Breadcrumb(name=value.name, url=value.url)
 
@@ -30,7 +39,7 @@ def breadcrumbs_processor(value: Any, page: Any) -> Any:
             [_from_zp_breadcrumb(b) for b in zp_breadcrumbs] if zp_breadcrumbs else None
         )
 
-    if not isinstance(value, list):
+    if not isinstance(value, Iterable) or isinstance(value, str):
         return value
 
     results: List[Any] = []
