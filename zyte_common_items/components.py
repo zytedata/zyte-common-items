@@ -108,7 +108,6 @@ class RealEstateMetadata(_DetailsMetadata):
 
 @attrs.define
 class _Media(Item):
-
     #: URL.
     #:
     #: When multiple URLs exist for a given media element, pointing to

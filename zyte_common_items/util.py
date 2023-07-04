@@ -46,20 +46,6 @@ def split_dict(dict: Dict, key_pred: Callable[[Any], Any]) -> Tuple[Dict, Dict]:
     return (no, yes)
 
 
-def get_args(tp) -> Tuple:
-    """Offers backward compatibility for Python 3.7 since
-    typing.get_args(tp) is only available startingo on 3.8.
-    """
-    return getattr(tp, "__args__", ())
-
-
-def get_origin(tp) -> Tuple:
-    """Offers backward compatibility for Python 3.7 since
-    typing.get_origin(tp) is only available startingo on 3.8.
-    """
-    return getattr(tp, "__origin__", ())
-
-
 def url_to_str(url: Union[str, _Url]) -> str:
     if not isinstance(url, (str, _Url)):
         raise ValueError(
