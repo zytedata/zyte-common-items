@@ -90,7 +90,9 @@ class ArticleFromList(Item):
     images: Optional[List[Image]] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[ProbabilityMetadata] = None
+    metadata: Optional[ProbabilityMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ProbabilityMetadata)), kw_only=True  # type: ignore
+    )
 
     #: Main URL.
     url: Optional[str] = attrs.field(
@@ -642,7 +644,9 @@ class ProductFromList(Item):
     mainImage: Optional[Image] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[ProbabilityMetadata] = None
+    metadata: Optional[ProbabilityMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ProbabilityMetadata)), kw_only=True  # type: ignore
+    )
 
     #: Name as it appears on the webpage (no post-processing).
     name: Optional[str] = None
