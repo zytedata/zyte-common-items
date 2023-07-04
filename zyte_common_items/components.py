@@ -9,7 +9,6 @@ from zyte_common_items.util import url_to_str
 
 @attrs.define
 class _Media(Item):
-
     #: URL.
     #:
     #: When multiple URLs exist for a given media element, pointing to
