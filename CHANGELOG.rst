@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.6.0 (YYYY-MM-DD)
+0.6.0 (2023-07-05)
 ==================
 
 * Added :class:`~zyte_common_items.Article` and
