@@ -15,6 +15,7 @@ from zyte_common_items import (
     HasMetadata,
     Metadata,
     ProbabilityRequest,
+    ProductListMetadata,
     ProductListPage,
     ProductMetadata,
     ProductPage,
@@ -297,17 +298,30 @@ def test_metadata_generic():
     assert metadata1.dateDownloaded == "foo"
     assert metadata1.probability == 0.5
 
-    class WarningProductPage(ProductPage):
+    class ExtraAttrProductPage(ProductPage):
         @field
         def metadata(self):
             return Metadata(dateDownloaded="foo", probability=0.5, searchText="bar")
 
-    page2 = WarningProductPage(response=HttpResponse(url=url, body=html))
+    page2 = ExtraAttrProductPage(response=HttpResponse(url=url, body=html))
     with pytest.warns(RuntimeWarning, match=r"dropping the non-empty values"):
         metadata2 = page2.metadata
     assert type(metadata2) == ProductMetadata
     assert metadata2.dateDownloaded == "foo"
     assert metadata2.probability == 0.5
+
+    class DefaultAttrProductPage(ProductListPage):
+        @field
+        def metadata(self):
+            return Metadata(dateDownloaded="foo", probability=1.0)
+
+    page3 = DefaultAttrProductPage(response=HttpResponse(url=url, body=html))
+    with catch_warnings():
+        warnings.simplefilter("error")
+        metadata3 = page3.metadata
+    assert type(metadata3) == ProductListMetadata
+    assert metadata3.dateDownloaded == "foo"
+    assert not hasattr(metadata3, "probability")
 
 
 def test_metadata_override():

@@ -71,6 +71,7 @@ def convert_to_class(value: Any, new_cls: type) -> Any:
         attribute
         for attribute in (input_attributes - output_attributes)
         if getattr(value, attribute) is not None
+        and not (attribute == "probability" and getattr(value, attribute) == 1.0)
     }
     if removed_nonempty_attributes:
         warn(
