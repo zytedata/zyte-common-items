@@ -304,7 +304,7 @@ def test_metadata_generic():
             return Metadata(dateDownloaded="foo", probability=0.5, searchText="bar")
 
     page2 = ExtraAttrProductPage(response=HttpResponse(url=url, body=html))
-    with pytest.warns(RuntimeWarning, match=r"dropping the non-empty values"):
+    with pytest.warns(RuntimeWarning, match=r"dropping the non-default values"):
         metadata2 = page2.metadata
     assert type(metadata2) == ProductMetadata
     assert metadata2.dateDownloaded == "foo"

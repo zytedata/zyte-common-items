@@ -70,13 +70,13 @@ def convert_to_class(value: Any, new_cls: type) -> Any:
     removed_nonempty_attributes = {
         attribute
         for attribute in (input_attributes - output_attributes)
-        if getattr(value, attribute) is not None
-        and not (attribute == "probability" and getattr(value, attribute) == 1.0)
+        if getattr(value, attribute)
+        != attrs.fields_dict(value.__class__)[attribute].default
     }
     if removed_nonempty_attributes:
         warn(
             (
-                f"Conversion of {value} into {new_cls} is dropping the non-empty "
+                f"Conversion of {value} into {new_cls} is dropping the non-default "
                 f"values of the following attributes: "
                 f"{removed_nonempty_attributes}."
             ),
