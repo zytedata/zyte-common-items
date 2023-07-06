@@ -19,9 +19,9 @@ def _get_base_url(page: Any) -> Optional[str]:
 def breadcrumbs_processor(value: Any, page: Any) -> Any:
     """Convert the data into a list of Breadcrumb objects if possible.
 
-    Supported inputs are :class:`~parsel.Selector`,
-    :class:`~parsel.SelectorList`, :class:`~lxml.html.HtmlElement` and an
-    iterable of :class:`zyte_parsers.Breadcrumb` objects. Other inputs are
+    Supported inputs are :class:`~parsel.selector.Selector`,
+    :class:`~parsel.selector.SelectorList`, :class:`~lxml.html.HtmlElement` and
+    an iterable of :class:`zyte_parsers.Breadcrumb` objects. Other inputs are
     returned as is.
     """
 
