@@ -90,6 +90,9 @@ class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
 
 @attrs.define
 class BasePage(_BasePage):
+    class Processors(_BasePage.Processors):
+        pass
+
     request_url: RequestUrl
 
     @field
@@ -98,14 +101,14 @@ class BasePage(_BasePage):
 
 
 class BaseArticlePage(BasePage, Returns[Article], HasMetadata[ArticleMetadata]):
-    class Processors:
+    class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
 
 class BaseArticleListPage(
     BasePage, Returns[ArticleList], HasMetadata[ArticleListMetadata]
 ):
-    class Processors:
+    class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
 
@@ -116,21 +119,21 @@ class BaseBusinessPlacePage(
 
 
 class BaseProductPage(BasePage, Returns[Product], HasMetadata[ProductMetadata]):
-    class Processors:
+    class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
 
 class BaseProductListPage(
     BasePage, Returns[ProductList], HasMetadata[ProductListMetadata]
 ):
-    class Processors:
+    class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
 
 class BaseProductNavigationPage(
     BasePage, Returns[ProductNavigation], HasMetadata[ProductNavigationMetadata]
 ):
-    class Processors:
+    class Processors(BasePage.Processors):
         subCategories = [request_list_processor]
         items = [request_list_processor]
 
@@ -138,24 +141,27 @@ class BaseProductNavigationPage(
 class BaseRealEstatePage(
     BasePage, Returns[RealEstate], HasMetadata[RealEstateMetadata]
 ):
-    class Processors:
+    class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
 
 @attrs.define
 class Page(_BasePage, WebPage):
+    class Processors(_BasePage.Processors):
+        pass
+
     @field
     def url(self) -> str:
         return str(self.response.url)
 
 
 class ArticlePage(Page, Returns[Article], HasMetadata[ArticleMetadata]):
-    class Processors:
+    class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
 
 class ArticleListPage(Page, Returns[ArticleList], HasMetadata[ArticleListMetadata]):
-    class Processors:
+    class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
 
@@ -166,12 +172,12 @@ class BusinessPlacePage(
 
 
 class ProductPage(Page, Returns[Product], HasMetadata[ProductMetadata]):
-    class Processors:
+    class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
 
 class ProductListPage(Page, Returns[ProductList], HasMetadata[ProductListMetadata]):
-    class Processors:
+    class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
 
@@ -182,5 +188,5 @@ class ProductNavigationPage(
 
 
 class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata]):
-    class Processors:
+    class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
