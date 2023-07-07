@@ -1,20 +1,7 @@
 """The ``Item`` class should be used as the parent class for data containers."""
 
 from collections import ChainMap
-
-try:
-    from typing import get_args
-except ImportError:
-    # Compliance with python 3.7
-    from .util import get_args
-
-try:
-    from typing import get_origin
-except ImportError:
-    # Compliance with python 3.7
-    from .util import get_origin
-
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union, get_args, get_origin
 
 import attrs
 

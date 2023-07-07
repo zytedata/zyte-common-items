@@ -1,4 +1,5 @@
 from typing import Any, Callable, Dict, Optional, Tuple, Type, Union
+from warnings import warn
 from weakref import WeakKeyDictionary
 
 import attrs
@@ -45,20 +46,6 @@ def split_dict(dict: Dict, key_pred: Callable[[Any], Any]) -> Tuple[Dict, Dict]:
     return (no, yes)
 
 
-def get_args(tp) -> Tuple:
-    """Offers backward compatibility for Python 3.7 since
-    typing.get_args(tp) is only available startingo on 3.8.
-    """
-    return getattr(tp, "__args__", ())
-
-
-def get_origin(tp) -> Tuple:
-    """Offers backward compatibility for Python 3.7 since
-    typing.get_origin(tp) is only available startingo on 3.8.
-    """
-    return getattr(tp, "__origin__", ())
-
-
 def url_to_str(url: Union[str, _Url]) -> str:
     if not isinstance(url, (str, _Url)):
         raise ValueError(
@@ -69,3 +56,47 @@ def url_to_str(url: Union[str, _Url]) -> str:
 
 def format_datetime(dt):
     return f"{dt.isoformat(timespec='seconds')}Z"
+
+
+def convert_to_class(value: Any, new_cls: type) -> Any:
+    if type(value) == new_cls:
+        return value
+    input_attributes = {attribute.name for attribute in attrs.fields(value.__class__)}
+    output_attributes = {attribute.name for attribute in attrs.fields(new_cls)}
+    shared_attributes = input_attributes & output_attributes
+    new_value = new_cls(
+        **{attribute: getattr(value, attribute) for attribute in shared_attributes}
+    )
+    removed_nonempty_attributes = {
+        attribute
+        for attribute in (input_attributes - output_attributes)
+        if getattr(value, attribute)
+        != attrs.fields_dict(value.__class__)[attribute].default
+    }
+    if removed_nonempty_attributes:
+        warn(
+            (
+                f"Conversion of {value} into {new_cls} is dropping the non-default "
+                f"values of the following attributes: "
+                f"{removed_nonempty_attributes}."
+            ),
+            RuntimeWarning,
+        )
+    return new_value
+
+
+def cast_metadata(value, cls):
+    new_value = convert_to_class(value, cls)
+    return new_value
+
+
+def metadata_processor(metadata, page):
+    return cast_metadata(metadata, page.metadata_cls)
+
+
+class MetadataCaster:
+    def __init__(self, target):
+        self._target = target
+
+    def __call__(self, value):
+        return cast_metadata(value, self._target)
