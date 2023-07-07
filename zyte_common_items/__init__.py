@@ -8,6 +8,7 @@ from .components import (
     Amenity,
     ArticleListMetadata,
     ArticleMetadata,
+    ArticleNavigationMetadata,
     Audio,
     Author,
     Brand,

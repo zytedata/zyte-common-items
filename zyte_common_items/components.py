@@ -79,6 +79,11 @@ class ArticleListMetadata(_ListMetadata):
 
 
 @attrs.define(kw_only=True)
+class ArticleNavigationMetadata(_ListMetadata):
+    pass
+
+
+@attrs.define(kw_only=True)
 class BusinessPlaceMetadata(Metadata):
     pass
 

@@ -10,6 +10,7 @@ from zyte_common_items.components import (
     Amenity,
     ArticleListMetadata,
     ArticleMetadata,
+    ArticleNavigationMetadata,
     Audio,
     Author,
     Brand,
@@ -1013,10 +1014,14 @@ class ArticleNavigation(Item):
     categoryName: Optional[str] = None
 
     #: List of sub-category links ordered by their position in the page.
-    subCategories: Optional[List[Request]] = None
+    subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
+        default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
+    )
 
     #: Links to listed items in order of appearance.
-    items: Optional[List[Request]] = None
+    items: Optional[List[ProbabilityRequest]] = attrs.field(
+        default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
+    )
 
     #: A link to the next page, if available.
     nextPage: Optional[Request] = None
@@ -1030,4 +1035,6 @@ class ArticleNavigation(Item):
     pageNumber: Optional[int] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[DateDownloadedMetadata] = None
+    metadata: Optional[ArticleNavigationMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ArticleNavigationMetadata)), kw_only=True  # type: ignore
+    )

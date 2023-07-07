@@ -187,6 +187,7 @@ def test_matching_items():
 METADATA_FIELDS = {
     "Article": {"dateDownloaded", "probability"},
     "ArticleList": {"dateDownloaded"},
+    "ArticleNavigation": {"dateDownloaded"},
     "BusinessPlace": {"dateDownloaded", "probability", "searchText"},
     "Product": {"dateDownloaded", "probability"},
     "ProductList": {"dateDownloaded"},
