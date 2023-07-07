@@ -24,6 +24,7 @@ from .items import (
     ProductNavigation,
     RealEstate,
 )
+from .processors import breadcrumbs_processor
 from .util import format_datetime, metadata_processor
 
 #: Generic type for metadata classes for specific item types.
@@ -97,13 +98,15 @@ class BasePage(_BasePage):
 
 
 class BaseArticlePage(BasePage, Returns[Article], HasMetadata[ArticleMetadata]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class BaseArticleListPage(
     BasePage, Returns[ArticleList], HasMetadata[ArticleListMetadata]
 ):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class BaseBusinessPlacePage(
@@ -113,13 +116,15 @@ class BaseBusinessPlacePage(
 
 
 class BaseProductPage(BasePage, Returns[Product], HasMetadata[ProductMetadata]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class BaseProductListPage(
     BasePage, Returns[ProductList], HasMetadata[ProductListMetadata]
 ):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class BaseProductNavigationPage(
@@ -133,7 +138,8 @@ class BaseProductNavigationPage(
 class BaseRealEstatePage(
     BasePage, Returns[RealEstate], HasMetadata[RealEstateMetadata]
 ):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 @attrs.define
@@ -144,11 +150,13 @@ class Page(_BasePage, WebPage):
 
 
 class ArticlePage(Page, Returns[Article], HasMetadata[ArticleMetadata]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class ArticleListPage(Page, Returns[ArticleList], HasMetadata[ArticleListMetadata]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class BusinessPlacePage(
@@ -158,11 +166,13 @@ class BusinessPlacePage(
 
 
 class ProductPage(Page, Returns[Product], HasMetadata[ProductMetadata]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class ProductListPage(Page, Returns[ProductList], HasMetadata[ProductListMetadata]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class ProductNavigationPage(
@@ -172,4 +182,5 @@ class ProductNavigationPage(
 
 
 class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]

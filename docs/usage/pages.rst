@@ -35,3 +35,15 @@ whose ``to_item`` method returns an instance of
         @field
         def name(self):
             return self.css("h1::text").get()
+
+Field processors
+================
+
+Some of these base classes include a ``Processors`` subclass that enables
+:ref:`default processors <web-poet:field-processors>` for some fields.
+
+All ``breadcrumbs`` fields have the following processor enabled:
+
+.. autofunction:: zyte_common_items.processors.breadcrumbs_processor
+
+This processor can also be used in the user code.

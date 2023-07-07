@@ -2,6 +2,14 @@
 Changelog
 =========
 
+0.6.0 (2023-07-05)
+==================
+
+* Added :class:`~zyte_common_items.Article` and
+  :class:`~zyte_common_items.ArticleList`.
+
+* Added support for Python 3.11 and dropped support for Python 3.7.
+
 0.5.0 (2023-05-10)
 ==================
 
