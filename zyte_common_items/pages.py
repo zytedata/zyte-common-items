@@ -6,6 +6,7 @@ from web_poet.pages import ItemT
 
 from .components import Metadata
 from .items import Article, ArticleList, BusinessPlace, Product, ProductList, RealEstate
+from .processors import breadcrumbs_processor
 from .util import format_datetime
 
 
@@ -43,11 +44,13 @@ class BasePage(_BasePage):
 
 
 class BaseArticlePage(BasePage, Returns[Article]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class BaseArticleListPage(BasePage, Returns[ArticleList]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class BaseBusinessPlacePage(BasePage, Returns[BusinessPlace]):
@@ -55,15 +58,18 @@ class BaseBusinessPlacePage(BasePage, Returns[BusinessPlace]):
 
 
 class BaseProductPage(BasePage, Returns[Product]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class BaseProductListPage(BasePage, Returns[ProductList]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class BaseRealEstatePage(BasePage, Returns[RealEstate]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 @attrs.define
@@ -74,11 +80,13 @@ class Page(_BasePage, WebPage):
 
 
 class ArticlePage(Page, Returns[Article]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class ArticleListPage(Page, Returns[ArticleList]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class BusinessPlacePage(Page, Returns[BusinessPlace]):
@@ -86,12 +94,15 @@ class BusinessPlacePage(Page, Returns[BusinessPlace]):
 
 
 class ProductPage(Page, Returns[Product]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class ProductListPage(Page, Returns[ProductList]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
 
 
 class RealEstatePage(Page, Returns[RealEstate]):
-    pass
+    class Processors:
+        breadcrumbs = [breadcrumbs_processor]
