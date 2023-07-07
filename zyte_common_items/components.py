@@ -1,10 +1,109 @@
 """Classes for data nested within items."""
-from typing import Optional
+from typing import List, Optional, Type
 
 import attrs
 
 from zyte_common_items.base import Item
-from zyte_common_items.util import url_to_str
+from zyte_common_items.util import convert_to_class, url_to_str
+
+# Metadata ####################################################################
+
+
+@attrs.define(kw_only=True)
+class ProbabilityMetadata(Item):
+    """Data extraction process metadata that indicates a probability."""
+
+    #: The probability (0 for 0%, 1 for 100%) that the resource features the
+    #: expected data type.
+    #:
+    #: For example, if the extraction of a product from a given URL is
+    #: requested, and that URL points to the webpage of a product with complete
+    #: certainty, the value should be `1`. If with complete certainty the
+    #: webpage features a job listing instead of a product, the value should be
+    #: `0`. When there is no complete certainty, the value could be anything in
+    #: between (e.g. `0.96`).
+    probability: Optional[float] = 1.0
+
+
+@attrs.define(kw_only=True)
+class _ListMetadata(Item):
+    """Data extraction process metadata that indicates the download date.
+
+    See
+    :class:`ArticleList.metadata <zyte_common_items.ArticleList.metadata>`.
+    """
+
+    #: Date and time when the product data was downloaded, in UTC timezone and
+    #: the following format: ``YYYY-MM-DDThh:mm:ssZ``.
+    dateDownloaded: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
+class _DetailsMetadata(_ListMetadata):
+    """Data extraction process metadata that indicates the download date and a
+    probability."""
+
+    #: The probability (0 for 0%, 1 for 100%) that the resource features the
+    #: expected data type.
+    #:
+    #: For example, if the extraction of a product from a given URL is
+    #: requested, and that URL points to the webpage of a product with complete
+    #: certainty, the value should be `1`. If with complete certainty the
+    #: webpage features a job listing instead of a product, the value should be
+    #: `0`. When there is no complete certainty, the value could be anything in
+    #: between (e.g. `0.96`).
+    probability: Optional[float] = 1.0
+
+
+@attrs.define(kw_only=True)
+class Metadata(_DetailsMetadata):
+    """Generic metadata class.
+
+    It defines all attributes of metadata classes for specific item types, so
+    that it can be used during extraction instead of a more specific class, and
+    later converted to the corresponding, more specific metadata class.
+    """
+
+    #: The search text used to find the item.
+    searchText: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
+class ArticleMetadata(_DetailsMetadata):
+    pass
+
+
+@attrs.define(kw_only=True)
+class ArticleListMetadata(_ListMetadata):
+    pass
+
+
+@attrs.define(kw_only=True)
+class BusinessPlaceMetadata(Metadata):
+    pass
+
+
+@attrs.define(kw_only=True)
+class ProductMetadata(_DetailsMetadata):
+    pass
+
+
+@attrs.define(kw_only=True)
+class ProductListMetadata(_ListMetadata):
+    pass
+
+
+@attrs.define(kw_only=True)
+class ProductNavigationMetadata(_ListMetadata):
+    pass
+
+
+@attrs.define(kw_only=True)
+class RealEstateMetadata(_DetailsMetadata):
+    pass
+
+
+###############################################################################
 
 
 @attrs.define
@@ -174,44 +273,6 @@ class NamedLink(Item):
 
 
 @attrs.define(kw_only=True)
-class DateDownloadedMetadata(Item):
-    """Data extraction process metadata that only indicates the download date.
-
-    See
-    :class:`ArticleList.metadata <zyte_common_items.ArticleList.metadata>`.
-    """
-
-    #: Date and time when the product data was downloaded, in UTC timezone and
-    #: the following format: ``YYYY-MM-DDThh:mm:ssZ``.
-    dateDownloaded: Optional[str] = None
-
-
-@attrs.define(kw_only=True)
-class Metadata(DateDownloadedMetadata):
-    #: The probability (0 for 0%, 1 for 100%) that the webpage features the
-    #: requested data type.
-    #:
-    #: For example, if the extraction of a product from a given URL is
-    #: requested, and that URL points to the webpage of a product with complete
-    #: certainty, the value should be `1`. If with complete certainty the
-    #: webpage features a job listing instead of a product, the value should be
-    #: `0`. When there is no complete certainty, the value could be anything in
-    #: between (e.g. `0.96`).
-    probability: Optional[float] = None
-
-
-@attrs.define(kw_only=True)
-class BusinessPlaceMetadata(Metadata):
-    """Data extraction process metadata.
-
-    See :class:`BusinessPlace.metadata <zyte_common_items.BusinessPlace.metadata>`.
-    """
-
-    #: The search text the place was found with.
-    searchText: Optional[str] = None
-
-
-@attrs.define(kw_only=True)
 class Address(Item):
     """Address item."""
 
@@ -325,9 +386,59 @@ class RealEstateArea(Item):
     raw: str
 
 
+@attrs.define(kw_only=True)
+class Header(Item):
+    """An HTTP header"""
+
+    #: Name of the header
+    name: str
+
+    #: Value of the header
+    value: str
+
+
+@attrs.define(kw_only=True)
+class Request(Item):
+    """Describe a web request to load a page"""
+
+    #: Name of the page being requested.
+    name: Optional[str] = None
+
+    #: HTTP URL
+    url: str = attrs.field(converter=url_to_str)
+
+    #: HTTP method
+    method: str = "GET"
+
+    #: HTTP request body, Base64-encoded
+    body: Optional[str] = None
+
+    #: HTTP headers
+    headers: Optional[List[Header]] = None
+
+
 @attrs.define
 class Video(_Media):
     """Video.
 
     See :class:`Article.videos <zyte_common_items.Article.videos>`.
     """
+
+
+def cast_request(value: Request, cls: Type[Request]) -> Request:
+    new_value = convert_to_class(value, cls)
+    if type(value) is Request and cls is ProbabilityRequest:
+        new_value.metadata = ProbabilityMetadata(probability=1.0)
+    return new_value
+
+
+def request_list_processor(request_list):
+    return [cast_request(request, ProbabilityRequest) for request in request_list]
+
+
+@attrs.define(kw_only=True)
+class ProbabilityRequest(Request):
+    """A :class:`Request` that includes a probability value."""
+
+    #: Data extraction process metadata.
+    metadata: Optional[ProbabilityMetadata] = None

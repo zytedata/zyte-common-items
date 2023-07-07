@@ -2,6 +2,7 @@ from copy import copy
 
 import pytest
 
+import zyte_common_items
 from zyte_common_items import (
     AdditionalProperty,
     Address,
@@ -10,26 +11,36 @@ from zyte_common_items import (
     Article,
     ArticleFromList,
     ArticleList,
+    ArticleListMetadata,
+    ArticleMetadata,
     Audio,
     Author,
     Brand,
     Breadcrumb,
     BusinessPlace,
     BusinessPlaceMetadata,
-    DateDownloadedMetadata,
     Gtin,
+    Header,
     Image,
     Link,
     Metadata,
     NamedLink,
     OpeningHoursItem,
     ParentPlace,
+    ProbabilityMetadata,
+    ProbabilityRequest,
     Product,
     ProductFromList,
     ProductList,
+    ProductListMetadata,
+    ProductMetadata,
+    ProductNavigation,
+    ProductNavigationMetadata,
     ProductVariant,
     RealEstate,
     RealEstateArea,
+    RealEstateMetadata,
+    Request,
     StarRating,
     Video,
 )
@@ -54,7 +65,9 @@ _ARTICLE_FROM_LIST_ALL_KWARGS: dict = {
     "mainImage": Image(
         "https://www.zyte.com/wp-content/uploads/2021/10/Extract-Summit-2021_Blog-Summary_Header-85.png"
     ),
-    "probability": 0.8437236322711676,
+    "metadata": ProbabilityMetadata(
+        probability=0.8437236322711676,
+    ),
     "url": "https://www.zyte.com/blog/reflecting-on-the-2022-web-data-extraction-summit-zyte/",
 }
 _ARTICLE_MIN_KWARGS: dict = {
@@ -109,7 +122,7 @@ _ARTICLE_ALL_KWARGS: dict = {
     ],
     "canonicalUrl": "https://www.zyte.com/blog/product-data-extraction-automatic/",
     "url": "https://www.zyte.com/blog/product-data-extraction-automatic",
-    "metadata": Metadata(
+    "metadata": ArticleMetadata(
         dateDownloaded="2022-12-31T13:01:54Z",
         probability=1.0,
     ),
@@ -139,7 +152,7 @@ _ARTICLE_LIST_ALL_KWARGS: dict = {
             url="https://www.zyte.com/blog/extract-summit-blog/",
         ),
     ],
-    "metadata": DateDownloadedMetadata(
+    "metadata": ArticleListMetadata(
         dateDownloaded="2022-12-31T13:01:54Z",
     ),
 }
@@ -192,8 +205,7 @@ _PRODUCT_FROM_LIST_ALL_KWARGS: dict = {
     "currency": "USD",
     "currencyRaw": "$",
     "mainImage": Image("http://example.com/image1.png"),
-    "metadata": Metadata(
-        dateDownloaded="2022-12-31T13:01:54Z",
+    "metadata": ProbabilityMetadata(
         probability=1.0,
     ),
     "name": "White two-door refrigerator",
@@ -249,7 +261,7 @@ _PRODUCT_ALL_KWARGS: dict = {
         "<p>Super Cooling Plus&trade;</p></article>"
     ),
     "features": ["Easily store fragile products.", "Bluetooth connectivity."],
-    "metadata": Metadata(
+    "metadata": ProductMetadata(
         dateDownloaded="2022-12-31T13:01:54Z",
         probability=1.0,
     ),
@@ -266,9 +278,8 @@ _PRODUCT_LIST_ALL_KWARGS: dict = {
     ],
     "canonicalUrl": "https://example.com/swiss-watches",
     "categoryName": "Swiss Watches",
-    "metadata": Metadata(
+    "metadata": ProductListMetadata(
         dateDownloaded="2022-12-31T13:01:54Z",
-        probability=1.0,
     ),
     "pageNumber": 1,
     "paginationNext": Link(
@@ -322,10 +333,56 @@ _REAL_ESTATE_ALL_KWARGS: dict = {
     "propertyType": "flat",
     "yearBuilt": 1997,
     "virtualTourUrl": "https://example.com",
-    "metadata": Metadata(
+    "metadata": RealEstateMetadata(
         dateDownloaded="2022-12-31T13:01:54Z",
         probability=1.0,
     ),
+}
+
+_PRODUCT_NAVIGATION_MIN_KWARGS: dict = {"url": "https://example.com/real-estate/12345"}
+
+_PRODUCT_NAVIGATION_ALL_KWARGS: dict = {
+    **_PRODUCT_NAVIGATION_MIN_KWARGS,
+    "categoryName": "Swiss Watches",
+    "subCategories": [
+        ProbabilityRequest(
+            url="http://books.toscrape.com/catalogue/category/books/",
+            method="POST",
+            body="YmFzZTY0LWVuY29kZWQ=",
+            headers=[Header(name="content-type", value="text/json")],
+            name="Travel",
+            metadata=ProbabilityMetadata(probability=0.99),
+        ),
+        ProbabilityRequest(
+            url="http://books.toscrape.com/catalogue/category/books/mystery_3/index.html",
+            name="Mystery",
+            metadata=ProbabilityMetadata(probability=0.97),
+        ),
+    ],
+    "items": [
+        ProbabilityRequest(
+            url="http://books.toscrape.com/catalogue/in-her-wake_980",
+            method="POST",
+            body="YmFzZTY0LWVuY29kZWQ=",
+            headers=[Header(name="content-type", value="text/json")],
+            name="In Her Wake",
+            metadata=ProbabilityMetadata(probability=0.99),
+        ),
+        ProbabilityRequest(
+            url="http://books.toscrape.com/catalogue/how-music-works_979/index.html",
+            name="How Music Works",
+            metadata=ProbabilityMetadata(probability=0.98),
+        ),
+    ],
+    "nextPage": Request(
+        url="http://books.toscrape.com/catalogue/page-3.html",
+        name="Next page",
+        method="POST",
+        body="Im9rIg==",
+        headers=[Header(name="content-type", value="text/json")],
+    ),
+    "pageNumber": 5,
+    "metadata": ProductNavigationMetadata(dateDownloaded="2022-12-31T13:01:54Z"),
 }
 
 
@@ -495,3 +552,83 @@ def test_real_estate_missing_fields():
         del incomplete_kwargs[required_field]
         with pytest.raises(TypeError):
             RealEstate(**incomplete_kwargs)
+
+
+def test_product_navigation_all_fields():
+    product_navigation = ProductNavigation(**_PRODUCT_NAVIGATION_ALL_KWARGS)
+    for field in list(_PRODUCT_NAVIGATION_ALL_KWARGS):
+        assert (
+            getattr(product_navigation, field) == _PRODUCT_NAVIGATION_ALL_KWARGS[field]
+        )
+
+
+def test_product_navigation_min_fields():
+    product_navigation = ProductNavigation(**_PRODUCT_NAVIGATION_MIN_KWARGS)
+    for field in list(_PRODUCT_NAVIGATION_ALL_KWARGS):
+        if field in _PRODUCT_NAVIGATION_MIN_KWARGS:
+            continue
+        assert getattr(product_navigation, field) is None
+
+
+def test_product_navigation_missing_fields():
+    for required_field in list(_PRODUCT_NAVIGATION_MIN_KWARGS):
+        incomplete_kwargs: dict = copy(_PRODUCT_NAVIGATION_MIN_KWARGS)
+        del incomplete_kwargs[required_field]
+        with pytest.raises(TypeError):
+            ProductNavigation(**incomplete_kwargs)
+
+
+def test_metadata():
+    """Test metadata expectations for items.
+
+    For every item:
+
+    -   There must be a matching metadata class.
+
+    -   The metadata attribute must be of that metadata class.
+
+    -   If the generic Metadata object is assigned as input, it gets converted
+        into an object of the right, more specific metadata class.
+    """
+    item_names = {
+        obj_name[:-4]
+        for obj_name in zyte_common_items.__dict__
+        if (
+            not obj_name.startswith("Base")
+            and obj_name.endswith("Page")
+            and obj_name != "Page"
+        )
+    }
+    for item_name in item_names:
+        cls = zyte_common_items.__dict__[item_name]
+        metadata_cls = zyte_common_items.__dict__[f"{item_name}Metadata"]
+
+        obj1 = cls.from_dict(
+            {"url": "https://example.com", "metadata": {"dateDownloaded": "foo"}}
+        )
+        assert type(obj1.metadata) == metadata_cls
+        assert obj1.metadata.dateDownloaded == "foo"
+
+        obj2 = cls(url="https://example.com", metadata=Metadata(dateDownloaded="foo"))
+        assert type(obj2.metadata) == metadata_cls
+        assert obj2.metadata.dateDownloaded == "foo"
+        obj2.metadata = Metadata(dateDownloaded="foo")
+        assert type(obj2.metadata) == metadata_cls
+        assert obj2.metadata.dateDownloaded == "foo"
+
+
+def test_request():
+    """Test request class conversion on assignment"""
+
+    product_navigation = ProductNavigation(**_PRODUCT_NAVIGATION_MIN_KWARGS)
+    product_navigation.subCategories = [
+        Request(  # type: ignore[list-item]
+            url="http://books.toscrape.com/catalogue/category/books/mystery_3/index.html",
+            name="Mystery",
+        ),
+    ]
+    assert product_navigation.subCategories[0] == ProbabilityRequest(
+        url="http://books.toscrape.com/catalogue/category/books/mystery_3/index.html",
+        name="Mystery",
+        metadata=ProbabilityMetadata(probability=1.0),
+    )

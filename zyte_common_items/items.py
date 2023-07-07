@@ -8,24 +8,32 @@ from zyte_common_items.components import (
     Address,
     AggregateRating,
     Amenity,
+    ArticleListMetadata,
+    ArticleMetadata,
     Audio,
     Author,
     Brand,
     Breadcrumb,
     BusinessPlaceMetadata,
-    DateDownloadedMetadata,
     Gtin,
     Image,
     Link,
-    Metadata,
     NamedLink,
     OpeningHoursItem,
     ParentPlace,
+    ProbabilityMetadata,
+    ProbabilityRequest,
+    ProductListMetadata,
+    ProductMetadata,
+    ProductNavigationMetadata,
     RealEstateArea,
+    RealEstateMetadata,
+    Request,
     StarRating,
     Video,
+    cast_request,
 )
-from zyte_common_items.util import url_to_str
+from zyte_common_items.util import MetadataCaster, url_to_str
 
 
 @attrs.define(slots=True, kw_only=True)
@@ -81,9 +89,10 @@ class ArticleFromList(Item):
     #: All images.
     images: Optional[List[Image]] = None
 
-    #: The probability (0 for 0%, 1 for 100%) that this record represents an
-    #: actual article.
-    probability: Optional[float] = None
+    #: Data extraction process metadata.
+    metadata: Optional[ProbabilityMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ProbabilityMetadata)), kw_only=True  # type: ignore
+    )
 
     #: Main URL.
     url: Optional[str] = attrs.field(
@@ -192,7 +201,9 @@ class Article(Item):
     url: str = attrs.field(converter=url_to_str)
 
     #: Data extraction process metadata.
-    metadata: Optional[DateDownloadedMetadata] = None
+    metadata: Optional[ArticleMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ArticleMetadata)), kw_only=True  # type: ignore
+    )
 
 
 @attrs.define(slots=True, kw_only=True)
@@ -232,7 +243,9 @@ class ArticleList(Item):
     breadcrumbs: Optional[List[Breadcrumb]] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[DateDownloadedMetadata] = None
+    metadata: Optional[ArticleListMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ArticleListMetadata)), kw_only=True  # type: ignore
+    )
 
 
 @attrs.define(kw_only=True)
@@ -500,7 +513,9 @@ class Product(Item):
     mainImage: Optional[Image] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[Metadata] = None
+    metadata: Optional[ProductMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ProductMetadata)), kw_only=True  # type: ignore
+    )
 
     #: `Manufacturer part number (MPN)`_.
     #:
@@ -629,7 +644,9 @@ class ProductFromList(Item):
     mainImage: Optional[Image] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[Metadata] = None
+    metadata: Optional[ProbabilityMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ProbabilityMetadata)), kw_only=True  # type: ignore
+    )
 
     #: Name as it appears on the webpage (no post-processing).
     name: Optional[str] = None
@@ -698,7 +715,9 @@ class ProductList(Item):
     categoryName: Optional[str] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[Metadata] = None
+    metadata: Optional[ProductListMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ProductListMetadata)), kw_only=True  # type: ignore
+    )
 
     #: Current page number, if displayed explicitly on the list page.
     #:
@@ -820,7 +839,9 @@ class BusinessPlace(Item):
     tags: Optional[List[str]] = None
 
     #: Data extraction process metadata.
-    metadata: Optional[BusinessPlaceMetadata] = None
+    metadata: Optional[BusinessPlaceMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(BusinessPlaceMetadata)), kw_only=True  # type: ignore
+    )
 
 
 @attrs.define(slots=True, kw_only=True)
@@ -919,4 +940,56 @@ class RealEstate(Item):
     virtualTourUrl: Optional[str] = None
 
     #: Contains metadata about the data extraction process.
-    metadata: Optional[Metadata] = None
+    metadata: Optional[RealEstateMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(RealEstateMetadata)), kw_only=True  # type: ignore
+    )
+
+
+class RequestListCaster:
+    def __init__(self, target):
+        self._target = target
+
+    def __call__(self, value):
+        return [cast_request(item, self._target) for item in value]
+
+
+@attrs.define(kw_only=True)
+class ProductNavigation(Item):
+    """Represents the navigational aspects of a product listing page on an
+    e-commerce website"""
+
+    #: Main URL from which the data is extracted.
+    url: str = attrs.field(converter=url_to_str)
+
+    #: Name of the category/page with the product list.
+    #:
+    #: Format:
+    #:
+    #: - trimmed (no whitespace at the beginning or the end of the description string)
+    categoryName: Optional[str] = None
+
+    #: List of sub-category links ordered by their position in the page.
+    subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
+        default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
+    )
+
+    #: List of product links found on the page category ordered by their position in the page.
+    items: Optional[List[ProbabilityRequest]] = attrs.field(
+        default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
+    )
+
+    #: A link to the next page, if available.
+    nextPage: Optional[Request] = None
+
+    #: Number of the current page.
+    #:
+    #: It should only be extracted if the webpage shows a page number.
+    #:
+    #: It must be 1-based. For example, if the first page of a listing is
+    #: numbered as 0 on the website, it should be extracted as `1` nonetheless.
+    pageNumber: Optional[int] = None
+
+    #: Data extraction process metadata.
+    metadata: Optional[ProductNavigationMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ProductNavigationMetadata)), kw_only=True  # type: ignore
+    )
