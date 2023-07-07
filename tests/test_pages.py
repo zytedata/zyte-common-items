@@ -14,7 +14,9 @@ from zyte_common_items import (
     BaseProductPage,
     HasMetadata,
     Metadata,
+    ProbabilityMetadata,
     ProbabilityRequest,
+    ProductFromList,
     ProductListMetadata,
     ProductListPage,
     ProductMetadata,
@@ -310,18 +312,25 @@ def test_metadata_generic():
     assert metadata2.dateDownloaded == "foo"
     assert metadata2.probability == 0.5
 
-    class DefaultAttrProductPage(ProductListPage):
+    class DefaultAttrProductListPage(ProductListPage):
         @field
         def metadata(self):
             return Metadata(dateDownloaded="foo", probability=1.0)
 
-    page3 = DefaultAttrProductPage(response=HttpResponse(url=url, body=html))
+        @field
+        def products(self):
+            return [ProductFromList(url=url, metadata=Metadata())]
+
+    page3 = DefaultAttrProductListPage(response=HttpResponse(url=url, body=html))
     with catch_warnings():
         warnings.simplefilter("error")
         metadata3 = page3.metadata
+        metadata4 = page3.products[0].metadata
     assert type(metadata3) == ProductListMetadata
     assert metadata3.dateDownloaded == "foo"
     assert not hasattr(metadata3, "probability")
+    assert type(metadata4) == ProbabilityMetadata
+    assert metadata4.probability == 1.0
 
 
 def test_metadata_override():
