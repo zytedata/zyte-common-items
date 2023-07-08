@@ -8,6 +8,7 @@ from .components import (
     Amenity,
     ArticleListMetadata,
     ArticleMetadata,
+    ArticleNavigationMetadata,
     Audio,
     Author,
     Brand,
@@ -36,6 +37,7 @@ from .items import (
     Article,
     ArticleFromList,
     ArticleList,
+    ArticleNavigation,
     BusinessPlace,
     Product,
     ProductFromList,
@@ -46,8 +48,10 @@ from .items import (
 )
 from .pages import (
     ArticleListPage,
+    ArticleNavigationPage,
     ArticlePage,
     BaseArticleListPage,
+    BaseArticleNavigationPage,
     BaseArticlePage,
     BaseBusinessPlacePage,
     BasePage,

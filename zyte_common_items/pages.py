@@ -8,6 +8,7 @@ from web_poet.pages import ItemT
 from .components import (
     ArticleListMetadata,
     ArticleMetadata,
+    ArticleNavigationMetadata,
     BusinessPlaceMetadata,
     ProductListMetadata,
     ProductMetadata,
@@ -18,6 +19,7 @@ from .components import (
 from .items import (
     Article,
     ArticleList,
+    ArticleNavigation,
     BusinessPlace,
     Product,
     ProductList,
@@ -112,6 +114,12 @@ class BaseArticleListPage(
         breadcrumbs = [breadcrumbs_processor]
 
 
+class BaseArticleNavigationPage(
+    BasePage, Returns[ArticleNavigation], HasMetadata[ArticleNavigationMetadata]
+):
+    pass
+
+
 class BaseBusinessPlacePage(
     BasePage, Returns[BusinessPlace], HasMetadata[BusinessPlaceMetadata]
 ):
@@ -163,6 +171,12 @@ class ArticlePage(Page, Returns[Article], HasMetadata[ArticleMetadata]):
 class ArticleListPage(Page, Returns[ArticleList], HasMetadata[ArticleListMetadata]):
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
+
+
+class ArticleNavigationPage(
+    Page, Returns[ArticleNavigation], HasMetadata[ArticleNavigationMetadata]
+):
+    pass
 
 
 class BusinessPlacePage(

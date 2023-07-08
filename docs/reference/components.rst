@@ -82,6 +82,9 @@ Item metadata components
 .. autoclass:: zyte_common_items.ArticleListMetadata(**kwargs)
    :members: dateDownloaded
 
+.. autoclass:: zyte_common_items.ArticleNavigationMetadata(**kwargs)
+   :members: dateDownloaded
+
 .. autoclass:: zyte_common_items.BusinessPlaceMetadata(**kwargs)
    :members: dateDownloaded, probability, searchText
 
