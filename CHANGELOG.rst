@@ -2,6 +2,41 @@
 Changelog
 =========
 
+0.7.0 (YYYY-MM-DD)
+==================
+
+* Now requires ``zyte-parsers``.
+
+* Added navigation classes: :class:`~zyte_common_items.ArticleNavigation`,
+  :class:`~zyte_common_items.ProductNavigation`, the page classes that produce
+  them, and other related classes.
+
+* Improved the metadata field handling, also fixing some bugs:
+
+  * Added :ref:`item-specific metadata classes <components-metadata>`. The
+    ``metadata`` item fields were changed to use them.
+  * **Backwards incompatible change**: the ``DateDownloadedMetadata`` class was
+    removed. The item-specific ones are now used instead.
+  * **Backwards incompatible change**:
+    :class:`~zyte_common_items.ArticleFromList` no longer has a ``probability``
+    field and instead has a ``metadata`` field like all other similar classes.
+  * **Backwards incompatible change**: while in most items the old and the new
+    type of the ``metadata`` field have the same fields, the one in
+    :class:`~zyte_common_items.Article` now has ``probability``, the one in
+    :class:`~zyte_common_items.ProductList` no longer has ``probability``, and
+    the one in :class:`~zyte_common_items.ProductFromList` no longer has
+    ``dateDownloaded``.
+  * The default ``probability`` value is now ``1.0`` instead of ``None``.
+  * Added the :class:`~zyte_common_items.HasMetadata` mixin which is used
+    similarly to :class:`~web_poet.pages.Returns` to set the page metadata
+    class.
+  * Metadata objects assigned to the ``metadata`` fields of the items or
+    returned from the ``metadata()`` methods of the pages are now converted to
+    suitable classes.
+
+* Added :func:`zyte_common_items.processors.breadcrumbs_processor` and enabled
+  it for the ``breadcrumbs`` fields.
+
 0.6.0 (2023-07-05)
 ==================
 

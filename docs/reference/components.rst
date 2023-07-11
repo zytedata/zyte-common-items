@@ -70,6 +70,8 @@ tied to any specific item type.
 .. autoclass:: zyte_common_items.Video(**kwargs)
    :members: url
 
+.. _components-metadata:
+
 Item metadata components
 ========================
 
