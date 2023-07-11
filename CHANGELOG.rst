@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.7.0 (YYYY-MM-DD)
+0.7.0 (2023-07-11)
 ==================
 
 * Now requires ``zyte-parsers``.
