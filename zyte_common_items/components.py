@@ -1,4 +1,5 @@
 """Classes for data nested within items."""
+import base64
 from typing import List, Optional, Type
 
 import attrs
@@ -420,6 +421,27 @@ class Request(Item):
 
     #: HTTP headers
     headers: Optional[List[Header]] = None
+
+    @property
+    def headers_dict(self) -> dict:
+        return {header.name: header.value for header in (self.headers or [])}
+
+    @property
+    def body_bytes(self) -> bytes:
+        # fixme: cache bytes body; allow to set it in __init__.
+        return base64.b64decode(self.body) if self.body else b""
+
+    def to_scrapy(self, callback, **kwargs):
+        import scrapy
+
+        return scrapy.Request(
+            url=self.url,
+            callback=callback,
+            method=self.method,
+            headers=self.headers_dict,
+            body=self.body_bytes,
+            **kwargs
+        )
 
 
 @attrs.define
