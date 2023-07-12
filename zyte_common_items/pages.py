@@ -26,7 +26,7 @@ from .items import (
     ProductNavigation,
     RealEstate,
 )
-from .processors import breadcrumbs_processor
+from .processors import brand_processor, breadcrumbs_processor
 from .util import format_datetime, metadata_processor
 
 #: Generic type for metadata classes for specific item types.
@@ -128,6 +128,7 @@ class BaseBusinessPlacePage(
 
 class BaseProductPage(BasePage, Returns[Product], HasMetadata[ProductMetadata]):
     class Processors(BasePage.Processors):
+        brand = [brand_processor]
         breadcrumbs = [breadcrumbs_processor]
 
 
@@ -187,6 +188,7 @@ class BusinessPlacePage(
 
 class ProductPage(Page, Returns[Product], HasMetadata[ProductMetadata]):
     class Processors(Page.Processors):
+        brand = [brand_processor]
         breadcrumbs = [breadcrumbs_processor]
 
 

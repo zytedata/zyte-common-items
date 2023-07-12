@@ -26,7 +26,7 @@ setup(
         "attrs>=21.3.0",
         "itemadapter>=0.8.0",
         "web-poet>=0.7.0",
-        "zyte-parsers",
+        "zyte-parsers>=0.2.0",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",

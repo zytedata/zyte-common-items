@@ -5,7 +5,7 @@ from lxml.html import HtmlElement
 from parsel import Selector, SelectorList
 from web_poet.mixins import ResponseShortcutsMixin
 from zyte_parsers import Breadcrumb as zp_Breadcrumb
-from zyte_parsers import extract_breadcrumbs
+from zyte_parsers import extract_brand_name, extract_breadcrumbs
 
 from .items import Breadcrumb
 
@@ -49,3 +49,22 @@ def breadcrumbs_processor(value: Any, page: Any) -> Any:
         else:
             results.append(item)
     return results
+
+
+def brand_processor(value: Any) -> Any:
+    """Convert the data into a brand name if possible.
+
+    Supported inputs are :class:`~parsel.selector.Selector`,
+    :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
+    Other inputs are returned as is.
+    """
+
+    if isinstance(value, SelectorList):
+        if len(value) == 0:
+            return None
+        value = value[0]
+
+    if isinstance(value, (Selector, HtmlElement)):
+        return extract_brand_name(value, search_depth=2)
+
+    return value

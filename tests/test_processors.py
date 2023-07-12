@@ -6,7 +6,7 @@ from zyte_parsers import Breadcrumb as zp_Breadcrumb
 from zyte_parsers import extract_breadcrumbs
 
 from zyte_common_items import BasePage, Breadcrumb, ProductPage
-from zyte_common_items.processors import breadcrumbs_processor
+from zyte_common_items.processors import brand_processor, breadcrumbs_processor
 
 breadcrumbs_html = """
 <div class="pagesbar">
@@ -111,3 +111,43 @@ def test_breadcrumbs_base_url():
     )
     page = MyProductPage(response=response)
     assert page.breadcrumbs == breadcrumbs_expected
+
+
+@pytest.mark.parametrize(
+    "input_value,expected_value",
+    [
+        (None, None),
+        ("", ""),
+        ("foo", "foo"),
+        (Selector(text="<html></html>"), None),
+        (SelectorList([]), None),
+        (fromstring("<p>foo</p>"), "foo"),
+        (fromstring("<img alt='foo'>"), "foo"),
+        (fromstring("<p><img alt='foo'></p>"), "foo"),
+        (fromstring("<p><p><img alt='foo'></p></p>"), "foo"),
+        (Selector(text="<p>foo</p>"), "foo"),
+        (SelectorList([Selector(text="<p>foo</p>")]), "foo"),
+    ],
+)
+def test_brand(input_value, expected_value):
+    class BrandPage(BasePage):
+        @field(out=[brand_processor])
+        def brand(self):
+            return input_value
+
+    page = BrandPage("http://www.example.com/")  # type: ignore[arg-type]
+    assert page.brand == expected_value
+
+
+def test_brand_page():
+    class MyProductPage(ProductPage):
+        @field
+        def brand(self):
+            return self.css("body")
+
+    response = HttpResponse(
+        url="http://www.example.com/",
+        body="<html><body><img alt='foo'></body></html>".encode(),
+    )
+    page = MyProductPage(response=response)
+    assert page.brand == "foo"
