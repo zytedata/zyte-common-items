@@ -32,6 +32,10 @@ from .components import (
     Request,
     StarRating,
     Video,
+    JobLocation,
+    BaseSalary,
+    HiringOrganization,
+    JobPostingMetadata,
 )
 from .items import (
     Article,
@@ -45,6 +49,7 @@ from .items import (
     ProductNavigation,
     ProductVariant,
     RealEstate,
+    JobPosting,
 )
 from .pages import (
     ArticleListPage,
@@ -67,4 +72,5 @@ from .pages import (
     ProductNavigationPage,
     ProductPage,
     RealEstatePage,
+    JobPostingPage,
 )

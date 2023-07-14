@@ -101,3 +101,15 @@ Item metadata components
 
 .. autoclass:: zyte_common_items.RealEstateMetadata(**kwargs)
    :members: dateDownloaded, probability
+
+.. autoclass:: zyte_common_items.JobPostingMetadata(**kwargs)
+   :members: dateDownloaded, probability
+
+.. autoclass:: zyte_common_items.BaseSalary(**kwargs)
+   :members: raw, valueMin, valueMax, currency, currencyRaw
+
+.. autoclass:: zyte_common_items.HiringOrganization(**kwargs)
+   :members: name, nameRaw, id
+
+.. autoclass:: zyte_common_items.JobLocation(**kwargs)
+   :members: raw

@@ -502,4 +502,4 @@ class JobPostingMetadata(Item):
     dateDownloaded: Optional[str] = None
 
     #: The probability that the page belongs to certain data type.
-    probality: Optional[float] = None
+    probability: Optional[float] = None

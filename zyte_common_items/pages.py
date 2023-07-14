@@ -24,7 +24,7 @@ from .items import (
     Product,
     ProductList,
     ProductNavigation,
-    RealEstate,
+    RealEstate, JobPosting,
 )
 from .processors import brand_processor, breadcrumbs_processor
 from .util import format_datetime, metadata_processor
@@ -206,3 +206,7 @@ class ProductNavigationPage(
 class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata]):
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
+
+
+class JobPostingPage(Page, Returns[JobPosting]):
+    pass
