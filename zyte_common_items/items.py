@@ -1133,4 +1133,6 @@ class JobPosting(Item):
     remoteStatus: Optional[str] = None
 
     #: Contains metadata about the data extraction process.
-    metadata: Optional[JobPostingMetadata] = None
+    metadata: Optional[JobPostingMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(JobPostingMetadata)), kw_only=True # type: ignore
+    )

@@ -454,7 +454,7 @@ class JobLocation(Item):
     """Location of a job offer."""
 
     #: Job location, as it appears on the website.
-    raw: Optional[str] = None
+    raw: str = None
 
 
 @attrs.define(kw_only=True)
@@ -495,11 +495,6 @@ class HiringOrganization(Item):
 
 
 @attrs.define(kw_only=True)
-class JobPostingMetadata(Item):
+class JobPostingMetadata(Metadata):
     """Metadata associated with a job posting."""
-
-    #: The timestamp at which the article data was downloaded.
-    dateDownloaded: Optional[str] = None
-
-    #: The probability that the page belongs to certain data type.
-    probability: Optional[float] = None
+    pass

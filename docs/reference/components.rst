@@ -106,7 +106,7 @@ Item metadata components
    :members: dateDownloaded, probability
 
 .. autoclass:: zyte_common_items.BaseSalary(**kwargs)
-   :members: raw, valueMin, valueMax, currency, currencyRaw
+   :members: raw, valueMin, valueMax, rateType, currency, currencyRaw
 
 .. autoclass:: zyte_common_items.HiringOrganization(**kwargs)
    :members: name, nameRaw, id

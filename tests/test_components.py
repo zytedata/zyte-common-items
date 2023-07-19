@@ -17,6 +17,10 @@ from zyte_common_items import (
     RealEstateArea,
     Request,
     StarRating,
+    JobLocation,
+    BaseSalary,
+    HiringOrganization,
+    JobPostingMetadata,
 )
 
 
@@ -140,3 +144,20 @@ def test_request():
     )
 
     assert request.url == "https://example.com/test"
+
+
+def test_job_location():
+    JobLocation(raw="New York, NY")
+
+
+def test_base_salary():
+    BaseSalary(raw="$53,000-$55,000 a year", valueMin="53000", valueMax="55000", rateType="yearly", currencyRaw="$",
+               currency="USD")
+
+
+def test_hiring_organization():
+    HiringOrganization(name="Example Inc.", nameRaw="Example Inc. USA", id="12345")
+
+
+def test_job_posting_metadata():
+    JobPostingMetadata(dateDownloaded="2020-01-01", probability=0.5, searchText="Software Engineer")
