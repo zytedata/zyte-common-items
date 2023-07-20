@@ -15,6 +15,7 @@ from .components import (
     ProductNavigationMetadata,
     RealEstateMetadata,
     request_list_processor,
+    JobPostingMetadata,
 )
 from .items import (
     Article,
@@ -208,5 +209,11 @@ class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata])
         breadcrumbs = [breadcrumbs_processor]
 
 
-class JobPostingPage(Page, Returns[JobPosting]):
+class BaseJobPostingPage(
+    BasePage, Returns[JobPosting], HasMetadata[JobPostingMetadata]
+):
+    pass
+
+
+class JobPostingPage(Page, Returns[JobPosting], HasMetadata[JobPostingMetadata]):
     pass
