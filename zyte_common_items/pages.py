@@ -10,22 +10,23 @@ from .components import (
     ArticleMetadata,
     ArticleNavigationMetadata,
     BusinessPlaceMetadata,
+    JobPostingMetadata,
     ProductListMetadata,
     ProductMetadata,
     ProductNavigationMetadata,
     RealEstateMetadata,
     request_list_processor,
-    JobPostingMetadata,
 )
 from .items import (
     Article,
     ArticleList,
     ArticleNavigation,
     BusinessPlace,
+    JobPosting,
     Product,
     ProductList,
     ProductNavigation,
-    RealEstate, JobPosting,
+    RealEstate,
 )
 from .processors import brand_processor, breadcrumbs_processor
 from .util import format_datetime, metadata_processor

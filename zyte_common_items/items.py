@@ -13,11 +13,15 @@ from zyte_common_items.components import (
     ArticleNavigationMetadata,
     Audio,
     Author,
+    BaseSalary,
     Brand,
     Breadcrumb,
     BusinessPlaceMetadata,
     Gtin,
+    HiringOrganization,
     Image,
+    JobLocation,
+    JobPostingMetadata,
     Link,
     NamedLink,
     OpeningHoursItem,
@@ -33,10 +37,6 @@ from zyte_common_items.components import (
     StarRating,
     Video,
     cast_request,
-    JobLocation,
-    BaseSalary,
-    HiringOrganization,
-    JobPostingMetadata,
 )
 from zyte_common_items.util import MetadataCaster, url_to_str
 
@@ -1134,5 +1134,5 @@ class JobPosting(Item):
 
     #: Contains metadata about the data extraction process.
     metadata: Optional[JobPostingMetadata] = attrs.field(
-        default=None, converter=attrs.converters.optional(MetadataCaster(JobPostingMetadata)), kw_only=True # type: ignore
+        default=None, converter=attrs.converters.optional(MetadataCaster(JobPostingMetadata)), kw_only=True  # type: ignore
     )

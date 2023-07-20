@@ -17,13 +17,18 @@ from zyte_common_items import (
     ArticleNavigationMetadata,
     Audio,
     Author,
+    BaseSalary,
     Brand,
     Breadcrumb,
     BusinessPlace,
     BusinessPlaceMetadata,
     Gtin,
     Header,
+    HiringOrganization,
     Image,
+    JobLocation,
+    JobPosting,
+    JobPostingMetadata,
     Link,
     Metadata,
     NamedLink,
@@ -45,11 +50,6 @@ from zyte_common_items import (
     Request,
     StarRating,
     Video,
-    JobPosting,
-    JobLocation,
-    BaseSalary,
-    HiringOrganization,
-    JobPostingMetadata,
 )
 
 _ARTICLE_FROM_LIST_ALL_KWARGS: dict = {
@@ -499,7 +499,7 @@ def test_article_navigation_all_fields():
     article_navigation = ArticleNavigation(**_ARTICLE_NAVIGATION_ALL_KWARGS)
     for field in list(_ARTICLE_NAVIGATION_ALL_KWARGS):
         assert (
-                getattr(article_navigation, field) == _ARTICLE_NAVIGATION_ALL_KWARGS[field]
+            getattr(article_navigation, field) == _ARTICLE_NAVIGATION_ALL_KWARGS[field]
         )
 
 
@@ -635,7 +635,7 @@ def test_product_navigation_all_fields():
     product_navigation = ProductNavigation(**_PRODUCT_NAVIGATION_ALL_KWARGS)
     for field in list(_PRODUCT_NAVIGATION_ALL_KWARGS):
         assert (
-                getattr(product_navigation, field) == _PRODUCT_NAVIGATION_ALL_KWARGS[field]
+            getattr(product_navigation, field) == _PRODUCT_NAVIGATION_ALL_KWARGS[field]
         )
 
 
@@ -671,9 +671,9 @@ def test_metadata():
         obj_name[:-4]
         for obj_name in zyte_common_items.__dict__
         if (
-                not obj_name.startswith("Base")
-                and obj_name.endswith("Page")
-                and obj_name != "Page"
+            not obj_name.startswith("Base")
+            and obj_name.endswith("Page")
+            and obj_name != "Page"
         )
     }
     for item_name in item_names:
@@ -728,30 +728,41 @@ _JOB_POSTING_ALL_KWARGS = {
     "headline": "Are you our next Software Engineer?",
     "jobLocation": JobLocation(raw="New York, NY"),
     "description": "We are looking for a Software Engineer to join our team."
-                   "- 35 days holiday"
-                   "- 15% bonus"
-                   "- flexible working arrangements",
+    "- 35 days holiday"
+    "- 15% bonus"
+    "- flexible working arrangements",
     "descriptionHtml": "<p>We are looking for a Software Engineer to join our team.</p>"
-                       "<ul>"
-                       "<li>35 days holiday</li>"
-                       "<li>15% bonus</li>"
-                       "<li>flexible working arrangements</li>"
-                       "</ul>",
+    "<ul>"
+    "<li>35 days holiday</li>"
+    "<li>15% bonus</li>"
+    "<li>flexible working arrangements</li>"
+    "</ul>",
     "employmentType": "Full-time",
-    "baseSalary": BaseSalary(raw="$53,000-$55,000 a year", valueMin="53000", valueMax="55000", rateType="yearly",
-                             currencyRaw="$", currency="USD"),
+    "baseSalary": BaseSalary(
+        raw="$53,000-$55,000 a year",
+        valueMin="53000",
+        valueMax="55000",
+        rateType="yearly",
+        currencyRaw="$",
+        currency="USD",
+    ),
     "requirements": [
         "Experience in managing diverse teams",
         "Great sense of responsibility",
         "5+ years of proven experience in sales",
-        "Ability to travel"
+        "Ability to travel",
     ],
-    "hiringOrganization": HiringOrganization(name="ACME Corp.", nameRaw="ACME Corp., US", id="54321"),
+    "hiringOrganization": HiringOrganization(
+        name="ACME Corp.", nameRaw="ACME Corp., US", id="54321"
+    ),
     "jobStartDate": "2019-08-01T00:00:00-05:00",
     "jobStartDateRaw": "01 August 2019",
     "remoteStatus": "Remote",
-    "metadata": JobPostingMetadata(dateDownloaded="2022-12-31T13:01:54Z", probability=0.95,
-                                   searchText="Software Engineer")
+    "metadata": JobPostingMetadata(
+        dateDownloaded="2022-12-31T13:01:54Z",
+        probability=0.95,
+        searchText="Software Engineer",
+    ),
 }
 
 

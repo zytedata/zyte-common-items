@@ -497,4 +497,5 @@ class HiringOrganization(Item):
 @attrs.define(kw_only=True)
 class JobPostingMetadata(Metadata):
     """Metadata associated with a job posting."""
+
     pass
