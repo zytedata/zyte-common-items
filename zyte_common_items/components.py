@@ -403,7 +403,7 @@ class Header(Item):
     value: str
 
 
-@attrs.define(kw_only=False, slots=False)
+@attrs.define(slots=False)
 class Request(Item):
     """Describe a web request to load a page"""
 
