@@ -454,7 +454,7 @@ class JobLocation(Item):
     """Location of a job offer."""
 
     #: Job location, as it appears on the website.
-    raw: str = None
+    raw: Optional[str] = None
 
 
 @attrs.define(kw_only=True)
