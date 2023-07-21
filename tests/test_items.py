@@ -438,6 +438,60 @@ _PRODUCT_NAVIGATION_ALL_KWARGS: dict = {
     "metadata": ProductNavigationMetadata(dateDownloaded="2022-12-31T13:01:54Z"),
 }
 
+_JOB_POSTING_MIN_KWARGS: dict = {
+    "url": "https://example.com/viewjob/12345",
+}
+
+_JOB_POSTING_ALL_KWARGS: dict = {
+    **_JOB_POSTING_MIN_KWARGS,
+    "jobPostingId": "12345",
+    "datePublished": "2019-06-19T00:00:00-05:00",
+    "datePublishedRaw": "19 June 2019",
+    "dateModified": "2019-06-21T00:00:00-05:00",
+    "dateModifiedRaw": "21 June 2019",
+    "validThrough": "2019-07-19T00:00:00-05:00",
+    "validThroughRaw": "19 July 2019",
+    "jobTitle": "Software Engineer",
+    "headline": "Are you our next Software Engineer?",
+    "jobLocation": JobLocation(raw="New York, NY"),
+    "description": "We are looking for a Software Engineer to join our team."
+    "- 35 days holiday"
+    "- 15% bonus"
+    "- flexible working arrangements",
+    "descriptionHtml": "<p>We are looking for a Software Engineer to join our team.</p>"
+    "<ul>"
+    "<li>35 days holiday</li>"
+    "<li>15% bonus</li>"
+    "<li>flexible working arrangements</li>"
+    "</ul>",
+    "employmentType": "Full-time",
+    "baseSalary": BaseSalary(
+        raw="$53,000-$55,000 a year",
+        valueMin="53000",
+        valueMax="55000",
+        rateType="yearly",
+        currencyRaw="$",
+        currency="USD",
+    ),
+    "requirements": [
+        "Experience in managing diverse teams",
+        "Great sense of responsibility",
+        "5+ years of proven experience in sales",
+        "Ability to travel",
+    ],
+    "hiringOrganization": HiringOrganization(
+        name="ACME Corp.", nameRaw="ACME Corp., US", id="54321"
+    ),
+    "jobStartDate": "2019-08-01T00:00:00-05:00",
+    "jobStartDateRaw": "01 August 2019",
+    "remoteStatus": "Remote",
+    "metadata": JobPostingMetadata(
+        dateDownloaded="2022-12-31T13:01:54Z",
+        probability=0.95,
+        searchText="Software Engineer",
+    ),
+}
+
 
 def test_article_all_fields():
     article = Article(**_ARTICLE_ALL_KWARGS)
@@ -709,61 +763,6 @@ def test_request():
         name="Mystery",
         metadata=ProbabilityMetadata(probability=1.0),
     )
-
-
-_JOB_POSTING_MIN_KWARGS = {
-    "url": "https://example.com/viewjob/12345",
-}
-
-_JOB_POSTING_ALL_KWARGS = {
-    **_JOB_POSTING_MIN_KWARGS,
-    "jobPostingId": "12345",
-    "datePublished": "2019-06-19T00:00:00-05:00",
-    "datePublishedRaw": "19 June 2019",
-    "dateModified": "2019-06-21T00:00:00-05:00",
-    "dateModifiedRaw": "21 June 2019",
-    "validThrough": "2019-07-19T00:00:00-05:00",
-    "validThroughRaw": "19 July 2019",
-    "jobTitle": "Software Engineer",
-    "headline": "Are you our next Software Engineer?",
-    "jobLocation": JobLocation(raw="New York, NY"),
-    "description": "We are looking for a Software Engineer to join our team."
-    "- 35 days holiday"
-    "- 15% bonus"
-    "- flexible working arrangements",
-    "descriptionHtml": "<p>We are looking for a Software Engineer to join our team.</p>"
-    "<ul>"
-    "<li>35 days holiday</li>"
-    "<li>15% bonus</li>"
-    "<li>flexible working arrangements</li>"
-    "</ul>",
-    "employmentType": "Full-time",
-    "baseSalary": BaseSalary(
-        raw="$53,000-$55,000 a year",
-        valueMin="53000",
-        valueMax="55000",
-        rateType="yearly",
-        currencyRaw="$",
-        currency="USD",
-    ),
-    "requirements": [
-        "Experience in managing diverse teams",
-        "Great sense of responsibility",
-        "5+ years of proven experience in sales",
-        "Ability to travel",
-    ],
-    "hiringOrganization": HiringOrganization(
-        name="ACME Corp.", nameRaw="ACME Corp., US", id="54321"
-    ),
-    "jobStartDate": "2019-08-01T00:00:00-05:00",
-    "jobStartDateRaw": "01 August 2019",
-    "remoteStatus": "Remote",
-    "metadata": JobPostingMetadata(
-        dateDownloaded="2022-12-31T13:01:54Z",
-        probability=0.95,
-        searchText="Software Engineer",
-    ),
-}
 
 
 def test_job_posting_all_fields():
