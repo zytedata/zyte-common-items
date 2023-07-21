@@ -59,6 +59,7 @@ from .pages import (
     BaseArticleNavigationPage,
     BaseArticlePage,
     BaseBusinessPlacePage,
+    BaseJobPostingPage,
     BasePage,
     BaseProductListPage,
     BaseProductNavigationPage,
