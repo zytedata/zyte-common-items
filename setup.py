@@ -23,9 +23,9 @@ setup(
         "zyte_common_items": ["py.typed", "VERSION"],
     },
     install_requires=[
-        "attrs>=21.3.0",
+        "attrs>=22.1.0",
         "itemadapter>=0.8.0",
-        "web-poet>=0.7.0",
+        "web-poet>=0.9.0",
         "zyte-parsers",
     ],
     classifiers=[
