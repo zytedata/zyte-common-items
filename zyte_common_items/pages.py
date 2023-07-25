@@ -1,3 +1,4 @@
+from collections import deque
 from datetime import datetime
 from typing import Generic, Type, TypeVar, get_args
 
@@ -44,18 +45,24 @@ class HasMetadata(Generic[MetadataT]):
     @property
     def metadata_cls(self) -> Type[MetadataT]:
         """Metadata class."""
-        return _get_metadata_class(self)
+        return _get_metadata_class(type(self))
 
 
-def _get_metadata_class(obj):
-    for base in getattr(obj.__class__, "__orig_bases__", []):
-        origin = getattr(base, "__origin__", None)
-        if not origin:
-            continue
-        if origin != HasMetadata:
-            continue
-        return get_args(base)[0]
-    return None
+def _get_metadata_class(cls: type) -> Type[MetadataT]:
+    """Search the base classes recursively breadth-first for a HasMetadata class."""
+    visited = set()
+    queue = deque([cls])
+    while queue:
+        node = queue.popleft()
+        visited.add(node)
+        for base in getattr(node, "__orig_bases__", []):
+            origin = getattr(base, "__origin__", None)
+            if origin == HasMetadata:
+                result = get_args(base)[0]
+                if not isinstance(result, TypeVar):
+                    return result
+            queue.append(base)
+    raise TypeError(f"A HasMetadata base class not found in {cls!r}")
 
 
 class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
