@@ -128,6 +128,12 @@ class BaseBusinessPlacePage(
     pass
 
 
+class BaseJobPostingPage(
+    BasePage, Returns[JobPosting], HasMetadata[JobPostingMetadata]
+):
+    pass
+
+
 class BaseProductPage(BasePage, Returns[Product], HasMetadata[ProductMetadata]):
     class Processors(BasePage.Processors):
         brand = [brand_processor]
@@ -188,6 +194,10 @@ class BusinessPlacePage(
     pass
 
 
+class JobPostingPage(Page, Returns[JobPosting], HasMetadata[JobPostingMetadata]):
+    pass
+
+
 class ProductPage(Page, Returns[Product], HasMetadata[ProductMetadata]):
     class Processors(Page.Processors):
         brand = [brand_processor]
@@ -208,13 +218,3 @@ class ProductNavigationPage(
 class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata]):
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
-
-
-class BaseJobPostingPage(
-    BasePage, Returns[JobPosting], HasMetadata[JobPostingMetadata]
-):
-    pass
-
-
-class JobPostingPage(Page, Returns[JobPosting], HasMetadata[JobPostingMetadata]):
-    pass

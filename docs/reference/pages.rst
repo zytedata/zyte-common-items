@@ -82,6 +82,10 @@ Real estate
 
 Job posting
 ===========
+
+.. autoclass:: zyte_common_items.BaseJobPostingPage(**kwargs)
+   :show-inheritance:
+
 .. autoclass:: zyte_common_items.JobPostingPage(**kwargs)
    :show-inheritance:
 

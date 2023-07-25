@@ -89,6 +89,12 @@ class BusinessPlaceMetadata(Metadata):
 
 
 @attrs.define(kw_only=True)
+class JobPostingMetadata(Metadata):
+    """Metadata associated with a job posting."""
+    pass
+
+
+@attrs.define(kw_only=True)
 class ProductMetadata(_DetailsMetadata):
     pass
 
@@ -494,8 +500,3 @@ class HiringOrganization(Item):
     id: Optional[str] = None
 
 
-@attrs.define(kw_only=True)
-class JobPostingMetadata(Metadata):
-    """Metadata associated with a job posting."""
-
-    pass
