@@ -91,6 +91,7 @@ class BusinessPlaceMetadata(Metadata):
 @attrs.define(kw_only=True)
 class JobPostingMetadata(Metadata):
     """Metadata associated with a job posting."""
+
     pass
 
 
@@ -498,5 +499,3 @@ class HiringOrganization(Item):
 
     #: Identifier of the organization used by job posting website.
     id: Optional[str] = None
-
-
