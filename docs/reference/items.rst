@@ -72,6 +72,13 @@ Real estate
    :members:
    :inherited-members:
 
+Job posting
+===========
+
+.. autoclass:: zyte_common_items.JobPosting(**kwargs)
+   :members:
+   :inherited-members:
+
 Custom items
 ============
 

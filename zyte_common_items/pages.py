@@ -10,6 +10,7 @@ from .components import (
     ArticleMetadata,
     ArticleNavigationMetadata,
     BusinessPlaceMetadata,
+    JobPostingMetadata,
     ProductListMetadata,
     ProductMetadata,
     ProductNavigationMetadata,
@@ -21,6 +22,7 @@ from .items import (
     ArticleList,
     ArticleNavigation,
     BusinessPlace,
+    JobPosting,
     Product,
     ProductList,
     ProductNavigation,
@@ -126,6 +128,12 @@ class BaseBusinessPlacePage(
     pass
 
 
+class BaseJobPostingPage(
+    BasePage, Returns[JobPosting], HasMetadata[JobPostingMetadata]
+):
+    pass
+
+
 class BaseProductPage(BasePage, Returns[Product], HasMetadata[ProductMetadata]):
     class Processors(BasePage.Processors):
         brand = [brand_processor]
@@ -183,6 +191,10 @@ class ArticleNavigationPage(
 class BusinessPlacePage(
     Page, Returns[BusinessPlace], HasMetadata[BusinessPlaceMetadata]
 ):
+    pass
+
+
+class JobPostingPage(Page, Returns[JobPosting], HasMetadata[JobPostingMetadata]):
     pass
 
 
