@@ -12,13 +12,6 @@ def test_request_no_kwargs():
     assert req.body is None
     assert req.body_bytes is None
     assert req.headers is None
-    assert req.headers_dict == {}
-
-
-def test_request_headers():
-    req = Request("http://example.com", headers=[Header(name="Header", value="Value")])
-    assert req.headers == [Header(name="Header", value="Value")]
-    assert req.headers_dict == {"Header": "Value"}
 
 
 def test_request_body_bytes():
@@ -67,3 +60,13 @@ def test_request_to_scrapy_complex():
     assert scrapy_req.body == b"request body"
     assert scrapy_req.headers["Header"] == b"Value"
     assert scrapy_req.priority == 5
+
+
+def test_request_to_scrapy_headers_with_the_same_name():
+    pytest.importorskip("scrapy")
+
+    headers = [Header(name="name", value="value1"), Header(name="name", value="value2")]
+
+    req = Request("http://example.com", headers=headers)
+    scrapy_req = req.to_scrapy(callback=None)
+    assert scrapy_req.headers.getlist("name") == [b"value1", b"value2"]

@@ -425,11 +425,6 @@ class Request(Item):
     _body_bytes = None
 
     @property
-    def headers_dict(self) -> dict:
-        """Headers, as a ``{str: str}`` dictionary."""
-        return {header.name: header.value for header in (self.headers or [])}
-
-    @property
     def body_bytes(self) -> Optional[bytes]:
         """Request.body as bytes"""
         # todo: allow to set body bytes in __init__, to avoid encoding/decoding.
@@ -445,11 +440,13 @@ class Request(Item):
         """
         import scrapy
 
+        header_list = [(header.name, header.value) for header in self.headers or []]
+
         return scrapy.Request(
             url=self.url,
             callback=callback,
             method=self.method or "GET",
-            headers=self.headers_dict,
+            headers=header_list,
             body=self.body_bytes,
             **kwargs
         )
