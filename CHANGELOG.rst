@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.8.0 (YYYY-MM-DD)
+0.8.0 (2023-07-27)
 ==================
 
 * Updated minimum versions for the following requirements:
