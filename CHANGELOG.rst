@@ -2,6 +2,24 @@
 Changelog
 =========
 
+0.8.0 (YYYY-MM-DD)
+==================
+
+* Updated minimum versions for the following requirements:
+
+  * ``attrs >= 22.1.0``
+  * ``web-poet >= 0.9.0``
+  * ``zyte-parsers >= 0.2.0``
+
+* Added :class:`~zyte_common_items.JobPosting` and related classes.
+
+* Added :func:`zyte_common_items.processors.brand_processor` and enabled
+  it for the ``brand`` fields.
+
+* Added :meth:`zyte_common_items.Request.to_scrapy` to convert
+  :class:`zyte_common_items.Request` instances to :class:`scrapy.http.Request`
+  instances.
+
 0.7.0 (2023-07-11)
 ==================
 
