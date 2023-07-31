@@ -58,6 +58,8 @@ class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
 
     @field
     def metadata(self) -> MetadataT:
+        if self.metadata_cls is None:
+            raise ValueError(f"{type(self)} doesn'have a metadata class configured.")
         value = self.metadata_cls()
         attributes = dir(value)
         if "dateDownloaded" in attributes:
@@ -72,6 +74,8 @@ class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
 
         Use it in your .validate_input implementation.
         """
+        if self.metadata_cls is None:
+            raise ValueError(f"{type(self)} doesn'have a metadata class configured.")
         metadata = self.metadata_cls()
         metadata_attributes = dir(metadata)
         if "dateDownloaded" in metadata_attributes:

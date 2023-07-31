@@ -14,6 +14,7 @@ from zyte_common_items import (
     BaseProductPage,
     HasMetadata,
     Metadata,
+    Page,
     ProbabilityMetadata,
     ProbabilityRequest,
     Product,
@@ -383,6 +384,26 @@ def test_hasmetadata_inheritance():
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     metadata = page.metadata
     assert type(metadata) == ProductMetadata
+
+
+def test_metadata_cls_none():
+    """Ensure that metadata_cls can be None."""
+
+    class CustomProductPage(Page, Returns[Product]):
+        pass
+
+    url = ResponseUrl("https://example.com")
+    html = b"""
+    <!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Foo</h1>
+        </body>
+    </html>
+    """
+    page = CustomProductPage(response=HttpResponse(url=url, body=html))
+    with pytest.raises(ValueError):
+        page.metadata
 
 
 def test_request():
