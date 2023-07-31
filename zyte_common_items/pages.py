@@ -1,10 +1,10 @@
-from collections import deque
 from datetime import datetime
-from typing import Generic, Type, TypeVar, get_args
+from typing import Generic, Optional, Type, TypeVar
 
 import attrs
 from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
 from web_poet.pages import ItemT
+from web_poet.utils import get_generic_param
 
 from .components import (
     ArticleListMetadata,
@@ -43,26 +43,13 @@ class HasMetadata(Generic[MetadataT]):
     class."""
 
     @property
-    def metadata_cls(self) -> Type[MetadataT]:
+    def metadata_cls(self) -> Optional[Type[MetadataT]]:
         """Metadata class."""
         return _get_metadata_class(type(self))
 
 
-def _get_metadata_class(cls: type) -> Type[MetadataT]:
-    """Search the base classes recursively breadth-first for a HasMetadata class."""
-    visited = set()
-    queue = deque([cls])
-    while queue:
-        node = queue.popleft()
-        visited.add(node)
-        for base in getattr(node, "__orig_bases__", []):
-            origin = getattr(base, "__origin__", None)
-            if origin == HasMetadata:
-                result = get_args(base)[0]
-                if not isinstance(result, TypeVar):
-                    return result
-            queue.append(base)
-    raise TypeError(f"A HasMetadata base class not found in {cls!r}")
+def _get_metadata_class(cls: type) -> Optional[Type[MetadataT]]:
+    return get_generic_param(cls, HasMetadata)
 
 
 class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
