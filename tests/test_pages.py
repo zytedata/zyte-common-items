@@ -5,7 +5,7 @@ from warnings import catch_warnings
 
 import attrs
 import pytest
-from web_poet import HttpResponse, RequestUrl, ResponseUrl, field
+from web_poet import HttpResponse, RequestUrl, ResponseUrl, Returns, field
 
 import zyte_common_items
 from zyte_common_items import (
@@ -14,8 +14,10 @@ from zyte_common_items import (
     BaseProductPage,
     HasMetadata,
     Metadata,
+    Page,
     ProbabilityMetadata,
     ProbabilityRequest,
+    Product,
     ProductFromList,
     ProductListMetadata,
     ProductListPage,
@@ -360,6 +362,49 @@ def test_metadata_override():
     metadata = page.metadata
     assert type(metadata) == CustomProductMetadata
     assert metadata.new_field is None
+
+
+def test_hasmetadata_inheritance():
+    """Ensure that a subclass with just Returns doesn't break _get_metadata_class()."""
+
+    class MyProduct(Product):
+        pass
+
+    class CustomProductPage(ProductPage, Returns[MyProduct]):
+        pass
+
+    url = ResponseUrl("https://example.com")
+    html = b"""
+    <!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Foo</h1>
+        </body>
+    </html>
+    """
+    page = CustomProductPage(response=HttpResponse(url=url, body=html))
+    metadata = page.metadata
+    assert type(metadata) == ProductMetadata
+
+
+def test_metadata_cls_none():
+    """Ensure that metadata_cls can be None."""
+
+    class CustomProductPage(Page, Returns[Product]):
+        pass
+
+    url = ResponseUrl("https://example.com")
+    html = b"""
+    <!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Foo</h1>
+        </body>
+    </html>
+    """
+    page = CustomProductPage(response=HttpResponse(url=url, body=html))
+    with pytest.raises(ValueError):
+        page.metadata
 
 
 def test_request():

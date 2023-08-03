@@ -22,10 +22,11 @@ setup(
     package_data={
         "zyte_common_items": ["py.typed", "VERSION"],
     },
+    # needs to be in sync with the tox.ini min env
     install_requires=[
         "attrs>=22.1.0",
         "itemadapter>=0.8.0",
-        "web-poet>=0.9.0",
+        "web-poet>=0.14.0",
         "zyte-parsers>=0.2.0",
     ],
     classifiers=[

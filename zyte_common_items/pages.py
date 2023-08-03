@@ -1,9 +1,10 @@
 from datetime import datetime
-from typing import Generic, Type, TypeVar, get_args
+from typing import Generic, Optional, Type, TypeVar
 
 import attrs
 from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
 from web_poet.pages import ItemT
+from web_poet.utils import get_generic_param
 
 from .components import (
     ArticleListMetadata,
@@ -44,20 +45,13 @@ class HasMetadata(Generic[MetadataT]):
     class."""
 
     @property
-    def metadata_cls(self) -> Type[MetadataT]:
+    def metadata_cls(self) -> Optional[Type[MetadataT]]:
         """Metadata class."""
-        return _get_metadata_class(self)
+        return _get_metadata_class(type(self))
 
 
-def _get_metadata_class(obj):
-    for base in getattr(obj.__class__, "__orig_bases__", []):
-        origin = getattr(base, "__origin__", None)
-        if not origin:
-            continue
-        if origin != HasMetadata:
-            continue
-        return get_args(base)[0]
-    return None
+def _get_metadata_class(cls: type) -> Optional[Type[MetadataT]]:
+    return get_generic_param(cls, HasMetadata)
 
 
 class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
@@ -66,6 +60,8 @@ class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
 
     @field
     def metadata(self) -> MetadataT:
+        if self.metadata_cls is None:
+            raise ValueError(f"{type(self)} doesn'have a metadata class configured.")
         value = self.metadata_cls()
         attributes = dir(value)
         if "dateDownloaded" in attributes:
@@ -80,6 +76,8 @@ class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
 
         Use it in your .validate_input implementation.
         """
+        if self.metadata_cls is None:
+            raise ValueError(f"{type(self)} doesn'have a metadata class configured.")
         metadata = self.metadata_cls()
         metadata_attributes = dir(metadata)
         if "dateDownloaded" in metadata_attributes:
