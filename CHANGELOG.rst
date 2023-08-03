@@ -2,6 +2,13 @@
 Changelog
 =========
 
+0.9.0 (YYYY-MM-DD)
+==================
+
+* Now requires ``web-poet >= 0.14.0``.
+
+* Fixed detection of the :class:`~.HasMetadata` base class.
+
 0.8.0 (2023-07-27)
 ==================
 
