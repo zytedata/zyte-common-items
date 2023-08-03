@@ -45,6 +45,7 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
     "lxml": ("https://lxml.de/apidoc/", None),
     "parsel": ("https://parsel.readthedocs.io/en/stable", None),
+    "scrapy": ("https://docs.scrapy.org/en/stable", None),
     "web-poet": ("https://web-poet.readthedocs.io/en/stable", None),
     "zyte-parsers": ("https://zyte-parsers.readthedocs.io/en/stable", None),
 }

@@ -1,4 +1,5 @@
 """Classes for data nested within items."""
+import base64
 from typing import List, Optional, Type
 
 import attrs
@@ -85,6 +86,13 @@ class ArticleNavigationMetadata(_ListMetadata):
 
 @attrs.define(kw_only=True)
 class BusinessPlaceMetadata(Metadata):
+    pass
+
+
+@attrs.define(kw_only=True)
+class JobPostingMetadata(Metadata):
+    """Metadata associated with a job posting."""
+
     pass
 
 
@@ -402,12 +410,9 @@ class Header(Item):
     value: str
 
 
-@attrs.define(kw_only=True)
+@attrs.define(slots=False)
 class Request(Item):
     """Describe a web request to load a page"""
-
-    #: Name of the page being requested.
-    name: Optional[str] = None
 
     #: HTTP URL
     url: str = attrs.field(converter=url_to_str)
@@ -420,6 +425,38 @@ class Request(Item):
 
     #: HTTP headers
     headers: Optional[List[Header]] = None
+
+    #: Name of the page being requested.
+    name: Optional[str] = None
+
+    _body_bytes = None
+
+    @property
+    def body_bytes(self) -> Optional[bytes]:
+        """Request.body as bytes"""
+        # todo: allow to set body bytes in __init__, to avoid encoding/decoding.
+        if self._body_bytes is None:
+            if self.body is not None:
+                self._body_bytes = base64.b64decode(self.body)
+        return self._body_bytes
+
+    def to_scrapy(self, callback, **kwargs):
+        """
+        Convert a request to scrapy.Request.
+        All kwargs are passed to scrapy.Request as-is.
+        """
+        import scrapy
+
+        header_list = [(header.name, header.value) for header in self.headers or []]
+
+        return scrapy.Request(
+            url=self.url,
+            callback=callback,
+            method=self.method or "GET",
+            headers=header_list,
+            body=self.body_bytes,
+            **kwargs
+        )
 
 
 @attrs.define
@@ -447,3 +484,48 @@ class ProbabilityRequest(Request):
 
     #: Data extraction process metadata.
     metadata: Optional[ProbabilityMetadata] = None
+
+
+@attrs.define(kw_only=True)
+class JobLocation(Item):
+    """Location of a job offer."""
+
+    #: Job location, as it appears on the website.
+    raw: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
+class BaseSalary(Item):
+    """Base salary of a job offer."""
+
+    #: Salary amount as it appears on the website.
+    raw: Optional[str] = None
+
+    #: The minimum value of the base salary as a number string.
+    valueMin: Optional[str] = None
+
+    #: The maximum value of the base salary as a number string.
+    valueMax: Optional[str] = None
+
+    #: The type of rate associated with the salary, e.g. monthly, annual, daily.
+    rateType: Optional[str] = None
+
+    #: Currency associated with the salary amount.
+    currency: Optional[str] = None
+
+    #: Currency associated with the salary amount, without normalization.
+    currencyRaw: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
+class HiringOrganization(Item):
+    """Organization that is hiring for a job offer."""
+
+    #: Name of the hiring organization.
+    name: Optional[str] = None
+
+    #: Organization information as available on the website.
+    nameRaw: Optional[str] = None
+
+    #: Identifier of the organization used by job posting website.
+    id: Optional[str] = None

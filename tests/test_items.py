@@ -17,13 +17,18 @@ from zyte_common_items import (
     ArticleNavigationMetadata,
     Audio,
     Author,
+    BaseSalary,
     Brand,
     Breadcrumb,
     BusinessPlace,
     BusinessPlaceMetadata,
     Gtin,
     Header,
+    HiringOrganization,
     Image,
+    JobLocation,
+    JobPosting,
+    JobPostingMetadata,
     Link,
     Metadata,
     NamedLink,
@@ -433,6 +438,60 @@ _PRODUCT_NAVIGATION_ALL_KWARGS: dict = {
     "metadata": ProductNavigationMetadata(dateDownloaded="2022-12-31T13:01:54Z"),
 }
 
+_JOB_POSTING_MIN_KWARGS: dict = {
+    "url": "https://example.com/viewjob/12345",
+}
+
+_JOB_POSTING_ALL_KWARGS: dict = {
+    **_JOB_POSTING_MIN_KWARGS,
+    "jobPostingId": "12345",
+    "datePublished": "2019-06-19T00:00:00-05:00",
+    "datePublishedRaw": "19 June 2019",
+    "dateModified": "2019-06-21T00:00:00-05:00",
+    "dateModifiedRaw": "21 June 2019",
+    "validThrough": "2019-07-19T00:00:00-05:00",
+    "validThroughRaw": "19 July 2019",
+    "jobTitle": "Software Engineer",
+    "headline": "Are you our next Software Engineer?",
+    "jobLocation": JobLocation(raw="New York, NY"),
+    "description": "We are looking for a Software Engineer to join our team."
+    "- 35 days holiday"
+    "- 15% bonus"
+    "- flexible working arrangements",
+    "descriptionHtml": "<p>We are looking for a Software Engineer to join our team.</p>"
+    "<ul>"
+    "<li>35 days holiday</li>"
+    "<li>15% bonus</li>"
+    "<li>flexible working arrangements</li>"
+    "</ul>",
+    "employmentType": "Full-time",
+    "baseSalary": BaseSalary(
+        raw="$53,000-$55,000 a year",
+        valueMin="53000",
+        valueMax="55000",
+        rateType="yearly",
+        currencyRaw="$",
+        currency="USD",
+    ),
+    "requirements": [
+        "Experience in managing diverse teams",
+        "Great sense of responsibility",
+        "5+ years of proven experience in sales",
+        "Ability to travel",
+    ],
+    "hiringOrganization": HiringOrganization(
+        name="ACME Corp.", nameRaw="ACME Corp., US", id="54321"
+    ),
+    "jobStartDate": "2019-08-01T00:00:00-05:00",
+    "jobStartDateRaw": "01 August 2019",
+    "remoteStatus": "Remote",
+    "metadata": JobPostingMetadata(
+        dateDownloaded="2022-12-31T13:01:54Z",
+        probability=0.95,
+        searchText="Software Engineer",
+    ),
+}
+
 
 def test_article_all_fields():
     article = Article(**_ARTICLE_ALL_KWARGS)
@@ -704,3 +763,25 @@ def test_request():
         name="Mystery",
         metadata=ProbabilityMetadata(probability=1.0),
     )
+
+
+def test_job_posting_all_fields():
+    job_posting = JobPosting(**_JOB_POSTING_ALL_KWARGS)
+    for field in list(_JOB_POSTING_ALL_KWARGS):
+        assert getattr(job_posting, field) == _JOB_POSTING_ALL_KWARGS[field]
+
+
+def test_job_posting_min_fields():
+    job_posting = JobPosting(**_JOB_POSTING_MIN_KWARGS)
+    for field in list(_JOB_POSTING_ALL_KWARGS):
+        if field in _JOB_POSTING_MIN_KWARGS:
+            continue
+        assert getattr(job_posting, field) is None
+
+
+def test_job_posting_missing_fields():
+    for required_field in list(_JOB_POSTING_MIN_KWARGS):
+        incomplete_kwargs: dict = copy(_JOB_POSTING_MIN_KWARGS)
+        del incomplete_kwargs[required_field]
+        with pytest.raises(TypeError):
+            JobPosting(**incomplete_kwargs)

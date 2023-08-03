@@ -80,6 +80,14 @@ Real estate
 .. autoclass:: zyte_common_items.RealEstatePage(**kwargs)
    :show-inheritance:
 
+Job posting
+===========
+
+.. autoclass:: zyte_common_items.BaseJobPostingPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.JobPostingPage(**kwargs)
+   :show-inheritance:
 
 Custom page objects
 ===================
