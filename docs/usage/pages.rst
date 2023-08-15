@@ -50,4 +50,12 @@ All ``breadcrumbs`` fields have the following processor enabled:
 
 .. autofunction:: zyte_common_items.processors.breadcrumbs_processor
 
+All ``price`` fields have the following processor enabled:
+
+.. autofunction:: zyte_common_items.processors.price_processor
+
+All ``regularPrice`` fields have the following processor enabled:
+
+.. autofunction:: zyte_common_items.processors.simple_price_processor
+
 These processors can also be used in the user code.

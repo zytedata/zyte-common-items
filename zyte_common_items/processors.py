@@ -5,7 +5,7 @@ from lxml.html import HtmlElement
 from parsel import Selector, SelectorList
 from web_poet.mixins import ResponseShortcutsMixin
 from zyte_parsers import Breadcrumb as zp_Breadcrumb
-from zyte_parsers import extract_brand_name, extract_breadcrumbs
+from zyte_parsers import extract_brand_name, extract_breadcrumbs, extract_price
 
 from .items import Breadcrumb
 
@@ -66,5 +66,52 @@ def brand_processor(value: Any) -> Any:
 
     if isinstance(value, (Selector, HtmlElement)):
         return extract_brand_name(value, search_depth=2)
+
+    return value
+
+
+def price_processor(value: Any, page: Any) -> Any:
+    """Convert the data into a price string if possible.
+
+    Supported inputs are :class:`~parsel.selector.Selector`,
+    :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
+    Other inputs are returned as is.
+
+    Puts the parsed Price object into ``page._parsed_price``.
+    """
+
+    if isinstance(value, SelectorList):
+        if len(value) == 0:
+            return None
+        value = value[0]
+
+    if isinstance(value, (Selector, HtmlElement)):
+        price = extract_price(value)
+        page._parsed_price = price
+        if price.amount is None:
+            return None
+        return str(price.amount)
+
+    return value
+
+
+def simple_price_processor(value: Any) -> Any:
+    """Convert the data into a price string if possible.
+
+    Supported inputs are :class:`~parsel.selector.Selector`,
+    :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
+    Other inputs are returned as is.
+    """
+
+    if isinstance(value, SelectorList):
+        if len(value) == 0:
+            return None
+        value = value[0]
+
+    if isinstance(value, (Selector, HtmlElement)):
+        price = extract_price(value)
+        if price.amount is None:
+            return None
+        return str(price.amount)
 
     return value
