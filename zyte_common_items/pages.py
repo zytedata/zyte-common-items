@@ -142,6 +142,8 @@ class BaseProductPage(BasePage, Returns[Product], HasMetadata[ProductMetadata]):
     _parsed_price: Optional[Price] = None
 
     def _get_parsed_price(self):
+        if not hasattr(self, "price"):
+            return None
         if self._parsed_price is None:
             self.price
         return self._parsed_price
@@ -228,6 +230,8 @@ class ProductPage(Page, Returns[Product], HasMetadata[ProductMetadata]):
     _parsed_price: Optional[Price] = None
 
     def _get_parsed_price(self):
+        if not hasattr(self, "price"):
+            return None
         if self._parsed_price is None:
             self.price
         return self._parsed_price
