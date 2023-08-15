@@ -16,6 +16,14 @@ def _get_base_url(page: Any) -> Optional[str]:
     return getattr(page, "url", None)
 
 
+def _handle_selectorlist(value: Any) -> Any:
+    if not isinstance(value, SelectorList):
+        return value
+    if len(value) == 0:
+        return None
+    return value[0]
+
+
 def breadcrumbs_processor(value: Any, page: Any) -> Any:
     """Convert the data into a list of :class:`~zyte_common_items.Breadcrumb` objects if possible.
 
@@ -28,10 +36,7 @@ def breadcrumbs_processor(value: Any, page: Any) -> Any:
     def _from_zp_breadcrumb(value: zp_Breadcrumb) -> Breadcrumb:
         return Breadcrumb(name=value.name, url=value.url)
 
-    if isinstance(value, SelectorList):
-        if len(value) == 0:
-            return None
-        value = value[0]
+    value = _handle_selectorlist(value)
 
     if isinstance(value, (Selector, HtmlElement)):
         zp_breadcrumbs = extract_breadcrumbs(value, base_url=_get_base_url(page))
@@ -59,15 +64,11 @@ def brand_processor(value: Any) -> Any:
     Other inputs are returned as is.
     """
 
-    if isinstance(value, SelectorList):
-        if len(value) == 0:
-            return None
-        value = value[0]
+    value = _handle_selectorlist(value)
+    if not isinstance(value, (Selector, HtmlElement)):
+        return value
 
-    if isinstance(value, (Selector, HtmlElement)):
-        return extract_brand_name(value, search_depth=2)
-
-    return value
+    return extract_brand_name(value, search_depth=2)
 
 
 def price_processor(value: Any, page: Any) -> Any:
@@ -80,19 +81,15 @@ def price_processor(value: Any, page: Any) -> Any:
     Puts the parsed Price object into ``page._parsed_price``.
     """
 
-    if isinstance(value, SelectorList):
-        if len(value) == 0:
-            return None
-        value = value[0]
+    value = _handle_selectorlist(value)
+    if not isinstance(value, (Selector, HtmlElement)):
+        return value
 
-    if isinstance(value, (Selector, HtmlElement)):
-        price = extract_price(value)
-        page._parsed_price = price
-        if price.amount is None:
-            return None
-        return str(price.amount)
-
-    return value
+    price = extract_price(value)
+    page._parsed_price = price
+    if price.amount is None:
+        return None
+    return str(price.amount)
 
 
 def simple_price_processor(value: Any) -> Any:
@@ -103,15 +100,11 @@ def simple_price_processor(value: Any) -> Any:
     Other inputs are returned as is.
     """
 
-    if isinstance(value, SelectorList):
-        if len(value) == 0:
-            return None
-        value = value[0]
+    value = _handle_selectorlist(value)
+    if not isinstance(value, (Selector, HtmlElement)):
+        return value
 
-    if isinstance(value, (Selector, HtmlElement)):
-        price = extract_price(value)
-        if price.amount is None:
-            return None
-        return str(price.amount)
-
-    return value
+    price = extract_price(value)
+    if price.amount is None:
+        return None
+    return str(price.amount)
