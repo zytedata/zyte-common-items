@@ -6,7 +6,7 @@ from price_parser import Price
 from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
 from web_poet.fields import FieldsMixin
 from web_poet.pages import ItemT
-from web_poet.utils import get_generic_param
+from web_poet.utils import ensure_awaitable, get_generic_param
 
 from .components import (
     ArticleListMetadata,
@@ -66,11 +66,11 @@ class PriceMixin(FieldsMixin):
 
     _parsed_price: Optional[Price] = None
 
-    def _get_parsed_price(self):
+    async def _get_parsed_price(self):
         if not hasattr(self, "price"):
             return None
         if self._parsed_price is None:
-            self.price
+            await ensure_awaitable(self.price)
         return self._parsed_price
 
     @field
@@ -80,8 +80,8 @@ class PriceMixin(FieldsMixin):
         return None
 
     @field
-    def currencyRaw(self) -> Optional[str]:
-        parsed_price = self._get_parsed_price()
+    async def currencyRaw(self) -> Optional[str]:
+        parsed_price = await self._get_parsed_price()
         if parsed_price:
             return parsed_price.currency
         return None

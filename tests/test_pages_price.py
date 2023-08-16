@@ -1,9 +1,11 @@
+import pytest
 from web_poet import HttpResponse, field
 
 from zyte_common_items import ProductPage
 
 
-def test_price_selector():
+@pytest.mark.asyncio
+async def test_price_selector():
     class CustomProductPage(ProductPage):
         @field
         def price(self):
@@ -21,16 +23,17 @@ def test_price_selector():
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.price == "13.2"
     assert page.currency is None
-    assert page.currencyRaw == "$"
+    assert await page.currencyRaw == "$"
 
     # access currency fields before the price field
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.currency is None
-    assert page.currencyRaw == "$"
+    assert await page.currencyRaw == "$"
     assert page.price == "13.2"
 
 
-def test_price_explicit():
+@pytest.mark.asyncio
+async def test_price_explicit():
     class CustomProductPage(ProductPage):
         @field
         def price(self):
@@ -48,16 +51,45 @@ def test_price_explicit():
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.price == "$13.2"
     assert page.currency is None
-    assert page.currencyRaw is None
+    assert await page.currencyRaw is None
 
     # access currency fields before the price field
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.currency is None
-    assert page.currencyRaw is None
+    assert await page.currencyRaw is None
     assert page.price == "$13.2"
 
 
-def test_currency_hardcoded():
+@pytest.mark.asyncio
+async def test_price_async():
+    class CustomProductPage(ProductPage):
+        @field
+        async def price(self):
+            return self.css("div::text")
+
+    html = b"""
+    <!DOCTYPE html>
+    <html>
+        <body>
+            <div>$13.2</div>
+        </body>
+    </html>
+    """
+    url = "https://example.com"
+    page = CustomProductPage(response=HttpResponse(url=url, body=html))
+    assert await page.price == "13.2"
+    assert page.currency is None
+    assert await page.currencyRaw == "$"
+
+    # access currency fields before the price field
+    page = CustomProductPage(response=HttpResponse(url=url, body=html))
+    assert page.currency is None
+    assert await page.currencyRaw == "$"
+    assert await page.price == "13.2"
+
+
+@pytest.mark.asyncio
+async def test_currency_hardcoded():
     class CustomProductPage(ProductPage):
         CURRENCY = "USD"
 
@@ -77,16 +109,17 @@ def test_currency_hardcoded():
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.price == "13.2"
     assert page.currency == "USD"
-    assert page.currencyRaw == "$"
+    assert await page.currencyRaw == "$"
 
     # access currency fields before the price field
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.currency == "USD"
-    assert page.currencyRaw == "$"
+    assert await page.currencyRaw == "$"
     assert page.price == "13.2"
 
 
-def test_currency_no_price():
+@pytest.mark.asyncio
+async def test_currency_no_price():
     class CustomProductPage(ProductPage):
         CURRENCY = "USD"
 
@@ -101,10 +134,11 @@ def test_currency_no_price():
     url = "https://example.com"
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.currency == "USD"
-    assert page.currencyRaw is None
+    assert await page.currencyRaw is None
 
 
-def test_regularPrice():
+@pytest.mark.asyncio
+async def test_regularPrice():
     class CustomProductPage(ProductPage):
         CURRENCY = "USD"
 
@@ -130,17 +164,18 @@ def test_regularPrice():
     assert page.regularPrice == "13.2"
     assert page.price == "10.2"
     assert page.currency == "USD"
-    assert page.currencyRaw == "$"
+    assert await page.currencyRaw == "$"
 
     # access currency fields before the price field
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.currency == "USD"
-    assert page.currencyRaw == "$"
+    assert await page.currencyRaw == "$"
     assert page.price == "10.2"
     assert page.regularPrice == "13.2"
 
 
-def test_price_invalid():
+@pytest.mark.asyncio
+async def test_price_invalid():
     class CustomProductPage(ProductPage):
         CURRENCY = "USD"
 
@@ -160,12 +195,12 @@ def test_price_invalid():
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.price is None
     assert page.currency == "USD"
-    assert page.currencyRaw is None
+    assert await page.currencyRaw is None
 
     # access currency fields before the price field
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.currency == "USD"
-    assert page.currencyRaw is None
+    assert await page.currencyRaw is None
     assert page.price is None
 
 
