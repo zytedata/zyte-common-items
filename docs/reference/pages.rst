@@ -13,6 +13,17 @@ Product
 .. autoclass:: zyte_common_items.ProductPage(**kwargs)
    :show-inheritance:
 
+.. autoclass:: zyte_common_items.pages.PriceMixin
+
+   .. data:: currency
+      :type: str
+
+      Price currency ISO 4217` alphabetic code (e.g. ``"USD"``).
+
+   .. data:: currencyRaw
+      :type: str
+
+      Price currency as it appears on the webpage (no post-processing), e.g. ``"$"``.
 
 Product list
 ============

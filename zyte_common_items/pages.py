@@ -4,6 +4,7 @@ from typing import Generic, Optional, Type, TypeVar
 import attrs
 from price_parser import Price
 from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
+from web_poet.fields import FieldsMixin
 from web_poet.pages import ItemT
 from web_poet.utils import get_generic_param
 
@@ -58,6 +59,32 @@ class HasMetadata(Generic[MetadataT]):
 
 def _get_metadata_class(cls: type) -> Optional[Type[MetadataT]]:
     return get_generic_param(cls, HasMetadata)
+
+
+class PriceMixin(FieldsMixin):
+    """Provides price-related field implementations."""
+
+    _parsed_price: Optional[Price] = None
+
+    def _get_parsed_price(self):
+        if not hasattr(self, "price"):
+            return None
+        if self._parsed_price is None:
+            self.price
+        return self._parsed_price
+
+    @field
+    def currency(self) -> Optional[str]:
+        if hasattr(self, "CURRENCY"):
+            return self.CURRENCY
+        return None
+
+    @field
+    def currencyRaw(self) -> Optional[str]:
+        parsed_price = self._get_parsed_price()
+        if parsed_price:
+            return parsed_price.currency
+        return None
 
 
 class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
@@ -138,29 +165,9 @@ class BaseJobPostingPage(
     pass
 
 
-class BaseProductPage(BasePage, Returns[Product], HasMetadata[ProductMetadata]):
-    _parsed_price: Optional[Price] = None
-
-    def _get_parsed_price(self):
-        if not hasattr(self, "price"):
-            return None
-        if self._parsed_price is None:
-            self.price
-        return self._parsed_price
-
-    @field
-    def currency(self) -> Optional[str]:
-        if hasattr(self, "CURRENCY"):
-            return self.CURRENCY
-        return None
-
-    @field
-    def currencyRaw(self) -> Optional[str]:
-        parsed_price = self._get_parsed_price()
-        if parsed_price:
-            return parsed_price.currency
-        return None
-
+class BaseProductPage(
+    BasePage, PriceMixin, Returns[Product], HasMetadata[ProductMetadata]
+):
     class Processors(BasePage.Processors):
         brand = [brand_processor]
         breadcrumbs = [breadcrumbs_processor]
@@ -226,29 +233,7 @@ class JobPostingPage(Page, Returns[JobPosting], HasMetadata[JobPostingMetadata])
     pass
 
 
-class ProductPage(Page, Returns[Product], HasMetadata[ProductMetadata]):
-    _parsed_price: Optional[Price] = None
-
-    def _get_parsed_price(self):
-        if not hasattr(self, "price"):
-            return None
-        if self._parsed_price is None:
-            self.price
-        return self._parsed_price
-
-    @field
-    def currency(self) -> Optional[str]:
-        if hasattr(self, "CURRENCY"):
-            return self.CURRENCY
-        return None
-
-    @field
-    def currencyRaw(self) -> Optional[str]:
-        parsed_price = self._get_parsed_price()
-        if parsed_price:
-            return parsed_price.currency
-        return None
-
+class ProductPage(Page, PriceMixin, Returns[Product], HasMetadata[ProductMetadata]):
     class Processors(Page.Processors):
         brand = [brand_processor]
         breadcrumbs = [breadcrumbs_processor]

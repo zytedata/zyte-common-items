@@ -18,6 +18,10 @@ They provide the following base line:
     :attr:`~zyte_common_items.Page.metadata` and
     :attr:`~zyte_common_items.Page.url` fields.
 
+-   They also provide a default implementation for some item-specific fields in
+    pages that have those: :attr:`~zyte_common_items.pages.PriceMixin.currency` and
+    :attr:`~zyte_common_items.pages.PriceMixin.currencyRaw`.
+
 The following code shows a :class:`~zyte_common_items.ProductPage` subclass
 whose ``to_item`` method returns an instance of
 :class:`~zyte_common_items.Product` with
