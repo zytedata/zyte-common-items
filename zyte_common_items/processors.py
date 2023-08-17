@@ -1,5 +1,6 @@
 from collections.abc import Iterable
-from typing import Any, List, Optional
+from functools import wraps
+from typing import Any, Callable, List, Optional, Union
 
 from lxml.html import HtmlElement
 from parsel import Selector, SelectorList
@@ -22,6 +23,20 @@ def _handle_selectorlist(value: Any) -> Any:
     if len(value) == 0:
         return None
     return value[0]
+
+
+def only_handle_nodes(
+    f: Callable[[Union[Selector, HtmlElement], Any], Any]
+) -> Callable[[Any, Any], Any]:
+    @wraps(f)
+    def wrapper(value: Any, page: Any) -> Any:
+        value = _handle_selectorlist(value)
+        if not isinstance(value, (Selector, HtmlElement)):
+            return value
+        result = f(value, page)
+        return result
+
+    return wrapper
 
 
 def breadcrumbs_processor(value: Any, page: Any) -> Any:
@@ -56,22 +71,19 @@ def breadcrumbs_processor(value: Any, page: Any) -> Any:
     return results
 
 
-def brand_processor(value: Any) -> Any:
+@only_handle_nodes
+def brand_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
     """Convert the data into a brand name if possible.
 
     Supported inputs are :class:`~parsel.selector.Selector`,
     :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
     Other inputs are returned as is.
     """
-
-    value = _handle_selectorlist(value)
-    if not isinstance(value, (Selector, HtmlElement)):
-        return value
-
     return extract_brand_name(value, search_depth=2)
 
 
-def price_processor(value: Any, page: Any) -> Any:
+@only_handle_nodes
+def price_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
     """Convert the data into a price string if possible.
 
     Supported inputs are :class:`~parsel.selector.Selector`,
@@ -80,11 +92,6 @@ def price_processor(value: Any, page: Any) -> Any:
 
     Puts the parsed Price object into ``page._parsed_price``.
     """
-
-    value = _handle_selectorlist(value)
-    if not isinstance(value, (Selector, HtmlElement)):
-        return value
-
     price = extract_price(value)
     page._parsed_price = price
     if price.amount is None:
@@ -92,18 +99,14 @@ def price_processor(value: Any, page: Any) -> Any:
     return str(price.amount)
 
 
-def simple_price_processor(value: Any) -> Any:
+@only_handle_nodes
+def simple_price_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
     """Convert the data into a price string if possible.
 
     Supported inputs are :class:`~parsel.selector.Selector`,
     :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
     Other inputs are returned as is.
     """
-
-    value = _handle_selectorlist(value)
-    if not isinstance(value, (Selector, HtmlElement)):
-        return value
-
     price = extract_price(value)
     if price.amount is None:
         return None
