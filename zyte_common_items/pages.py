@@ -67,10 +67,11 @@ class PriceMixin(FieldsMixin):
     _parsed_price: Optional[Price] = None
 
     async def _get_parsed_price(self):
-        if not hasattr(self, "price"):
-            return None
         if self._parsed_price is None:
-            await ensure_awaitable(self.price)
+            price_field = getattr(self, "price", None)
+            if price_field is None:
+                return None
+            await ensure_awaitable(price_field)
         return self._parsed_price
 
     @field

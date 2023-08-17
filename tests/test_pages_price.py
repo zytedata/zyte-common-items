@@ -7,8 +7,11 @@ from zyte_common_items import ProductPage
 @pytest.mark.asyncio
 async def test_price_selector():
     class CustomProductPage(ProductPage):
+        call_count = 0
+
         @field
         def price(self):
+            self.call_count += 1
             return self.css("div::text")
 
     html = b"""
@@ -21,15 +24,21 @@ async def test_price_selector():
     """
     url = "https://example.com"
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
+    assert page.call_count == 0
     assert page.price == "13.2"
+    assert page.call_count == 1
     assert page.currency is None
     assert await page.currencyRaw == "$"
+    assert page.call_count == 1
 
     # access currency fields before the price field
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
+    assert page.call_count == 0
     assert page.currency is None
     assert await page.currencyRaw == "$"
+    assert page.call_count == 1
     assert page.price == "13.2"
+    assert page.call_count == 2
 
 
 @pytest.mark.asyncio
