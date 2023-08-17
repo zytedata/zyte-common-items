@@ -212,7 +212,7 @@ def test_currencyRaw_explicit():
 
         @field
         def currencyRaw(self):
-            return "$"
+            return "US$"
 
     html = b"""
     <!DOCTYPE html>
@@ -226,10 +226,10 @@ def test_currencyRaw_explicit():
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.price == "13.2"
     assert page.currency is None
-    assert page.currencyRaw == "$"
+    assert page.currencyRaw == "US$"
 
     # access currency fields before the price field
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.currency is None
-    assert page.currencyRaw == "$"
+    assert page.currencyRaw == "US$"
     assert page.price == "13.2"
