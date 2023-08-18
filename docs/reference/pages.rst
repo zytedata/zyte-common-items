@@ -18,7 +18,7 @@ Product
    .. data:: currency
       :type: str
 
-      Price currency ISO 4217` alphabetic code (e.g. ``"USD"``).
+      Price currency ISO 4217 alphabetic code (e.g. ``"USD"``).
 
    .. data:: currencyRaw
       :type: str
