@@ -66,7 +66,7 @@ class PriceMixin(FieldsMixin):
 
     _parsed_price: Optional[Price] = None
 
-    async def _get_parsed_price(self) -> Price:
+    async def _get_parsed_price(self) -> Optional[Price]:
         if self._parsed_price is None:
             price_field = getattr(self, "price", object())
             if price_field is None:
