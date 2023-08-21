@@ -156,6 +156,37 @@ async def test_currency_no_price():
 
 
 @pytest.mark.asyncio
+async def test_currency_none_price():
+    class CustomProductPage(ProductPage):
+        CURRENCY = "USD"
+        call_count = 0
+
+        @field
+        def price(self):
+            self.call_count += 1
+            return None
+
+    html = b"""
+    <!DOCTYPE html>
+    <html>
+        <body>
+            <div>$13.2</div>
+        </body>
+    </html>
+    """
+    url = "https://example.com"
+    page = CustomProductPage(response=HttpResponse(url=url, body=html))
+    assert page.call_count == 0
+    assert page.currency == "USD"
+    assert await page.currencyRaw is None
+    assert page.call_count == 1
+    assert await page.currencyRaw is None
+    assert page.call_count == 1
+    assert page.price is None
+    assert page.call_count == 2  # we want this to be 1
+
+
+@pytest.mark.asyncio
 async def test_regularPrice():
     class CustomProductPage(ProductPage):
         CURRENCY = "USD"
