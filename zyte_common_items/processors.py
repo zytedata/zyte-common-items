@@ -2,6 +2,7 @@ from collections.abc import Iterable
 from functools import wraps
 from typing import Any, Callable, List, Optional, Union
 
+from clear_html import clean_node, cleaned_node_to_html, cleaned_node_to_text
 from lxml.html import HtmlElement
 from parsel import Selector, SelectorList
 from price_parser import Price
@@ -129,3 +130,55 @@ def simple_price_processor(value: Union[Selector, HtmlElement], page: Any) -> An
     """
     price = extract_price(value)
     return _format_price(price)
+
+
+@only_handle_nodes
+def description_html_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
+    """Convert the data into a cleaned up HTML if possible.
+
+    Uses the clear-html_ library.
+
+    Supported inputs are :class:`~parsel.selector.Selector`,
+    :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
+    Other inputs are returned as is.
+
+    Puts the cleaned HtmlElement object into ``page._description_node``.
+
+    .. _clear-html: https://github.com/zytedata/clear-html
+    """
+    if isinstance(value, Selector):
+        value = value.root
+    if value is None:
+        return None
+    assert isinstance(value, HtmlElement)
+    cleaned_node = clean_node(value, _get_base_url(page))
+    page._description_html = cleaned_node
+    return cleaned_node_to_html(cleaned_node)
+
+
+def description_processor(value: Any, page: Any) -> Any:
+    """Convert the data into a cleaned up text if possible.
+
+    Uses the clear-html_ library.
+
+    Supported inputs are :class:`~parsel.selector.Selector`,
+    :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
+    Other inputs are returned as is.
+
+    Puts the cleaned text into ``page._description_str``.
+
+    .. _clear-html: https://github.com/zytedata/clear-html
+    """
+    value = _handle_selectorlist(value)
+    if isinstance(value, str):
+        page._description_str = value
+        return value
+    if isinstance(value, Selector):
+        value = value.root
+    if value is None:
+        return None
+    assert isinstance(value, HtmlElement)
+    cleaned_node = clean_node(value, _get_base_url(page))
+    cleaned_text = cleaned_node_to_text(cleaned_node)
+    page._description_str = cleaned_text
+    return cleaned_text

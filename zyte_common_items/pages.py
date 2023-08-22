@@ -1,8 +1,11 @@
 from datetime import datetime
 from types import CoroutineType
-from typing import Generic, Optional, Type, TypeVar
+from typing import Generic, Optional, Type, TypeVar, Union
 
 import attrs
+import html_text
+from clear_html import cleaned_node_to_text
+from lxml.html import HtmlElement
 from price_parser import Price
 from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
 from web_poet.fields import FieldsMixin
@@ -35,10 +38,12 @@ from .items import (
 from .processors import (
     brand_processor,
     breadcrumbs_processor,
+    description_html_processor,
+    description_processor,
     price_processor,
     simple_price_processor,
 )
-from .util import format_datetime, metadata_processor
+from .util import format_datetime, metadata_processor, wrap_description_into_html
 
 #: Generic type for metadata classes for specific item types.
 MetadataT = TypeVar("MetadataT")
@@ -89,6 +94,58 @@ class PriceMixin(FieldsMixin):
         parsed_price = await self._get_parsed_price()
         if parsed_price:
             return parsed_price.currency
+        return None
+
+
+class DescriptionMixin(FieldsMixin):
+    """Provides description and descriptionHtml field implementations."""
+
+    _description_html: Union[HtmlElement, str, None] = None
+    _description_str: Optional[str] = None
+
+    _description_default = False
+    _descriptionHtml_default = False
+
+    async def _get_description(self) -> Optional[str]:
+        if self._description_default:
+            return None
+        if self._description_str is None:
+            description = self.description
+            if isinstance(description, CoroutineType):
+                description = await description
+            if self._description_str is None:
+                # the description field doesn't write _description_str
+                self._description_str = description
+        return self._description_str
+
+    async def _get_description_html(self) -> Optional[HtmlElement]:
+        if self._descriptionHtml_default:
+            return None
+        if self._description_html is None:
+            descriptionHtml = self.descriptionHtml
+            if isinstance(descriptionHtml, CoroutineType):
+                descriptionHtml = await descriptionHtml
+            if self._description_html is None:
+                # the descriptionHtml field doesn't write _description_html
+                self._description_html = descriptionHtml
+        return self._description_html
+
+    @field
+    async def description(self) -> Optional[str]:
+        self._description_default = True
+        description_html = await self._get_description_html()
+        if isinstance(description_html, HtmlElement):
+            return cleaned_node_to_text(description_html)
+        if isinstance(description_html, str):
+            return html_text.extract_text(description_html)
+        return None
+
+    @field
+    async def descriptionHtml(self) -> Optional[str]:
+        self._descriptionHtml_default = True
+        description = await self._get_description()
+        if isinstance(description, str):
+            return wrap_description_into_html(description)
         return None
 
 
@@ -171,11 +228,17 @@ class BaseJobPostingPage(
 
 
 class BaseProductPage(
-    BasePage, PriceMixin, Returns[Product], HasMetadata[ProductMetadata]
+    BasePage,
+    DescriptionMixin,
+    PriceMixin,
+    Returns[Product],
+    HasMetadata[ProductMetadata],
 ):
     class Processors(BasePage.Processors):
         brand = [brand_processor]
         breadcrumbs = [breadcrumbs_processor]
+        description = [description_processor]
+        descriptionHtml = [description_html_processor]
         price = [price_processor]
         regularPrice = [simple_price_processor]
 
@@ -238,10 +301,14 @@ class JobPostingPage(Page, Returns[JobPosting], HasMetadata[JobPostingMetadata])
     pass
 
 
-class ProductPage(Page, PriceMixin, Returns[Product], HasMetadata[ProductMetadata]):
+class ProductPage(
+    Page, DescriptionMixin, PriceMixin, Returns[Product], HasMetadata[ProductMetadata]
+):
     class Processors(Page.Processors):
         brand = [brand_processor]
         breadcrumbs = [breadcrumbs_processor]
+        description = [description_processor]
+        descriptionHtml = [description_html_processor]
         price = [price_processor]
         regularPrice = [simple_price_processor]
 
