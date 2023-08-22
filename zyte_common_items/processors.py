@@ -86,11 +86,15 @@ def brand_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
 def price_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
     """Convert the data into a price string if possible.
 
+    Uses the price-parser_ library.
+
     Supported inputs are :class:`~parsel.selector.Selector`,
     :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
     Other inputs are returned as is.
 
     Puts the parsed Price object into ``page._parsed_price``.
+
+    .. _price-parser: https://github.com/scrapinghub/price-parser
     """
     price = extract_price(value)
     page._parsed_price = price
@@ -103,9 +107,13 @@ def price_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
 def simple_price_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
     """Convert the data into a price string if possible.
 
+    Uses the price-parser_ library.
+
     Supported inputs are :class:`~parsel.selector.Selector`,
     :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
     Other inputs are returned as is.
+
+    .. _price-parser: https://github.com/scrapinghub/price-parser
     """
     price = extract_price(value)
     if price.amount is None:
