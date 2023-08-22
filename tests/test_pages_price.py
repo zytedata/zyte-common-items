@@ -67,6 +67,8 @@ async def test_price_explicit():
     assert page.currency is None
     assert await page.currencyRaw is None
     assert page.call_count == 2  # we want this to be 1
+    assert await page.currencyRaw is None
+    assert page.call_count == 2  # we want this to be 1
 
     # access currency fields before the price field
     page = CustomProductPage(response=HttpResponse(url=url, body=html))

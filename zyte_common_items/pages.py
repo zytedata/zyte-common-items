@@ -1,4 +1,5 @@
 from datetime import datetime
+from types import CoroutineType
 from typing import Generic, Optional, Type, TypeVar
 
 import attrs
@@ -6,7 +7,7 @@ from price_parser import Price
 from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
 from web_poet.fields import FieldsMixin
 from web_poet.pages import ItemT
-from web_poet.utils import ensure_awaitable, get_generic_param
+from web_poet.utils import get_generic_param
 
 from .components import (
     ArticleListMetadata,
@@ -68,20 +69,20 @@ class PriceMixin(FieldsMixin):
 
     async def _get_parsed_price(self) -> Optional[Price]:
         if self._parsed_price is None:
-            price_field = getattr(self, "price", object())
-            if price_field is None:
-                # the price field was executed and returned None
-                self._parsed_price = Price(None, None, None)
-                return self._parsed_price
-            # the field wasn't executed yet
-            await ensure_awaitable(price_field)
+            # the price field wasn't executed or doesn't write _parsed_price
+            price = getattr(self, "price", None)
+            if isinstance(price, CoroutineType):
+                price = await price
+            if self._parsed_price is None:
+                # the price field doesn't write _parsed_price (or doesn't exist)
+                self._parsed_price = Price(
+                    amount=None, currency=None, amount_text=price
+                )
         return self._parsed_price
 
     @field
     def currency(self) -> Optional[str]:
-        if hasattr(self, "CURRENCY"):
-            return self.CURRENCY
-        return None
+        return getattr(self, "CURRENCY", None)
 
     @field
     async def currencyRaw(self) -> Optional[str]:
