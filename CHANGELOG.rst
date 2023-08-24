@@ -2,6 +2,22 @@
 Changelog
 =========
 
+0.10.0 (YYYY-MM-DD)
+===================
+
+* Now requires ``price-parser >= 0.3.4`` (a new dependency) and
+  ``zyte-parsers >= 0.3.0`` (a version increase).
+
+* Added :func:`zyte_common_items.processors.price_processor` and enabled
+  it for the ``price`` fields.
+
+* Added :func:`zyte_common_items.processors.simple_price_processor` and enabled
+  it for the ``regularPrice`` fields.
+
+* Added default implementations for the ``currency`` (uses the ``CURRENCY``
+  attribute on the page class) and ``currencyRaw`` (uses the data extracted by
+  the ``price`` field) fields.
+
 0.9.0 (2023-08-03)
 ==================
 
