@@ -26,8 +26,9 @@ setup(
     install_requires=[
         "attrs>=22.1.0",
         "itemadapter>=0.8.0",
+        "price-parser>=0.3.4",
         "web-poet>=0.14.0",
-        "zyte-parsers>=0.2.0",
+        "zyte-parsers>=0.3.0",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",

@@ -116,7 +116,13 @@ async def test_mixin_leak():
     from web_poet.fields import get_fields_dict
 
     assert set(get_fields_dict(MyProductListPage)) == {"metadata", "products", "url"}
-    assert set(get_fields_dict(MyProductPage)) == {"brand", "metadata", "url"}
+    assert set(get_fields_dict(MyProductPage)) == {
+        "brand",
+        "currency",
+        "currencyRaw",
+        "metadata",
+        "url",
+    }
 
 
 @pytest.mark.asyncio

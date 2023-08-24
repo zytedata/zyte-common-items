@@ -1,8 +1,11 @@
 from datetime import datetime
+from types import CoroutineType
 from typing import Generic, Optional, Type, TypeVar
 
 import attrs
+from price_parser import Price
 from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
+from web_poet.fields import FieldsMixin
 from web_poet.pages import ItemT
 from web_poet.utils import get_generic_param
 
@@ -29,7 +32,12 @@ from .items import (
     ProductNavigation,
     RealEstate,
 )
-from .processors import brand_processor, breadcrumbs_processor
+from .processors import (
+    brand_processor,
+    breadcrumbs_processor,
+    price_processor,
+    simple_price_processor,
+)
 from .util import format_datetime, metadata_processor
 
 #: Generic type for metadata classes for specific item types.
@@ -52,6 +60,36 @@ class HasMetadata(Generic[MetadataT]):
 
 def _get_metadata_class(cls: type) -> Optional[Type[MetadataT]]:
     return get_generic_param(cls, HasMetadata)
+
+
+class PriceMixin(FieldsMixin):
+    """Provides price-related field implementations."""
+
+    _parsed_price: Optional[Price] = None
+
+    async def _get_parsed_price(self) -> Optional[Price]:
+        if self._parsed_price is None:
+            # the price field wasn't executed or doesn't write _parsed_price
+            price = getattr(self, "price", None)
+            if isinstance(price, CoroutineType):
+                price = await price
+            if self._parsed_price is None:
+                # the price field doesn't write _parsed_price (or doesn't exist)
+                self._parsed_price = Price(
+                    amount=None, currency=None, amount_text=price
+                )
+        return self._parsed_price
+
+    @field
+    def currency(self) -> Optional[str]:
+        return getattr(self, "CURRENCY", None)
+
+    @field
+    async def currencyRaw(self) -> Optional[str]:
+        parsed_price = await self._get_parsed_price()
+        if parsed_price:
+            return parsed_price.currency
+        return None
 
 
 class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
@@ -132,10 +170,14 @@ class BaseJobPostingPage(
     pass
 
 
-class BaseProductPage(BasePage, Returns[Product], HasMetadata[ProductMetadata]):
+class BaseProductPage(
+    BasePage, PriceMixin, Returns[Product], HasMetadata[ProductMetadata]
+):
     class Processors(BasePage.Processors):
         brand = [brand_processor]
         breadcrumbs = [breadcrumbs_processor]
+        price = [price_processor]
+        regularPrice = [simple_price_processor]
 
 
 class BaseProductListPage(
@@ -196,10 +238,12 @@ class JobPostingPage(Page, Returns[JobPosting], HasMetadata[JobPostingMetadata])
     pass
 
 
-class ProductPage(Page, Returns[Product], HasMetadata[ProductMetadata]):
+class ProductPage(Page, PriceMixin, Returns[Product], HasMetadata[ProductMetadata]):
     class Processors(Page.Processors):
         brand = [brand_processor]
         breadcrumbs = [breadcrumbs_processor]
+        price = [price_processor]
+        regularPrice = [simple_price_processor]
 
 
 class ProductListPage(Page, Returns[ProductList], HasMetadata[ProductListMetadata]):
