@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.10.0 (YYYY-MM-DD)
+0.10.0 (2023-08-24)
 ===================
 
 * Now requires ``price-parser >= 0.3.4`` (a new dependency) and
