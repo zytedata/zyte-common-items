@@ -100,7 +100,7 @@ def price_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
     page._parsed_price = price
     if price.amount is None:
         return None
-    return str(price.amount)
+    return f"{price.amount:.2f}"
 
 
 @only_handle_nodes
@@ -118,4 +118,4 @@ def simple_price_processor(value: Union[Selector, HtmlElement], page: Any) -> An
     price = extract_price(value)
     if price.amount is None:
         return None
-    return str(price.amount)
+    return f"{price.amount:.2f}"
