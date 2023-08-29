@@ -26,7 +26,7 @@ def _handle_selectorlist(value: Any) -> Any:
     return value[0]
 
 
-def _format_price(price: Price) -> str:
+def _format_price(price: Price) -> Optional[str]:
     """Return the price amount as a string, with a minimum of 2 decimal
     places."""
     if price.amount is None:
