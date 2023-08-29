@@ -31,7 +31,10 @@ def _format_price(price: Price) -> str:
     places."""
     if price.amount is None:
         return None
-    return max(f"{price.amount:.2f}", str(price.amount), key=len)
+    *_, exponent = price.amount.as_tuple()
+    if exponent <= -2:
+        return str(price.amount)
+    return f"{price.amount:.2f}"
 
 
 def only_handle_nodes(
