@@ -32,6 +32,8 @@ def _format_price(price: Price) -> Optional[str]:
     if price.amount is None:
         return None
     *_, exponent = price.amount.as_tuple()
+    if not isinstance(exponent, int):
+        return None  # NaN, Infinity, etc.
     if exponent <= -2:
         return str(price.amount)
     return f"{price.amount:.2f}"

@@ -162,6 +162,8 @@ def test_brand_page():
     "input_value,expected_value",
     [
         ("", None),
+        ("NaN", None),
+        ("Infinity", None),
         ("1", "1.00"),
         ("1.2", "1.20"),
         ("1.23", "1.23"),
