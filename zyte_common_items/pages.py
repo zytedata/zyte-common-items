@@ -1,5 +1,4 @@
 from datetime import datetime
-from types import CoroutineType
 from typing import Generic, Optional, Type, TypeVar, Union
 
 import attrs
@@ -10,7 +9,7 @@ from price_parser import Price
 from web_poet import ItemPage, RequestUrl, Returns, WebPage, field
 from web_poet.fields import FieldsMixin
 from web_poet.pages import ItemT
-from web_poet.utils import get_generic_param
+from web_poet.utils import ensure_awaitable, get_generic_param
 
 from .components import (
     ArticleListMetadata,
@@ -76,8 +75,7 @@ class PriceMixin(FieldsMixin):
         if self._parsed_price is None:
             # the price field wasn't executed or doesn't write _parsed_price
             price = getattr(self, "price", None)
-            if isinstance(price, CoroutineType):
-                price = await price
+            price = await ensure_awaitable(price)
             if self._parsed_price is None:
                 # the price field doesn't write _parsed_price (or doesn't exist)
                 self._parsed_price = Price(
@@ -110,9 +108,7 @@ class DescriptionMixin(FieldsMixin):
         if self._description_default:
             return None
         if self._description_str is None:
-            description = self.description
-            if isinstance(description, CoroutineType):
-                description = await description
+            description = await ensure_awaitable(self.description)
             if self._description_str is None:
                 # the description field doesn't write _description_str
                 self._description_str = description
@@ -122,9 +118,7 @@ class DescriptionMixin(FieldsMixin):
         if self._descriptionHtml_default:
             return None
         if self._description_html is None:
-            descriptionHtml = self.descriptionHtml
-            if isinstance(descriptionHtml, CoroutineType):
-                descriptionHtml = await descriptionHtml
+            descriptionHtml = await ensure_awaitable(self.descriptionHtml)
             if self._description_html is None:
                 # the descriptionHtml field doesn't write _description_html
                 self._description_html = descriptionHtml
