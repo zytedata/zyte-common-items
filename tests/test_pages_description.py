@@ -7,7 +7,7 @@ HTML = b"""
 <!DOCTYPE html>
 <html>
     <body>
-        <article><p>text</p><p>text2</p></article>
+        <article><div>text</div><p style="color:blue">text2</p></article>
     </body>
 </html>
 """
@@ -67,7 +67,10 @@ async def test_descriptionHtml_explicit():
     url = "https://example.com"
     page = CustomProductPage(response=HttpResponse(url=url, body=HTML))
     assert page.call_count == 0
-    assert page.descriptionHtml == "<article><p>text</p><p>text2</p></article>"
+    assert (
+        page.descriptionHtml
+        == '<article><div>text</div><p style="color:blue">text2</p></article>'
+    )
     assert page.call_count == 1
     assert await page.description == TEXT_CLEANED
     assert page.call_count == 2  # we want this to be 1
@@ -78,7 +81,10 @@ async def test_descriptionHtml_explicit():
     assert page.call_count == 0
     assert await page.description == TEXT_CLEANED
     assert page.call_count == 1
-    assert page.descriptionHtml == "<article><p>text</p><p>text2</p></article>"
+    assert (
+        page.descriptionHtml
+        == '<article><div>text</div><p style="color:blue">text2</p></article>'
+    )
     assert page.call_count == 2  # we want this to be 1
 
 
