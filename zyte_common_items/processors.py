@@ -4,6 +4,7 @@ from typing import Any, Callable, List, Optional, Union
 
 from lxml.html import HtmlElement
 from parsel import Selector, SelectorList
+from price_parser import Price
 from web_poet.mixins import ResponseShortcutsMixin
 from zyte_parsers import Breadcrumb as zp_Breadcrumb
 from zyte_parsers import extract_brand_name, extract_breadcrumbs, extract_price
@@ -23,6 +24,19 @@ def _handle_selectorlist(value: Any) -> Any:
     if len(value) == 0:
         return None
     return value[0]
+
+
+def _format_price(price: Price) -> Optional[str]:
+    """Return the price amount as a string, with a minimum of 2 decimal
+    places."""
+    if price.amount is None:
+        return None
+    *_, exponent = price.amount.as_tuple()
+    if not isinstance(exponent, int):
+        return None  # NaN, Infinity, etc.
+    if exponent <= -2:
+        return str(price.amount)
+    return f"{price.amount:.2f}"
 
 
 def only_handle_nodes(
@@ -98,9 +112,7 @@ def price_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
     """
     price = extract_price(value)
     page._parsed_price = price
-    if price.amount is None:
-        return None
-    return str(price.amount)
+    return _format_price(price)
 
 
 @only_handle_nodes
@@ -116,6 +128,4 @@ def simple_price_processor(value: Union[Selector, HtmlElement], page: Any) -> An
     .. _price-parser: https://github.com/scrapinghub/price-parser
     """
     price = extract_price(value)
-    if price.amount is None:
-        return None
-    return str(price.amount)
+    return _format_price(price)

@@ -25,7 +25,7 @@ async def test_price_selector():
     url = "https://example.com"
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.call_count == 0
-    assert page.price == "13.2"
+    assert page.price == "13.20"
     assert page.call_count == 1
     assert page.currency is None
     assert await page.currencyRaw == "$"
@@ -37,7 +37,7 @@ async def test_price_selector():
     assert page.currency is None
     assert await page.currencyRaw == "$"
     assert page.call_count == 1
-    assert page.price == "13.2"
+    assert page.price == "13.20"
     assert page.call_count == 2  # we want this to be 1
 
 
@@ -97,7 +97,7 @@ async def test_price_async():
     """
     url = "https://example.com"
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
-    assert await page.price == "13.2"
+    assert await page.price == "13.20"
     assert page.currency is None
     assert await page.currencyRaw == "$"
 
@@ -105,7 +105,7 @@ async def test_price_async():
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.currency is None
     assert await page.currencyRaw == "$"
-    assert await page.price == "13.2"
+    assert await page.price == "13.20"
 
 
 @pytest.mark.asyncio
@@ -127,7 +127,7 @@ async def test_currency_hardcoded():
     """
     url = "https://example.com"
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
-    assert page.price == "13.2"
+    assert page.price == "13.20"
     assert page.currency == "USD"
     assert await page.currencyRaw == "$"
 
@@ -135,7 +135,7 @@ async def test_currency_hardcoded():
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.currency == "USD"
     assert await page.currencyRaw == "$"
-    assert page.price == "13.2"
+    assert page.price == "13.20"
 
 
 @pytest.mark.asyncio
@@ -212,8 +212,8 @@ async def test_regularPrice():
     """
     url = "https://example.com"
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
-    assert page.regularPrice == "13.2"
-    assert page.price == "10.2"
+    assert page.regularPrice == "13.20"
+    assert page.price == "10.20"
     assert page.currency == "USD"
     assert await page.currencyRaw == "$"
 
@@ -221,8 +221,8 @@ async def test_regularPrice():
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.currency == "USD"
     assert await page.currencyRaw == "$"
-    assert page.price == "10.2"
-    assert page.regularPrice == "13.2"
+    assert page.price == "10.20"
+    assert page.regularPrice == "13.20"
 
 
 @pytest.mark.asyncio
@@ -275,7 +275,7 @@ def test_currencyRaw_explicit():
     """
     url = "https://example.com"
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
-    assert page.price == "13.2"
+    assert page.price == "13.20"
     assert page.currency is None
     assert page.currencyRaw == "US$"
 
@@ -283,4 +283,4 @@ def test_currencyRaw_explicit():
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.currency is None
     assert page.currencyRaw == "US$"
-    assert page.price == "13.2"
+    assert page.price == "13.20"

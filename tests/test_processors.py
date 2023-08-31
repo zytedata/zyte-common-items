@@ -1,12 +1,17 @@
 import pytest
 from lxml.html import fromstring
 from parsel import Selector, SelectorList
+from price_parser import Price
 from web_poet import HttpResponse, field
 from zyte_parsers import Breadcrumb as zp_Breadcrumb
 from zyte_parsers import extract_breadcrumbs
 
 from zyte_common_items import BasePage, Breadcrumb, ProductPage
-from zyte_common_items.processors import brand_processor, breadcrumbs_processor
+from zyte_common_items.processors import (
+    _format_price,
+    brand_processor,
+    breadcrumbs_processor,
+)
 
 breadcrumbs_html = """
 <div class="pagesbar">
@@ -151,3 +156,21 @@ def test_brand_page():
     )
     page = MyProductPage(response=response)
     assert page.brand == "foo"
+
+
+@pytest.mark.parametrize(
+    "input_value,expected_value",
+    [
+        ("", None),
+        ("NaN", None),
+        ("Infinity", None),
+        ("1", "1.00"),
+        ("1.2", "1.20"),
+        ("1.23", "1.23"),
+        # Fails due to . being considered a thousands separator in this case.
+        # ("1.234", "1.234"),
+        ("1.2345", "1.2345"),
+    ],
+)
+def test_format_price(input_value, expected_value):
+    assert _format_price(Price.fromstring(input_value)) == expected_value
