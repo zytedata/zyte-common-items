@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Generic, Optional, Type, TypeVar, Union
+from typing import Any, Generic, Optional, Type, TypeVar
 
 import attrs
 import html_text
@@ -98,8 +98,10 @@ class PriceMixin(FieldsMixin):
 class DescriptionMixin(FieldsMixin):
     """Provides description and descriptionHtml field implementations."""
 
-    _description_html: Union[HtmlElement, str, None] = None
-    _description_str: Optional[str] = None
+    UNSET = object()
+
+    _description_html: Any = UNSET
+    _description_str: Any = UNSET
 
     _description_default = False
     _descriptionHtml_default = False
@@ -107,9 +109,9 @@ class DescriptionMixin(FieldsMixin):
     async def _get_description(self) -> Optional[str]:
         if self._description_default:
             return None
-        if self._description_str is None:
+        if self._description_str == self.UNSET:
             description = await ensure_awaitable(self.description)
-            if self._description_str is None:
+            if self._description_str == self.UNSET:
                 # the description field doesn't write _description_str
                 self._description_str = description
         return self._description_str
@@ -117,9 +119,9 @@ class DescriptionMixin(FieldsMixin):
     async def _get_description_html(self) -> Optional[HtmlElement]:
         if self._descriptionHtml_default:
             return None
-        if self._description_html is None:
+        if self._description_html == self.UNSET:
             descriptionHtml = await ensure_awaitable(self.descriptionHtml)
-            if self._description_html is None:
+            if self._description_html == self.UNSET:
                 # the descriptionHtml field doesn't write _description_html
                 self._description_html = descriptionHtml
         return self._description_html
