@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Generic, Optional, Type, TypeVar
+from typing import Any, Generic, Optional, Type, TypeVar, Union
 
 import attrs
 import html_text
@@ -100,7 +100,8 @@ class DescriptionMixin(FieldsMixin):
 
     UNSET = object()
 
-    _description_html: Any = UNSET
+    _descriptionHtml_node: Any = UNSET
+    _description_node: Any = UNSET
     _description_str: Any = UNSET
 
     _description_default = False
@@ -119,12 +120,12 @@ class DescriptionMixin(FieldsMixin):
     async def _get_description_html(self) -> Optional[HtmlElement]:
         if self._descriptionHtml_default:
             return None
-        if self._description_html == self.UNSET:
+        if self._descriptionHtml_node == self.UNSET:
             descriptionHtml = await ensure_awaitable(self.descriptionHtml)
-            if self._description_html == self.UNSET:
-                # the descriptionHtml field doesn't write _description_html
-                self._description_html = descriptionHtml
-        return self._description_html
+            if self._descriptionHtml_node == self.UNSET:
+                # the descriptionHtml field doesn't write _descriptionHtml_node
+                self._descriptionHtml_node = descriptionHtml
+        return self._descriptionHtml_node
 
     @field
     async def description(self) -> Optional[str]:
@@ -137,9 +138,12 @@ class DescriptionMixin(FieldsMixin):
         return None
 
     @field
-    async def descriptionHtml(self) -> Optional[str]:
+    async def descriptionHtml(self) -> Union[HtmlElement, str, None]:
         self._descriptionHtml_default = True
         description = await self._get_description()
+        if self._description_node not in {self.UNSET, None}:
+            # we can use the element provided by the description field
+            return self._description_node
         if isinstance(description, str):
             return wrap_description_into_html(description)
         return None

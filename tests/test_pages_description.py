@@ -7,10 +7,11 @@ HTML = b"""
 <!DOCTYPE html>
 <html>
     <body>
-        <article><div>text</div><p style="color:blue">text2</p></article>
+        <article><div>text</div><p style="color:blue">text2</p><div class="twitter-tweet">tw</div></article>
     </body>
 </html>
 """
+
 
 DESCR_HTML_CLEANED = """<article>
 
@@ -18,10 +19,23 @@ DESCR_HTML_CLEANED = """<article>
 
 <p>text2</p>
 
+<div class="twitter-tweet">tw</div>
+
 </article>"""
 
 
-TEXT_CLEANED = "text\n\ntext2"
+TEXT_CLEANED = "text\n\ntext2\n\ntw"
+
+
+DESCR_HTML_WRAPPED = """<article>
+
+<p>text</p>
+
+<p>text2</p>
+
+<p>tw</p>
+
+</article>"""
 
 
 @pytest.mark.asyncio
@@ -64,13 +78,12 @@ async def test_descriptionHtml_explicit():
             self.call_count += 1
             return self.css("article").get()
 
+    html = '<article><div>text</div><p style="color:blue">text2</p><div class="twitter-tweet">tw</div></article>'
+
     url = "https://example.com"
     page = CustomProductPage(response=HttpResponse(url=url, body=HTML))
     assert page.call_count == 0
-    assert (
-        page.descriptionHtml
-        == '<article><div>text</div><p style="color:blue">text2</p></article>'
-    )
+    assert page.descriptionHtml == html
     assert page.call_count == 1
     assert await page.description == TEXT_CLEANED
     assert page.call_count == 2  # we want this to be 1
@@ -81,10 +94,7 @@ async def test_descriptionHtml_explicit():
     assert page.call_count == 0
     assert await page.description == TEXT_CLEANED
     assert page.call_count == 1
-    assert (
-        page.descriptionHtml
-        == '<article><div>text</div><p style="color:blue">text2</p></article>'
-    )
+    assert page.descriptionHtml == html
     assert page.call_count == 2  # we want this to be 1
 
 
@@ -150,14 +160,14 @@ async def test_description_explicit():
     assert page.call_count == 0
     assert page.description == TEXT_CLEANED
     assert page.call_count == 1
-    assert await page.descriptionHtml == DESCR_HTML_CLEANED
+    assert await page.descriptionHtml == DESCR_HTML_WRAPPED
     assert page.call_count == 1
-    assert await page.descriptionHtml == DESCR_HTML_CLEANED
+    assert await page.descriptionHtml == DESCR_HTML_WRAPPED
     assert page.call_count == 1
 
     page = CustomProductPage(response=HttpResponse(url=url, body=HTML))
     assert page.call_count == 0
-    assert await page.descriptionHtml == DESCR_HTML_CLEANED
+    assert await page.descriptionHtml == DESCR_HTML_WRAPPED
     assert page.call_count == 1
     assert page.description == TEXT_CLEANED
     assert page.call_count == 2  # we want this to be 1

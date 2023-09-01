@@ -142,7 +142,7 @@ def description_html_processor(value: Union[Selector, HtmlElement], page: Any) -
     :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
     Other inputs are returned as is.
 
-    Puts the cleaned HtmlElement object into ``page._description_node``.
+    Puts the cleaned HtmlElement object into ``page._descriptionHtml_node``.
 
     .. _clear-html: https://github.com/zytedata/clear-html
     """
@@ -152,7 +152,7 @@ def description_html_processor(value: Union[Selector, HtmlElement], page: Any) -
         return None
     assert isinstance(value, HtmlElement)
     cleaned_node = clean_node(value, _get_base_url(page))
-    page._description_html = cleaned_node
+    page._descriptionHtml_node = cleaned_node
     return cleaned_node_to_html(cleaned_node)
 
 
@@ -165,7 +165,8 @@ def description_processor(value: Any, page: Any) -> Any:
     :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
     Other inputs are returned as is.
 
-    Puts the cleaned text into ``page._description_str``.
+    Puts the cleaned HtmlElement object into ``page._description_node`` and the
+    cleaned text into ``page._description_str``.
 
     .. _clear-html: https://github.com/zytedata/clear-html
     """
@@ -180,5 +181,6 @@ def description_processor(value: Any, page: Any) -> Any:
     assert isinstance(value, HtmlElement)
     cleaned_node = clean_node(value, _get_base_url(page))
     cleaned_text = cleaned_node_to_text(cleaned_node)
+    page._description_node = cleaned_node
     page._description_str = cleaned_text
     return cleaned_text
