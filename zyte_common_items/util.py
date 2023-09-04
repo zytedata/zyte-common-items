@@ -100,21 +100,3 @@ class MetadataCaster:
 
     def __call__(self, value):
         return cast_metadata(value, self._target)
-
-
-def wrap_description_into_html(description: str) -> str:
-    r"""Convert plain text into an article HTML.
-
-    The format tries to match clear_html.cleaned_node_to_html().
-
-    >>> wrap_description_into_html('')
-    '<article>\n\n</article>'
-    >>> wrap_description_into_html('foo')
-    '<article>\n\n<p>foo</p>\n\n</article>'
-    >>> wrap_description_into_html('foo\nbar')
-    '<article>\n\n<p>foo</p>\n\n<p>bar</p>\n\n</article>'
-    >>> wrap_description_into_html('foo\n\nbar')
-    '<article>\n\n<p>foo</p>\n\n<p>bar</p>\n\n</article>'
-    """
-    paras_wrapped = [f"\n<p>{para}</p>\n" for para in description.split("\n") if para]
-    return f"<article>\n{''.join(paras_wrapped)}\n</article>"

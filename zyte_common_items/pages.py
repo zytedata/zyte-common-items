@@ -41,8 +41,9 @@ from .processors import (
     description_processor,
     price_processor,
     simple_price_processor,
+    wrap_description_into_html,
 )
-from .util import format_datetime, metadata_processor, wrap_description_into_html
+from .util import format_datetime, metadata_processor
 
 #: Generic type for metadata classes for specific item types.
 MetadataT = TypeVar("MetadataT")
