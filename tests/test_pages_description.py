@@ -7,7 +7,7 @@ HTML = b"""
 <!DOCTYPE html>
 <html>
     <body>
-        <article><div>text</div><p style="color:blue">text2&gt;</p><div class="twitter-tweet">tw</div></article>
+        <article><div>\xe2\x82\xact&eacute;xt</div><p style="color:blue">text2&gt;</p><div class="twitter-tweet">tw</div></article>
     </body>
 </html>
 """
@@ -15,7 +15,7 @@ HTML = b"""
 
 DESCR_HTML_CLEANED = """<article>
 
-<p>text</p>
+<p>€téxt</p>
 
 <p>text2&gt;</p>
 
@@ -24,12 +24,12 @@ DESCR_HTML_CLEANED = """<article>
 </article>"""
 
 
-TEXT_CLEANED = "text\n\ntext2>\n\ntw"
+TEXT_CLEANED = "€téxt\n\ntext2>\n\ntw"
 
 
 DESCR_HTML_WRAPPED = """<article>
 
-<p>text</p>
+<p>€téxt</p>
 
 <p>text2&gt;</p>
 
@@ -78,7 +78,7 @@ async def test_descriptionHtml_explicit():
             self.call_count += 1
             return self.css("article").get()
 
-    html = '<article><div>text</div><p style="color:blue">text2&gt;</p><div class="twitter-tweet">tw</div></article>'
+    html = '<article><div>€téxt</div><p style="color:blue">text2&gt;</p><div class="twitter-tweet">tw</div></article>'
 
     url = "https://example.com"
     page = CustomProductPage(response=HttpResponse(url=url, body=HTML))

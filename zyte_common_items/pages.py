@@ -1,3 +1,4 @@
+import html
 from datetime import datetime
 from typing import Any, Generic, Optional, Type, TypeVar, Union
 
@@ -41,7 +42,6 @@ from .processors import (
     description_processor,
     price_processor,
     simple_price_processor,
-    wrap_description_into_html,
 )
 from .util import format_datetime, metadata_processor
 
@@ -108,6 +108,38 @@ class DescriptionMixin(FieldsMixin):
     _description_default = False
     _descriptionHtml_default = False
 
+    @staticmethod
+    def wrap_description_into_html(description: str) -> str:
+        r"""Convert plain text into an article HTML.
+
+        The format tries to match clear_html.cleaned_node_to_html().
+
+        >>> DescriptionMixin.wrap_description_into_html('')
+        '<article>\n\n</article>'
+        >>> DescriptionMixin.wrap_description_into_html('foo')
+        '<article>\n\n<p>foo</p>\n\n</article>'
+        >>> DescriptionMixin.wrap_description_into_html('foo\nbar')
+        '<article>\n\n<p>foo</p>\n\n<p>bar</p>\n\n</article>'
+        >>> DescriptionMixin.wrap_description_into_html('foo\n\nbar')
+        '<article>\n\n<p>foo</p>\n\n<p>bar</p>\n\n</article>'
+        >>> DescriptionMixin.wrap_description_into_html('\nfoo\n\nbar\n')
+        '<article>\n\n<p>foo</p>\n\n<p>bar</p>\n\n</article>'
+        >>> DescriptionMixin.wrap_description_into_html('foo\nbar\n\nbaz\n')
+        '<article>\n\n<p>foo</p>\n\n<p>bar</p>\n\n<p>baz</p>\n\n</article>'
+        >>> DescriptionMixin.wrap_description_into_html('2>1')
+        '<article>\n\n<p>2&gt;1</p>\n\n</article>'
+        >>> DescriptionMixin.wrap_description_into_html('<p>')
+        '<article>\n\n<p>&lt;p&gt;</p>\n\n</article>'
+        >>> DescriptionMixin.wrap_description_into_html('&lt;p&gt;')
+        '<article>\n\n<p>&amp;lt;p&amp;gt;</p>\n\n</article>'
+        """
+        paras_wrapped = [
+            f"\n<p>{html.escape(para)}</p>\n"
+            for para in description.split("\n")
+            if para
+        ]
+        return f"<article>\n{''.join(paras_wrapped)}\n</article>"
+
     async def _get_description(self) -> Optional[str]:
         if self._description_default:
             return None
@@ -146,7 +178,7 @@ class DescriptionMixin(FieldsMixin):
             # we can use the element provided by the description field
             return self._description_node
         if isinstance(description, str):
-            return wrap_description_into_html(description)
+            return self.wrap_description_into_html(description)
         return None
 
 
