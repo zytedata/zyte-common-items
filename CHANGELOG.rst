@@ -2,6 +2,25 @@
 Changelog
 =========
 
+0.10.1 (YYYY-MM-DD)
+===================
+
+* Now requires ``clear-html >= 0.4.0``.
+
+* Added :func:`zyte_common_items.processors.description_processor` and enabled
+  it for the ``description`` fields.
+
+* Added :func:`zyte_common_items.processors.description_html_processor` and
+  enabled it for the ``descriptionHtml`` fields.
+
+* Added default implementations for the ``description`` and ``descriptionHtml``
+  fields (if one of these is user-defined, another one will use it).
+
+* :func:`~zyte_common_items.processors.price_processor` and
+  :func:`~zyte_common_items.processors.simple_price_processor` now keep at
+  least two decimal places when formatting the result.
+
+
 0.10.0 (2023-08-24)
 ===================
 
