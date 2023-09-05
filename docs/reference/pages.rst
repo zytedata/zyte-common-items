@@ -13,6 +13,20 @@ Product
 .. autoclass:: zyte_common_items.ProductPage(**kwargs)
    :show-inheritance:
 
+.. autoclass:: zyte_common_items.pages.DescriptionMixin
+
+   .. data:: description
+      :type: str
+
+      Plain-text description. The default implementation makes it from the
+      ``descriptionHtml`` field if that is user-defined.
+
+   .. data:: descriptionHtml
+      :type: str
+
+      HTML description. The default implementation makes it from the
+      ``description`` field if that is user-defined.
+
 .. autoclass:: zyte_common_items.pages.PriceMixin
 
    .. data:: currency

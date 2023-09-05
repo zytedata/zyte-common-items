@@ -19,8 +19,12 @@ They provide the following base line:
     :attr:`~zyte_common_items.Page.url` fields.
 
 -   They also provide a default implementation for some item-specific fields in
-    pages that have those: :attr:`~zyte_common_items.pages.PriceMixin.currency` and
-    :attr:`~zyte_common_items.pages.PriceMixin.currencyRaw`.
+    pages that have those:
+
+    - :attr:`~zyte_common_items.pages.PriceMixin.currency`
+    - :attr:`~zyte_common_items.pages.PriceMixin.currencyRaw`
+    - :attr:`~zyte_common_items.pages.DescriptionMixin.description`
+    - :attr:`~zyte_common_items.pages.DescriptionMixin.descriptionHtml`
 
 The following code shows a :class:`~zyte_common_items.ProductPage` subclass
 whose ``to_item`` method returns an instance of
@@ -53,6 +57,14 @@ All ``brand`` fields have the following processor enabled:
 All ``breadcrumbs`` fields have the following processor enabled:
 
 .. autofunction:: zyte_common_items.processors.breadcrumbs_processor
+
+All ``description`` fields have the following processor enabled:
+
+.. autofunction:: zyte_common_items.processors.description_processor
+
+All ``descriptionHtml`` fields have the following processor enabled:
+
+.. autofunction:: zyte_common_items.processors.description_html_processor
 
 All ``price`` fields have the following processor enabled:
 

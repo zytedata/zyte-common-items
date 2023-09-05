@@ -120,6 +120,8 @@ async def test_mixin_leak():
         "brand",
         "currency",
         "currencyRaw",
+        "description",
+        "descriptionHtml",
         "metadata",
         "url",
     }
