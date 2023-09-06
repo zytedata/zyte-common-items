@@ -251,13 +251,16 @@ class BaseArticleNavigationPage(
 class BaseBusinessPlacePage(
     BasePage, Returns[BusinessPlace], HasMetadata[BusinessPlaceMetadata]
 ):
-    pass
+    class Processors(BasePage.Processors):
+        description = [description_processor]
 
 
 class BaseJobPostingPage(
-    BasePage, Returns[JobPosting], HasMetadata[JobPostingMetadata]
+    BasePage, DescriptionMixin, Returns[JobPosting], HasMetadata[JobPostingMetadata]
 ):
-    pass
+    class Processors(BasePage.Processors):
+        description = [description_processor]
+        descriptionHtml = [description_html_processor]
 
 
 class BaseProductPage(
@@ -296,6 +299,7 @@ class BaseRealEstatePage(
 ):
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
+        description = [description_processor]
 
 
 @attrs.define
@@ -327,11 +331,16 @@ class ArticleNavigationPage(
 class BusinessPlacePage(
     Page, Returns[BusinessPlace], HasMetadata[BusinessPlaceMetadata]
 ):
-    pass
+    class Processors(Page.Processors):
+        description = [description_processor]
 
 
-class JobPostingPage(Page, Returns[JobPosting], HasMetadata[JobPostingMetadata]):
-    pass
+class JobPostingPage(
+    Page, DescriptionMixin, Returns[JobPosting], HasMetadata[JobPostingMetadata]
+):
+    class Processors(Page.Processors):
+        description = [description_processor]
+        descriptionHtml = [description_html_processor]
 
 
 class ProductPage(
@@ -360,3 +369,4 @@ class ProductNavigationPage(
 class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata]):
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
+        description = [description_processor]
