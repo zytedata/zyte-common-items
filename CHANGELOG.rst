@@ -2,13 +2,13 @@
 Changelog
 =========
 
-0.10.1 (YYYY-MM-DD)
+0.11.0 (YYYY-MM-DD)
 ===================
 
 * Now requires ``clear-html >= 0.4.0``.
 
 * Added :func:`zyte_common_items.processors.description_processor` and enabled
-  it for the ``description`` fields.
+  it for the ``description`` fields (except ``Article.description``).
 
 * Added :func:`zyte_common_items.processors.description_html_processor` and
   enabled it for the ``descriptionHtml`` fields.
