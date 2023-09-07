@@ -13,8 +13,9 @@ Changelog
 * Added :func:`zyte_common_items.processors.description_html_processor` and
   enabled it for the ``descriptionHtml`` fields.
 
-* Added default implementations for the ``description`` and ``descriptionHtml``
-  fields (if one of these is user-defined, another one will use it).
+* Added default implementations for the ``description`` (except
+  ``Article.description``) and ``descriptionHtml`` fields (if one of these is
+  user-defined, another one will use it).
 
 * :func:`~zyte_common_items.processors.price_processor` and
   :func:`~zyte_common_items.processors.simple_price_processor` now keep at
