@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.11.0 (YYYY-MM-DD)
+0.11.0 (2023-09-08)
 ===================
 
 * Now requires ``clear-html >= 0.4.0``.
