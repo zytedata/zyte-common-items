@@ -1,7 +1,12 @@
 import pytest
 from web_poet import HttpResponse, field
 
-from zyte_common_items import ProductPage
+from zyte_common_items import (
+    BusinessPlacePage,
+    JobPostingPage,
+    ProductPage,
+    RealEstatePage,
+)
 
 HTML = b"""
 <!DOCTYPE html>
@@ -184,3 +189,35 @@ async def test_none():
     page = CustomProductPage(response=HttpResponse(url=url, body=HTML))
     assert await page.description is None
     assert await page.descriptionHtml is None
+
+
+@pytest.mark.asyncio
+async def test_job_posting_mixin():
+    class CustomPage(JobPostingPage):
+        @field
+        def descriptionHtml(self):
+            return self.css("article")
+
+    url = "https://example.com"
+    page = CustomPage(response=HttpResponse(url=url, body=HTML))
+    assert page.descriptionHtml == DESCR_HTML_CLEANED
+    assert await page.description == TEXT_CLEANED
+
+
+@pytest.mark.parametrize(
+    "page_class",
+    (
+        BusinessPlacePage,
+        JobPostingPage,
+        RealEstatePage,
+    ),
+)
+def test_description_simple(page_class: type):
+    class CustomPage(page_class):
+        @field
+        def description(self):
+            return self.css("article")
+
+    url = "https://example.com"
+    page = CustomPage(response=HttpResponse(url=url, body=HTML))
+    assert page.description == TEXT_CLEANED

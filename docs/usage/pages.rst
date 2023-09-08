@@ -19,7 +19,8 @@ They provide the following base line:
     :attr:`~zyte_common_items.Page.url` fields.
 
 -   They also provide a default implementation for some item-specific fields in
-    pages that have those:
+    pages that have those (except ``Article.description`` which has different
+    requirements):
 
     - :attr:`~zyte_common_items.pages.PriceMixin.currency`
     - :attr:`~zyte_common_items.pages.PriceMixin.currencyRaw`
@@ -58,7 +59,8 @@ All ``breadcrumbs`` fields have the following processor enabled:
 
 .. autofunction:: zyte_common_items.processors.breadcrumbs_processor
 
-All ``description`` fields have the following processor enabled:
+All ``description`` fields except in pages for
+:class:`~zyte_common_items.Article` have the following processor enabled:
 
 .. autofunction:: zyte_common_items.processors.description_processor
 
