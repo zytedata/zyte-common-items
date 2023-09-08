@@ -8,14 +8,23 @@ Changelog
 * Now requires ``clear-html >= 0.4.0``.
 
 * Added :func:`zyte_common_items.processors.description_processor` and enabled
-  it for the ``description`` fields (except ``Article.description``).
+  it for the ``description`` fields in the page classes for
+  :class:`~zyte_common_items.BusinessPlace`,
+  :class:`~zyte_common_items.JobPosting`, :class:`~zyte_common_items.Product`
+  and :class:`~zyte_common_items.RealEstate`.
 
 * Added :func:`zyte_common_items.processors.description_html_processor` and
-  enabled it for the ``descriptionHtml`` fields.
+  enabled it for the ``descriptionHtml`` fields in the page classes for
+  :class:`~zyte_common_items.JobPosting` and
+  :class:`~zyte_common_items.Product`.
 
-* Added default implementations for the ``description`` (except
-  ``Article.description``) and ``descriptionHtml`` fields (if one of these is
-  user-defined, another one will use it).
+* Added default implementations for the ``description`` (in the page classes
+  for :class:`~zyte_common_items.BusinessPlace`,
+  :class:`~zyte_common_items.JobPosting`, :class:`~zyte_common_items.Product`
+  and :class:`~zyte_common_items.RealEstate`) and ``descriptionHtml`` (in the
+  page classes for :class:`~zyte_common_items.JobPosting` and
+  :class:`~zyte_common_items.Product`) fields: if one of these fields is
+  user-defined, another one will use it.
 
 * :func:`~zyte_common_items.processors.price_processor` and
   :func:`~zyte_common_items.processors.simple_price_processor` now keep at

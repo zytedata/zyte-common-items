@@ -19,8 +19,8 @@ They provide the following base line:
     :attr:`~zyte_common_items.Page.url` fields.
 
 -   They also provide a default implementation for some item-specific fields in
-    pages that have those (except ``Article.description`` which has different
-    requirements):
+    pages that have those (except for ``description`` in the pages for
+    :class:`~zyte_common_items.Article` which has different requirements):
 
     - :attr:`~zyte_common_items.pages.PriceMixin.currency`
     - :attr:`~zyte_common_items.pages.PriceMixin.currencyRaw`
