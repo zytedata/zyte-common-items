@@ -725,7 +725,7 @@ def test_metadata():
         obj_name[:-4]
         for obj_name in zyte_common_items.__dict__
         if (
-            not obj_name.startswith("Base")
+            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )

@@ -1,6 +1,6 @@
 import html
 from datetime import datetime
-from typing import Any, Generic, Optional, Type, TypeVar, Union
+from typing import Any, Generic, List, Optional, Type, TypeVar, Union
 
 import attrs
 import html_text
@@ -13,10 +13,16 @@ from web_poet.pages import ItemT
 from web_poet.utils import ensure_awaitable, get_generic_param
 
 from .components import (
+    AdditionalProperty,
+    AggregateRating,
     ArticleListMetadata,
     ArticleMetadata,
     ArticleNavigationMetadata,
+    Brand,
+    Breadcrumb,
     BusinessPlaceMetadata,
+    Gtin,
+    Image,
     JobPostingMetadata,
     ProductListMetadata,
     ProductMetadata,
@@ -33,6 +39,7 @@ from .items import (
     Product,
     ProductList,
     ProductNavigation,
+    ProductVariant,
     RealEstate,
 )
 from .processors import (
@@ -370,3 +377,126 @@ class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata])
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
+
+
+@attrs.define
+class AutoProductPage(
+    _BasePage,
+    DescriptionMixin,
+    PriceMixin,
+    Returns[Product],
+    HasMetadata[ProductMetadata],
+):
+    product: Product
+
+    class Processors(_BasePage.Processors):
+        brand = [brand_processor]
+        breadcrumbs = [breadcrumbs_processor]
+        description = [description_processor]
+        descriptionHtml = [description_html_processor]
+        price = [price_processor]
+        regularPrice = [simple_price_processor]
+
+    @field
+    async def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
+        return self.product.additionalProperties
+
+    @field
+    async def aggregateRating(self) -> Optional[AggregateRating]:
+        return self.product.aggregateRating
+
+    @field
+    async def availability(self) -> Optional[str]:
+        return self.product.availability
+
+    @field
+    async def brand(self) -> Optional[Brand]:
+        return self.product.brand
+
+    @field
+    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+        return self.product.breadcrumbs
+
+    @field
+    async def canonicalUrl(self) -> Optional[str]:
+        return self.product.canonicalUrl
+
+    @field
+    async def color(self) -> Optional[str]:
+        return self.product.color
+
+    @field
+    async def currency(self) -> Optional[str]:
+        return self.product.currency
+
+    @field
+    async def currencyRaw(self) -> Optional[str]:
+        return self.product.currencyRaw
+
+    @field
+    async def description(self) -> Optional[str]:
+        return self.product.description
+
+    @field
+    async def descriptionHtml(self) -> Optional[str]:
+        return self.product.descriptionHtml
+
+    @field
+    async def features(self) -> Optional[List[str]]:
+        return self.product.features
+
+    @field
+    async def gtin(self) -> Optional[List[Gtin]]:
+        return self.product.gtin
+
+    @field
+    async def images(self) -> Optional[List[Image]]:
+        return self.product.images
+
+    @field
+    async def mainImage(self) -> Optional[Image]:
+        return self.product.mainImage
+
+    @field
+    async def metadata(self) -> Optional[ProductMetadata]:
+        return self.product.metadata
+
+    @field
+    async def mpn(self) -> Optional[str]:
+        return self.product.mpn
+
+    @field
+    async def name(self) -> Optional[str]:
+        return self.product.name
+
+    @field
+    async def price(self) -> Optional[str]:
+        return self.product.price
+
+    @field
+    async def productId(self) -> Optional[str]:
+        return self.product.productId
+
+    @field
+    async def regularPrice(self) -> Optional[str]:
+        return self.product.regularPrice
+
+    @field
+    async def size(self) -> Optional[str]:
+        return self.product.size
+
+    @field
+    async def sku(self) -> Optional[str]:
+        return self.product.sku
+
+    @field
+    async def style(self) -> Optional[str]:
+        return self.product.style
+
+    @field
+    async def url(self) -> str:
+        return self.product.url
+
+    @field
+    async def variants(self) -> Optional[List[ProductVariant]]:
+        return self.product.variants

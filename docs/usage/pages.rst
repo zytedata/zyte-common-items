@@ -36,14 +36,39 @@ whose ``to_item`` method returns an instance of
 
 .. code-block:: python
 
-   import attrs
-   from zyte_common_items import ProductPage
+    import attrs
+    from zyte_common_items import ProductPage
 
     class CustomProductPage(ProductPage):
 
         @field
         def name(self):
             return self.css("h1::text").get()
+
+Page object classes with the ``Auto`` prefix can be used to easily define page
+object classes that get an :ref:`item <items>` as a dependency from another
+page object class, can generate an identical item by default, and can also
+easily override specific fields of the item, or even return a new item with
+extra fields. For example:
+
+.. code-block:: python
+
+    import attrs
+    from zyte_common_items import AutoProductPage, Product, Returns, field
+
+    @attrs.define
+    class ExtendedProduct(Product):
+        foo: str
+
+    class ExtendedProductPage(AutoProductPage, Returns[ExtendedProduct]):
+
+        @field
+        async def name(self):
+            return f"{self.product.brand.name} {self.product.name}"
+
+        @field
+        async def foo(self):
+            return "bar"
 
 Field processors
 ================
