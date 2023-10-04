@@ -380,22 +380,8 @@ class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata])
 
 
 @attrs.define
-class AutoProductPage(
-    _BasePage,
-    DescriptionMixin,
-    PriceMixin,
-    Returns[Product],
-    HasMetadata[ProductMetadata],
-):
+class AutoProductPage(BaseProductPage):
     product: Product
-
-    class Processors(_BasePage.Processors):
-        brand = [brand_processor]
-        breadcrumbs = [breadcrumbs_processor]
-        description = [description_processor]
-        descriptionHtml = [description_html_processor]
-        price = [price_processor]
-        regularPrice = [simple_price_processor]
 
     @field
     async def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
