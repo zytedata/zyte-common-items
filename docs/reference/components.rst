@@ -70,7 +70,13 @@ tied to any specific item type.
 .. autoclass:: zyte_common_items.RealEstateArea(**kwargs)
    :members:
 
+.. autoclass:: zyte_common_items.Reactions(**kwargs)
+   :members:
+
 .. autoclass:: zyte_common_items.Request(**kwargs)
+   :members:
+
+.. autoclass:: zyte_common_items.SocialMediaPostAuthor(**kwargs)
    :members:
 
 .. autoclass:: zyte_common_items.StarRating(**kwargs)
@@ -113,3 +119,6 @@ Item metadata components
 
 .. autoclass:: zyte_common_items.RealEstateMetadata(**kwargs)
    :members: dateDownloaded, probability
+
+.. autoclass:: zyte_common_items.SocialMediaPostMetadata(**kwargs)
+   :members: dateDownloaded, probability, searchText

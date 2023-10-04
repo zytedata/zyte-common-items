@@ -79,6 +79,13 @@ Job posting
    :members:
    :inherited-members:
 
+Social media post
+=================
+
+.. autoclass:: zyte_common_items.SocialMediaPost(**kwargs)
+   :members:
+   :inherited-members:
+
 Custom items
 ============
 

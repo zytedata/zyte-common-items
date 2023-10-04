@@ -22,6 +22,7 @@ from .components import (
     ProductMetadata,
     ProductNavigationMetadata,
     RealEstateMetadata,
+    SocialMediaPostMetadata,
     request_list_processor,
 )
 from .items import (
@@ -34,6 +35,7 @@ from .items import (
     ProductList,
     ProductNavigation,
     RealEstate,
+    SocialMediaPost,
 )
 from .processors import (
     brand_processor,
@@ -302,6 +304,12 @@ class BaseRealEstatePage(
         description = [description_processor]
 
 
+class BaseSocialMediaPostPage(
+    BasePage, Returns[SocialMediaPost], HasMetadata[SocialMediaPostMetadata]
+):
+    pass
+
+
 @attrs.define
 class Page(_BasePage, WebPage):
     class Processors(_BasePage.Processors):
@@ -370,3 +378,9 @@ class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata])
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
+
+
+class SocialMediaPostPage(
+    Page, Returns[SocialMediaPost], HasMetadata[SocialMediaPostMetadata]
+):
+    pass

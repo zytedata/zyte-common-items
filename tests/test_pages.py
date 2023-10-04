@@ -204,6 +204,7 @@ METADATA_FIELDS = {
     "ProductNavigation": {"dateDownloaded"},
     "RealEstate": {"dateDownloaded", "probability"},
     "JobPosting": {"dateDownloaded", "probability", "searchText"},
+    "SocialMediaPost": {"dateDownloaded", "probability", "searchText"},
 }
 
 

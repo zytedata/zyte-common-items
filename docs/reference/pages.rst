@@ -118,6 +118,15 @@ Job posting
 .. autoclass:: zyte_common_items.JobPostingPage(**kwargs)
    :show-inheritance:
 
+Social Media Post
+=================
+
+.. autoclass:: zyte_common_items.BaseSocialMediaPostPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.SocialMediaPostPage(**kwargs)
+   :show-inheritance:
+
 Custom page objects
 ===================
 
