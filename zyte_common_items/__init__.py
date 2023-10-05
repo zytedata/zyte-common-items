@@ -55,6 +55,7 @@ from .pages import (
     ArticleListPage,
     ArticleNavigationPage,
     ArticlePage,
+    AutoProductListPage,
     AutoProductPage,
     BaseArticleListPage,
     BaseArticleNavigationPage,

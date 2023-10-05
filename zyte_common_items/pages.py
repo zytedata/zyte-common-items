@@ -24,6 +24,7 @@ from .components import (
     Gtin,
     Image,
     JobPostingMetadata,
+    Link,
     ProductListMetadata,
     ProductMetadata,
     ProductNavigationMetadata,
@@ -37,6 +38,7 @@ from .items import (
     BusinessPlace,
     JobPosting,
     Product,
+    ProductFromList,
     ProductList,
     ProductNavigation,
     ProductVariant,
@@ -486,3 +488,40 @@ class AutoProductPage(BaseProductPage):
     @field
     async def variants(self) -> Optional[List[ProductVariant]]:
         return self.product.variants
+
+
+@attrs.define
+class AutoProductListPage(BaseProductListPage):
+    product_list: ProductList
+
+    @field
+    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+        return self.product_list.breadcrumbs
+
+    @field
+    async def canonicalUrl(self) -> Optional[str]:
+        return self.product_list.canonicalUrl
+
+    @field
+    async def categoryName(self) -> Optional[str]:
+        return self.product_list.categoryName
+
+    @field
+    async def metadata(self) -> Optional[ProductListMetadata]:
+        return self.product_list.metadata
+
+    @field
+    async def pageNumber(self) -> Optional[int]:
+        return self.product_list.pageNumber
+
+    @field
+    async def paginationNext(self) -> Optional[Link]:
+        return self.product_list.paginationNext
+
+    @field
+    async def products(self) -> Optional[List[ProductFromList]]:
+        return self.product_list.products
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.product_list.url

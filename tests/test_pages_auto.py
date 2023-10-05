@@ -4,53 +4,68 @@ import attrs
 import pytest
 from web_poet import RequestUrl, Returns, field
 
-from zyte_common_items import AutoProductPage, Product
+from zyte_common_items import AutoProductListPage, AutoProductPage, Product, ProductList
 
-from .test_items import _PRODUCT_ALL_KWARGS
+from .test_items import _PRODUCT_ALL_KWARGS, _PRODUCT_LIST_ALL_KWARGS
+
+PARAMS = (
+    "item_cls,item_kwargs,cls,param",
+    (
+        (Product, _PRODUCT_ALL_KWARGS, AutoProductPage, "product"),
+        (ProductList, _PRODUCT_LIST_ALL_KWARGS, AutoProductListPage, "product_list"),
+    ),
+)
 
 
+@pytest.mark.parametrize(*PARAMS)
 @pytest.mark.asyncio
-async def test_product_unmodified():
-    input_product = Product(**_PRODUCT_ALL_KWARGS)
-    page = AutoProductPage(
-        product=input_product,
-        request_url=RequestUrl("https://example.com"),
-    )
-    assert await page.to_item() == input_product
+async def test_unmodified(item_cls, item_kwargs, cls, param):
+    item = item_cls(**item_kwargs)
+    kwargs = {
+        param: item,
+        "request_url": RequestUrl("https://example.com"),
+    }
+    page = cls(**kwargs)
+    assert await page.to_item() == item
 
 
+@pytest.mark.parametrize(*PARAMS)
 @pytest.mark.asyncio
-async def test_product_modified():
-    class CustomProductPage(AutoProductPage):
+async def test_modified(item_cls, item_kwargs, cls, param):
+    modified_url = "https://custom.example"
+
+    class CustomPage(cls):
         @field
-        async def name(self):
-            return f"{self.product.brand.name} {self.product.name}"
+        async def url(self):
+            return modified_url
 
-    input_product = Product(**_PRODUCT_ALL_KWARGS)
-    page = CustomProductPage(
-        product=input_product,
-        request_url=RequestUrl("https://example.com"),
-    )
-    expected_product = copy(input_product)
-    expected_product.name = f"{input_product.brand.name} {input_product.name}"
-    assert await page.to_item() == expected_product
+    item = item_cls(**item_kwargs)
+    kwargs = {
+        param: item,
+        "request_url": RequestUrl("https://example.com"),
+    }
+    page = CustomPage(**kwargs)
+    expected_item = copy(item)
+    expected_item.url = modified_url
+    assert await page.to_item() == expected_item
 
 
+@pytest.mark.parametrize(*PARAMS)
 @pytest.mark.asyncio
-async def test_product_extended():
+async def test_extended(item_cls, item_kwargs, cls, param):
     @attrs.define
-    class ExtendedProduct(Product):
+    class ExtendedItem(item_cls):
         foo: str
 
-    class CustomProductPage(AutoProductPage, Returns[ExtendedProduct]):
+    class ExtendedPage(cls, Returns[ExtendedItem]):
         @field
         async def foo(self):
             return "bar"
 
-    input_product = Product(**_PRODUCT_ALL_KWARGS)
-    page = CustomProductPage(
-        product=input_product,
-        request_url=RequestUrl("https://example.com"),
-    )
-    expected_product = ExtendedProduct(**_PRODUCT_ALL_KWARGS, foo="bar")
-    assert await page.to_item() == expected_product
+    kwargs = {
+        param: item_cls(**item_kwargs),
+        "request_url": RequestUrl("https://example.com"),
+    }
+    page = ExtendedPage(**kwargs)
+    expected_item = ExtendedItem(**item_kwargs, foo="bar")
+    assert await page.to_item() == expected_item

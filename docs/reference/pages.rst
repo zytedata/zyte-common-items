@@ -13,35 +13,8 @@ Product
 .. autoclass:: zyte_common_items.ProductPage(**kwargs)
    :show-inheritance:
 
-.. autoclass:: zyte_common_items.pages.DescriptionMixin
-
-   .. data:: description
-      :type: str
-
-      Plain-text description. The default implementation makes it from the
-      ``descriptionHtml`` field if that is user-defined.
-
-   .. data:: descriptionHtml
-      :type: str
-
-      HTML description. The default implementation makes it from the
-      ``description`` field if that is user-defined.
-
-.. autoclass:: zyte_common_items.pages.PriceMixin
-
-   .. data:: currency
-      :type: str
-
-      Price currency ISO 4217 alphabetic code (e.g. ``"USD"``). The default
-      implementation returns ``self.CURRENCY`` if this attribute is defined.
-
-   .. data:: currencyRaw
-      :type: str
-
-      Price currency as it appears on the webpage (no post-processing), e.g.
-      ``"$"``. The default implementation uses the data extracted by
-      :func:`~zyte_common_items.processors.price_processor` from the ``price``
-      field.
+.. autoclass:: zyte_common_items.AutoProductPage(**kwargs)
+   :show-inheritance:
 
 Product list
 ============
@@ -50,6 +23,9 @@ Product list
    :show-inheritance:
 
 .. autoclass:: zyte_common_items.ProductListPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoProductListPage(**kwargs)
    :show-inheritance:
 
 Product navigation
@@ -117,6 +93,39 @@ Job posting
 
 .. autoclass:: zyte_common_items.JobPostingPage(**kwargs)
    :show-inheritance:
+
+Mixins
+======
+
+.. autoclass:: zyte_common_items.pages.DescriptionMixin
+
+   .. data:: description
+      :type: str
+
+      Plain-text description. The default implementation makes it from the
+      ``descriptionHtml`` field if that is user-defined.
+
+   .. data:: descriptionHtml
+      :type: str
+
+      HTML description. The default implementation makes it from the
+      ``description`` field if that is user-defined.
+
+.. autoclass:: zyte_common_items.pages.PriceMixin
+
+   .. data:: currency
+      :type: str
+
+      Price currency ISO 4217 alphabetic code (e.g. ``"USD"``). The default
+      implementation returns ``self.CURRENCY`` if this attribute is defined.
+
+   .. data:: currencyRaw
+      :type: str
+
+      Price currency as it appears on the webpage (no post-processing), e.g.
+      ``"$"``. The default implementation uses the data extracted by
+      :func:`~zyte_common_items.processors.price_processor` from the ``price``
+      field.
 
 Custom page objects
 ===================
