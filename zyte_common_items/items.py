@@ -963,9 +963,6 @@ class ProductNavigation(Item):
     """Represents the navigational aspects of a product listing page on an
     e-commerce website"""
 
-    #: Main URL from which the data is extracted.
-    url: str = attrs.field(converter=url_to_str)
-
     #: Name of the category/page with the product list.
     #:
     #: Format:
@@ -973,14 +970,14 @@ class ProductNavigation(Item):
     #: - trimmed (no whitespace at the beginning or the end of the description string)
     categoryName: Optional[str] = None
 
-    #: List of sub-category links ordered by their position in the page.
-    subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
-    )
-
     #: List of product links found on the page category ordered by their position in the page.
     items: Optional[List[ProbabilityRequest]] = attrs.field(
         default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
+    )
+
+    #: Data extraction process metadata.
+    metadata: Optional[ProductNavigationMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ProductNavigationMetadata)), kw_only=True  # type: ignore
     )
 
     #: A link to the next page, if available.
@@ -994,10 +991,13 @@ class ProductNavigation(Item):
     #: numbered as 0 on the website, it should be extracted as `1` nonetheless.
     pageNumber: Optional[int] = None
 
-    #: Data extraction process metadata.
-    metadata: Optional[ProductNavigationMetadata] = attrs.field(
-        default=None, converter=attrs.converters.optional(MetadataCaster(ProductNavigationMetadata)), kw_only=True  # type: ignore
+    #: List of sub-category links ordered by their position in the page.
+    subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
+        default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
     )
+
+    #: Main URL from which the data is extracted.
+    url: str = attrs.field(converter=url_to_str)
 
 
 @attrs.define(kw_only=True)

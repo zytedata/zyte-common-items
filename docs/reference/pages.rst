@@ -37,6 +37,9 @@ Product navigation
 .. autoclass:: zyte_common_items.ProductNavigationPage(**kwargs)
    :show-inheritance:
 
+.. autoclass:: zyte_common_items.AutoProductNavigationPage(**kwargs)
+   :show-inheritance:
+
 Article
 =======
 
@@ -44,6 +47,9 @@ Article
    :show-inheritance:
 
 .. autoclass:: zyte_common_items.ArticlePage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoArticlePage(**kwargs)
    :show-inheritance:
 
 

@@ -4,15 +4,36 @@ import attrs
 import pytest
 from web_poet import RequestUrl, Returns, field
 
-from zyte_common_items import AutoProductListPage, AutoProductPage, Product, ProductList
+from zyte_common_items import (
+    Article,
+    AutoArticlePage,
+    AutoProductListPage,
+    AutoProductNavigationPage,
+    AutoProductPage,
+    Product,
+    ProductList,
+    ProductNavigation,
+)
 
-from .test_items import _PRODUCT_ALL_KWARGS, _PRODUCT_LIST_ALL_KWARGS
+from .test_items import (
+    _ARTICLE_ALL_KWARGS,
+    _PRODUCT_ALL_KWARGS,
+    _PRODUCT_LIST_ALL_KWARGS,
+    _PRODUCT_NAVIGATION_ALL_KWARGS,
+)
 
 PARAMS = (
     "item_cls,item_kwargs,cls,param",
     (
         (Product, _PRODUCT_ALL_KWARGS, AutoProductPage, "product"),
         (ProductList, _PRODUCT_LIST_ALL_KWARGS, AutoProductListPage, "product_list"),
+        (
+            ProductNavigation,
+            _PRODUCT_NAVIGATION_ALL_KWARGS,
+            AutoProductNavigationPage,
+            "product_navigation",
+        ),
+        (Article, _ARTICLE_ALL_KWARGS, AutoArticlePage, "article"),
     ),
 )
 

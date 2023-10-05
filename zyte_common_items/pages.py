@@ -18,6 +18,8 @@ from .components import (
     ArticleListMetadata,
     ArticleMetadata,
     ArticleNavigationMetadata,
+    Audio,
+    Author,
     Brand,
     Breadcrumb,
     BusinessPlaceMetadata,
@@ -25,10 +27,13 @@ from .components import (
     Image,
     JobPostingMetadata,
     Link,
+    ProbabilityRequest,
     ProductListMetadata,
     ProductMetadata,
     ProductNavigationMetadata,
     RealEstateMetadata,
+    Request,
+    Video,
     request_list_processor,
 )
 from .items import (
@@ -525,3 +530,113 @@ class AutoProductListPage(BaseProductListPage):
     @field
     async def url(self) -> Optional[str]:
         return self.product_list.url
+
+
+@attrs.define
+class AutoProductNavigationPage(BaseProductNavigationPage):
+    product_navigation: ProductNavigation
+
+    @field
+    async def categoryName(self) -> Optional[str]:
+        return self.product_navigation.categoryName
+
+    @field
+    async def items(self) -> Optional[List[ProbabilityRequest]]:
+        return self.product_navigation.items
+
+    @field
+    async def metadata(self) -> Optional[ProductNavigationMetadata]:
+        return self.product_navigation.metadata
+
+    @field
+    async def nextPage(self) -> Optional[Request]:
+        return self.product_navigation.nextPage
+
+    @field
+    async def pageNumber(self) -> Optional[int]:
+        return self.product_navigation.pageNumber
+
+    @field
+    async def subCategories(self) -> Optional[List[ProbabilityRequest]]:
+        return self.product_navigation.subCategories
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.product_navigation.url
+
+
+@attrs.define
+class AutoArticlePage(BaseArticlePage):
+    article: Article
+
+    @field
+    async def headline(self) -> Optional[str]:
+        return self.article.headline
+
+    @field
+    async def datePublished(self) -> Optional[str]:
+        return self.article.datePublished
+
+    @field
+    async def datePublishedRaw(self) -> Optional[str]:
+        return self.article.datePublishedRaw
+
+    @field
+    async def dateModified(self) -> Optional[str]:
+        return self.article.dateModified
+
+    @field
+    async def dateModifiedRaw(self) -> Optional[str]:
+        return self.article.dateModifiedRaw
+
+    @field
+    async def authors(self) -> Optional[List[Author]]:
+        return self.article.authors
+
+    @field
+    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+        return self.article.breadcrumbs
+
+    @field
+    async def inLanguage(self) -> Optional[str]:
+        return self.article.inLanguage
+
+    @field
+    async def mainImage(self) -> Optional[Image]:
+        return self.article.mainImage
+
+    @field
+    async def images(self) -> Optional[List[Image]]:
+        return self.article.images
+
+    @field
+    async def description(self) -> Optional[str]:
+        return self.article.description
+
+    @field
+    async def articleBody(self) -> Optional[str]:
+        return self.article.articleBody
+
+    @field
+    async def articleBodyHtml(self) -> Optional[str]:
+        return self.article.articleBodyHtml
+
+    @field
+    async def videos(self) -> Optional[List[Video]]:
+        return self.article.videos
+
+    @field
+    async def audios(self) -> Optional[List[Audio]]:
+        return self.article.audios
+
+    @field
+    async def canonicalUrl(self) -> Optional[str]:
+        return self.article.canonicalUrl
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.article.url
+
+    @field
+    async def metadata(self) -> Optional[ArticleMetadata]:
+        return self.article.metadata
