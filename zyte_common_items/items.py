@@ -219,24 +219,6 @@ class ArticleList(Item):
     are optional.
     """
 
-    #: The main URL of the article list.
-    #:
-    #: The URL of the final response, after any redirects.
-    #:
-    #: Required attribute.
-    #:
-    #: In case there is no article list data on the page or the page was not
-    #: reached, the returned item still contain this URL field and all the
-    #: other available datapoints.
-    url: str = attrs.field(converter=url_to_str)
-
-    #: Canonical form of the URL, as indicated by the website.
-    #:
-    #: See also ``url``.
-    canonicalUrl: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
-    )
-
     #: List of article details found on the page.
     #:
     #: The order of the articles reflects their position on the page.
@@ -247,10 +229,28 @@ class ArticleList(Item):
     #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
     breadcrumbs: Optional[List[Breadcrumb]] = None
 
+    #: Canonical form of the URL, as indicated by the website.
+    #:
+    #: See also ``url``.
+    canonicalUrl: Optional[str] = attrs.field(
+        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    )
+
     #: Data extraction process metadata.
     metadata: Optional[ArticleListMetadata] = attrs.field(
         default=None, converter=attrs.converters.optional(MetadataCaster(ArticleListMetadata)), kw_only=True  # type: ignore
     )
+
+    #: The main URL of the article list.
+    #:
+    #: The URL of the final response, after any redirects.
+    #:
+    #: Required attribute.
+    #:
+    #: In case there is no article list data on the page or the page was not
+    #: reached, the returned item still contain this URL field and all the
+    #: other available datapoints.
+    url: str = attrs.field(converter=url_to_str)
 
 
 @attrs.define(kw_only=True)

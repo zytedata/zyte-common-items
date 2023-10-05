@@ -6,6 +6,8 @@ from web_poet import RequestUrl, Returns, field
 
 from zyte_common_items import (
     Article,
+    ArticleList,
+    AutoArticleListPage,
     AutoArticlePage,
     AutoProductListPage,
     AutoProductNavigationPage,
@@ -17,6 +19,7 @@ from zyte_common_items import (
 
 from .test_items import (
     _ARTICLE_ALL_KWARGS,
+    _ARTICLE_LIST_ALL_KWARGS,
     _PRODUCT_ALL_KWARGS,
     _PRODUCT_LIST_ALL_KWARGS,
     _PRODUCT_NAVIGATION_ALL_KWARGS,
@@ -34,6 +37,7 @@ PARAMS = (
             "product_navigation",
         ),
         (Article, _ARTICLE_ALL_KWARGS, AutoArticlePage, "article"),
+        (ArticleList, _ARTICLE_LIST_ALL_KWARGS, AutoArticleListPage, "article_list"),
     ),
 )
 

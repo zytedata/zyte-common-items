@@ -62,6 +62,9 @@ Article list
 .. autoclass:: zyte_common_items.ArticleListPage(**kwargs)
    :show-inheritance:
 
+.. autoclass:: zyte_common_items.AutoArticleListPage(**kwargs)
+   :show-inheritance:
+
 
 Article navigation
 ==================

@@ -38,6 +38,7 @@ from .components import (
 )
 from .items import (
     Article,
+    ArticleFromList,
     ArticleList,
     ArticleNavigation,
     BusinessPlace,
@@ -640,3 +641,28 @@ class AutoArticlePage(BaseArticlePage):
     @field
     async def metadata(self) -> Optional[ArticleMetadata]:
         return self.article.metadata
+
+
+@attrs.define
+class AutoArticleListPage(BaseArticleListPage):
+    article_list: ArticleList
+
+    @field
+    async def articles(self) -> Optional[List[ArticleFromList]]:
+        return self.article_list.articles
+
+    @field
+    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+        return self.article_list.breadcrumbs
+
+    @field
+    async def canonicalUrl(self) -> Optional[str]:
+        return self.article_list.canonicalUrl
+
+    @field
+    async def metadata(self) -> Optional[ArticleListMetadata]:
+        return self.article_list.metadata
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.article_list.url
