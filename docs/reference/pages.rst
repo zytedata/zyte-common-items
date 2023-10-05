@@ -78,7 +78,6 @@ Article navigation
 .. autoclass:: zyte_common_items.AutoArticleNavigationPage(**kwargs)
    :show-inheritance:
 
-
 Business place
 ==============
 
@@ -86,6 +85,9 @@ Business place
    :show-inheritance:
 
 .. autoclass:: zyte_common_items.BusinessPlacePage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoBusinessPlacePage(**kwargs)
    :show-inheritance:
 
 Real estate

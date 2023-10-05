@@ -14,7 +14,9 @@ from web_poet.utils import ensure_awaitable, get_generic_param
 
 from .components import (
     AdditionalProperty,
+    Address,
     AggregateRating,
+    Amenity,
     ArticleListMetadata,
     ArticleMetadata,
     ArticleNavigationMetadata,
@@ -27,12 +29,16 @@ from .components import (
     Image,
     JobPostingMetadata,
     Link,
+    NamedLink,
+    OpeningHoursItem,
+    ParentPlace,
     ProbabilityRequest,
     ProductListMetadata,
     ProductMetadata,
     ProductNavigationMetadata,
     RealEstateMetadata,
     Request,
+    StarRating,
     Video,
     request_list_processor,
 )
@@ -699,3 +705,108 @@ class AutoArticleNavigationPage(BaseArticleNavigationPage):
     @field
     async def url(self) -> Optional[str]:
         return self.article_navigation.url
+
+
+@attrs.define
+class AutoBusinessPlacePage(BaseBusinessPlacePage):
+    business_place: BusinessPlace
+
+    @field
+    async def actions(self) -> Optional[List[NamedLink]]:
+        return self.business_place.actions
+
+    @field
+    async def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
+        return self.business_place.additionalProperties
+
+    @field
+    async def address(self) -> Optional[Address]:
+        return self.business_place.address
+
+    @field
+    async def aggregateRating(self) -> Optional[AggregateRating]:
+        return self.business_place.aggregateRating
+
+    @field
+    async def amenityFeatures(self) -> Optional[List[Amenity]]:
+        return self.business_place.amenityFeatures
+
+    @field
+    async def categories(self) -> Optional[List[str]]:
+        return self.business_place.categories
+
+    @field
+    async def containedInPlace(self) -> Optional[ParentPlace]:
+        return self.business_place.containedInPlace
+
+    @field
+    async def description(self) -> Optional[str]:
+        return self.business_place.description
+
+    @field
+    async def features(self) -> Optional[List[str]]:
+        return self.business_place.features
+
+    @field
+    async def images(self) -> Optional[List[Image]]:
+        return self.business_place.images
+
+    @field
+    async def isVerified(self) -> Optional[bool]:
+        return self.business_place.isVerified
+
+    @field
+    async def map(self) -> Optional[str]:
+        return self.business_place.map
+
+    @field
+    async def metadata(self) -> Optional[BusinessPlaceMetadata]:
+        return self.business_place.metadata
+
+    @field
+    async def name(self) -> Optional[str]:
+        return self.business_place.name
+
+    @field
+    async def openingHours(self) -> Optional[List[OpeningHoursItem]]:
+        return self.business_place.openingHours
+
+    @field
+    async def placeId(self) -> Optional[str]:
+        return self.business_place.placeId
+
+    @field
+    async def priceRange(self) -> Optional[str]:
+        return self.business_place.priceRange
+
+    @field
+    async def reservationAction(self) -> Optional[NamedLink]:
+        return self.business_place.reservationAction
+
+    @field
+    async def reviewSites(self) -> Optional[List[NamedLink]]:
+        return self.business_place.reviewSites
+
+    @field
+    async def starRating(self) -> Optional[StarRating]:
+        return self.business_place.starRating
+
+    @field
+    async def tags(self) -> Optional[List[str]]:
+        return self.business_place.tags
+
+    @field
+    async def telephone(self) -> Optional[str]:
+        return self.business_place.telephone
+
+    @field
+    async def timezone(self) -> Optional[str]:
+        return self.business_place.timezone
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.business_place.url
+
+    @field
+    async def website(self) -> Optional[str]:
+        return self.business_place.website
