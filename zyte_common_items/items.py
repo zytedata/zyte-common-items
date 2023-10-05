@@ -851,19 +851,25 @@ class BusinessPlace(Item):
 
 @attrs.define(slots=True, kw_only=True)
 class RealEstate(Item):
-    #: The url of the final response, after any redirects.
-    url: str = attrs.field(converter=url_to_str)
+    #: A name-value pair field holding information pertaining to specific features. Usually in a form of a specification table or freeform specification list.
+    additionalProperties: Optional[List[AdditionalProperty]] = None
+
+    #: The details of the address of the real estate.
+    address: Optional[Address] = None
+
+    #: Real estate area details.
+    area: Optional[RealEstateArea] = None
 
     #: Webpage `breadcrumb trail`_.
     #:
     #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
     breadcrumbs: Optional[List[Breadcrumb]] = None
 
-    #: The identifier of the real estate, usually assigned by the seller and unique within a website, similar to product SKU.
-    realEstateId: Optional[str] = None
+    #: The currency of the price, in 3-letter ISO 4217 format.
+    currency: Optional[str] = None
 
-    #: The name of the real estate.
-    name: Optional[str] = None
+    #: Currency associated with the price, as appears on the page (no post-processing).
+    currencyRaw: Optional[str] = None
 
     #: Publication date of the real estate offer.
     #:
@@ -890,20 +896,25 @@ class RealEstate(Item):
     #: - no concatenation of description from different parts of the page.
     description: Optional[str] = None
 
-    #: The details of the main image of the real estate.
-    mainImage: Optional[Image] = None
-
     #: A list of URL values of all images of the real estate.
     images: Optional[List[Image]] = None
 
-    #: The details of the address of the real estate.
-    address: Optional[Address] = None
+    #: The details of the main image of the real estate.
+    mainImage: Optional[Image] = None
 
-    #: Real estate area details.
-    area: Optional[RealEstateArea] = None
+    #: Contains metadata about the data extraction process.
+    metadata: Optional[RealEstateMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(RealEstateMetadata)), kw_only=True  # type: ignore
+    )
+
+    #: The name of the real estate.
+    name: Optional[str] = None
 
     #: The total number of bathrooms in the real estate.
     numberOfBathroomsTotal: Optional[int] = None
+
+    #: The number of bedrooms in the real estate.
+    numberOfBedrooms: Optional[int] = None
 
     #: The number of full bathrooms in the real estate.
     numberOfFullBathrooms: Optional[int] = None
@@ -911,43 +922,32 @@ class RealEstate(Item):
     #: The number of partial bathrooms in the real estate.
     numberOfPartialBathrooms: Optional[int] = None
 
-    #: The number of bedrooms in the real estate.
-    numberOfBedrooms: Optional[int] = None
-
     #: The number of rooms (excluding bathrooms and closets) of the real estate.
     numberOfRooms: Optional[int] = None
-
-    #: Type of a trade action: buying or renting.
-    tradeType: Optional[str] = None
 
     #: The offer price of the real estate.
     price: Optional[str] = None
 
-    #: The rental period to which the rental price applies, only available in case of rental. Usually weekly, monthly, quarterly, yearly.
-    rentalPeriod: Optional[str] = None
-
-    #: Currency associated with the price, as appears on the page (no post-processing).
-    currencyRaw: Optional[str] = None
-
-    #: The currency of the price, in 3-letter ISO 4217 format.
-    currency: Optional[str] = None
-
-    #: A name-value pair field holding information pertaining to specific features. Usually in a form of a specification table or freeform specification list.
-    additionalProperties: Optional[List[AdditionalProperty]] = None
-
     #: Type of the property, e.g. flat, house, land.
     propertyType: Optional[str] = None
 
-    #: The year the real estate was built.
-    yearBuilt: Optional[int] = None
+    #: The identifier of the real estate, usually assigned by the seller and unique within a website, similar to product SKU.
+    realEstateId: Optional[str] = None
+
+    #: The rental period to which the rental price applies, only available in case of rental. Usually weekly, monthly, quarterly, yearly.
+    rentalPeriod: Optional[str] = None
+
+    #: Type of a trade action: buying or renting.
+    tradeType: Optional[str] = None
+
+    #: The url of the final response, after any redirects.
+    url: str = attrs.field(converter=url_to_str)
 
     #: The URL of the virtual tour of the real estate.
     virtualTourUrl: Optional[str] = None
 
-    #: Contains metadata about the data extraction process.
-    metadata: Optional[RealEstateMetadata] = attrs.field(
-        default=None, converter=attrs.converters.optional(MetadataCaster(RealEstateMetadata)), kw_only=True  # type: ignore
-    )
+    #: The year the real estate was built.
+    yearBuilt: Optional[int] = None
 
 
 class RequestListCaster:

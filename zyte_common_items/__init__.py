@@ -62,6 +62,7 @@ from .pages import (
     AutoProductListPage,
     AutoProductNavigationPage,
     AutoProductPage,
+    AutoRealEstatePage,
     BaseArticleListPage,
     BaseArticleNavigationPage,
     BaseArticlePage,

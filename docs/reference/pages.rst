@@ -99,6 +99,9 @@ Real estate
 .. autoclass:: zyte_common_items.RealEstatePage(**kwargs)
    :show-inheritance:
 
+.. autoclass:: zyte_common_items.AutoRealEstatePage(**kwargs)
+   :show-inheritance:
+
 Job posting
 ===========
 

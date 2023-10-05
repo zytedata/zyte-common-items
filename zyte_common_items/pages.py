@@ -36,6 +36,7 @@ from .components import (
     ProductListMetadata,
     ProductMetadata,
     ProductNavigationMetadata,
+    RealEstateArea,
     RealEstateMetadata,
     Request,
     StarRating,
@@ -810,3 +811,112 @@ class AutoBusinessPlacePage(BaseBusinessPlacePage):
     @field
     async def website(self) -> Optional[str]:
         return self.business_place.website
+
+
+@attrs.define
+class AutoRealEstatePage(BaseRealEstatePage):
+    real_estate: RealEstate
+
+    @field
+    async def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
+        return self.real_estate.additionalProperties
+
+    @field
+    async def address(self) -> Optional[Address]:
+        return self.real_estate.address
+
+    @field
+    async def area(self) -> Optional[RealEstateArea]:
+        return self.real_estate.area
+
+    @field
+    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+        return self.real_estate.breadcrumbs
+
+    @field
+    async def currency(self) -> Optional[str]:
+        return self.real_estate.currency
+
+    @field
+    async def currencyRaw(self) -> Optional[str]:
+        return self.real_estate.currencyRaw
+
+    @field
+    async def datePublished(self) -> Optional[str]:
+        return self.real_estate.datePublished
+
+    @field
+    async def datePublishedRaw(self) -> Optional[str]:
+        return self.real_estate.datePublishedRaw
+
+    @field
+    async def description(self) -> Optional[str]:
+        return self.real_estate.description
+
+    @field
+    async def images(self) -> Optional[List[Image]]:
+        return self.real_estate.images
+
+    @field
+    async def mainImage(self) -> Optional[Image]:
+        return self.real_estate.mainImage
+
+    @field
+    async def metadata(self) -> Optional[RealEstateMetadata]:
+        return self.real_estate.metadata
+
+    @field
+    async def name(self) -> Optional[str]:
+        return self.real_estate.name
+
+    @field
+    async def numberOfBathroomsTotal(self) -> Optional[int]:
+        return self.real_estate.numberOfBathroomsTotal
+
+    @field
+    async def numberOfBedrooms(self) -> Optional[int]:
+        return self.real_estate.numberOfBedrooms
+
+    @field
+    async def numberOfFullBathrooms(self) -> Optional[int]:
+        return self.real_estate.numberOfFullBathrooms
+
+    @field
+    async def numberOfPartialBathrooms(self) -> Optional[int]:
+        return self.real_estate.numberOfPartialBathrooms
+
+    @field
+    async def numberOfRooms(self) -> Optional[int]:
+        return self.real_estate.numberOfRooms
+
+    @field
+    async def price(self) -> Optional[str]:
+        return self.real_estate.price
+
+    @field
+    async def propertyType(self) -> Optional[str]:
+        return self.real_estate.propertyType
+
+    @field
+    async def realEstateId(self) -> Optional[str]:
+        return self.real_estate.realEstateId
+
+    @field
+    async def rentalPeriod(self) -> Optional[str]:
+        return self.real_estate.rentalPeriod
+
+    @field
+    async def tradeType(self) -> Optional[str]:
+        return self.real_estate.tradeType
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.real_estate.url
+
+    @field
+    async def virtualTourUrl(self) -> Optional[str]:
+        return self.real_estate.virtualTourUrl
+
+    @field
+    async def yearBuilt(self) -> Optional[int]:
+        return self.real_estate.yearBuilt

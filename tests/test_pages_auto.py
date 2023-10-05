@@ -15,10 +15,12 @@ from zyte_common_items import (
     AutoProductListPage,
     AutoProductNavigationPage,
     AutoProductPage,
+    AutoRealEstatePage,
     BusinessPlace,
     Product,
     ProductList,
     ProductNavigation,
+    RealEstate,
 )
 
 from .test_items import (
@@ -29,6 +31,7 @@ from .test_items import (
     _PRODUCT_ALL_KWARGS,
     _PRODUCT_LIST_ALL_KWARGS,
     _PRODUCT_NAVIGATION_ALL_KWARGS,
+    _REAL_ESTATE_ALL_KWARGS,
 )
 
 PARAMS = (
@@ -55,6 +58,12 @@ PARAMS = (
             _BUSINESS_PLACE_ALL_KWARGS,
             AutoBusinessPlacePage,
             "business_place",
+        ),
+        (
+            RealEstate,
+            _REAL_ESTATE_ALL_KWARGS,
+            AutoRealEstatePage,
+            "real_estate",
         ),
     ),
 )
