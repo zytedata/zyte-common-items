@@ -59,6 +59,7 @@ from .pages import (
     AutoArticleNavigationPage,
     AutoArticlePage,
     AutoBusinessPlacePage,
+    AutoJobPostingPage,
     AutoProductListPage,
     AutoProductNavigationPage,
     AutoProductPage,

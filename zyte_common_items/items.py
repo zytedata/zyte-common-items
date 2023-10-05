@@ -219,28 +219,6 @@ class ArticleList(Item):
     are optional.
     """
 
-    #: List of article details found on the page.
-    #:
-    #: The order of the articles reflects their position on the page.
-    articles: Optional[List[ArticleFromList]] = None
-
-    #: Webpage `breadcrumb trail`_.
-    #:
-    #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
-    breadcrumbs: Optional[List[Breadcrumb]] = None
-
-    #: Canonical form of the URL, as indicated by the website.
-    #:
-    #: See also ``url``.
-    canonicalUrl: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
-    )
-
-    #: Data extraction process metadata.
-    metadata: Optional[ArticleListMetadata] = attrs.field(
-        default=None, converter=attrs.converters.optional(MetadataCaster(ArticleListMetadata)), kw_only=True  # type: ignore
-    )
-
     #: The main URL of the article list.
     #:
     #: The URL of the final response, after any redirects.
@@ -251,6 +229,28 @@ class ArticleList(Item):
     #: reached, the returned item still contain this URL field and all the
     #: other available datapoints.
     url: str = attrs.field(converter=url_to_str)
+
+    #: Canonical form of the URL, as indicated by the website.
+    #:
+    #: See also ``url``.
+    canonicalUrl: Optional[str] = attrs.field(
+        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    )
+
+    #: List of article details found on the page.
+    #:
+    #: The order of the articles reflects their position on the page.
+    articles: Optional[List[ArticleFromList]] = None
+
+    #: Webpage `breadcrumb trail`_.
+    #:
+    #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
+    breadcrumbs: Optional[List[Breadcrumb]] = None
+
+    #: Data extraction process metadata.
+    metadata: Optional[ArticleListMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ArticleListMetadata)), kw_only=True  # type: ignore
+    )
 
 
 @attrs.define(kw_only=True)
@@ -754,84 +754,8 @@ class BusinessPlace(Item):
     """Business place, with properties typically seen on maps or business
     listings."""
 
-    #: List of actions that can be performed directly from the URLs on the place page, including URLs.
-    actions: Optional[List[NamedLink]] = None
-
-    #: List of name-value pais of any unmapped additional properties specific to the place.
-    additionalProperties: Optional[List[AdditionalProperty]] = None
-
-    #: The address details of the place.
-    address: Optional[Address] = None
-
-    #: The overall rating, based on a collection of reviews or ratings.
-    aggregateRating: Optional[AggregateRating] = None
-
-    #: List of amenities of the place.
-    amenityFeatures: Optional[List[Amenity]] = None
-
-    #: List of categories the place belongs to.
-    categories: Optional[List[str]] = None
-
-    #: If the place is located inside another place, these are the details of the parent place.
-    containedInPlace: Optional[ParentPlace] = None
-
-    #: The description of the place.
-    #:
-    #: Stripped of white spaces.
-    description: Optional[str] = None
-
-    #: List of frequently mentioned features of this place.
-    features: Optional[List[str]] = None
-
-    #: A list of URL values of all images of the place.
-    images: Optional[List[Image]] = None
-
-    #: If the information is verified by the owner of this place.
-    isVerified: Optional[bool] = None
-
-    #: URL to a map of the place.
-    map: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
-    )
-
-    #: Data extraction process metadata.
-    metadata: Optional[BusinessPlaceMetadata] = attrs.field(
-        default=None, converter=attrs.converters.optional(MetadataCaster(BusinessPlaceMetadata)), kw_only=True  # type: ignore
-    )
-
-    #: The name of the place.
-    name: Optional[str] = None
-
-    #: Ordered specification of opening hours, including data for opening and closing time for each day of the week.
-    openingHours: Optional[List[OpeningHoursItem]] = None
-
     #: Unique identifier of the place on the website.
     placeId: Optional[str] = None
-
-    #: How is the price range of the place viewed by its customers (from z to zzzz).
-    priceRange: Optional[str] = None
-
-    #: The details of the reservation action,
-    #: e.g. table reservation in case of restaurants
-    #: or room reservation in case of hotels.
-    reservationAction: Optional[NamedLink] = None
-
-    #: List of partner review sites.
-    reviewSites: Optional[List[NamedLink]] = None
-
-    #: Official star rating of the place.
-    starRating: Optional[StarRating] = None
-
-    #:  List of the tags associated with the place.
-    tags: Optional[List[str]] = None
-
-    #: The phone number associated with the place, as it appears on the page.
-    telephone: Optional[str] = None
-
-    #: Which timezone is the place situated in.
-    #:
-    #: Standard: Name compliant with IANA tz database (tzdata).
-    timezone: Optional[str] = None
 
     #: The main URL that the place data was extracted from.
     #:
@@ -843,33 +767,103 @@ class BusinessPlace(Item):
         default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
 
+    #: The name of the place.
+    name: Optional[str] = None
+
+    #: List of actions that can be performed directly from the URLs on the place page, including URLs.
+    actions: Optional[List[NamedLink]] = None
+
+    #: List of name-value pais of any unmapped additional properties specific to the place.
+    additionalProperties: Optional[List[AdditionalProperty]] = None
+
+    #: The address details of the place.
+    address: Optional[Address] = None
+
+    #: The details of the reservation action,
+    #: e.g. table reservation in case of restaurants
+    #: or room reservation in case of hotels.
+    reservationAction: Optional[NamedLink] = None
+
+    #: List of categories the place belongs to.
+    categories: Optional[List[str]] = None
+
+    #: The description of the place.
+    #:
+    #: Stripped of white spaces.
+    description: Optional[str] = None
+
+    #: List of frequently mentioned features of this place.
+    features: Optional[List[str]] = None
+
+    #: URL to a map of the place.
+    map: Optional[str] = attrs.field(
+        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+    )
+
+    #: A list of URL values of all images of the place.
+    images: Optional[List[Image]] = None
+
+    #: List of amenities of the place.
+    amenityFeatures: Optional[List[Amenity]] = None
+
+    #: The overall rating, based on a collection of reviews or ratings.
+    aggregateRating: Optional[AggregateRating] = None
+
+    #: Official star rating of the place.
+    starRating: Optional[StarRating] = None
+
+    #: If the place is located inside another place, these are the details of the parent place.
+    containedInPlace: Optional[ParentPlace] = None
+
+    #: Ordered specification of opening hours, including data for opening and closing time for each day of the week.
+    openingHours: Optional[List[OpeningHoursItem]] = None
+
+    #: List of partner review sites.
+    reviewSites: Optional[List[NamedLink]] = None
+
+    #: The phone number associated with the place, as it appears on the page.
+    telephone: Optional[str] = None
+
+    #: How is the price range of the place viewed by its customers (from z to zzzz).
+    priceRange: Optional[str] = None
+
+    #: Which timezone is the place situated in.
+    #:
+    #: Standard: Name compliant with IANA tz database (tzdata).
+    timezone: Optional[str] = None
+
+    #: If the information is verified by the owner of this place.
+    isVerified: Optional[bool] = None
+
     #: The URL pointing to the official website of the place.
     website: Optional[str] = attrs.field(
         default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
 
+    #:  List of the tags associated with the place.
+    tags: Optional[List[str]] = None
+
+    #: Data extraction process metadata.
+    metadata: Optional[BusinessPlaceMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(BusinessPlaceMetadata)), kw_only=True  # type: ignore
+    )
+
 
 @attrs.define(slots=True, kw_only=True)
 class RealEstate(Item):
-    #: A name-value pair field holding information pertaining to specific features. Usually in a form of a specification table or freeform specification list.
-    additionalProperties: Optional[List[AdditionalProperty]] = None
-
-    #: The details of the address of the real estate.
-    address: Optional[Address] = None
-
-    #: Real estate area details.
-    area: Optional[RealEstateArea] = None
+    #: The url of the final response, after any redirects.
+    url: str = attrs.field(converter=url_to_str)
 
     #: Webpage `breadcrumb trail`_.
     #:
     #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
     breadcrumbs: Optional[List[Breadcrumb]] = None
 
-    #: The currency of the price, in 3-letter ISO 4217 format.
-    currency: Optional[str] = None
+    #: The identifier of the real estate, usually assigned by the seller and unique within a website, similar to product SKU.
+    realEstateId: Optional[str] = None
 
-    #: Currency associated with the price, as appears on the page (no post-processing).
-    currencyRaw: Optional[str] = None
+    #: The name of the real estate.
+    name: Optional[str] = None
 
     #: Publication date of the real estate offer.
     #:
@@ -896,25 +890,20 @@ class RealEstate(Item):
     #: - no concatenation of description from different parts of the page.
     description: Optional[str] = None
 
-    #: A list of URL values of all images of the real estate.
-    images: Optional[List[Image]] = None
-
     #: The details of the main image of the real estate.
     mainImage: Optional[Image] = None
 
-    #: Contains metadata about the data extraction process.
-    metadata: Optional[RealEstateMetadata] = attrs.field(
-        default=None, converter=attrs.converters.optional(MetadataCaster(RealEstateMetadata)), kw_only=True  # type: ignore
-    )
+    #: A list of URL values of all images of the real estate.
+    images: Optional[List[Image]] = None
 
-    #: The name of the real estate.
-    name: Optional[str] = None
+    #: The details of the address of the real estate.
+    address: Optional[Address] = None
+
+    #: Real estate area details.
+    area: Optional[RealEstateArea] = None
 
     #: The total number of bathrooms in the real estate.
     numberOfBathroomsTotal: Optional[int] = None
-
-    #: The number of bedrooms in the real estate.
-    numberOfBedrooms: Optional[int] = None
 
     #: The number of full bathrooms in the real estate.
     numberOfFullBathrooms: Optional[int] = None
@@ -922,32 +911,43 @@ class RealEstate(Item):
     #: The number of partial bathrooms in the real estate.
     numberOfPartialBathrooms: Optional[int] = None
 
+    #: The number of bedrooms in the real estate.
+    numberOfBedrooms: Optional[int] = None
+
     #: The number of rooms (excluding bathrooms and closets) of the real estate.
     numberOfRooms: Optional[int] = None
-
-    #: The offer price of the real estate.
-    price: Optional[str] = None
-
-    #: Type of the property, e.g. flat, house, land.
-    propertyType: Optional[str] = None
-
-    #: The identifier of the real estate, usually assigned by the seller and unique within a website, similar to product SKU.
-    realEstateId: Optional[str] = None
-
-    #: The rental period to which the rental price applies, only available in case of rental. Usually weekly, monthly, quarterly, yearly.
-    rentalPeriod: Optional[str] = None
 
     #: Type of a trade action: buying or renting.
     tradeType: Optional[str] = None
 
-    #: The url of the final response, after any redirects.
-    url: str = attrs.field(converter=url_to_str)
+    #: The offer price of the real estate.
+    price: Optional[str] = None
+
+    #: The rental period to which the rental price applies, only available in case of rental. Usually weekly, monthly, quarterly, yearly.
+    rentalPeriod: Optional[str] = None
+
+    #: Currency associated with the price, as appears on the page (no post-processing).
+    currencyRaw: Optional[str] = None
+
+    #: The currency of the price, in 3-letter ISO 4217 format.
+    currency: Optional[str] = None
+
+    #: A name-value pair field holding information pertaining to specific features. Usually in a form of a specification table or freeform specification list.
+    additionalProperties: Optional[List[AdditionalProperty]] = None
+
+    #: Type of the property, e.g. flat, house, land.
+    propertyType: Optional[str] = None
+
+    #: The year the real estate was built.
+    yearBuilt: Optional[int] = None
 
     #: The URL of the virtual tour of the real estate.
     virtualTourUrl: Optional[str] = None
 
-    #: The year the real estate was built.
-    yearBuilt: Optional[int] = None
+    #: Contains metadata about the data extraction process.
+    metadata: Optional[RealEstateMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(RealEstateMetadata)), kw_only=True  # type: ignore
+    )
 
 
 class RequestListCaster:
@@ -963,6 +963,9 @@ class ProductNavigation(Item):
     """Represents the navigational aspects of a product listing page on an
     e-commerce website"""
 
+    #: Main URL from which the data is extracted.
+    url: str = attrs.field(converter=url_to_str)
+
     #: Name of the category/page with the product list.
     #:
     #: Format:
@@ -970,14 +973,14 @@ class ProductNavigation(Item):
     #: - trimmed (no whitespace at the beginning or the end of the description string)
     categoryName: Optional[str] = None
 
-    #: List of product links found on the page category ordered by their position in the page.
-    items: Optional[List[ProbabilityRequest]] = attrs.field(
+    #: List of sub-category links ordered by their position in the page.
+    subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
         default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
     )
 
-    #: Data extraction process metadata.
-    metadata: Optional[ProductNavigationMetadata] = attrs.field(
-        default=None, converter=attrs.converters.optional(MetadataCaster(ProductNavigationMetadata)), kw_only=True  # type: ignore
+    #: List of product links found on the page category ordered by their position in the page.
+    items: Optional[List[ProbabilityRequest]] = attrs.field(
+        default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
     )
 
     #: A link to the next page, if available.
@@ -991,13 +994,10 @@ class ProductNavigation(Item):
     #: numbered as 0 on the website, it should be extracted as `1` nonetheless.
     pageNumber: Optional[int] = None
 
-    #: List of sub-category links ordered by their position in the page.
-    subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
+    #: Data extraction process metadata.
+    metadata: Optional[ProductNavigationMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ProductNavigationMetadata)), kw_only=True  # type: ignore
     )
-
-    #: Main URL from which the data is extracted.
-    url: str = attrs.field(converter=url_to_str)
 
 
 @attrs.define(kw_only=True)
@@ -1007,6 +1007,9 @@ class ArticleNavigation(Item):
     See :class:`ArticleList`.
     """
 
+    #: Main URL from which the data is extracted.
+    url: str = attrs.field(converter=url_to_str)
+
     #: Name of the category/page.
     #:
     #: Format:
@@ -1014,14 +1017,14 @@ class ArticleNavigation(Item):
     #: - trimmed (no whitespace at the beginning or the end of the description string)
     categoryName: Optional[str] = None
 
-    #: Links to listed items in order of appearance.
-    items: Optional[List[ProbabilityRequest]] = attrs.field(
+    #: List of sub-category links ordered by their position in the page.
+    subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
         default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
     )
 
-    #: Data extraction process metadata.
-    metadata: Optional[ArticleNavigationMetadata] = attrs.field(
-        default=None, converter=attrs.converters.optional(MetadataCaster(ArticleNavigationMetadata)), kw_only=True  # type: ignore
+    #: Links to listed items in order of appearance.
+    items: Optional[List[ProbabilityRequest]] = attrs.field(
+        default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
     )
 
     #: A link to the next page, if available.
@@ -1035,13 +1038,10 @@ class ArticleNavigation(Item):
     #: numbered as 0 on the website, it should be extracted as `1` nonetheless.
     pageNumber: Optional[int] = None
 
-    #: List of sub-category links ordered by their position in the page.
-    subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=attrs.converters.optional(RequestListCaster(ProbabilityRequest)), kw_only=True  # type: ignore
+    #: Data extraction process metadata.
+    metadata: Optional[ArticleNavigationMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(ArticleNavigationMetadata)), kw_only=True  # type: ignore
     )
-
-    #: Main URL from which the data is extracted.
-    url: str = attrs.field(converter=url_to_str)
 
 
 @attrs.define(kw_only=True)

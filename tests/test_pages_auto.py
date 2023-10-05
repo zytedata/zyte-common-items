@@ -12,11 +12,13 @@ from zyte_common_items import (
     AutoArticleNavigationPage,
     AutoArticlePage,
     AutoBusinessPlacePage,
+    AutoJobPostingPage,
     AutoProductListPage,
     AutoProductNavigationPage,
     AutoProductPage,
     AutoRealEstatePage,
     BusinessPlace,
+    JobPosting,
     Product,
     ProductList,
     ProductNavigation,
@@ -28,6 +30,7 @@ from .test_items import (
     _ARTICLE_LIST_ALL_KWARGS,
     _ARTICLE_NAVIGATION_ALL_KWARGS,
     _BUSINESS_PLACE_ALL_KWARGS,
+    _JOB_POSTING_ALL_KWARGS,
     _PRODUCT_ALL_KWARGS,
     _PRODUCT_LIST_ALL_KWARGS,
     _PRODUCT_NAVIGATION_ALL_KWARGS,
@@ -37,14 +40,6 @@ from .test_items import (
 PARAMS = (
     "item_cls,item_kwargs,cls,param",
     (
-        (Product, _PRODUCT_ALL_KWARGS, AutoProductPage, "product"),
-        (ProductList, _PRODUCT_LIST_ALL_KWARGS, AutoProductListPage, "product_list"),
-        (
-            ProductNavigation,
-            _PRODUCT_NAVIGATION_ALL_KWARGS,
-            AutoProductNavigationPage,
-            "product_navigation",
-        ),
         (Article, _ARTICLE_ALL_KWARGS, AutoArticlePage, "article"),
         (ArticleList, _ARTICLE_LIST_ALL_KWARGS, AutoArticleListPage, "article_list"),
         (
@@ -58,6 +53,20 @@ PARAMS = (
             _BUSINESS_PLACE_ALL_KWARGS,
             AutoBusinessPlacePage,
             "business_place",
+        ),
+        (
+            JobPosting,
+            _JOB_POSTING_ALL_KWARGS,
+            AutoJobPostingPage,
+            "job_posting",
+        ),
+        (Product, _PRODUCT_ALL_KWARGS, AutoProductPage, "product"),
+        (ProductList, _PRODUCT_LIST_ALL_KWARGS, AutoProductListPage, "product_list"),
+        (
+            ProductNavigation,
+            _PRODUCT_NAVIGATION_ALL_KWARGS,
+            AutoProductNavigationPage,
+            "product_navigation",
         ),
         (
             RealEstate,

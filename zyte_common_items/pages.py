@@ -22,11 +22,14 @@ from .components import (
     ArticleNavigationMetadata,
     Audio,
     Author,
+    BaseSalary,
     Brand,
     Breadcrumb,
     BusinessPlaceMetadata,
     Gtin,
+    HiringOrganization,
     Image,
+    JobLocation,
     JobPostingMetadata,
     Link,
     NamedLink,
@@ -920,3 +923,92 @@ class AutoRealEstatePage(BaseRealEstatePage):
     @field
     async def yearBuilt(self) -> Optional[int]:
         return self.real_estate.yearBuilt
+
+
+@attrs.define
+class AutoJobPostingPage(BaseJobPostingPage):
+    job_posting: JobPosting
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.job_posting.url
+
+    @field
+    async def jobPostingId(self) -> Optional[str]:
+        return self.job_posting.jobPostingId
+
+    @field
+    async def datePublished(self) -> Optional[str]:
+        return self.job_posting.datePublished
+
+    @field
+    async def datePublishedRaw(self) -> Optional[str]:
+        return self.job_posting.datePublishedRaw
+
+    @field
+    async def dateModified(self) -> Optional[str]:
+        return self.job_posting.dateModified
+
+    @field
+    async def dateModifiedRaw(self) -> Optional[str]:
+        return self.job_posting.dateModifiedRaw
+
+    @field
+    async def validThrough(self) -> Optional[str]:
+        return self.job_posting.validThrough
+
+    @field
+    async def validThroughRaw(self) -> Optional[str]:
+        return self.job_posting.validThroughRaw
+
+    @field
+    async def jobTitle(self) -> Optional[str]:
+        return self.job_posting.jobTitle
+
+    @field
+    async def headline(self) -> Optional[str]:
+        return self.job_posting.headline
+
+    @field
+    async def jobLocation(self) -> Optional[JobLocation]:
+        return self.job_posting.jobLocation
+
+    @field
+    async def description(self) -> Optional[str]:
+        return self.job_posting.description
+
+    @field
+    async def descriptionHtml(self) -> Optional[str]:
+        return self.job_posting.descriptionHtml
+
+    @field
+    async def employmentType(self) -> Optional[str]:
+        return self.job_posting.employmentType
+
+    @field
+    async def baseSalary(self) -> Optional[BaseSalary]:
+        return self.job_posting.baseSalary
+
+    @field
+    async def requirements(self) -> Optional[List[str]]:
+        return self.job_posting.requirements
+
+    @field
+    async def hiringOrganization(self) -> Optional[HiringOrganization]:
+        return self.job_posting.hiringOrganization
+
+    @field
+    async def jobStartDate(self) -> Optional[str]:
+        return self.job_posting.jobStartDate
+
+    @field
+    async def jobStartDateRaw(self) -> Optional[str]:
+        return self.job_posting.jobStartDateRaw
+
+    @field
+    async def remoteStatus(self) -> Optional[str]:
+        return self.job_posting.remoteStatus
+
+    @field
+    async def metadata(self) -> Optional[JobPostingMetadata]:
+        return self.job_posting.metadata
