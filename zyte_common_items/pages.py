@@ -666,3 +666,36 @@ class AutoArticleListPage(BaseArticleListPage):
     @field
     async def url(self) -> Optional[str]:
         return self.article_list.url
+
+
+@attrs.define
+class AutoArticleNavigationPage(BaseArticleNavigationPage):
+    article_navigation: ArticleNavigation
+
+    @field
+    async def categoryName(self) -> Optional[str]:
+        return self.article_navigation.categoryName
+
+    @field
+    async def items(self) -> Optional[List[ProbabilityRequest]]:
+        return self.article_navigation.items
+
+    @field
+    async def metadata(self) -> Optional[ArticleNavigationMetadata]:
+        return self.article_navigation.metadata
+
+    @field
+    async def nextPage(self) -> Optional[Request]:
+        return self.article_navigation.nextPage
+
+    @field
+    async def pageNumber(self) -> Optional[int]:
+        return self.article_navigation.pageNumber
+
+    @field
+    async def subCategories(self) -> Optional[List[ProbabilityRequest]]:
+        return self.article_navigation.subCategories
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.article_navigation.url
