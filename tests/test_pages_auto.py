@@ -1,4 +1,5 @@
 from copy import copy
+from typing import Any, Dict, Type
 
 import attrs
 import pytest
@@ -80,7 +81,9 @@ PARAMS = (
 
 @pytest.mark.parametrize(*PARAMS)
 @pytest.mark.asyncio
-async def test_unmodified(item_cls, item_kwargs, cls, param):
+async def test_unmodified(
+    item_cls: Type, item_kwargs: Dict[str, Any], cls: Type, param: str
+) -> None:
     item = item_cls(**item_kwargs)
     kwargs = {
         param: item,
@@ -92,7 +95,9 @@ async def test_unmodified(item_cls, item_kwargs, cls, param):
 
 @pytest.mark.parametrize(*PARAMS)
 @pytest.mark.asyncio
-async def test_modified(item_cls, item_kwargs, cls, param):
+async def test_modified(
+    item_cls: Type, item_kwargs: Dict[str, Any], cls: Type, param: str
+) -> None:
     modified_url = "https://custom.example"
 
     class CustomPage(cls):
@@ -113,7 +118,9 @@ async def test_modified(item_cls, item_kwargs, cls, param):
 
 @pytest.mark.parametrize(*PARAMS)
 @pytest.mark.asyncio
-async def test_extended(item_cls, item_kwargs, cls, param):
+async def test_extended(
+    item_cls: Type, item_kwargs: Dict[str, Any], cls: Type, param: str
+) -> None:
     @attrs.define
     class ExtendedItem(item_cls):
         foo: str
