@@ -123,7 +123,7 @@ def test_probability_request():
     )
 
     assert request.url == "https://example.com/test"
-    assert request.probability == None
+    assert request.probability is None
 
 
 def test_request():
