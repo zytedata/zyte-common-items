@@ -455,7 +455,7 @@ class Request(Item):
             method=self.method or "GET",
             headers=header_list,
             body=self.body_bytes,
-            **kwargs
+            **kwargs,
         )
 
 
@@ -484,6 +484,10 @@ class ProbabilityRequest(Request):
 
     #: Data extraction process metadata.
     metadata: Optional[ProbabilityMetadata] = None
+
+    def get_probability(self) -> Optional[int]:
+        if metadata := getattr(self, "metadata", None):
+            return metadata.probability
 
 
 @attrs.define(kw_only=True)
