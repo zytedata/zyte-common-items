@@ -485,8 +485,7 @@ class ProbabilityRequest(Request):
     #: Data extraction process metadata.
     metadata: Optional[ProbabilityMetadata] = None
 
-    @property
-    def probability(self) -> Optional[int]:
+    def get_probability(self) -> Optional[int]:
         if metadata := getattr(self, "metadata", None):
             return metadata.probability
 
