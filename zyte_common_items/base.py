@@ -51,8 +51,7 @@ def _extend_trail(trail: _Trail, key: Union[int, str]):
 class ProbabilityMixin:
     def get_probability(self) -> Optional[float]:
         if metadata := getattr(self, "metadata", None):
-            if probability := getattr(metadata, "probability", None):
-                return probability
+            return getattr(metadata, "probability", None)
         return None
 
 

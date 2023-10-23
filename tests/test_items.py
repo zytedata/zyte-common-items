@@ -815,3 +815,9 @@ def test_get_probability_request(cls, has_proba):
         assert item.get_probability() == 0.5
     else:
         assert item.get_probability() is None
+
+    item = cls.from_dict({**data, "metadata": {"probability": 0.0}})
+    if has_proba:
+        assert item.get_probability() == 0.0
+    else:
+        assert item.get_probability() is None
