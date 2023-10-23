@@ -785,3 +785,32 @@ def test_job_posting_missing_fields():
         del incomplete_kwargs[required_field]
         with pytest.raises(TypeError):
             JobPosting(**incomplete_kwargs)
+
+
+@pytest.mark.parametrize(
+    "cls,has_proba",
+    (
+        (Article, True),
+        (ArticleList, False),
+        (ArticleFromList, True),
+        (Product, True),
+        (ProductFromList, True),
+        (ProductList, False),
+        (BusinessPlace, True),
+        (RealEstate, True),
+        (ProductNavigation, False),
+        (ArticleNavigation, False),
+        (JobPosting, True),
+    ),
+)
+def test_get_probability_request(cls, has_proba):
+    data = {"url": "https://example.com"}
+
+    item = cls.from_dict(data)
+    assert item.get_probability() is None
+
+    item = cls.from_dict({**data, "metadata": {"probability": 0.5}})
+    if has_proba:
+        assert item.get_probability() == 0.5
+    else:
+        assert item.get_probability() is None
