@@ -791,16 +791,17 @@ def test_job_posting_missing_fields():
     "cls,has_proba",
     (
         (Article, True),
-        (ArticleList, False),
         (ArticleFromList, True),
+        (ArticleList, False),
+        (ArticleNavigation, False),
+        (BusinessPlace, True),
+        (JobPosting, True),
         (Product, True),
         (ProductFromList, True),
         (ProductList, False),
-        (BusinessPlace, True),
-        (RealEstate, True),
         (ProductNavigation, False),
-        (ArticleNavigation, False),
-        (JobPosting, True),
+        (ProductVariant, False),
+        (RealEstate, True),
     ),
 )
 def test_get_probability_request(cls, has_proba):
