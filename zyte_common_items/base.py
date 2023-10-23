@@ -48,7 +48,15 @@ def _extend_trail(trail: _Trail, key: Union[int, str]):
 
 
 @attrs.define
-class Item(_ItemBase):
+class ProbabilityMixin:
+    def get_probability(self) -> Optional[float]:
+        if metadata := getattr(self, "metadata", None):
+            return getattr(metadata, "probability", None)
+        return None
+
+
+@attrs.define
+class Item(ProbabilityMixin, _ItemBase):
     def __attrs_post_init__(self):
         self._unknown_fields_dict = {}
 
