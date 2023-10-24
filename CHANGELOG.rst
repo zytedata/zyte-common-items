@@ -2,6 +2,16 @@
 Changelog
 =========
 
+0.12.0 (2023-10-24)
+===================
+
+* Added :meth:`~zyte_common_items.base.ProbabilityMixin.get_probability` helper
+  method in page classes (e.g. :class:`~zyte_common_items.Product`,
+  :class:`~zyte_common_items.Article`) and 
+  :class:`~zyte_common_items.ProbabilityRequest`.
+
+
+
 0.11.0 (2023-09-08)
 ===================
 
