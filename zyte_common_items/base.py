@@ -50,6 +50,7 @@ def _extend_trail(trail: _Trail, key: Union[int, str]):
 @attrs.define
 class ProbabilityMixin:
     def get_probability(self) -> Optional[float]:
+        """Returns the item probability if available, otherwise ``None``."""
         if metadata := getattr(self, "metadata", None):
             return getattr(metadata, "probability", None)
         return None

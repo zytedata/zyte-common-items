@@ -84,8 +84,12 @@ Custom items
 
 Subclass :class:`~zyte_common_items.Item` to create your own item classes.
 
+.. autoclass:: zyte_common_items.base.ProbabilityMixin(**kwargs)
+   :members:
+
 .. autoclass:: zyte_common_items.Item(**kwargs)
    :members:
+   :inherited-members:
 
    .. attribute:: _unknown_fields_dict
       :type: dict
