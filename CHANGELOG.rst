@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.12.0 (2023-10-24)
+0.12.0 (2023-10-27)
 ===================
 
 * Added :meth:`~zyte_common_items.base.ProbabilityMixin.get_probability` helper
