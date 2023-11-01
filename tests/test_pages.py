@@ -217,11 +217,14 @@ def check_default_metadata(cls, kwargs, item_name):
     assert type(obj.metadata) == metadata_cls
 
     expected_fields = METADATA_FIELDS[item_name]
-    actual_fields = {
-        field
-        for field in dir(obj.metadata)
-        if not field.startswith("_") and not field.startswith("from_")
-    }
+
+    def allow_field(field_name):
+        for prefix in ["_", "from_", "get_"]:
+            if field_name.startswith(prefix):
+                return False
+        return True
+
+    actual_fields = {field for field in dir(obj.metadata) if allow_field(field)}
     error_message = (
         f"{metadata_cls}: actual fields ({actual_fields}) != expected fields "
         f"({expected_fields})"
