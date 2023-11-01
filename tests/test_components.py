@@ -25,6 +25,7 @@ from zyte_common_items import (
     SocialMediaPostMetadata,
     StarRating,
 )
+from zyte_common_items.components import Url
 
 
 def test_aggregated_rating_optional_fields():
@@ -194,3 +195,7 @@ def test_social_media_post_metadata():
     SocialMediaPostMetadata(
         dateDownloaded="2020-01-01", probability=0.5, searchText="Extract Summit"
     )
+
+
+def test_url():
+    Url(url="https://example.com")

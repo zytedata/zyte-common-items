@@ -504,9 +504,11 @@ _SOCIAL_MEDIA_POST_ALL_KWARGS: dict = {
     **_SOCIAL_MEDIA_POST_MIN_KWARGS,
     "postId": "1569750785201676290",
     "reactions": Reactions(reposts=1, likes=1, dislikes=1),
-    "text": "Join us for the @usertag_1 2022 Coding Contest and stand a chance to win bragging rights plus awesome "
-    "prizes! Register for free - https://hubs.li/Q01mcRlk0 #coding #webdata #dataextraction #webscraping "
-    "#scrapy #python",
+    "text": (
+        "Join us for the @usertag_1 2022 Coding Contest and stand a chance to win bragging rights plus awesome "
+        "prizes! Register for free - https://hubs.li/Q01mcRlk0 #coding #webdata #dataextraction #webscraping "
+        "#scrapy #python"
+    ),
     "datePublished": "2023-10-04T00:00:00Z",
     "hashtags": [
         "coding",

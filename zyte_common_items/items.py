@@ -39,7 +39,7 @@ from zyte_common_items.components import (
     SocialMediaPostMetadata,
     StarRating,
     Video,
-    cast_request,
+    cast_request, Url,
 )
 from zyte_common_items.util import MetadataCaster, url_to_str
 
@@ -1157,12 +1157,6 @@ class SocialMediaPost(Item):
     #: The text content of the post.
     text: Optional[str] = None
 
-    #: The title of the post.
-    title: Optional[str] = None
-
-    #: The description of the post.
-    description: Optional[str] = None
-
     #: The timestamp at which the post was created.
     #:
     #: Format: Timezone: UTC. ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
@@ -1171,8 +1165,8 @@ class SocialMediaPost(Item):
     #: The list of hashtags contained in the post.
     hashtags: Optional[List[str]] = None
 
-    #: The list of URLs of media files (images, videos, etc.) linked to the post.
-    mediaUrls: Optional[List[Link]] = None
+    #: The list of URLs of media files (images, videos, etc.) linked from the post.
+    mediaUrls: Optional[List[Url]] = None
 
     #: Details of the author of the post.
     #: No easily identifiable information can be contained in here, such as usernames.

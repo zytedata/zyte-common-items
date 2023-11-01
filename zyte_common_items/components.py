@@ -464,6 +464,11 @@ class Request(Item):
         )
 
 
+@attrs.define(kw_only=True)
+class Url(Item):
+    url: str = attrs.field(converter=url_to_str)
+
+
 @attrs.define
 class Video(_Media):
     """Video.
