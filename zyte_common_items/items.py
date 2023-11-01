@@ -38,8 +38,9 @@ from zyte_common_items.components import (
     SocialMediaPostAuthor,
     SocialMediaPostMetadata,
     StarRating,
+    Url,
     Video,
-    cast_request, Url,
+    cast_request,
 )
 from zyte_common_items.util import MetadataCaster, url_to_str
 
