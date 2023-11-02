@@ -39,6 +39,7 @@ from .components import (
     SocialMediaPostMetadata,
     StarRating,
     Video,
+    Url,
 )
 from .items import (
     Article,
