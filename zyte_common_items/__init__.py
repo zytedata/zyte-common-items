@@ -38,8 +38,8 @@ from .components import (
     SocialMediaPostAuthor,
     SocialMediaPostMetadata,
     StarRating,
-    Video,
     Url,
+    Video,
 )
 from .items import (
     Article,
