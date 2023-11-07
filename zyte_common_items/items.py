@@ -1146,7 +1146,7 @@ class JobPosting(Item):
 class SocialMediaPost(Item):
     """Represents a single social media post."""
 
-    #: The url of the final response, after any redirects.
+    #: The URL of the final response, after any redirects.
     url: str = attrs.field(converter=url_to_str)
 
     #: The identifier of the post.
@@ -1170,6 +1170,7 @@ class SocialMediaPost(Item):
     mediaUrls: Optional[List[Url]] = None
 
     #: Details of the author of the post.
+    #:
     #: No easily identifiable information can be contained in here, such as usernames.
     author: Optional[SocialMediaPostAuthor] = None
 

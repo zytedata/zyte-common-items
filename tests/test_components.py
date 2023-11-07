@@ -24,8 +24,8 @@ from zyte_common_items import (
     SocialMediaPostAuthor,
     SocialMediaPostMetadata,
     StarRating,
+    Url,
 )
-from zyte_common_items.components import Url
 
 
 def test_aggregated_rating_optional_fields():

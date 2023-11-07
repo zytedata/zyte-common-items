@@ -53,6 +53,7 @@ from zyte_common_items import (
     SocialMediaPostAuthor,
     SocialMediaPostMetadata,
     StarRating,
+    Url,
     Video,
 )
 
@@ -520,10 +521,10 @@ _SOCIAL_MEDIA_POST_ALL_KWARGS: dict = {
     ],
     "mediaUrls": [
         {
-            "url": "https://example.com/image1.png",
+            "url": Url(url="https://example.com/image1.png"),
         },
         {
-            "url": "https://video.twimg.com/tweet_video/FcjgBTkX0AAXPUh.mp4",
+            "url": Url(url="https://video.twimg.com/tweet_video/FcjgBTkX0AAXPUh.mp4"),
         },
     ],
     "author": SocialMediaPostAuthor(

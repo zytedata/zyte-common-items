@@ -466,6 +466,9 @@ class Request(Item):
 
 @attrs.define(kw_only=True)
 class Url(Item):
+    """A URL."""
+
+    # : URL.
     url: str = attrs.field(converter=url_to_str)
 
 
@@ -545,13 +548,13 @@ class HiringOrganization(Item):
 class Reactions(Item):
     """Details of reactions to a post."""
 
-    # Number of times the post has been shared
+    #: Number of times the post has been shared.
     reposts: Optional[int] = None
 
-    # Number of likes or other positive reactions to the post.
+    #: Number of likes or other positive reactions to the post.
     likes: Optional[int] = None
 
-    # Number of dislikes or other negative reactions to the post.
+    #: Number of dislikes or other negative reactions to the post.
     dislikes: Optional[int] = None
 
 

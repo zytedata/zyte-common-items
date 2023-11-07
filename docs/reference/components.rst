@@ -67,10 +67,10 @@ tied to any specific item type.
 .. autoclass:: zyte_common_items.ProbabilityRequest(**kwargs)
    :members:
 
-.. autoclass:: zyte_common_items.RealEstateArea(**kwargs)
+.. autoclass:: zyte_common_items.Reactions(**kwargs)
    :members:
 
-.. autoclass:: zyte_common_items.Reactions(**kwargs)
+.. autoclass:: zyte_common_items.RealEstateArea(**kwargs)
    :members:
 
 .. autoclass:: zyte_common_items.Request(**kwargs)
@@ -82,10 +82,10 @@ tied to any specific item type.
 .. autoclass:: zyte_common_items.StarRating(**kwargs)
    :members:
 
-.. autoclass:: zyte_common_items.Video(**kwargs)
+.. autoclass:: zyte_common_items.Url(**kwargs)
    :members: url
 
-.. autoclass:: zyte_common_items.Url(**kwargs)
+.. autoclass:: zyte_common_items.Video(**kwargs)
    :members: url
 
 .. _components-metadata:
