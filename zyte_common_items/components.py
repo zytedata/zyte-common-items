@@ -71,48 +71,64 @@ class Metadata(_DetailsMetadata):
 
 @attrs.define(kw_only=True)
 class ArticleMetadata(_DetailsMetadata):
+    """Metadata class for :data:`zyte_common_items.Article.metadata`."""
+
     pass
 
 
 @attrs.define(kw_only=True)
 class ArticleListMetadata(_ListMetadata):
+    """Metadata class for :data:`zyte_common_items.ArticleList.metadata`."""
+
     pass
 
 
 @attrs.define(kw_only=True)
 class ArticleNavigationMetadata(_ListMetadata):
+    """Metadata class for :data:`zyte_common_items.ArticleNavigation.metadata`."""
+
     pass
 
 
 @attrs.define(kw_only=True)
 class BusinessPlaceMetadata(Metadata):
+    """Metadata class for :data:`zyte_common_items.BusinessPlace.metadata`."""
+
     pass
 
 
 @attrs.define(kw_only=True)
 class JobPostingMetadata(Metadata):
-    """Metadata associated with a job posting."""
+    """Metadata class for :data:`zyte_common_items.JobPosting.metadata`."""
 
     pass
 
 
 @attrs.define(kw_only=True)
 class ProductMetadata(_DetailsMetadata):
+    """Metadata class for :data:`zyte_common_items.Product.metadata`."""
+
     pass
 
 
 @attrs.define(kw_only=True)
 class ProductListMetadata(_ListMetadata):
+    """Metadata class for :data:`zyte_common_items.ProductList.metadata`."""
+
     pass
 
 
 @attrs.define(kw_only=True)
 class ProductNavigationMetadata(_ListMetadata):
+    """Metadata class for :data:`zyte_common_items.ProductNavigation.metadata`."""
+
     pass
 
 
 @attrs.define(kw_only=True)
 class RealEstateMetadata(_DetailsMetadata):
+    """Metadata class for :data:`zyte_common_items.RealEstate.metadata`."""
+
     pass
 
 
@@ -468,6 +484,9 @@ class Video(_Media):
 
 
 def cast_request(value: Request, cls: Type[Request]) -> Request:
+    """Convert *value*, an instance of :class:`Request` or a subclass, into
+    *cls*, a different class that is also either :class:`Request` or a
+    subclass."""
     new_value = convert_to_class(value, cls)
     if type(value) is Request and cls is ProbabilityRequest:
         new_value.metadata = ProbabilityMetadata(probability=1.0)
@@ -475,6 +494,9 @@ def cast_request(value: Request, cls: Type[Request]) -> Request:
 
 
 def request_list_processor(request_list):
+    """Convert all objects in *request_list*, which are instances of
+    :class:`Request` or a subclass, into instances of
+    :class:`ProbabilityRequest`."""
     return [cast_request(request, ProbabilityRequest) for request in request_list]
 
 

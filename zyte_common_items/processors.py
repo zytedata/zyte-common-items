@@ -43,6 +43,9 @@ def _format_price(price: Price) -> Optional[str]:
 def only_handle_nodes(
     f: Callable[[Union[Selector, HtmlElement], Any], Any]
 ) -> Callable[[Any, Any], Any]:
+    """Decorator for processors that only runs a decorated processor if the
+    input is of type :class:`Selector` or :class:`HtmlElement`."""
+
     @wraps(f)
     def wrapper(value: Any, page: Any) -> Any:
         value = _handle_selectorlist(value)

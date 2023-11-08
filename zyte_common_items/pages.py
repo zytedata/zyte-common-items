@@ -220,6 +220,9 @@ class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
 
 @attrs.define
 class BasePage(_BasePage):
+    """Base class for page object classes that has
+    :class:`~web_poet.page_inputs.http.RequestUrl` as a dependency."""
+
     class Processors(_BasePage.Processors):
         pass
 
@@ -231,6 +234,8 @@ class BasePage(_BasePage):
 
 
 class BaseArticlePage(BasePage, Returns[Article], HasMetadata[ArticleMetadata]):
+    """:class:`BasePage` subclass for :class:`Article`."""
+
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
@@ -238,6 +243,8 @@ class BaseArticlePage(BasePage, Returns[Article], HasMetadata[ArticleMetadata]):
 class BaseArticleListPage(
     BasePage, Returns[ArticleList], HasMetadata[ArticleListMetadata]
 ):
+    """:class:`BasePage` subclass for :class:`ArticleList`."""
+
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
@@ -245,12 +252,14 @@ class BaseArticleListPage(
 class BaseArticleNavigationPage(
     BasePage, Returns[ArticleNavigation], HasMetadata[ArticleNavigationMetadata]
 ):
-    pass
+    """:class:`BasePage` subclass for :class:`ArticleNavigation`."""
 
 
 class BaseBusinessPlacePage(
     BasePage, Returns[BusinessPlace], HasMetadata[BusinessPlaceMetadata]
 ):
+    """:class:`BasePage` subclass for :class:`BusinessPlace`."""
+
     class Processors(BasePage.Processors):
         description = [description_processor]
 
@@ -258,6 +267,8 @@ class BaseBusinessPlacePage(
 class BaseJobPostingPage(
     BasePage, DescriptionMixin, Returns[JobPosting], HasMetadata[JobPostingMetadata]
 ):
+    """:class:`BasePage` subclass for :class:`JobPosting`."""
+
     class Processors(BasePage.Processors):
         description = [description_processor]
         descriptionHtml = [description_html_processor]
@@ -270,6 +281,8 @@ class BaseProductPage(
     Returns[Product],
     HasMetadata[ProductMetadata],
 ):
+    """:class:`BasePage` subclass for :class:`Product`."""
+
     class Processors(BasePage.Processors):
         brand = [brand_processor]
         breadcrumbs = [breadcrumbs_processor]
@@ -282,6 +295,8 @@ class BaseProductPage(
 class BaseProductListPage(
     BasePage, Returns[ProductList], HasMetadata[ProductListMetadata]
 ):
+    """:class:`BasePage` subclass for :class:`ProductList`."""
+
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
@@ -289,6 +304,8 @@ class BaseProductListPage(
 class BaseProductNavigationPage(
     BasePage, Returns[ProductNavigation], HasMetadata[ProductNavigationMetadata]
 ):
+    """:class:`BasePage` subclass for :class:`ProductNavigation`."""
+
     class Processors(BasePage.Processors):
         subCategories = [request_list_processor]
         items = [request_list_processor]
@@ -297,6 +314,8 @@ class BaseProductNavigationPage(
 class BaseRealEstatePage(
     BasePage, Returns[RealEstate], HasMetadata[RealEstateMetadata]
 ):
+    """:class:`BasePage` subclass for :class:`RealEstate`."""
+
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
@@ -304,6 +323,9 @@ class BaseRealEstatePage(
 
 @attrs.define
 class Page(_BasePage, WebPage):
+    """Base class for page object classes that has
+    :class:`~web_poet.page_inputs.http.HttpResponse` as a dependency."""
+
     class Processors(_BasePage.Processors):
         pass
 
@@ -313,11 +335,15 @@ class Page(_BasePage, WebPage):
 
 
 class ArticlePage(Page, Returns[Article], HasMetadata[ArticleMetadata]):
+    """:class:`Page` subclass for :class:`Article`."""
+
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
 
 class ArticleListPage(Page, Returns[ArticleList], HasMetadata[ArticleListMetadata]):
+    """:class:`Page` subclass for :class:`ArticleList`."""
+
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
@@ -325,12 +351,14 @@ class ArticleListPage(Page, Returns[ArticleList], HasMetadata[ArticleListMetadat
 class ArticleNavigationPage(
     Page, Returns[ArticleNavigation], HasMetadata[ArticleNavigationMetadata]
 ):
-    pass
+    """:class:`Page` subclass for :class:`ArticleNavigation`."""
 
 
 class BusinessPlacePage(
     Page, Returns[BusinessPlace], HasMetadata[BusinessPlaceMetadata]
 ):
+    """:class:`Page` subclass for :class:`BusinessPlace`."""
+
     class Processors(Page.Processors):
         description = [description_processor]
 
@@ -338,6 +366,8 @@ class BusinessPlacePage(
 class JobPostingPage(
     Page, DescriptionMixin, Returns[JobPosting], HasMetadata[JobPostingMetadata]
 ):
+    """:class:`Page` subclass for :class:`JobPosting`."""
+
     class Processors(Page.Processors):
         description = [description_processor]
         descriptionHtml = [description_html_processor]
@@ -346,6 +376,8 @@ class JobPostingPage(
 class ProductPage(
     Page, DescriptionMixin, PriceMixin, Returns[Product], HasMetadata[ProductMetadata]
 ):
+    """:class:`Page` subclass for :class:`Product`."""
+
     class Processors(Page.Processors):
         brand = [brand_processor]
         breadcrumbs = [breadcrumbs_processor]
@@ -356,6 +388,8 @@ class ProductPage(
 
 
 class ProductListPage(Page, Returns[ProductList], HasMetadata[ProductListMetadata]):
+    """:class:`Page` subclass for :class:`ProductList`."""
+
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
@@ -363,10 +397,12 @@ class ProductListPage(Page, Returns[ProductList], HasMetadata[ProductListMetadat
 class ProductNavigationPage(
     Page, Returns[ProductNavigation], HasMetadata[ProductNavigationMetadata]
 ):
-    pass
+    """:class:`Page` subclass for :class:`ProductNavigation`."""
 
 
 class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata]):
+    """:class:`Page` subclass for :class:`RealEstate`."""
+
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
