@@ -1,6 +1,6 @@
 """Classes for data nested within items."""
 import base64
-from typing import List, Optional, Type
+from typing import Any, List, Optional, Type
 
 import attrs
 
@@ -465,6 +465,14 @@ class Video(_Media):
     """
 
 
+@attrs.define(kw_only=True)
+class ProbabilityRequest(Request, ProbabilityMixin):
+    """A :class:`Request` that includes a probability value."""
+
+    #: Data extraction process metadata.
+    metadata: Optional[ProbabilityMetadata] = None
+
+
 def cast_request(value: Request, cls: Type[Request]) -> Request:
     """Convert *value*, an instance of :class:`Request` or a subclass, into
     *cls*, a different class that is also either :class:`Request` or a
@@ -480,14 +488,6 @@ def request_list_processor(request_list: List[Any]) -> List[ProbabilityRequest]:
     :class:`Request` or a subclass, into instances of
     :class:`ProbabilityRequest`."""
     return [cast_request(request, ProbabilityRequest) for request in request_list]
-
-
-@attrs.define(kw_only=True)
-class ProbabilityRequest(Request, ProbabilityMixin):
-    """A :class:`Request` that includes a probability value."""
-
-    #: Data extraction process metadata.
-    metadata: Optional[ProbabilityMetadata] = None
 
 
 @attrs.define(kw_only=True)
