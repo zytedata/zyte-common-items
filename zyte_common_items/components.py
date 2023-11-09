@@ -493,7 +493,7 @@ def cast_request(value: Request, cls: Type[Request]) -> Request:
     return new_value
 
 
-def request_list_processor(request_list):
+def request_list_processor(request_list: List[Any]) -> List[ProbabilityRequest]:
     """Convert all objects in *request_list*, which are instances of
     :class:`Request` or a subclass, into instances of
     :class:`ProbabilityRequest`."""
