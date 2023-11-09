@@ -155,7 +155,7 @@ async def test_no_item_found_BasePage():
 
 
 def test_page_pairs():
-    """For every page a base page and an auto page, and the other way around."""
+    """For every page, a base page and an auto page, and vice versa."""
     pages = {
         obj_name
         for obj_name in zyte_common_items.__dict__
