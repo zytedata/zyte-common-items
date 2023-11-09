@@ -107,7 +107,8 @@ class ArticleFromList(Item):
 
 @attrs.define(kw_only=True)
 class Article(Item):
-    """Article from an online news website.
+    """Article, typically seen on online news websites, blogs, or announcement
+    sections.
 
     :attr:`url` is the only required attribute.
     """
