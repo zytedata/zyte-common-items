@@ -2,12 +2,21 @@
 Changelog
 =========
 
+0.13.0 (unreleased)
+===================
+
+* Added ``Auto``-prefixed versions of :ref:`page objects <page-objects>`, such
+  as :meth:`~zyte_common_items.AutoProductPage`, that return data from Zyte API
+  automatic extraction from their fields by default, and can be used to more
+  easily override that data with custom parsing logic.
+
+
 0.12.0 (2023-10-27)
 ===================
 
 * Added :meth:`~zyte_common_items.base.ProbabilityMixin.get_probability` helper
   method in item classes (e.g. :class:`~zyte_common_items.Product`,
-  :class:`~zyte_common_items.Article`) and 
+  :class:`~zyte_common_items.Article`) and
   :class:`~zyte_common_items.ProbabilityRequest`.
 
 
