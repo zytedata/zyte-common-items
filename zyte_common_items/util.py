@@ -108,7 +108,7 @@ def metadata_processor(metadata, page):
 
 
 class MetadataCaster:
-    """attrs convertor that converts an input metadata object into the metadata
+    """attrs converter that converts an input metadata object into the metadata
     class declared by the container page object class."""
 
     def __init__(self, target):
