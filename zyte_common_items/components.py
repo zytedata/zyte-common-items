@@ -1,6 +1,6 @@
 """Classes for data nested within items."""
 import base64
-from typing import Any, List, Optional, Type, TypeVar
+from typing import List, Optional, Type, TypeVar
 
 import attrs
 
@@ -486,7 +486,7 @@ def cast_request(value: Request, cls: Type[RequestT]) -> RequestT:
     return new_value
 
 
-def request_list_processor(request_list: List[Any]) -> List[ProbabilityRequest]:
+def request_list_processor(request_list: List[Request]) -> List[ProbabilityRequest]:
     """Convert all objects in *request_list*, which are instances of
     :class:`Request` or a subclass, into instances of
     :class:`ProbabilityRequest`."""
