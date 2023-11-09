@@ -4,7 +4,7 @@ from typing import List, Optional, Type
 
 import attrs
 
-from zyte_common_items.base import Item
+from zyte_common_items.base import Item, ProbabilityMixin
 from zyte_common_items.util import convert_to_class, url_to_str
 
 # Metadata ####################################################################
@@ -455,7 +455,7 @@ class Request(Item):
             method=self.method or "GET",
             headers=header_list,
             body=self.body_bytes,
-            **kwargs
+            **kwargs,
         )
 
 
@@ -479,7 +479,7 @@ def request_list_processor(request_list):
 
 
 @attrs.define(kw_only=True)
-class ProbabilityRequest(Request):
+class ProbabilityRequest(Request, ProbabilityMixin):
     """A :class:`Request` that includes a probability value."""
 
     #: Data extraction process metadata.
