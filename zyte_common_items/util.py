@@ -58,7 +58,7 @@ def url_to_str(url: Union[str, _Url]) -> str:
 
 
 def format_datetime(dt):
-    """Returns the specified :class:`~datetime.datetime` object, assumed to be
+    """Return the specified :class:`~datetime.datetime` object, assumed to be
     in the UTC timezone, in ISO format, with the timezone specified as
     ``Z``."""
     return f"{dt.isoformat(timespec='seconds')}Z"
