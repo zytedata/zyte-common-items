@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.13.0 (unreleased)
+0.13.0 (2023-11-09)
 ===================
 
 * Added ``Auto``-prefixed versions of :ref:`page objects <page-objects>`, such
