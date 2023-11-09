@@ -65,7 +65,7 @@ def format_datetime(dt):
 
 
 def convert_to_class(value: Any, new_cls: type) -> Any:
-    """Converts *value* into *type* keeping all shared attributes, and
+    """Convert *value* into *type* keeping all shared attributes, and
     triggering a run-time warning if any attribute is removed."""
     if type(value) == new_cls:
         return value
