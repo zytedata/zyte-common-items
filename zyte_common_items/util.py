@@ -5,8 +5,8 @@ from weakref import WeakKeyDictionary
 import attrs
 from web_poet.page_inputs.url import _Url
 
-#: Caches the attribute names for attr.s classes.
-CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
+# Caches the attribute names for attr.s classes.
+_CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
 
 
 def split_in_unknown_and_known_fields(
@@ -20,9 +20,9 @@ def split_in_unknown_and_known_fields(
     data = data or {}
     if not attrs.has(item_cls):
         raise ValueError(f"The cls {item_cls} is not attrs class")
-    if item_cls not in CLASS_ATTRS:
-        CLASS_ATTRS[item_cls] = {field.name for field in attrs.fields(item_cls)}
-    unknown, known = split_dict(data, lambda k: k in CLASS_ATTRS[item_cls])
+    if item_cls not in _CLASS_ATTRS:
+        _CLASS_ATTRS[item_cls] = {field.name for field in attrs.fields(item_cls)}
+    unknown, known = split_dict(data, lambda k: k in _CLASS_ATTRS[item_cls])
     return unknown, known
 
 
