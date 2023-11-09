@@ -73,63 +73,45 @@ class Metadata(_DetailsMetadata):
 class ArticleMetadata(_DetailsMetadata):
     """Metadata class for :data:`zyte_common_items.Article.metadata`."""
 
-    pass
-
 
 @attrs.define(kw_only=True)
 class ArticleListMetadata(_ListMetadata):
     """Metadata class for :data:`zyte_common_items.ArticleList.metadata`."""
-
-    pass
 
 
 @attrs.define(kw_only=True)
 class ArticleNavigationMetadata(_ListMetadata):
     """Metadata class for :data:`zyte_common_items.ArticleNavigation.metadata`."""
 
-    pass
-
 
 @attrs.define(kw_only=True)
 class BusinessPlaceMetadata(Metadata):
     """Metadata class for :data:`zyte_common_items.BusinessPlace.metadata`."""
-
-    pass
 
 
 @attrs.define(kw_only=True)
 class JobPostingMetadata(Metadata):
     """Metadata class for :data:`zyte_common_items.JobPosting.metadata`."""
 
-    pass
-
 
 @attrs.define(kw_only=True)
 class ProductMetadata(_DetailsMetadata):
     """Metadata class for :data:`zyte_common_items.Product.metadata`."""
-
-    pass
 
 
 @attrs.define(kw_only=True)
 class ProductListMetadata(_ListMetadata):
     """Metadata class for :data:`zyte_common_items.ProductList.metadata`."""
 
-    pass
-
 
 @attrs.define(kw_only=True)
 class ProductNavigationMetadata(_ListMetadata):
     """Metadata class for :data:`zyte_common_items.ProductNavigation.metadata`."""
 
-    pass
-
 
 @attrs.define(kw_only=True)
 class RealEstateMetadata(_DetailsMetadata):
     """Metadata class for :data:`zyte_common_items.RealEstate.metadata`."""
-
-    pass
 
 
 ###############################################################################
