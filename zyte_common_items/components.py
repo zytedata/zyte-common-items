@@ -1,6 +1,6 @@
 """Classes for data nested within items."""
 import base64
-from typing import Any, List, Optional, Type
+from typing import Any, List, Optional, Type, TypeVar
 
 import attrs
 
@@ -473,7 +473,10 @@ class ProbabilityRequest(Request, ProbabilityMixin):
     metadata: Optional[ProbabilityMetadata] = None
 
 
-def cast_request(value: Request, cls: Type[Request]) -> Request:
+RequestT = TypeVar("RequestT", bound=Request)
+
+
+def cast_request(value: Request, cls: Type[RequestT]) -> RequestT:
     """Convert *value*, an instance of :class:`Request` or a subclass, into
     *cls*, a different class that is also either :class:`Request` or a
     subclass."""
