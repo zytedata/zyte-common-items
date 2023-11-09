@@ -155,16 +155,17 @@ async def test_no_item_found_BasePage():
 
 
 def test_page_pairs():
-    """For every page a base page, for every base page a page."""
+    """For every page, a base page and an auto page, and vice versa."""
     pages = {
         obj_name
         for obj_name in zyte_common_items.__dict__
         if (
-            not obj_name.startswith("Base")
+            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )
     }
+
     actual_base_pages = {
         obj_name
         for obj_name in zyte_common_items.__dict__
@@ -177,6 +178,14 @@ def test_page_pairs():
     expected_base_pages = {f"Base{page}" for page in pages}
     assert actual_base_pages == expected_base_pages
 
+    actual_auto_pages = {
+        obj_name
+        for obj_name in zyte_common_items.__dict__
+        if (obj_name.startswith("Auto") and obj_name.endswith("Page"))
+    }
+    expected_auto_pages = {f"Auto{page}" for page in pages}
+    assert actual_auto_pages == expected_auto_pages
+
 
 def test_matching_items():
     """For every page, an item."""
@@ -184,7 +193,7 @@ def test_matching_items():
         obj_name
         for obj_name in zyte_common_items.__dict__
         if (
-            not obj_name.startswith("Base")
+            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )
@@ -260,7 +269,7 @@ def test_metadata():
         obj_name
         for obj_name in zyte_common_items.__dict__
         if (
-            not obj_name.startswith("Base")
+            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )

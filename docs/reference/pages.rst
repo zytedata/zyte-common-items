@@ -13,6 +13,110 @@ Product
 .. autoclass:: zyte_common_items.ProductPage(**kwargs)
    :show-inheritance:
 
+.. autoclass:: zyte_common_items.AutoProductPage(**kwargs)
+   :show-inheritance:
+
+Product list
+============
+
+.. autoclass:: zyte_common_items.BaseProductListPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.ProductListPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoProductListPage(**kwargs)
+   :show-inheritance:
+
+Product navigation
+==================
+
+.. autoclass:: zyte_common_items.BaseProductNavigationPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.ProductNavigationPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoProductNavigationPage(**kwargs)
+   :show-inheritance:
+
+Article
+=======
+
+.. autoclass:: zyte_common_items.BaseArticlePage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.ArticlePage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoArticlePage(**kwargs)
+   :show-inheritance:
+
+
+Article list
+============
+
+.. autoclass:: zyte_common_items.BaseArticleListPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.ArticleListPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoArticleListPage(**kwargs)
+   :show-inheritance:
+
+
+Article navigation
+==================
+
+.. autoclass:: zyte_common_items.BaseArticleNavigationPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.ArticleNavigationPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoArticleNavigationPage(**kwargs)
+   :show-inheritance:
+
+Business place
+==============
+
+.. autoclass:: zyte_common_items.BaseBusinessPlacePage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.BusinessPlacePage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoBusinessPlacePage(**kwargs)
+   :show-inheritance:
+
+Real estate
+===========
+
+.. autoclass:: zyte_common_items.BaseRealEstatePage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.RealEstatePage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoRealEstatePage(**kwargs)
+   :show-inheritance:
+
+Job posting
+===========
+
+.. autoclass:: zyte_common_items.BaseJobPostingPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.JobPostingPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoJobPostingPage(**kwargs)
+   :show-inheritance:
+
+Mixins
+======
+
 .. autoclass:: zyte_common_items.pages.DescriptionMixin
 
    .. data:: description
@@ -42,81 +146,6 @@ Product
       ``"$"``. The default implementation uses the data extracted by
       :func:`~zyte_common_items.processors.price_processor` from the ``price``
       field.
-
-Product list
-============
-
-.. autoclass:: zyte_common_items.BaseProductListPage(**kwargs)
-   :show-inheritance:
-
-.. autoclass:: zyte_common_items.ProductListPage(**kwargs)
-   :show-inheritance:
-
-Product navigation
-==================
-
-.. autoclass:: zyte_common_items.BaseProductNavigationPage(**kwargs)
-   :show-inheritance:
-
-.. autoclass:: zyte_common_items.ProductNavigationPage(**kwargs)
-   :show-inheritance:
-
-Article
-=======
-
-.. autoclass:: zyte_common_items.BaseArticlePage(**kwargs)
-   :show-inheritance:
-
-.. autoclass:: zyte_common_items.ArticlePage(**kwargs)
-   :show-inheritance:
-
-
-Article list
-============
-
-.. autoclass:: zyte_common_items.BaseArticleListPage(**kwargs)
-   :show-inheritance:
-
-.. autoclass:: zyte_common_items.ArticleListPage(**kwargs)
-   :show-inheritance:
-
-
-Article navigation
-==================
-
-.. autoclass:: zyte_common_items.BaseArticleNavigationPage(**kwargs)
-   :show-inheritance:
-
-.. autoclass:: zyte_common_items.ArticleNavigationPage(**kwargs)
-   :show-inheritance:
-
-
-Business place
-==============
-
-.. autoclass:: zyte_common_items.BaseBusinessPlacePage(**kwargs)
-   :show-inheritance:
-
-.. autoclass:: zyte_common_items.BusinessPlacePage(**kwargs)
-   :show-inheritance:
-
-Real estate
-===========
-
-.. autoclass:: zyte_common_items.BaseRealEstatePage(**kwargs)
-   :show-inheritance:
-
-.. autoclass:: zyte_common_items.RealEstatePage(**kwargs)
-   :show-inheritance:
-
-Job posting
-===========
-
-.. autoclass:: zyte_common_items.BaseJobPostingPage(**kwargs)
-   :show-inheritance:
-
-.. autoclass:: zyte_common_items.JobPostingPage(**kwargs)
-   :show-inheritance:
 
 Custom page objects
 ===================
