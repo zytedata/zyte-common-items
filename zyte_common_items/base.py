@@ -49,6 +49,10 @@ def _extend_trail(trail: _Trail, key: Union[int, str]):
 
 @attrs.define
 class ProbabilityMixin:
+    """Provides :meth:`get_probability` to make it easier to access the
+    probability of an item or item component that is nested under its metadata
+    attribute."""
+
     def get_probability(self) -> Optional[float]:
         """Returns the item probability if available, otherwise ``None``."""
         if metadata := getattr(self, "metadata", None):
@@ -58,6 +62,8 @@ class ProbabilityMixin:
 
 @attrs.define
 class Item(ProbabilityMixin, _ItemBase):
+    """Base class for :ref:`items <items>`."""
+
     def __attrs_post_init__(self):
         self._unknown_fields_dict = {}
 

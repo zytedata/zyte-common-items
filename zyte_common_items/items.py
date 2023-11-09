@@ -107,6 +107,12 @@ class ArticleFromList(Item):
 
 @attrs.define(kw_only=True)
 class Article(Item):
+    """Article, typically seen on online news websites, blogs, or announcement
+    sections.
+
+    :attr:`url` is the only required attribute.
+    """
+
     #: Headline or title.
     headline: Optional[str] = None
 
@@ -402,8 +408,7 @@ class ProductVariant(Item):
 class Product(Item):
     """Product from an e-commerce website.
 
-    The :attr:`url` attribute is the only required attribute, all other fields
-    are optional.
+    :attr:`url` is the only required attribute.
     """
 
     #: List of name-value pais of data about a specific, otherwise unmapped
@@ -696,8 +701,7 @@ class ProductList(Item):
 
     It represents, for example, a single page from a category.
 
-    The :attr:`url` attribute is the only required attribute, all other fields
-    are optional.
+    :attr:`url` is the only required attribute.
     """
 
     #: Webpage `breadcrumb trail`_.
@@ -752,7 +756,10 @@ class ProductList(Item):
 @attrs.define(slots=True, kw_only=True)
 class BusinessPlace(Item):
     """Business place, with properties typically seen on maps or business
-    listings."""
+    listings.
+
+    :attr:`url` is the only required attribute.
+    """
 
     #: Unique identifier of the place on the website.
     placeId: Optional[str] = None
@@ -851,6 +858,12 @@ class BusinessPlace(Item):
 
 @attrs.define(slots=True, kw_only=True)
 class RealEstate(Item):
+    """Real state offer, typically seen on real estate offer aggregator
+    websites.
+
+    :attr:`url` is the only required attribute.
+    """
+
     #: The url of the final response, after any redirects.
     url: str = attrs.field(converter=url_to_str)
 
@@ -951,6 +964,9 @@ class RealEstate(Item):
 
 
 class RequestListCaster:
+    """attrs converter to turn lists of :class:`Request` instances into lists
+    of :class:`ProbabilityRequest` instances."""
+
     def __init__(self, target):
         self._target = target
 
@@ -1046,6 +1062,12 @@ class ArticleNavigation(Item):
 
 @attrs.define(kw_only=True)
 class JobPosting(Item):
+    """A job posting, typically seen on job posting websites or websites of
+    companies that are hiring.
+
+    :attr:`url` is the only required attribute.
+    """
+
     #: The url of the final response, after any redirects.
     url: str = attrs.field(converter=url_to_str)
 
