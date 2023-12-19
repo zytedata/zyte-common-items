@@ -37,6 +37,12 @@ from .components import (
     StarRating,
     Video,
 )
+from .extractors import (
+    ProductFromListExtractor,
+    ProductFromListSelectorExtractor,
+    ProductVariantExtractor,
+    ProductVariantSelectorExtractor,
+)
 from .items import (
     Article,
     ArticleFromList,
