@@ -1,5 +1,6 @@
 from web_poet import Extractor, SelectorExtractor
 
+from .items import ProductFromList, ProductVariant
 from .processors import price_processor, simple_price_processor
 
 
@@ -8,21 +9,21 @@ class _ProductProcessors:
     regularPrice = [simple_price_processor]
 
 
-class ProductVariantExtractor(Extractor):
+class ProductVariantExtractor(Extractor[ProductVariant]):
     class Processors(_ProductProcessors):
         pass
 
 
-class ProductVariantSelectorExtractor(SelectorExtractor):
+class ProductVariantSelectorExtractor(SelectorExtractor[ProductVariant]):
     class Processors(_ProductProcessors):
         pass
 
 
-class ProductFromListExtractor(Extractor):
+class ProductFromListExtractor(Extractor[ProductFromList]):
     class Processors(_ProductProcessors):
         pass
 
 
-class ProductFromListSelectorExtractor(SelectorExtractor):
+class ProductFromListSelectorExtractor(SelectorExtractor[ProductFromList]):
     class Processors(_ProductProcessors):
         pass
