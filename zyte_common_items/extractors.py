@@ -9,21 +9,31 @@ class _ProductProcessors:
     regularPrice = [simple_price_processor]
 
 
-class ProductVariantExtractor(Extractor[ProductVariant]):
-    class Processors(_ProductProcessors):
-        pass
-
-
-class ProductVariantSelectorExtractor(SelectorExtractor[ProductVariant]):
-    class Processors(_ProductProcessors):
-        pass
-
-
 class ProductFromListExtractor(Extractor[ProductFromList]):
+    """:class:`~web_poet.pages.Extractor` for :class:`ProductFromList`."""
+
     class Processors(_ProductProcessors):
         pass
 
 
 class ProductFromListSelectorExtractor(SelectorExtractor[ProductFromList]):
+    """:class:`~web_poet.pages.SelectorExtractor` for
+    :class:`ProductFromList`."""
+
+    class Processors(_ProductProcessors):
+        pass
+
+
+class ProductVariantExtractor(Extractor[ProductVariant]):
+    """:class:`~web_poet.pages.Extractor` for :class:`ProductVariant`."""
+
+    class Processors(_ProductProcessors):
+        pass
+
+
+class ProductVariantSelectorExtractor(SelectorExtractor[ProductVariant]):
+    """:class:`~web_poet.pages.SelectorExtractor` for
+    :class:`ProductVariant`."""
+
     class Processors(_ProductProcessors):
         pass
