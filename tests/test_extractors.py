@@ -1,5 +1,6 @@
 import attrs
 import pytest
+from parsel import Selector
 from web_poet import field
 
 from zyte_common_items import ProductVariant, ProductVariantExtractor
@@ -19,7 +20,7 @@ async def test_product_variant_extractor():
         def regularPrice(self):
             return self.data["regularPrice"]
 
-    data = {"price": "10€", "regularPrice": "20€"}
+    data = {"price": Selector("10€"), "regularPrice": Selector("20€")}
     extracted = await MyProductVariantExtractor(data).to_item()
 
     assert isinstance(extracted, ProductVariant)
