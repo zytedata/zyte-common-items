@@ -57,13 +57,19 @@ def only_handle_nodes(
     return wrapper
 
 
-def handle_selectorlist(f: Callable[[Any, Any], Any]) -> Callable[[Any, Any], Any]:
-    """Decorator for processors that picks the first
-    :class:`~parsel.selector.Selector` if the input is a
-    :class:`~parsel.selector.SelectorList`."""
+def _handle_price(f: Callable[[Any, Any], Any]) -> Callable[[Any, Any], Any]:
+    """Decorator for price processors.
+
+    If the input is a :class:`~parsel.selector.SelectorList`, the first
+    :class:`~parsel.selector.Selector` is returned.
+
+    If the input is ``None``, the value is returned as is.
+    """
 
     @wraps(f)
     def wrapper(value: Any, page: Any) -> Any:
+        if value is None:
+            return value
         value = _handle_selectorlist(value)
         result = f(value, page)
         return result
@@ -114,8 +120,8 @@ def brand_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
     return extract_brand_name(value, search_depth=2)
 
 
-@handle_selectorlist
-def price_processor(value: Union[Selector, HtmlElement, str], page: Any) -> Any:
+@_handle_price
+def price_processor(value: Union[Selector, HtmlElement, str, None], page: Any) -> Any:
     """Convert the data into a price string if possible.
 
     Uses the price-parser_ library.
@@ -133,8 +139,10 @@ def price_processor(value: Union[Selector, HtmlElement, str], page: Any) -> Any:
     return _format_price(price)
 
 
-@handle_selectorlist
-def simple_price_processor(value: Union[Selector, HtmlElement, str], page: Any) -> Any:
+@_handle_price
+def simple_price_processor(
+    value: Union[Selector, HtmlElement, str, None], page: Any
+) -> Any:
     """Convert the data into a price string if possible.
 
     Uses the price-parser_ library.
