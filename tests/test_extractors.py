@@ -68,7 +68,7 @@ async def test_product_variant_extractor():
         def regularPrice(self):
             return self.data["oldPrice"]
 
-    data = {"price": "10€", "oldPrice": "20€"}
+    data = {"price": "10€", "oldPrice": "20€", "unusedField": "foo"}
     extracted = await MyProductVariantExtractor(data).to_item()
 
     assert isinstance(extracted, ProductVariant)
@@ -87,7 +87,9 @@ async def test_product_variant_selector_extractor():
         def regularPrice(self):
             return self.css("oldPrice")
 
-    selector = Selector("<data><price>10€</price><oldPrice>20€</oldPrice></data>")
+    selector = Selector(
+        "<data><price>10€</price><oldPrice>20€</oldPrice><unusedField>foo</unusedField></data>"
+    )
     extracted = await MyProductVariantSelectorExtractor(selector).to_item()
 
     assert isinstance(extracted, ProductVariant)
