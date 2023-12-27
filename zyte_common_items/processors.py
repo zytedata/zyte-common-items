@@ -57,6 +57,20 @@ def only_handle_nodes(
     return wrapper
 
 
+def handle_selectorlist(f: Callable[[Any, Any], Any]) -> Callable[[Any, Any], Any]:
+    """Decorator for processors that picks the first
+    :class:`~parsel.selector.Selector` if the input is a
+    :class:`~parsel.selector.SelectorList`."""
+
+    @wraps(f)
+    def wrapper(value: Any, page: Any) -> Any:
+        value = _handle_selectorlist(value)
+        result = f(value, page)
+        return result
+
+    return wrapper
+
+
 def breadcrumbs_processor(value: Any, page: Any) -> Any:
     """Convert the data into a list of :class:`~zyte_common_items.Breadcrumb` objects if possible.
 
@@ -100,8 +114,8 @@ def brand_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
     return extract_brand_name(value, search_depth=2)
 
 
-@only_handle_nodes
-def price_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
+@handle_selectorlist
+def price_processor(value: Union[Selector, HtmlElement, str], page: Any) -> Any:
     """Convert the data into a price string if possible.
 
     Uses the price-parser_ library.
@@ -119,8 +133,8 @@ def price_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
     return _format_price(price)
 
 
-@only_handle_nodes
-def simple_price_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
+@handle_selectorlist
+def simple_price_processor(value: Union[Selector, HtmlElement, str], page: Any) -> Any:
     """Convert the data into a price string if possible.
 
     Uses the price-parser_ library.
