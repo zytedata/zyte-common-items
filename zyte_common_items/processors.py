@@ -8,8 +8,15 @@ from parsel import Selector, SelectorList
 from price_parser import Price
 from web_poet.mixins import ResponseShortcutsMixin
 from zyte_parsers import Breadcrumb as zp_Breadcrumb
-from zyte_parsers import extract_brand_name, extract_breadcrumbs, extract_price
+from zyte_parsers import Gtin as zp_Gtin
+from zyte_parsers import (
+    extract_brand_name,
+    extract_breadcrumbs,
+    extract_gtin,
+    extract_price,
+)
 
+from . import Gtin
 from .items import Breadcrumb
 
 
@@ -187,3 +194,34 @@ def description_processor(value: Any, page: Any) -> Any:
     page._description_node = cleaned_node
     page._description_str = cleaned_text
     return cleaned_text
+
+
+def gtin_processor(value: Union[SelectorList, Selector, HtmlElement], page: Any) -> Any:
+    """Convert the data into a list of :class:`~zyte_common_items.Gtin` objects if possible.
+
+    Supported inputs are :class:`~parsel.selector.Selector`,
+    :class:`~parsel.selector.SelectorList`, :class:`~lxml.html.HtmlElement` and
+    an iterable of :class:`zyte_parsers.Gtin` objects.
+    Other inputs are returned as is.
+    """
+
+    def _from_zp_gtin(zp_value: zp_Gtin) -> Gtin:
+        return Gtin(type=zp_value.type, value=zp_value.value)
+
+    results = []
+    if isinstance(value, SelectorList):
+        for sel in value:
+            if result := extract_gtin(sel):
+                results.append(_from_zp_gtin(result))
+    elif isinstance(value, (Selector, HtmlElement)):
+        if result := extract_gtin(value):
+            results.append(_from_zp_gtin(result))
+    elif isinstance(value, Iterable) and not isinstance(value, str):
+        for item in value:
+            if isinstance(item, zp_Gtin):
+                results.append(_from_zp_gtin(item))
+            else:
+                results.append(item)
+    else:
+        return value
+    return results or None

@@ -65,6 +65,7 @@ from .processors import (
     breadcrumbs_processor,
     description_html_processor,
     description_processor,
+    gtin_processor,
     price_processor,
     simple_price_processor,
 )
@@ -313,6 +314,7 @@ class BaseProductPage(
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
         descriptionHtml = [description_html_processor]
+        gtin = [gtin_processor]
         price = [price_processor]
         regularPrice = [simple_price_processor]
 
