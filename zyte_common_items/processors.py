@@ -196,10 +196,12 @@ def description_processor(value: Any, page: Any) -> Any:
     return cleaned_text
 
 
-def gtin_processor(value: Union[SelectorList, Selector, HtmlElement], page: Any) -> Any:
+def gtin_processor(
+    value: Union[SelectorList, Selector, HtmlElement, str], page: Any
+) -> Any:
     """Convert the data into a list of :class:`~zyte_common_items.Gtin` objects if possible.
 
-    Supported inputs are :class:`~parsel.selector.Selector`,
+    Supported inputs are :class:`str`, :class:`~parsel.selector.Selector`,
     :class:`~parsel.selector.SelectorList`, :class:`~lxml.html.HtmlElement` and
     an iterable of :class:`zyte_parsers.Gtin` objects.
     Other inputs are returned as is.
@@ -213,10 +215,10 @@ def gtin_processor(value: Union[SelectorList, Selector, HtmlElement], page: Any)
         for sel in value:
             if result := extract_gtin(sel):
                 results.append(_from_zp_gtin(result))
-    elif isinstance(value, (Selector, HtmlElement)):
+    elif isinstance(value, (Selector, HtmlElement, str)):
         if result := extract_gtin(value):
             results.append(_from_zp_gtin(result))
-    elif isinstance(value, Iterable) and not isinstance(value, str):
+    elif isinstance(value, Iterable):
         for item in value:
             if isinstance(item, zp_Gtin):
                 results.append(_from_zp_gtin(item))

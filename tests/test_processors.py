@@ -188,7 +188,7 @@ gtin_expected = [Gtin("isbn13", "9781933624341")]
     [
         (None, None),
         ([], None),
-        ("foo", "foo"),
+        ("foo", None),
         (Selector(text="<html></html>"), None),
         (SelectorList([]), None),
         (gtin_expected, gtin_expected),
@@ -204,7 +204,7 @@ gtin_expected = [Gtin("isbn13", "9781933624341")]
                 Gtin("isbn13", "9781933624342"),
             ],
         ),
-        (gtin_str, gtin_str),
+        (gtin_str, gtin_expected),
     ],
 )
 def test_gtin(input_value, expected_value):
