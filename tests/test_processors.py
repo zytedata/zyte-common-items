@@ -197,14 +197,24 @@ gtin_expected = [Gtin("isbn13", "9781933624341")]
         (
             [
                 zp_Gtin("isbn13", "9781933624341"),
-                zp_Gtin("isbn13", "9781933624342"),
+                zp_Gtin("isbn13", "9780525555360"),
             ],
             [
                 Gtin("isbn13", "9781933624341"),
-                Gtin("isbn13", "9781933624342"),
+                Gtin("isbn13", "9780525555360"),
             ],
         ),
         (gtin_str, gtin_expected),
+        (
+            [
+                "978-1-933624-34-1",
+                "97-805-25555-360",
+            ],
+            [
+                Gtin("isbn13", "9781933624341"),
+                Gtin("isbn13", "9780525555360"),
+            ],
+        ),
     ],
 )
 def test_gtin(input_value, expected_value):

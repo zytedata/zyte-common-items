@@ -202,8 +202,9 @@ def gtin_processor(
     """Convert the data into a list of :class:`~zyte_common_items.Gtin` objects if possible.
 
     Supported inputs are :class:`str`, :class:`~parsel.selector.Selector`,
-    :class:`~parsel.selector.SelectorList`, :class:`~lxml.html.HtmlElement` and
-    an iterable of :class:`zyte_parsers.Gtin` objects.
+    :class:`~parsel.selector.SelectorList`, :class:`~lxml.html.HtmlElement`, an
+    iterable of :class:`str` and an iterable of :class:`zyte_parsers.Gtin`
+    objects.
     Other inputs are returned as is.
     """
 
@@ -222,6 +223,8 @@ def gtin_processor(
         for item in value:
             if isinstance(item, zp_Gtin):
                 results.append(_from_zp_gtin(item))
+            elif isinstance(item, str):
+                results.append(_from_zp_gtin(extract_gtin(item)))
             else:
                 results.append(item)
     else:
