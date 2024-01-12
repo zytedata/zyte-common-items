@@ -93,6 +93,10 @@ All ``descriptionHtml`` fields have the following processor enabled:
 
 .. autofunction:: zyte_common_items.processors.description_html_processor
 
+All ``gtin`` fields have the following processor enabled:
+
+.. autofunction:: zyte_common_items.processors.gtin_processor
+
 All ``price`` fields have the following processor enabled:
 
 .. autofunction:: zyte_common_items.processors.price_processor
