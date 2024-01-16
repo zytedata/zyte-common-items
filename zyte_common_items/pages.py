@@ -410,6 +410,7 @@ class ProductPage(
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
         descriptionHtml = [description_html_processor]
+        gtin = [gtin_processor]
         price = [price_processor]
         regularPrice = [simple_price_processor]
 
