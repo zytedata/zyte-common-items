@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.14.0 (YYYY-MM-DD)
+0.14.0 (2024-01-16)
 ===================
 
 * Now requires ``zyte-parsers >= 0.4.0``.
