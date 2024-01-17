@@ -2,6 +2,17 @@
 Changelog
 =========
 
+0.14.0 (2024-01-16)
+===================
+
+* Now requires ``zyte-parsers >= 0.4.0``.
+
+* Added :func:`zyte_common_items.processors.gtin_processor` and enabled it for
+  the ``gtin`` fields in the page classes for
+  :class:`~zyte_common_items.Product`.
+
+* Improved the API documentation.
+
 0.13.0 (2023-11-09)
 ===================
 
