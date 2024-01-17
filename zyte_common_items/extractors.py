@@ -1,7 +1,7 @@
 from web_poet import Extractor, SelectorExtractor
 
 from .items import ProductFromList, ProductVariant
-from .processors import price_processor, simple_price_processor
+from .processors import gtin_processor, price_processor, simple_price_processor
 
 
 class _ProductProcessors:
@@ -24,10 +24,14 @@ class ProductFromListSelectorExtractor(SelectorExtractor[ProductFromList]):
         pass
 
 
+class _ProductVariantProcessors(_ProductProcessors):
+    gtin = [gtin_processor]
+
+
 class ProductVariantExtractor(Extractor[ProductVariant]):
     """:class:`~web_poet.pages.Extractor` for :class:`ProductVariant`."""
 
-    class Processors(_ProductProcessors):
+    class Processors(_ProductVariantProcessors):
         pass
 
 
@@ -35,5 +39,5 @@ class ProductVariantSelectorExtractor(SelectorExtractor[ProductVariant]):
     """:class:`~web_poet.pages.SelectorExtractor` for
     :class:`ProductVariant`."""
 
-    class Processors(_ProductProcessors):
+    class Processors(_ProductVariantProcessors):
         pass
