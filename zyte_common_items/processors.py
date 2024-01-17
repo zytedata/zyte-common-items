@@ -57,26 +57,6 @@ def only_handle_nodes(
     return wrapper
 
 
-def _handle_price(f: Callable[[Any, Any], Any]) -> Callable[[Any, Any], Any]:
-    """Decorator for price processors.
-
-    If the input is a :class:`~parsel.selector.SelectorList`, the first
-    :class:`~parsel.selector.Selector` is returned.
-
-    If the input is ``None``, the value is returned as is.
-    """
-
-    @wraps(f)
-    def wrapper(value: Any, page: Any) -> Any:
-        if value is None:
-            return value
-        value = _handle_selectorlist(value)
-        result = f(value, page)
-        return result
-
-    return wrapper
-
-
 def breadcrumbs_processor(value: Any, page: Any) -> Any:
     """Convert the data into a list of :class:`~zyte_common_items.Breadcrumb` objects if possible.
 
@@ -120,7 +100,7 @@ def brand_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
     return extract_brand_name(value, search_depth=2)
 
 
-@_handle_price
+@only_handle_nodes
 def price_processor(value: Union[Selector, HtmlElement, str, None], page: Any) -> Any:
     """Convert the data into a price string if possible.
 
@@ -139,7 +119,7 @@ def price_processor(value: Union[Selector, HtmlElement, str, None], page: Any) -
     return _format_price(price)
 
 
-@_handle_price
+@only_handle_nodes
 def simple_price_processor(
     value: Union[Selector, HtmlElement, str, None], page: Any
 ) -> Any:

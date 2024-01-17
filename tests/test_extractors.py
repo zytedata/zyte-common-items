@@ -17,18 +17,18 @@ from zyte_common_items import (
 async def test_product_from_list_extractor():
     @attrs.define
     class MyProductFromListExtractor(ProductFromListExtractor):
-        data: dict
+        selector: Selector
 
         @field
         def price(self):
-            return self.data["price"]
+            return self.selector.css("price")
 
         @field
         def regularPrice(self):
-            return self.data["oldPrice"]
+            return self.selector.css("oldPrice")
 
-    data = {"price": "10€", "oldPrice": "20€"}
-    extracted = await MyProductFromListExtractor(data).to_item()
+    selector = Selector("<data><price>10€</price><oldPrice>20€</oldPrice></data>")
+    extracted = await MyProductFromListExtractor(selector).to_item()
 
     assert isinstance(extracted, ProductFromList)
     assert extracted.price == "10.00"
@@ -58,18 +58,20 @@ async def test_product_from_list_selector_extractor():
 async def test_product_variant_extractor():
     @attrs.define
     class MyProductVariantExtractor(ProductVariantExtractor):
-        data: dict
+        selector: Selector
 
         @field
         def price(self):
-            return self.data["price"]
+            return self.selector.css("price")
 
         @field
         def regularPrice(self):
-            return self.data["oldPrice"]
+            return self.selector.css("oldPrice")
 
-    data = {"price": "10€", "oldPrice": "20€", "unusedField": "foo"}
-    extracted = await MyProductVariantExtractor(data).to_item()
+    selector = Selector(
+        "<data><price>10€</price><oldPrice>20€</oldPrice><unusedField>foo</unusedField></data>"
+    )
+    extracted = await MyProductVariantExtractor(selector).to_item()
 
     assert isinstance(extracted, ProductVariant)
     assert extracted.price == "10.00"

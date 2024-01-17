@@ -49,7 +49,7 @@ async def test_price_string():
         @field
         def price(self):
             self.call_count += 1
-            return self.css("div::text").get()
+            return self.css("div")
 
     html = b"""
     <!DOCTYPE html>
