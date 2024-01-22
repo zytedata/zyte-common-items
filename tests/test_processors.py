@@ -7,12 +7,13 @@ from zyte_parsers import Breadcrumb as zp_Breadcrumb
 from zyte_parsers import Gtin as zp_Gtin
 from zyte_parsers import extract_breadcrumbs
 
-from zyte_common_items import BasePage, Breadcrumb, Gtin, ProductPage
+from zyte_common_items import AggregateRating, BasePage, Breadcrumb, Gtin, ProductPage
 from zyte_common_items.processors import (
     _format_price,
     brand_processor,
     breadcrumbs_processor,
     gtin_processor,
+    rating_processor,
 )
 
 breadcrumbs_html = """
@@ -227,3 +228,42 @@ def test_gtin(input_value, expected_value):
 
     page = GtinPage(base_url)  # type: ignore[arg-type]
     assert page.gtin == expected_value
+
+
+@pytest.mark.parametrize(
+    "input_value,expected_value",
+    [
+        (None, None),
+        ([], []),
+        ("foo", "foo"),
+        (Selector(text="<html></html>"), None),
+        (SelectorList([]), None),
+        (Selector(text="<html>3.8</html>"), AggregateRating(ratingValue=3.8)),
+        (
+            Selector(text="<html>3.8 out of 10</html>"),
+            AggregateRating(ratingValue=3.8, bestRating=10.0),
+        ),
+        (
+            Selector(text="<html>3.8 (7 reviews)</html>"),
+            AggregateRating(ratingValue=3.8, reviewCount=7),
+        ),
+        (
+            Selector(text="<html>3.8 out of 10 (5 reviews)</html>"),
+            AggregateRating(ratingValue=3.8, reviewCount=5),
+        ),
+        (
+            AggregateRating(ratingValue=3.8, bestRating=5.0, reviewCount=3),
+            AggregateRating(ratingValue=3.8, bestRating=5.0, reviewCount=3),
+        ),
+    ],
+)
+def test_rating(input_value, expected_value):
+    base_url = "http://www.example.com/blog/"
+
+    class RatingPage(BasePage):
+        @field(out=[rating_processor])
+        def aggregateRating(self):
+            return input_value
+
+    page = RatingPage(base_url)  # type: ignore[arg-type]
+    assert page.aggregateRating == expected_value

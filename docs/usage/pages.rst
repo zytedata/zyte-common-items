@@ -76,6 +76,10 @@ Field processors
 Some of these base classes include a ``Processors`` subclass that enables
 :ref:`default processors <web-poet:field-processors>` for some fields.
 
+All ``aggregateRating`` fields have the following processor enabled:
+
+.. autofunction:: zyte_common_items.processors.rating_processor
+
 All ``brand`` fields have the following processor enabled:
 
 .. autofunction:: zyte_common_items.processors.brand_processor

@@ -14,9 +14,11 @@ from zyte_parsers import (
     extract_breadcrumbs,
     extract_gtin,
     extract_price,
+    extract_rating,
+    extract_review_count,
 )
 
-from . import Gtin
+from . import AggregateRating, Gtin
 from .items import Breadcrumb
 
 
@@ -230,3 +232,26 @@ def gtin_processor(
     else:
         return value
     return results or None
+
+
+@only_handle_nodes
+def rating_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
+    """Convert the data into a :class:`~zyte_common_items.AggregateRating` object if possible.
+
+    Supported inputs are :class:`~parsel.selector.Selector`,
+    :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
+    Other inputs are returned as is.
+    """
+
+    # def _from_zp_rating(zp_value: zp_AggregateRating) -> AggregateRating:
+    #     return AggregateRating(bestRating=zp_value.bestRating, ratingValue=zp_value.ratingValue)
+
+    zp_rating = extract_rating(value)
+    result = AggregateRating(
+        reviewCount=extract_review_count(value),
+        bestRating=zp_rating.bestRating,
+        ratingValue=zp_rating.ratingValue,
+    )
+    if result.reviewCount or result.bestRating or result.ratingValue:
+        return result
+    return None

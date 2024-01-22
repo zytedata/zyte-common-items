@@ -67,6 +67,7 @@ from .processors import (
     description_processor,
     gtin_processor,
     price_processor,
+    rating_processor,
     simple_price_processor,
 )
 from .util import format_datetime, metadata_processor
@@ -287,6 +288,7 @@ class BaseBusinessPlacePage(
     """:class:`BasePage` subclass for :class:`BusinessPlace`."""
 
     class Processors(BasePage.Processors):
+        aggregateRating = [rating_processor]
         description = [description_processor]
 
 
@@ -310,6 +312,7 @@ class BaseProductPage(
     """:class:`BasePage` subclass for :class:`Product`."""
 
     class Processors(BasePage.Processors):
+        aggregateRating = [rating_processor]
         brand = [brand_processor]
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
@@ -387,6 +390,7 @@ class BusinessPlacePage(
     """:class:`Page` subclass for :class:`BusinessPlace`."""
 
     class Processors(Page.Processors):
+        aggregateRating = [rating_processor]
         description = [description_processor]
 
 
@@ -406,6 +410,7 @@ class ProductPage(
     """:class:`Page` subclass for :class:`Product`."""
 
     class Processors(Page.Processors):
+        aggregateRating = [rating_processor]
         brand = [brand_processor]
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
