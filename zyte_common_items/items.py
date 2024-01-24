@@ -263,7 +263,8 @@ class ArticleList(Item):
 class ProductVariant(Item):
     """:class:`Product` variant.
 
-    See :attr:`Product.variants`.
+    See :attr:`Product.variants`, :class:`ProductVariantExtractor`,
+    :class:`ProductVariantSelectorExtractor`.
     """
 
     #: List of name-value pais of data about a specific, otherwise unmapped
@@ -634,7 +635,8 @@ class ProductFromList(Item):
     """Product from a product list from a product listing page of an e-commerce
     webpage.
 
-    See :class:`ProductList`.
+    See :class:`ProductList`, :class:`ProductFromListExtractor`,
+    :class:`ProductFromListSelectorExtractor`.
     """
 
     #: Price currency `ISO 4217`_ alphabetic code (e.g. ``"USD"``).
