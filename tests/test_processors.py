@@ -255,6 +255,48 @@ def test_gtin(input_value, expected_value):
             AggregateRating(ratingValue=3.8, bestRating=5.0, reviewCount=3),
             AggregateRating(ratingValue=3.8, bestRating=5.0, reviewCount=3),
         ),
+        (
+            {"ratingValue": 3.8, "bestRating": 5.0, "reviewCount": 3},
+            AggregateRating(ratingValue=3.8, bestRating=5.0, reviewCount=3),
+        ),
+        (
+            {"ratingValue": 3.8, "reviewCount": 3},
+            AggregateRating(ratingValue=3.8, reviewCount=3),
+        ),
+        (
+            {"ratingValue": 3.8},
+            AggregateRating(ratingValue=3.8),
+        ),
+        (
+            {"ratingValue": 3.8, "reviewCount": "3"},
+            AggregateRating(ratingValue=3.8, reviewCount=3),
+        ),
+        (
+            {"ratingValue": 3.8, "bestRating": 10, "reviewCount": 3},
+            AggregateRating(ratingValue=3.8, bestRating=10.0, reviewCount=3),
+        ),
+        (
+            {
+                "ratingValue": Selector(text="<html>3.8 out of 10</html>"),
+                "reviewCount": 3,
+            },
+            AggregateRating(ratingValue=3.8, bestRating=10.0, reviewCount=3),
+        ),
+        (
+            {
+                "ratingValue": Selector(text="<html>3.8 out of 10</html>"),
+                "bestRating": 5.0,
+                "reviewCount": 3,
+            },
+            AggregateRating(ratingValue=3.8, bestRating=5.0, reviewCount=3),
+        ),
+        (
+            {
+                "ratingValue": Selector(text="<html>3.8 out of 10</html>"),
+                "reviewCount": Selector(text="<html>3 reviews</html>"),
+            },
+            AggregateRating(ratingValue=3.8, bestRating=10.0, reviewCount=3),
+        ),
     ],
 )
 def test_rating(input_value, expected_value):

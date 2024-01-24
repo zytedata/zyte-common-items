@@ -234,24 +234,59 @@ def gtin_processor(
     return results or None
 
 
-@only_handle_nodes
-def rating_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
+def rating_processor(value: Any, page: Any) -> Any:
     """Convert the data into a :class:`~zyte_common_items.AggregateRating` object if possible.
 
     Supported inputs are :class:`~parsel.selector.Selector`,
     :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
+    The input can also be a dictionary with one or more of the following keys:
+    "ratingValue", "bestRating", "reviewCount". The values for those keys will
+    be assigned to the respective result fields. If the value for "ratingValue"
+    is a :class:`~parsel.selector.Selector`,
+    :class:`~parsel.selector.SelectorList` or :class:`~lxml.html.HtmlElement`
+    instance, the final values for the ratingValue and bestRating fields will
+    be extracted from it (if the "bestRating" key is also present in the
+    dictionary it will take precedence). If the value for the "reviewCount" key
+    is one of those types, the final value for the reviewCount field will be
+    extracted from it.
     Other inputs are returned as is.
     """
 
     # def _from_zp_rating(zp_value: zp_AggregateRating) -> AggregateRating:
     #     return AggregateRating(bestRating=zp_value.bestRating, ratingValue=zp_value.ratingValue)
 
-    zp_rating = extract_rating(value)
-    result = AggregateRating(
-        reviewCount=extract_review_count(value),
-        bestRating=zp_rating.bestRating,
-        ratingValue=zp_rating.ratingValue,
-    )
-    if result.reviewCount or result.bestRating or result.ratingValue:
-        return result
-    return None
+    value = _handle_selectorlist(value)
+    if isinstance(value, (Selector, HtmlElement)):
+        zp_rating = extract_rating(value)
+        result = AggregateRating(
+            reviewCount=extract_review_count(value),
+            bestRating=zp_rating.bestRating,
+            ratingValue=zp_rating.ratingValue,
+        )
+        if result.reviewCount or result.bestRating or result.ratingValue:
+            return result
+        return None
+    elif isinstance(value, dict):
+        result = AggregateRating()
+
+        review_count = _handle_selectorlist(value.get("reviewCount"))
+        if isinstance(review_count, (Selector, HtmlElement)):
+            result.reviewCount = extract_review_count(review_count)
+        elif review_count is not None:
+            result.reviewCount = int(review_count)
+
+        rating_value = _handle_selectorlist(value.get("ratingValue"))
+        if isinstance(rating_value, (Selector, HtmlElement)):
+            zp_rating = extract_rating(rating_value)
+            result.ratingValue = zp_rating.ratingValue
+            result.bestRating = zp_rating.bestRating
+        elif rating_value is not None:
+            result.ratingValue = float(rating_value)
+
+        if (best_rating := value.get("bestRating")) is not None:
+            result.bestRating = float(best_rating)
+
+        if result.reviewCount or result.bestRating or result.ratingValue:
+            return result
+        return None
+    return value
