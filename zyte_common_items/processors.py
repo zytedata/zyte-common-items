@@ -108,7 +108,7 @@ def brand_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
 
 
 @only_handle_nodes
-def price_processor(value: Union[Selector, HtmlElement, str, None], page: Any) -> Any:
+def price_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
     """Convert the data into a price string if possible.
 
     Uses the price-parser_ library.
@@ -127,9 +127,7 @@ def price_processor(value: Union[Selector, HtmlElement, str, None], page: Any) -
 
 
 @only_handle_nodes
-def simple_price_processor(
-    value: Union[Selector, HtmlElement, str, None], page: Any
-) -> Any:
+def simple_price_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
     """Convert the data into a price string if possible.
 
     Uses the price-parser_ library.
