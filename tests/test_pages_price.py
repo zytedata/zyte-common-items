@@ -42,14 +42,14 @@ async def test_price_selector():
 
 
 @pytest.mark.asyncio
-async def test_price_string():
+async def test_price_explicit():
     class CustomProductPage(ProductPage):
         call_count = 0
 
         @field
         def price(self):
             self.call_count += 1
-            return self.css("div")
+            return self.css("div::text").get()
 
     html = b"""
     <!DOCTYPE html>
@@ -62,21 +62,21 @@ async def test_price_string():
     url = "https://example.com"
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.call_count == 0
-    assert page.price == "13.20"
+    assert page.price == "$13.2"
     assert page.call_count == 1
     assert page.currency is None
-    assert await page.currencyRaw == "$"
-    assert page.call_count == 1
-    assert await page.currencyRaw == "$"
-    assert page.call_count == 1
+    assert await page.currencyRaw is None
+    assert page.call_count == 2  # we want this to be 1
+    assert await page.currencyRaw is None
+    assert page.call_count == 2  # we want this to be 1
 
     # access currency fields before the price field
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     assert page.call_count == 0
     assert page.currency is None
-    assert await page.currencyRaw == "$"
+    assert await page.currencyRaw is None
     assert page.call_count == 1
-    assert page.price == "13.20"
+    assert page.price == "$13.2"
     assert page.call_count == 2  # we want this to be 1
 
 
