@@ -4,7 +4,7 @@
 Page objects
 ============
 
-The :ref:`provided page object classes <page-object-api>` are good base classes
+The :ref:`built-in page object classes <page-object-api>` are good base classes
 for custom page object classes that implement website-specific :doc:`page
 objects <web-poet:index>`.
 
@@ -95,36 +95,31 @@ See :ref:`extractor-api`.
 Field processors
 ================
 
-Some of these base classes include a ``Processors`` subclass that enables
-:ref:`default processors <web-poet:field-processors>` for some fields.
+This library provides some :ref:`built-in field processors <processor-api>`
+that you can pass to the ``out`` parameter of a :ref:`field <fields>`.
 
-All ``brand`` fields have the following processor enabled:
+Moreover, built-in page object classes assign built-in field processors to
+:ref:`some fields <field-processor-map>` as :ref:`default processors
+<web-poet:field-processors>`.
 
-.. autofunction:: zyte_common_items.processors.brand_processor
+For most :ref:`built-in field processors <processor-api>`, your field must
+return a :class:`~parsel.selector.Selector`,
+:class:`~parsel.selector.SelectorList`, or :class:`~lxml.html.HtmlElement`
+object (as opposed to :class:`str`, :class:`int`, etc.). Then the field
+processor will take care of extracting the right data.
 
-All ``breadcrumbs`` fields have the following processor enabled:
+For example, given an HTML document containing ``<span class="brand">Some
+Brand</span>``, you can use:
 
-.. autofunction:: zyte_common_items.processors.breadcrumbs_processor
+.. code-block:: python
 
-All ``description`` fields except in pages for
-:class:`~zyte_common_items.Article` have the following processor enabled:
+    from zyte_common_items import ProductPage
 
-.. autofunction:: zyte_common_items.processors.description_processor
+    class MyProductPage(ProductPage):
 
-All ``descriptionHtml`` fields have the following processor enabled:
+        @field
+        def brand(self):
+            return self.css(".brand")
 
-.. autofunction:: zyte_common_items.processors.description_html_processor
-
-All ``gtin`` fields have the following processor enabled:
-
-.. autofunction:: zyte_common_items.processors.gtin_processor
-
-All ``price`` fields have the following processor enabled:
-
-.. autofunction:: zyte_common_items.processors.price_processor
-
-All ``regularPrice`` fields have the following processor enabled:
-
-.. autofunction:: zyte_common_items.processors.simple_price_processor
-
-These processors can also be used in the user code.
+You do not need to point your selector to the text of an element, it can point
+to a containing element.
