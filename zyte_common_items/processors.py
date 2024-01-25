@@ -235,7 +235,7 @@ def gtin_processor(
 
 
 def rating_processor(value: Any, page: Any) -> Any:
-    """Convert the data into a :class:`~zyte_common_items.AggregateRating` object if possible.
+    """Convert the data into an :class:`~zyte_common_items.AggregateRating` object if possible.
 
     Supported inputs are :class:`~parsel.selector.Selector`,
     :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
@@ -247,14 +247,10 @@ def rating_processor(value: Any, page: Any) -> Any:
     instance, the final values for the ratingValue and bestRating fields will
     be extracted from it (if the "bestRating" key is also present in the
     dictionary it will take precedence). If the value for the "reviewCount" key
-    is one of those types, the final value for the reviewCount field will be
+    is of one of those types, the final value for the reviewCount field will be
     extracted from it.
     Other inputs are returned as is.
     """
-
-    # def _from_zp_rating(zp_value: zp_AggregateRating) -> AggregateRating:
-    #     return AggregateRating(bestRating=zp_value.bestRating, ratingValue=zp_value.ratingValue)
-
     value = _handle_selectorlist(value)
     if isinstance(value, (Selector, HtmlElement)):
         zp_rating = extract_rating(value)
