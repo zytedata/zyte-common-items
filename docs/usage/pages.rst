@@ -4,9 +4,9 @@
 Page objects
 ============
 
-The :ref:`built-in page object classes <page-object-api>` are good base classes
-for custom page object classes that implement website-specific :doc:`page
-objects <web-poet:index>`.
+:ref:`Built-in page object classes <page-object-api>` are good base classes for
+custom page object classes that implement website-specific :doc:`page objects
+<web-poet:index>`.
 
 They provide the following base line:
 
@@ -95,12 +95,10 @@ See :ref:`extractor-api`.
 Field processors
 ================
 
-This library provides some :ref:`built-in field processors <processor-api>`
-that you can pass to the ``out`` parameter of a :ref:`field <fields>`.
-
-Moreover, built-in page object classes assign built-in field processors to
-:ref:`some fields <field-processor-map>` as :ref:`default processors
-<web-poet:field-processors>`.
+This library :ref:`provides <processor-api>` some :ref:`field processors
+<web-poet:field-processors>`, and :ref:`built-in page object classes
+<page-object-api>` use them by default for :ref:`some fields
+<field-processor-map>`.
 
 For most :ref:`built-in field processors <processor-api>`, your field must
 return a :class:`~parsel.selector.Selector`,
@@ -108,18 +106,55 @@ return a :class:`~parsel.selector.Selector`,
 object (as opposed to :class:`str`, :class:`int`, etc.). Then the field
 processor will take care of extracting the right data.
 
-For example, given an HTML document containing ``<span class="brand">Some
-Brand</span>``, you can use:
+Here are some examples of inputs and matching field implementations that will
+work on :ref:`built-in page object classes <page-object-api>` thanks to
+:ref:`built-in field processors <processor-api>`:
 
-.. code-block:: python
-
-    from zyte_common_items import ProductPage
-
-    class MyProductPage(ProductPage):
-
-        @field
-        def brand(self):
-            return self.css(".brand")
-
-You do not need to point your selector to the text of an element, it can point
-to a containing element.
++-----------------------------------------------+-------------------------------------------+
+| Input HTML fragment                           | Field implementation                      |
++-----------------------------------------------+-------------------------------------------+
+| .. code-block:: html                          | .. code-block:: python                    |
+|                                               |                                           |
+|     <p class="brand">                         |     @field                                |
+|       <img alt='Some Brand'>                  |     def brand(self):                      |
+|     </p>                                      |         return self.css(".brand")         |
+|                                               |                                           |
++-----------------------------------------------+-------------------------------------------+
+| .. code-block:: html                          | .. code-block:: python                    |
+|                                               |                                           |
+|     <div class="nav">                         |     @field                                |
+|       <ul>                                    |     def breadcrumbs(self):                |
+|         <li><a href="/home">Home</a></li>     |         return self.css(".nav")           |
+|         <li><a href="/about">About</a></li>   |                                           |
+|       </ul>                                   |                                           |
+|     </div>                                    |                                           |
+|                                               |                                           |
++-----------------------------------------------+-------------------------------------------+
+| .. code-block:: html                          | .. code-block:: python                    |
+|                                               |                                           |
+|     <div class="desc">                        |     @field                                |
+|       <p>Ideal for scraping glass.</p>        |     def descriptionHtml(self):            |
+|       <p>Durable and reusable.</p>            |         return self.css(".desc")          |
+|     </div>                                    |                                           |
+|                                               | Also extracts ``description``.            |
++-----------------------------------------------+-------------------------------------------+
+| .. code-block:: html                          | .. code-block:: python                    |
+|                                               |                                           |
+|     <span class="gtin">                       |     @field                                |
+|       978-1-933624-34-1                       |     def gtin(self):                       |
+|     </span>                                   |         return self.css(".gtin")          |
+|                                               |                                           |
++-----------------------------------------------+-------------------------------------------+
+| .. code-block:: html                          | .. code-block:: python                    |
+|                                               |                                           |
+|     <div class="price">                       |     @field                                |
+|       <del>$13.2</del>                        |     def price(self):                      |
+|       $10.2                                   |         return self.css(".price::text")   |
+|     </div>                                    |                                           |
+|                                               |     @field                                |
+|                                               |     def regularPrice(self):               |
+|                                               |         return self.css(".price del")     |
+|                                               |                                           |
+|                                               | Also extracts ``currency`` and            |
+|                                               | ``currencyRaw``.                          |
++-----------------------------------------------+-------------------------------------------+
