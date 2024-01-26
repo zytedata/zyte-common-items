@@ -7,13 +7,16 @@ from zyte_parsers import Breadcrumb as zp_Breadcrumb
 from zyte_parsers import Gtin as zp_Gtin
 from zyte_parsers import extract_breadcrumbs
 
-from zyte_common_items import BasePage, Breadcrumb, Gtin, ProductPage
+from zyte_common_items import AggregateRating, BasePage, Breadcrumb, Gtin, ProductPage
 from zyte_common_items.processors import (
     _format_price,
     brand_processor,
     breadcrumbs_processor,
     gtin_processor,
+    rating_processor,
 )
+
+base_url = "http://www.example.com/blog/"
 
 breadcrumbs_html = """
 <div class="pagesbar">
@@ -51,8 +54,6 @@ breadcrumbs_expected = [
     ],
 )
 def test_breadcrumbs(input_value, expected_value):
-    base_url = "http://www.example.com/blog/"
-
     class BreadcrumbsPage(BasePage):
         @field(out=[breadcrumbs_processor])
         def breadcrumbs(self):
@@ -218,8 +219,6 @@ gtin_expected = [Gtin("isbn13", "9781933624341")]
     ],
 )
 def test_gtin(input_value, expected_value):
-    base_url = "http://www.example.com/blog/"
-
     class GtinPage(BasePage):
         @field(out=[gtin_processor])
         def gtin(self):
@@ -227,3 +226,98 @@ def test_gtin(input_value, expected_value):
 
     page = GtinPage(base_url)  # type: ignore[arg-type]
     assert page.gtin == expected_value
+
+
+@pytest.mark.parametrize(
+    "input_value,expected_value",
+    [
+        (None, None),
+        ([], []),
+        ("foo", "foo"),
+        (Selector(text="<html></html>"), None),
+        (SelectorList([]), None),
+        (Selector(text="<html>3.8</html>"), AggregateRating(ratingValue=3.8)),
+        (
+            Selector(text="<html>3.8 out of 10</html>"),
+            AggregateRating(ratingValue=3.8, bestRating=10.0),
+        ),
+        (
+            Selector(text="<html>3.8 (7 reviews)</html>"),
+            AggregateRating(ratingValue=3.8, reviewCount=7),
+        ),
+        # provided as a separate xfail test
+        # (
+        #     Selector(text="<html>3.8 out of 10 (5 reviews)</html>"),
+        #     AggregateRating(ratingValue=3.8, reviewCount=5),
+        # ),
+        (
+            AggregateRating(ratingValue=3.8, bestRating=5.0, reviewCount=3),
+            AggregateRating(ratingValue=3.8, bestRating=5.0, reviewCount=3),
+        ),
+        (
+            {"ratingValue": 3.8, "bestRating": 5.0, "reviewCount": 3},
+            AggregateRating(ratingValue=3.8, bestRating=5.0, reviewCount=3),
+        ),
+        (
+            {"ratingValue": 3.8, "reviewCount": 3},
+            AggregateRating(ratingValue=3.8, reviewCount=3),
+        ),
+        (
+            {"ratingValue": 3.8},
+            AggregateRating(ratingValue=3.8),
+        ),
+        (
+            {"ratingValue": 3.8, "reviewCount": "3"},
+            AggregateRating(ratingValue=3.8, reviewCount=3),
+        ),
+        (
+            {"ratingValue": 3.8, "bestRating": 10, "reviewCount": 3},
+            AggregateRating(ratingValue=3.8, bestRating=10.0, reviewCount=3),
+        ),
+        (
+            {
+                "ratingValue": Selector(text="<html>3.8 out of 10</html>"),
+                "reviewCount": 3,
+            },
+            AggregateRating(ratingValue=3.8, bestRating=10.0, reviewCount=3),
+        ),
+        (
+            {
+                "ratingValue": Selector(text="<html>3.8 out of 10</html>"),
+                "bestRating": 5.0,
+                "reviewCount": 3,
+            },
+            AggregateRating(ratingValue=3.8, bestRating=5.0, reviewCount=3),
+        ),
+        (
+            {
+                "ratingValue": Selector(text="<html>3.8 out of 10</html>"),
+                "reviewCount": Selector(text="<html>3 reviews</html>"),
+            },
+            AggregateRating(ratingValue=3.8, bestRating=10.0, reviewCount=3),
+        ),
+    ],
+)
+def test_rating(input_value, expected_value):
+    class RatingPage(BasePage):
+        @field(out=[rating_processor])
+        def aggregateRating(self):
+            return input_value
+
+    page = RatingPage(base_url)  # type: ignore[arg-type]
+    assert page.aggregateRating == expected_value
+
+
+@pytest.mark.xfail(
+    reason="When more than 2 numbers are found bestRating is not extracted"
+)
+def test_rating_3_values():
+    class RatingPage(BasePage):
+        @field(out=[rating_processor])
+        def aggregateRating(self):
+            return Selector(text="<html>3.8 out of 10 (5 reviews)</html>")
+
+    page = RatingPage(base_url)  # type: ignore[arg-type]
+    assert page.aggregateRating == AggregateRating(
+        ratingValue=3.8, bestRating=10, reviewCount=5
+    )

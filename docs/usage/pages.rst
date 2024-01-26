@@ -116,6 +116,13 @@ built-in :ref:`field processors <processor-api>` and :ref:`mixins <mixins>`:
 +-----------------------------------------------+-------------------------------------------+
 | .. code-block:: html                          | .. code-block:: python                    |
 |                                               |                                           |
+|     <span class="reviews">                    |     @field                                |
+|       3.8 (7 reviews)                         |     def aggregateRating(self):            |
+|     </div>                                    |         return self.css(".reviews")       |
+|                                               |                                           |
++-----------------------------------------------+-------------------------------------------+
+| .. code-block:: html                          | .. code-block:: python                    |
+|                                               |                                           |
 |     <p class="brand">                         |     @field                                |
 |       <img alt='Some Brand'>                  |     def brand(self):                      |
 |     </p>                                      |         return self.css(".brand")         |
