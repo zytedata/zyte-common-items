@@ -36,8 +36,8 @@ whose ``to_item`` method returns an instance of
 
 .. code-block:: python
 
-   import attrs
-   from zyte_common_items import ProductPage
+    import attrs
+    from zyte_common_items import ProductPage
 
     class CustomProductPage(ProductPage):
 
@@ -45,11 +45,62 @@ whose ``to_item`` method returns an instance of
         def name(self):
             return self.css("h1::text").get()
 
+Page object classes with the ``Auto`` prefix can be used to easily define page
+object classes that get an :ref:`item <items>` as a dependency from another
+page object class, can generate an identical item by default, and can also
+easily override specific fields of the item, or even return a new item with
+extra fields. For example:
+
+.. code-block:: python
+
+    import attrs
+    from zyte_common_items import AutoProductPage, Product, Returns, field
+
+    @attrs.define
+    class ExtendedProduct(Product):
+        foo: str
+
+    class ExtendedProductPage(AutoProductPage, Returns[ExtendedProduct]):
+
+        @field
+        async def name(self):
+            return f"{self.product.brand.name} {self.product.name}"
+
+        @field
+        async def foo(self):
+            return "bar"
+
+.. _extractors:
+
+Extractors
+==========
+
+For some nested fields (:class:`~.ProductFromList`, :class:`~.ProductVariant`),
+:ref:`base extractors <default-processors-nested>` exist that you can subclass
+to write your own extractors.
+
+They provide the following base line:
+
+-   They declare the :ref:`item class <items>` that they return, allowing for
+    their ``to_item`` method to automatically build an instance of it from
+    ``@field``-decorated methods. See :ref:`fields`.
+
+-   They also provide default :ref:`processors <processors>` for some
+    item-specific fields.
+
+See :ref:`extractor-api`.
+
+.. _processors:
+
 Field processors
 ================
 
 Some of these base classes include a ``Processors`` subclass that enables
 :ref:`default processors <web-poet:field-processors>` for some fields.
+
+All ``aggregateRating`` fields have the following processor enabled:
+
+.. autofunction:: zyte_common_items.processors.rating_processor
 
 All ``brand`` fields have the following processor enabled:
 
@@ -67,6 +118,10 @@ All ``description`` fields except in pages for
 All ``descriptionHtml`` fields have the following processor enabled:
 
 .. autofunction:: zyte_common_items.processors.description_html_processor
+
+All ``gtin`` fields have the following processor enabled:
+
+.. autofunction:: zyte_common_items.processors.gtin_processor
 
 All ``price`` fields have the following processor enabled:
 

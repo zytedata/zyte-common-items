@@ -41,6 +41,12 @@ from .components import (
     Url,
     Video,
 )
+from .extractors import (
+    ProductFromListExtractor,
+    ProductFromListSelectorExtractor,
+    ProductVariantExtractor,
+    ProductVariantSelectorExtractor,
+)
 from .items import (
     Article,
     ArticleFromList,
@@ -60,6 +66,16 @@ from .pages import (
     ArticleListPage,
     ArticleNavigationPage,
     ArticlePage,
+    AutoArticleListPage,
+    AutoArticleNavigationPage,
+    AutoArticlePage,
+    AutoBusinessPlacePage,
+    AutoJobPostingPage,
+    AutoProductListPage,
+    AutoProductNavigationPage,
+    AutoProductPage,
+    AutoRealEstatePage,
+    AutoSocialMediaPostPage,
     BaseArticleListPage,
     BaseArticleNavigationPage,
     BaseArticlePage,

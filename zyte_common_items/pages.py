@@ -1,6 +1,6 @@
 import html
 from datetime import datetime
-from typing import Any, Generic, Optional, Type, TypeVar, Union
+from typing import Any, Generic, List, Optional, Type, TypeVar, Union
 
 import attrs
 import html_text
@@ -13,27 +13,55 @@ from web_poet.pages import ItemT
 from web_poet.utils import ensure_awaitable, get_generic_param
 
 from .components import (
+    AdditionalProperty,
+    Address,
+    AggregateRating,
+    Amenity,
     ArticleListMetadata,
     ArticleMetadata,
     ArticleNavigationMetadata,
+    Audio,
+    Author,
+    BaseSalary,
+    Brand,
+    Breadcrumb,
     BusinessPlaceMetadata,
+    Gtin,
+    HiringOrganization,
+    Image,
+    JobLocation,
     JobPostingMetadata,
+    Link,
+    NamedLink,
+    OpeningHoursItem,
+    ParentPlace,
+    ProbabilityRequest,
     ProductListMetadata,
     ProductMetadata,
     ProductNavigationMetadata,
+    Reactions,
+    RealEstateArea,
     RealEstateMetadata,
+    Request,
+    SocialMediaPostAuthor,
     SocialMediaPostMetadata,
+    StarRating,
+    Url,
+    Video,
     request_list_processor,
 )
 from .items import (
     Article,
+    ArticleFromList,
     ArticleList,
     ArticleNavigation,
     BusinessPlace,
     JobPosting,
     Product,
+    ProductFromList,
     ProductList,
     ProductNavigation,
+    ProductVariant,
     RealEstate,
     SocialMediaPost,
 )
@@ -42,7 +70,9 @@ from .processors import (
     breadcrumbs_processor,
     description_html_processor,
     description_processor,
+    gtin_processor,
     price_processor,
+    rating_processor,
     simple_price_processor,
 )
 from .util import format_datetime, metadata_processor
@@ -222,6 +252,9 @@ class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
 
 @attrs.define
 class BasePage(_BasePage):
+    """Base class for page object classes that has
+    :class:`~web_poet.page_inputs.http.RequestUrl` as a dependency."""
+
     class Processors(_BasePage.Processors):
         pass
 
@@ -233,6 +266,8 @@ class BasePage(_BasePage):
 
 
 class BaseArticlePage(BasePage, Returns[Article], HasMetadata[ArticleMetadata]):
+    """:class:`BasePage` subclass for :class:`Article`."""
+
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
@@ -240,6 +275,8 @@ class BaseArticlePage(BasePage, Returns[Article], HasMetadata[ArticleMetadata]):
 class BaseArticleListPage(
     BasePage, Returns[ArticleList], HasMetadata[ArticleListMetadata]
 ):
+    """:class:`BasePage` subclass for :class:`ArticleList`."""
+
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
@@ -247,19 +284,24 @@ class BaseArticleListPage(
 class BaseArticleNavigationPage(
     BasePage, Returns[ArticleNavigation], HasMetadata[ArticleNavigationMetadata]
 ):
-    pass
+    """:class:`BasePage` subclass for :class:`ArticleNavigation`."""
 
 
 class BaseBusinessPlacePage(
     BasePage, Returns[BusinessPlace], HasMetadata[BusinessPlaceMetadata]
 ):
+    """:class:`BasePage` subclass for :class:`BusinessPlace`."""
+
     class Processors(BasePage.Processors):
+        aggregateRating = [rating_processor]
         description = [description_processor]
 
 
 class BaseJobPostingPage(
     BasePage, DescriptionMixin, Returns[JobPosting], HasMetadata[JobPostingMetadata]
 ):
+    """:class:`BasePage` subclass for :class:`JobPosting`."""
+
     class Processors(BasePage.Processors):
         description = [description_processor]
         descriptionHtml = [description_html_processor]
@@ -272,11 +314,15 @@ class BaseProductPage(
     Returns[Product],
     HasMetadata[ProductMetadata],
 ):
+    """:class:`BasePage` subclass for :class:`Product`."""
+
     class Processors(BasePage.Processors):
+        aggregateRating = [rating_processor]
         brand = [brand_processor]
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
         descriptionHtml = [description_html_processor]
+        gtin = [gtin_processor]
         price = [price_processor]
         regularPrice = [simple_price_processor]
 
@@ -284,6 +330,8 @@ class BaseProductPage(
 class BaseProductListPage(
     BasePage, Returns[ProductList], HasMetadata[ProductListMetadata]
 ):
+    """:class:`BasePage` subclass for :class:`ProductList`."""
+
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
@@ -291,6 +339,8 @@ class BaseProductListPage(
 class BaseProductNavigationPage(
     BasePage, Returns[ProductNavigation], HasMetadata[ProductNavigationMetadata]
 ):
+    """:class:`BasePage` subclass for :class:`ProductNavigation`."""
+
     class Processors(BasePage.Processors):
         subCategories = [request_list_processor]
         items = [request_list_processor]
@@ -299,6 +349,8 @@ class BaseProductNavigationPage(
 class BaseRealEstatePage(
     BasePage, Returns[RealEstate], HasMetadata[RealEstateMetadata]
 ):
+    """:class:`BasePage` subclass for :class:`RealEstate`."""
+
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
@@ -312,6 +364,9 @@ class BaseSocialMediaPostPage(
 
 @attrs.define
 class Page(_BasePage, WebPage):
+    """Base class for page object classes that has
+    :class:`~web_poet.page_inputs.http.HttpResponse` as a dependency."""
+
     class Processors(_BasePage.Processors):
         pass
 
@@ -321,11 +376,15 @@ class Page(_BasePage, WebPage):
 
 
 class ArticlePage(Page, Returns[Article], HasMetadata[ArticleMetadata]):
+    """:class:`Page` subclass for :class:`Article`."""
+
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
 
 class ArticleListPage(Page, Returns[ArticleList], HasMetadata[ArticleListMetadata]):
+    """:class:`Page` subclass for :class:`ArticleList`."""
+
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
@@ -333,19 +392,24 @@ class ArticleListPage(Page, Returns[ArticleList], HasMetadata[ArticleListMetadat
 class ArticleNavigationPage(
     Page, Returns[ArticleNavigation], HasMetadata[ArticleNavigationMetadata]
 ):
-    pass
+    """:class:`Page` subclass for :class:`ArticleNavigation`."""
 
 
 class BusinessPlacePage(
     Page, Returns[BusinessPlace], HasMetadata[BusinessPlaceMetadata]
 ):
+    """:class:`Page` subclass for :class:`BusinessPlace`."""
+
     class Processors(Page.Processors):
+        aggregateRating = [rating_processor]
         description = [description_processor]
 
 
 class JobPostingPage(
     Page, DescriptionMixin, Returns[JobPosting], HasMetadata[JobPostingMetadata]
 ):
+    """:class:`Page` subclass for :class:`JobPosting`."""
+
     class Processors(Page.Processors):
         description = [description_processor]
         descriptionHtml = [description_html_processor]
@@ -354,16 +418,22 @@ class JobPostingPage(
 class ProductPage(
     Page, DescriptionMixin, PriceMixin, Returns[Product], HasMetadata[ProductMetadata]
 ):
+    """:class:`Page` subclass for :class:`Product`."""
+
     class Processors(Page.Processors):
+        aggregateRating = [rating_processor]
         brand = [brand_processor]
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
         descriptionHtml = [description_html_processor]
+        gtin = [gtin_processor]
         price = [price_processor]
         regularPrice = [simple_price_processor]
 
 
 class ProductListPage(Page, Returns[ProductList], HasMetadata[ProductListMetadata]):
+    """:class:`Page` subclass for :class:`ProductList`."""
+
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
 
@@ -371,10 +441,12 @@ class ProductListPage(Page, Returns[ProductList], HasMetadata[ProductListMetadat
 class ProductNavigationPage(
     Page, Returns[ProductNavigation], HasMetadata[ProductNavigationMetadata]
 ):
-    pass
+    """:class:`Page` subclass for :class:`ProductNavigation`."""
 
 
 class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata]):
+    """:class:`Page` subclass for :class:`RealEstate`."""
+
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
@@ -384,3 +456,661 @@ class SocialMediaPostPage(
     Page, Returns[SocialMediaPost], HasMetadata[SocialMediaPostMetadata]
 ):
     pass
+
+
+@attrs.define
+class AutoProductPage(BaseProductPage):
+    product: Product
+
+    @field
+    async def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
+        return self.product.additionalProperties
+
+    @field
+    async def aggregateRating(self) -> Optional[AggregateRating]:
+        return self.product.aggregateRating
+
+    @field
+    async def availability(self) -> Optional[str]:
+        return self.product.availability
+
+    @field
+    async def brand(self) -> Optional[Brand]:
+        return self.product.brand
+
+    @field
+    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+        return self.product.breadcrumbs
+
+    @field
+    async def canonicalUrl(self) -> Optional[str]:
+        return self.product.canonicalUrl
+
+    @field
+    async def color(self) -> Optional[str]:
+        return self.product.color
+
+    @field
+    async def currency(self) -> Optional[str]:
+        return self.product.currency
+
+    @field
+    async def currencyRaw(self) -> Optional[str]:
+        return self.product.currencyRaw
+
+    @field
+    async def description(self) -> Optional[str]:
+        return self.product.description
+
+    @field
+    async def descriptionHtml(self) -> Optional[str]:
+        return self.product.descriptionHtml
+
+    @field
+    async def features(self) -> Optional[List[str]]:
+        return self.product.features
+
+    @field
+    async def gtin(self) -> Optional[List[Gtin]]:
+        return self.product.gtin
+
+    @field
+    async def images(self) -> Optional[List[Image]]:
+        return self.product.images
+
+    @field
+    async def mainImage(self) -> Optional[Image]:
+        return self.product.mainImage
+
+    @field
+    async def metadata(self) -> Optional[ProductMetadata]:
+        return self.product.metadata
+
+    @field
+    async def mpn(self) -> Optional[str]:
+        return self.product.mpn
+
+    @field
+    async def name(self) -> Optional[str]:
+        return self.product.name
+
+    @field
+    async def price(self) -> Optional[str]:
+        return self.product.price
+
+    @field
+    async def productId(self) -> Optional[str]:
+        return self.product.productId
+
+    @field
+    async def regularPrice(self) -> Optional[str]:
+        return self.product.regularPrice
+
+    @field
+    async def size(self) -> Optional[str]:
+        return self.product.size
+
+    @field
+    async def sku(self) -> Optional[str]:
+        return self.product.sku
+
+    @field
+    async def style(self) -> Optional[str]:
+        return self.product.style
+
+    @field
+    async def url(self) -> str:
+        return self.product.url
+
+    @field
+    async def variants(self) -> Optional[List[ProductVariant]]:
+        return self.product.variants
+
+
+@attrs.define
+class AutoProductListPage(BaseProductListPage):
+    product_list: ProductList
+
+    @field
+    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+        return self.product_list.breadcrumbs
+
+    @field
+    async def canonicalUrl(self) -> Optional[str]:
+        return self.product_list.canonicalUrl
+
+    @field
+    async def categoryName(self) -> Optional[str]:
+        return self.product_list.categoryName
+
+    @field
+    async def metadata(self) -> Optional[ProductListMetadata]:
+        return self.product_list.metadata
+
+    @field
+    async def pageNumber(self) -> Optional[int]:
+        return self.product_list.pageNumber
+
+    @field
+    async def paginationNext(self) -> Optional[Link]:
+        return self.product_list.paginationNext
+
+    @field
+    async def products(self) -> Optional[List[ProductFromList]]:
+        return self.product_list.products
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.product_list.url
+
+
+@attrs.define
+class AutoProductNavigationPage(BaseProductNavigationPage):
+    product_navigation: ProductNavigation
+
+    @field
+    async def categoryName(self) -> Optional[str]:
+        return self.product_navigation.categoryName
+
+    @field
+    async def items(self) -> Optional[List[ProbabilityRequest]]:
+        return self.product_navigation.items
+
+    @field
+    async def metadata(self) -> Optional[ProductNavigationMetadata]:
+        return self.product_navigation.metadata
+
+    @field
+    async def nextPage(self) -> Optional[Request]:
+        return self.product_navigation.nextPage
+
+    @field
+    async def pageNumber(self) -> Optional[int]:
+        return self.product_navigation.pageNumber
+
+    @field
+    async def subCategories(self) -> Optional[List[ProbabilityRequest]]:
+        return self.product_navigation.subCategories
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.product_navigation.url
+
+
+@attrs.define
+class AutoArticlePage(BaseArticlePage):
+    article: Article
+
+    @field
+    async def headline(self) -> Optional[str]:
+        return self.article.headline
+
+    @field
+    async def datePublished(self) -> Optional[str]:
+        return self.article.datePublished
+
+    @field
+    async def datePublishedRaw(self) -> Optional[str]:
+        return self.article.datePublishedRaw
+
+    @field
+    async def dateModified(self) -> Optional[str]:
+        return self.article.dateModified
+
+    @field
+    async def dateModifiedRaw(self) -> Optional[str]:
+        return self.article.dateModifiedRaw
+
+    @field
+    async def authors(self) -> Optional[List[Author]]:
+        return self.article.authors
+
+    @field
+    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+        return self.article.breadcrumbs
+
+    @field
+    async def inLanguage(self) -> Optional[str]:
+        return self.article.inLanguage
+
+    @field
+    async def mainImage(self) -> Optional[Image]:
+        return self.article.mainImage
+
+    @field
+    async def images(self) -> Optional[List[Image]]:
+        return self.article.images
+
+    @field
+    async def description(self) -> Optional[str]:
+        return self.article.description
+
+    @field
+    async def articleBody(self) -> Optional[str]:
+        return self.article.articleBody
+
+    @field
+    async def articleBodyHtml(self) -> Optional[str]:
+        return self.article.articleBodyHtml
+
+    @field
+    async def videos(self) -> Optional[List[Video]]:
+        return self.article.videos
+
+    @field
+    async def audios(self) -> Optional[List[Audio]]:
+        return self.article.audios
+
+    @field
+    async def canonicalUrl(self) -> Optional[str]:
+        return self.article.canonicalUrl
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.article.url
+
+    @field
+    async def metadata(self) -> Optional[ArticleMetadata]:
+        return self.article.metadata
+
+
+@attrs.define
+class AutoArticleListPage(BaseArticleListPage):
+    article_list: ArticleList
+
+    @field
+    async def articles(self) -> Optional[List[ArticleFromList]]:
+        return self.article_list.articles
+
+    @field
+    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+        return self.article_list.breadcrumbs
+
+    @field
+    async def canonicalUrl(self) -> Optional[str]:
+        return self.article_list.canonicalUrl
+
+    @field
+    async def metadata(self) -> Optional[ArticleListMetadata]:
+        return self.article_list.metadata
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.article_list.url
+
+
+@attrs.define
+class AutoArticleNavigationPage(BaseArticleNavigationPage):
+    article_navigation: ArticleNavigation
+
+    @field
+    async def categoryName(self) -> Optional[str]:
+        return self.article_navigation.categoryName
+
+    @field
+    async def items(self) -> Optional[List[ProbabilityRequest]]:
+        return self.article_navigation.items
+
+    @field
+    async def metadata(self) -> Optional[ArticleNavigationMetadata]:
+        return self.article_navigation.metadata
+
+    @field
+    async def nextPage(self) -> Optional[Request]:
+        return self.article_navigation.nextPage
+
+    @field
+    async def pageNumber(self) -> Optional[int]:
+        return self.article_navigation.pageNumber
+
+    @field
+    async def subCategories(self) -> Optional[List[ProbabilityRequest]]:
+        return self.article_navigation.subCategories
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.article_navigation.url
+
+
+@attrs.define
+class AutoBusinessPlacePage(BaseBusinessPlacePage):
+    business_place: BusinessPlace
+
+    @field
+    async def actions(self) -> Optional[List[NamedLink]]:
+        return self.business_place.actions
+
+    @field
+    async def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
+        return self.business_place.additionalProperties
+
+    @field
+    async def address(self) -> Optional[Address]:
+        return self.business_place.address
+
+    @field
+    async def aggregateRating(self) -> Optional[AggregateRating]:
+        return self.business_place.aggregateRating
+
+    @field
+    async def amenityFeatures(self) -> Optional[List[Amenity]]:
+        return self.business_place.amenityFeatures
+
+    @field
+    async def categories(self) -> Optional[List[str]]:
+        return self.business_place.categories
+
+    @field
+    async def containedInPlace(self) -> Optional[ParentPlace]:
+        return self.business_place.containedInPlace
+
+    @field
+    async def description(self) -> Optional[str]:
+        return self.business_place.description
+
+    @field
+    async def features(self) -> Optional[List[str]]:
+        return self.business_place.features
+
+    @field
+    async def images(self) -> Optional[List[Image]]:
+        return self.business_place.images
+
+    @field
+    async def isVerified(self) -> Optional[bool]:
+        return self.business_place.isVerified
+
+    @field
+    async def map(self) -> Optional[str]:
+        return self.business_place.map
+
+    @field
+    async def metadata(self) -> Optional[BusinessPlaceMetadata]:
+        return self.business_place.metadata
+
+    @field
+    async def name(self) -> Optional[str]:
+        return self.business_place.name
+
+    @field
+    async def openingHours(self) -> Optional[List[OpeningHoursItem]]:
+        return self.business_place.openingHours
+
+    @field
+    async def placeId(self) -> Optional[str]:
+        return self.business_place.placeId
+
+    @field
+    async def priceRange(self) -> Optional[str]:
+        return self.business_place.priceRange
+
+    @field
+    async def reservationAction(self) -> Optional[NamedLink]:
+        return self.business_place.reservationAction
+
+    @field
+    async def reviewSites(self) -> Optional[List[NamedLink]]:
+        return self.business_place.reviewSites
+
+    @field
+    async def starRating(self) -> Optional[StarRating]:
+        return self.business_place.starRating
+
+    @field
+    async def tags(self) -> Optional[List[str]]:
+        return self.business_place.tags
+
+    @field
+    async def telephone(self) -> Optional[str]:
+        return self.business_place.telephone
+
+    @field
+    async def timezone(self) -> Optional[str]:
+        return self.business_place.timezone
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.business_place.url
+
+    @field
+    async def website(self) -> Optional[str]:
+        return self.business_place.website
+
+
+@attrs.define
+class AutoRealEstatePage(BaseRealEstatePage):
+    real_estate: RealEstate
+
+    @field
+    async def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
+        return self.real_estate.additionalProperties
+
+    @field
+    async def address(self) -> Optional[Address]:
+        return self.real_estate.address
+
+    @field
+    async def area(self) -> Optional[RealEstateArea]:
+        return self.real_estate.area
+
+    @field
+    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+        return self.real_estate.breadcrumbs
+
+    @field
+    async def currency(self) -> Optional[str]:
+        return self.real_estate.currency
+
+    @field
+    async def currencyRaw(self) -> Optional[str]:
+        return self.real_estate.currencyRaw
+
+    @field
+    async def datePublished(self) -> Optional[str]:
+        return self.real_estate.datePublished
+
+    @field
+    async def datePublishedRaw(self) -> Optional[str]:
+        return self.real_estate.datePublishedRaw
+
+    @field
+    async def description(self) -> Optional[str]:
+        return self.real_estate.description
+
+    @field
+    async def images(self) -> Optional[List[Image]]:
+        return self.real_estate.images
+
+    @field
+    async def mainImage(self) -> Optional[Image]:
+        return self.real_estate.mainImage
+
+    @field
+    async def metadata(self) -> Optional[RealEstateMetadata]:
+        return self.real_estate.metadata
+
+    @field
+    async def name(self) -> Optional[str]:
+        return self.real_estate.name
+
+    @field
+    async def numberOfBathroomsTotal(self) -> Optional[int]:
+        return self.real_estate.numberOfBathroomsTotal
+
+    @field
+    async def numberOfBedrooms(self) -> Optional[int]:
+        return self.real_estate.numberOfBedrooms
+
+    @field
+    async def numberOfFullBathrooms(self) -> Optional[int]:
+        return self.real_estate.numberOfFullBathrooms
+
+    @field
+    async def numberOfPartialBathrooms(self) -> Optional[int]:
+        return self.real_estate.numberOfPartialBathrooms
+
+    @field
+    async def numberOfRooms(self) -> Optional[int]:
+        return self.real_estate.numberOfRooms
+
+    @field
+    async def price(self) -> Optional[str]:
+        return self.real_estate.price
+
+    @field
+    async def propertyType(self) -> Optional[str]:
+        return self.real_estate.propertyType
+
+    @field
+    async def realEstateId(self) -> Optional[str]:
+        return self.real_estate.realEstateId
+
+    @field
+    async def rentalPeriod(self) -> Optional[str]:
+        return self.real_estate.rentalPeriod
+
+    @field
+    async def tradeType(self) -> Optional[str]:
+        return self.real_estate.tradeType
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.real_estate.url
+
+    @field
+    async def virtualTourUrl(self) -> Optional[str]:
+        return self.real_estate.virtualTourUrl
+
+    @field
+    async def yearBuilt(self) -> Optional[int]:
+        return self.real_estate.yearBuilt
+
+
+@attrs.define
+class AutoJobPostingPage(BaseJobPostingPage):
+    job_posting: JobPosting
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.job_posting.url
+
+    @field
+    async def jobPostingId(self) -> Optional[str]:
+        return self.job_posting.jobPostingId
+
+    @field
+    async def datePublished(self) -> Optional[str]:
+        return self.job_posting.datePublished
+
+    @field
+    async def datePublishedRaw(self) -> Optional[str]:
+        return self.job_posting.datePublishedRaw
+
+    @field
+    async def dateModified(self) -> Optional[str]:
+        return self.job_posting.dateModified
+
+    @field
+    async def dateModifiedRaw(self) -> Optional[str]:
+        return self.job_posting.dateModifiedRaw
+
+    @field
+    async def validThrough(self) -> Optional[str]:
+        return self.job_posting.validThrough
+
+    @field
+    async def validThroughRaw(self) -> Optional[str]:
+        return self.job_posting.validThroughRaw
+
+    @field
+    async def jobTitle(self) -> Optional[str]:
+        return self.job_posting.jobTitle
+
+    @field
+    async def headline(self) -> Optional[str]:
+        return self.job_posting.headline
+
+    @field
+    async def jobLocation(self) -> Optional[JobLocation]:
+        return self.job_posting.jobLocation
+
+    @field
+    async def description(self) -> Optional[str]:
+        return self.job_posting.description
+
+    @field
+    async def descriptionHtml(self) -> Optional[str]:
+        return self.job_posting.descriptionHtml
+
+    @field
+    async def employmentType(self) -> Optional[str]:
+        return self.job_posting.employmentType
+
+    @field
+    async def baseSalary(self) -> Optional[BaseSalary]:
+        return self.job_posting.baseSalary
+
+    @field
+    async def requirements(self) -> Optional[List[str]]:
+        return self.job_posting.requirements
+
+    @field
+    async def hiringOrganization(self) -> Optional[HiringOrganization]:
+        return self.job_posting.hiringOrganization
+
+    @field
+    async def jobStartDate(self) -> Optional[str]:
+        return self.job_posting.jobStartDate
+
+    @field
+    async def jobStartDateRaw(self) -> Optional[str]:
+        return self.job_posting.jobStartDateRaw
+
+    @field
+    async def remoteStatus(self) -> Optional[str]:
+        return self.job_posting.remoteStatus
+
+    @field
+    async def metadata(self) -> Optional[JobPostingMetadata]:
+        return self.job_posting.metadata
+
+
+@attrs.define
+class AutoSocialMediaPostPage(BaseSocialMediaPostPage):
+    social_media_post: SocialMediaPost
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.social_media_post.url
+
+    @field
+    async def postId(self) -> Optional[str]:
+        return self.social_media_post.postId
+
+    @field
+    async def reactions(self) -> Optional[Reactions]:
+        return self.social_media_post.reactions
+
+    @field
+    async def text(self) -> Optional[str]:
+        return self.social_media_post.text
+
+    @field
+    async def datePublished(self) -> Optional[str]:
+        return self.social_media_post.datePublished
+
+    @field
+    async def hashtags(self) -> Optional[List[str]]:
+        return self.social_media_post.hashtags
+
+    @field
+    async def mediaUrls(self) -> Optional[List[Url]]:
+        return self.social_media_post.mediaUrls
+
+    @field
+    async def author(self) -> Optional[SocialMediaPostAuthor]:
+        return self.social_media_post.author
+
+    @field
+    async def metadata(self) -> Optional[SocialMediaPostMetadata]:
+        return self.social_media_post.metadata

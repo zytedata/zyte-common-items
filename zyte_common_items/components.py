@@ -1,6 +1,6 @@
 """Classes for data nested within items."""
 import base64
-from typing import List, Optional, Type
+from typing import List, Optional, Type, TypeVar
 
 import attrs
 
@@ -71,49 +71,47 @@ class Metadata(_DetailsMetadata):
 
 @attrs.define(kw_only=True)
 class ArticleMetadata(_DetailsMetadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.Article.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class ArticleListMetadata(_ListMetadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.ArticleList.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class ArticleNavigationMetadata(_ListMetadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.ArticleNavigation.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class BusinessPlaceMetadata(Metadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.BusinessPlace.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class JobPostingMetadata(Metadata):
-    """Metadata associated with a job posting."""
-
-    pass
+    """Metadata class for :data:`zyte_common_items.JobPosting.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class ProductMetadata(_DetailsMetadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.Product.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class ProductListMetadata(_ListMetadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.ProductList.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class ProductNavigationMetadata(_ListMetadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.ProductNavigation.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class RealEstateMetadata(_DetailsMetadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.RealEstate.metadata`."""
 
 
 @attrs.define(kw_only=True)
@@ -480,23 +478,32 @@ class Video(_Media):
     """
 
 
-def cast_request(value: Request, cls: Type[Request]) -> Request:
-    new_value = convert_to_class(value, cls)
-    if type(value) is Request and cls is ProbabilityRequest:
-        new_value.metadata = ProbabilityMetadata(probability=1.0)
-    return new_value
-
-
-def request_list_processor(request_list):
-    return [cast_request(request, ProbabilityRequest) for request in request_list]
-
-
 @attrs.define(kw_only=True)
 class ProbabilityRequest(Request, ProbabilityMixin):
     """A :class:`Request` that includes a probability value."""
 
     #: Data extraction process metadata.
     metadata: Optional[ProbabilityMetadata] = None
+
+
+RequestT = TypeVar("RequestT", bound=Request)
+
+
+def cast_request(value: Request, cls: Type[RequestT]) -> RequestT:
+    """Convert *value*, an instance of :class:`Request` or a subclass, into
+    *cls*, a different class that is also either :class:`Request` or a
+    subclass."""
+    new_value = convert_to_class(value, cls)
+    if type(value) is Request and cls is ProbabilityRequest:
+        new_value.metadata = ProbabilityMetadata(probability=1.0)
+    return new_value
+
+
+def request_list_processor(request_list: List[Request]) -> List[ProbabilityRequest]:
+    """Convert all objects in *request_list*, which are instances of
+    :class:`Request` or a subclass, into instances of
+    :class:`ProbabilityRequest`."""
+    return [cast_request(request, ProbabilityRequest) for request in request_list]
 
 
 @attrs.define(kw_only=True)

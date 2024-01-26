@@ -6,5 +6,6 @@ Reference
 
    items
    pages
+   extractors
    components
    adapter
