@@ -16,6 +16,8 @@ from zyte_common_items.processors import (
     rating_processor,
 )
 
+base_url = "http://www.example.com/blog/"
+
 breadcrumbs_html = """
 <div class="pagesbar">
   <ul>
@@ -52,8 +54,6 @@ breadcrumbs_expected = [
     ],
 )
 def test_breadcrumbs(input_value, expected_value):
-    base_url = "http://www.example.com/blog/"
-
     class BreadcrumbsPage(BasePage):
         @field(out=[breadcrumbs_processor])
         def breadcrumbs(self):
@@ -219,8 +219,6 @@ gtin_expected = [Gtin("isbn13", "9781933624341")]
     ],
 )
 def test_gtin(input_value, expected_value):
-    base_url = "http://www.example.com/blog/"
-
     class GtinPage(BasePage):
         @field(out=[gtin_processor])
         def gtin(self):
@@ -301,8 +299,6 @@ def test_gtin(input_value, expected_value):
     ],
 )
 def test_rating(input_value, expected_value):
-    base_url = "http://www.example.com/blog/"
-
     class RatingPage(BasePage):
         @field(out=[rating_processor])
         def aggregateRating(self):
@@ -316,8 +312,6 @@ def test_rating(input_value, expected_value):
     reason="When more than 2 numbers are found bestRating is not extracted"
 )
 def test_rating_3_values():
-    base_url = "http://www.example.com/blog/"
-
     class RatingPage(BasePage):
         @field(out=[rating_processor])
         def aggregateRating(self):
