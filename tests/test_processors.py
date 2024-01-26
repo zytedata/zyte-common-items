@@ -247,10 +247,11 @@ def test_gtin(input_value, expected_value):
             Selector(text="<html>3.8 (7 reviews)</html>"),
             AggregateRating(ratingValue=3.8, reviewCount=7),
         ),
-        (
-            Selector(text="<html>3.8 out of 10 (5 reviews)</html>"),
-            AggregateRating(ratingValue=3.8, reviewCount=5),
-        ),
+        # provided as a separate xfail test
+        # (
+        #     Selector(text="<html>3.8 out of 10 (5 reviews)</html>"),
+        #     AggregateRating(ratingValue=3.8, reviewCount=5),
+        # ),
         (
             AggregateRating(ratingValue=3.8, bestRating=5.0, reviewCount=3),
             AggregateRating(ratingValue=3.8, bestRating=5.0, reviewCount=3),
@@ -309,3 +310,20 @@ def test_rating(input_value, expected_value):
 
     page = RatingPage(base_url)  # type: ignore[arg-type]
     assert page.aggregateRating == expected_value
+
+
+@pytest.mark.xfail(
+    reason="When more than 2 numbers are found bestRating is not extracted"
+)
+def test_rating_3_values():
+    base_url = "http://www.example.com/blog/"
+
+    class RatingPage(BasePage):
+        @field(out=[rating_processor])
+        def aggregateRating(self):
+            return Selector(text="<html>3.8 out of 10 (5 reviews)</html>")
+
+    page = RatingPage(base_url)  # type: ignore[arg-type]
+    assert page.aggregateRating == AggregateRating(
+        ratingValue=3.8, bestRating=10, reviewCount=5
+    )
