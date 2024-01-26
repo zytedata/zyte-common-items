@@ -95,8 +95,9 @@ See :ref:`extractor-api`.
 Field processors
 ================
 
-This library :ref:`provides <processor-api>` some :ref:`field processors
-<web-poet:field-processors>`, and :ref:`built-in page object classes
+This library provides some :ref:`field processors <processor-api>`
+(:ref:`web-poet documentation <web-poet:field-processors>`) and complementary
+:ref:`mixins <mixins>`, and :ref:`built-in page object classes
 <page-object-api>` use them by default for :ref:`some fields
 <field-processor-map>`.
 
@@ -108,7 +109,7 @@ processor will take care of extracting the right data.
 
 Here are some examples of inputs and matching field implementations that will
 work on :ref:`built-in page object classes <page-object-api>` thanks to
-:ref:`built-in field processors <processor-api>`:
+built-in :ref:`field processors <processor-api>` and :ref:`mixins <mixins>`:
 
 +-----------------------------------------------+-------------------------------------------+
 | Input HTML fragment                           | Field implementation                      |

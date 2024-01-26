@@ -114,6 +114,8 @@ Job posting
 .. autoclass:: zyte_common_items.AutoJobPostingPage(**kwargs)
    :show-inheritance:
 
+.. _mixins:
+
 Mixins
 ======
 
