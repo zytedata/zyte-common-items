@@ -97,9 +97,9 @@ Field processors
 
 This library provides some :ref:`field processors <processor-api>`
 (:ref:`web-poet documentation <web-poet:field-processors>`) and complementary
-:ref:`mixins <mixins>`, and :ref:`built-in page object classes
-<page-object-api>` use them by default for :ref:`some fields
-<field-processor-map>`.
+:ref:`mixins <mixins>`, and built-in :ref:`page object classes
+<page-object-api>` and :ref:`extractor classes <extractor-api>` use them by
+default for :ref:`some fields <field-processor-map>`.
 
 For most :ref:`built-in field processors <processor-api>`, your field must
 return a :class:`~parsel.selector.Selector`,
@@ -108,8 +108,7 @@ object (as opposed to :class:`str`, :class:`int`, etc.). Then the field
 processor will take care of extracting the right data.
 
 Here are some examples of inputs and matching field implementations that will
-work on :ref:`built-in page object classes <page-object-api>` thanks to
-built-in :ref:`field processors <processor-api>` and :ref:`mixins <mixins>`:
+work on built-in page object and extractor classes:
 
 +-----------------------------------------------+-------------------------------------------+
 | Input HTML fragment                           | Field implementation                      |
@@ -118,7 +117,7 @@ built-in :ref:`field processors <processor-api>` and :ref:`mixins <mixins>`:
 |                                               |                                           |
 |     <span class="reviews">                    |     @field                                |
 |       3.8 (7 reviews)                         |     def aggregateRating(self):            |
-|     </div>                                    |         return self.css(".reviews")       |
+|     </span>                                   |         return self.css(".reviews")       |
 |                                               |                                           |
 +-----------------------------------------------+-------------------------------------------+
 | .. code-block:: html                          | .. code-block:: python                    |
