@@ -129,6 +129,9 @@ work on built-in page object and extractor classes:
 |                                               |         ),                                        |
 |                                               |     )                                             |
 |                                               |                                                   |
+|                                               | | Supports separate selectors per field.          |
+|                                               | | See :func:`~.processors.rating_processor`.      |
+|                                               |                                                   |
 +-----------------------------------------------+---------------------------------------------------+
 | .. code-block:: html                          | .. code-block:: python                            |
 |                                               |                                                   |
