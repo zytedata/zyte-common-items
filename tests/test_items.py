@@ -44,11 +44,16 @@ from zyte_common_items import (
     ProductNavigation,
     ProductNavigationMetadata,
     ProductVariant,
+    Reactions,
     RealEstate,
     RealEstateArea,
     RealEstateMetadata,
     Request,
+    SocialMediaPost,
+    SocialMediaPostAuthor,
+    SocialMediaPostMetadata,
     StarRating,
+    Url,
     Video,
 )
 
@@ -492,6 +497,50 @@ _JOB_POSTING_ALL_KWARGS: dict = {
     ),
 }
 
+_SOCIAL_MEDIA_POST_MIN_KWARGS: dict = {
+    "url": "https://example.com/viewjob/12345",
+}
+
+_SOCIAL_MEDIA_POST_ALL_KWARGS: dict = {
+    **_SOCIAL_MEDIA_POST_MIN_KWARGS,
+    "postId": "1569750785201676290",
+    "reactions": Reactions(reposts=1, likes=1, dislikes=1),
+    "text": (
+        "Join us for the @usertag_1 2022 Coding Contest and stand a chance to win bragging rights plus awesome "
+        "prizes! Register for free - https://hubs.li/Q01mcRlk0 #coding #webdata #dataextraction #webscraping "
+        "#scrapy #python"
+    ),
+    "datePublished": "2023-10-04T00:00:00Z",
+    "hashtags": [
+        "coding",
+        "webdata",
+        "dataextraction",
+        "webscraping",
+        "scrapy",
+        "python",
+    ],
+    "mediaUrls": [
+        {
+            "url": Url(url="https://example.com/image1.png"),
+        },
+        {
+            "url": Url(url="https://video.twimg.com/tweet_video/FcjgBTkX0AAXPUh.mp4"),
+        },
+    ],
+    "author": SocialMediaPostAuthor(
+        numberOfFollowers=5,
+        numberOfFollowing=5,
+        dateAccountCreated="2022-10-04",
+        location="San Francisco, CA",
+        isVerified=True,
+    ),
+    "metadata": SocialMediaPostMetadata(
+        dateDownloaded="2022-12-31T13:01:54Z",
+        probability=0.95,
+        searchText="Extract Summit",
+    ),
+}
+
 
 def test_article_all_fields():
     article = Article(**_ARTICLE_ALL_KWARGS)
@@ -785,6 +834,28 @@ def test_job_posting_missing_fields():
         del incomplete_kwargs[required_field]
         with pytest.raises(TypeError):
             JobPosting(**incomplete_kwargs)
+
+
+def test_social_media_post_all_fields():
+    social_media_post = SocialMediaPost(**_SOCIAL_MEDIA_POST_ALL_KWARGS)
+    for field in list(_SOCIAL_MEDIA_POST_ALL_KWARGS):
+        assert getattr(social_media_post, field) == _SOCIAL_MEDIA_POST_ALL_KWARGS[field]
+
+
+def test_social_media_post_min_fields():
+    social_media_post = SocialMediaPost(**_SOCIAL_MEDIA_POST_MIN_KWARGS)
+    for field in list(_SOCIAL_MEDIA_POST_ALL_KWARGS):
+        if field in _SOCIAL_MEDIA_POST_MIN_KWARGS:
+            continue
+        assert getattr(social_media_post, field) is None
+
+
+def test_social_media_post_missing_fields():
+    for required_field in list(_SOCIAL_MEDIA_POST_MIN_KWARGS):
+        incomplete_kwargs: dict = copy(_SOCIAL_MEDIA_POST_MIN_KWARGS)
+        del incomplete_kwargs[required_field]
+        with pytest.raises(TypeError):
+            SocialMediaPost(**incomplete_kwargs)
 
 
 @pytest.mark.parametrize(

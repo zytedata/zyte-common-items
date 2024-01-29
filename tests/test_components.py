@@ -18,9 +18,13 @@ from zyte_common_items import (
     ParentPlace,
     ProbabilityMetadata,
     ProbabilityRequest,
+    Reactions,
     RealEstateArea,
     Request,
+    SocialMediaPostAuthor,
+    SocialMediaPostMetadata,
     StarRating,
+    Url,
 )
 
 
@@ -171,3 +175,27 @@ def test_job_posting_metadata():
     JobPostingMetadata(
         dateDownloaded="2020-01-01", probability=0.5, searchText="Software Engineer"
     )
+
+
+def test_reactions():
+    Reactions(reposts=1, likes=2, dislikes=3)
+
+
+def test_social_media_post_author():
+    SocialMediaPostAuthor(
+        numberOfFollowers=5,
+        numberOfFollowing=5,
+        dateAccountCreated="2020-01-01",
+        location="New York, NY",
+        isVerified=True,
+    )
+
+
+def test_social_media_post_metadata():
+    SocialMediaPostMetadata(
+        dateDownloaded="2020-01-01", probability=0.5, searchText="Extract Summit"
+    )
+
+
+def test_url():
+    Url(url="https://example.com")
