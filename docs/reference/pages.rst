@@ -114,6 +114,18 @@ Job posting
 .. autoclass:: zyte_common_items.AutoJobPostingPage(**kwargs)
    :show-inheritance:
 
+Social media post
+=================
+
+.. autoclass:: zyte_common_items.BaseSocialMediaPostPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.SocialMediaPostPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoSocialMediaPostPage(**kwargs)
+   :show-inheritance:
+
 .. _mixins:
 
 Mixins

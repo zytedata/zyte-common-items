@@ -31,10 +31,14 @@ from zyte_common_items.components import (
     ProductListMetadata,
     ProductMetadata,
     ProductNavigationMetadata,
+    Reactions,
     RealEstateArea,
     RealEstateMetadata,
     Request,
+    SocialMediaPostAuthor,
+    SocialMediaPostMetadata,
     StarRating,
+    Url,
     Video,
     cast_request,
 )
@@ -1159,4 +1163,42 @@ class JobPosting(Item):
     #: Contains metadata about the data extraction process.
     metadata: Optional[JobPostingMetadata] = attrs.field(
         default=None, converter=attrs.converters.optional(MetadataCaster(JobPostingMetadata)), kw_only=True  # type: ignore
+    )
+
+
+@attrs.define(kw_only=True)
+class SocialMediaPost(Item):
+    """Represents a single social media post."""
+
+    #: The URL of the final response, after any redirects.
+    url: str = attrs.field(converter=url_to_str)
+
+    #: The identifier of the post.
+    postId: Optional[str] = None
+
+    #: Details of reactions to the post.
+    reactions: Optional[Reactions] = None
+
+    #: The text content of the post.
+    text: Optional[str] = None
+
+    #: The timestamp at which the post was created.
+    #:
+    #: Format: Timezone: UTC. ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
+    datePublished: Optional[str] = None
+
+    #: The list of hashtags contained in the post.
+    hashtags: Optional[List[str]] = None
+
+    #: The list of URLs of media files (images, videos, etc.) linked from the post.
+    mediaUrls: Optional[List[Url]] = None
+
+    #: Details of the author of the post.
+    #:
+    #: No easily identifiable information can be contained in here, such as usernames.
+    author: Optional[SocialMediaPostAuthor] = None
+
+    #: Contains metadata about the data extraction process.
+    metadata: Optional[SocialMediaPostMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(SocialMediaPostMetadata)), kw_only=True  # type: ignore
     )

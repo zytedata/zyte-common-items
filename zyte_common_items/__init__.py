@@ -31,10 +31,14 @@ from .components import (
     ProductListMetadata,
     ProductMetadata,
     ProductNavigationMetadata,
+    Reactions,
     RealEstateArea,
     RealEstateMetadata,
     Request,
+    SocialMediaPostAuthor,
+    SocialMediaPostMetadata,
     StarRating,
+    Url,
     Video,
 )
 from .extractors import (
@@ -56,6 +60,7 @@ from .items import (
     ProductNavigation,
     ProductVariant,
     RealEstate,
+    SocialMediaPost,
 )
 from .pages import (
     ArticleListPage,
@@ -70,6 +75,7 @@ from .pages import (
     AutoProductNavigationPage,
     AutoProductPage,
     AutoRealEstatePage,
+    AutoSocialMediaPostPage,
     BaseArticleListPage,
     BaseArticleNavigationPage,
     BaseArticlePage,
@@ -80,6 +86,7 @@ from .pages import (
     BaseProductNavigationPage,
     BaseProductPage,
     BaseRealEstatePage,
+    BaseSocialMediaPostPage,
     BusinessPlacePage,
     HasMetadata,
     JobPostingPage,
@@ -89,4 +96,5 @@ from .pages import (
     ProductNavigationPage,
     ProductPage,
     RealEstatePage,
+    SocialMediaPostPage,
 )

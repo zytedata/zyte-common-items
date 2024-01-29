@@ -39,10 +39,14 @@ from .components import (
     ProductListMetadata,
     ProductMetadata,
     ProductNavigationMetadata,
+    Reactions,
     RealEstateArea,
     RealEstateMetadata,
     Request,
+    SocialMediaPostAuthor,
+    SocialMediaPostMetadata,
     StarRating,
+    Url,
     Video,
     request_list_processor,
 )
@@ -59,6 +63,7 @@ from .items import (
     ProductNavigation,
     ProductVariant,
     RealEstate,
+    SocialMediaPost,
 )
 from .processors import (
     brand_processor,
@@ -351,6 +356,12 @@ class BaseRealEstatePage(
         description = [description_processor]
 
 
+class BaseSocialMediaPostPage(
+    BasePage, Returns[SocialMediaPost], HasMetadata[SocialMediaPostMetadata]
+):
+    pass
+
+
 @attrs.define
 class Page(_BasePage, WebPage):
     """Base class for page object classes that has
@@ -439,6 +450,12 @@ class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata])
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
+
+
+class SocialMediaPostPage(
+    Page, Returns[SocialMediaPost], HasMetadata[SocialMediaPostMetadata]
+):
+    pass
 
 
 @attrs.define
@@ -1056,3 +1073,44 @@ class AutoJobPostingPage(BaseJobPostingPage):
     @field
     async def metadata(self) -> Optional[JobPostingMetadata]:
         return self.job_posting.metadata
+
+
+@attrs.define
+class AutoSocialMediaPostPage(BaseSocialMediaPostPage):
+    social_media_post: SocialMediaPost
+
+    @field
+    async def url(self) -> Optional[str]:
+        return self.social_media_post.url
+
+    @field
+    async def postId(self) -> Optional[str]:
+        return self.social_media_post.postId
+
+    @field
+    async def reactions(self) -> Optional[Reactions]:
+        return self.social_media_post.reactions
+
+    @field
+    async def text(self) -> Optional[str]:
+        return self.social_media_post.text
+
+    @field
+    async def datePublished(self) -> Optional[str]:
+        return self.social_media_post.datePublished
+
+    @field
+    async def hashtags(self) -> Optional[List[str]]:
+        return self.social_media_post.hashtags
+
+    @field
+    async def mediaUrls(self) -> Optional[List[Url]]:
+        return self.social_media_post.mediaUrls
+
+    @field
+    async def author(self) -> Optional[SocialMediaPostAuthor]:
+        return self.social_media_post.author
+
+    @field
+    async def metadata(self) -> Optional[SocialMediaPostMetadata]:
+        return self.social_media_post.metadata

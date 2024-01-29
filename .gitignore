@@ -8,3 +8,4 @@ htmlcov/
 docs/_build/
 docs/_autosummary/
 coverage.xml
+.idea/
