@@ -126,6 +126,8 @@ Social media post
 .. autoclass:: zyte_common_items.AutoSocialMediaPostPage(**kwargs)
    :show-inheritance:
 
+.. _mixins:
+
 Mixins
 ======
 

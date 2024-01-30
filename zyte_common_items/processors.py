@@ -235,21 +235,49 @@ def gtin_processor(
 
 
 def rating_processor(value: Any, page: Any) -> Any:
-    """Convert the data into an :class:`~zyte_common_items.AggregateRating` object if possible.
+    """Convert the data into an :class:`~zyte_common_items.AggregateRating`
+    object if possible.
 
-    Supported inputs are :class:`~parsel.selector.Selector`,
-    :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
-    The input can also be a dictionary with one or more of the following keys:
-    "ratingValue", "bestRating", "reviewCount". The values for those keys will
-    be assigned to the respective result fields. If the value for "ratingValue"
-    is a :class:`~parsel.selector.Selector`,
-    :class:`~parsel.selector.SelectorList` or :class:`~lxml.html.HtmlElement`
-    instance, the final values for the ratingValue and bestRating fields will
-    be extracted from it (if the "bestRating" key is also present in the
-    dictionary it will take precedence). If the value for the "reviewCount" key
-    is of one of those types, the final value for the reviewCount field will be
-    extracted from it.
-    Other inputs are returned as is.
+    Supported inputs are selector-like objects
+    (:class:`~parsel.selector.Selector`,
+    :class:`~parsel.selector.SelectorList`, or
+    :class:`~lxml.html.HtmlElement`).
+
+    The input can also be a dictionary with one or more of the
+    :class:`~zyte_common_items.AggregateRating` fields as keys. The values for
+    those keys can be either final values, to be assigned to the corresponding
+    fields, or selector-like objects.
+
+    If a returning dictionary is missing the ``bestRating`` field and
+    ``ratingValue`` is a selector-like object, ``bestRating`` may be extracted.
+
+    For example, for the following input HTML:
+
+    .. code-block:: html
+
+        <span class="rating">3.8 out of 5 stars</span>
+        <a class="reviews">See all 7 reviews</a>
+
+    You can use:
+
+    .. code-block:: python
+
+        @field
+        def aggregateRating(self):
+            return {
+                "ratingValue": self.css(".rating"),
+                "reviewCount": self.css(".reviews"),
+            }
+
+    To get:
+
+    .. code-block:: python
+
+        AggregateRating(
+            bestRating=5.0,
+            ratingValue=3.8,
+            reviewCount=7,
+        )
     """
     value = _handle_selectorlist(value)
     if isinstance(value, (Selector, HtmlElement)):
