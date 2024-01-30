@@ -2,6 +2,24 @@
 Changelog
 =========
 
+0.15.0 (YYYY-MM-DD)
+===================
+
+* Now requires ``zyte-parsers >= 0.5.0``.
+
+* Added :class:`~.SocialMediaPost` and related classes.
+
+* Added :class:`~.ProductFromListExtractor`,
+  :class:`~.ProductFromListSelectorExtractor`,
+  :class:`~.ProductVariantExtractor` and
+  :class:`~.ProductVariantSelectorExtractor`.
+
+* Added :func:`zyte_common_items.processors.rating_processor` and enabled it
+  for the ``aggregateRating`` fields in the page classes for
+  :class:`~.BusinessPlace` and :class:`~.Product`.
+
+* Improved the documentation about the processors.
+
 0.14.0 (2024-01-16)
 ===================
 
