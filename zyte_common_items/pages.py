@@ -463,107 +463,107 @@ class AutoProductPage(BaseProductPage):
     product: Product
 
     @field
-    async def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
+    def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
         return self.product.additionalProperties
 
     @field
-    async def aggregateRating(self) -> Optional[AggregateRating]:
+    def aggregateRating(self) -> Optional[AggregateRating]:
         return self.product.aggregateRating
 
     @field
-    async def availability(self) -> Optional[str]:
+    def availability(self) -> Optional[str]:
         return self.product.availability
 
     @field
-    async def brand(self) -> Optional[Brand]:
+    def brand(self) -> Optional[Brand]:
         return self.product.brand
 
     @field
-    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+    def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
         return self.product.breadcrumbs
 
     @field
-    async def canonicalUrl(self) -> Optional[str]:
+    def canonicalUrl(self) -> Optional[str]:
         return self.product.canonicalUrl
 
     @field
-    async def color(self) -> Optional[str]:
+    def color(self) -> Optional[str]:
         return self.product.color
 
     @field
-    async def currency(self) -> Optional[str]:
+    def currency(self) -> Optional[str]:
         return self.product.currency
 
     @field
-    async def currencyRaw(self) -> Optional[str]:
+    def currencyRaw(self) -> Optional[str]:
         return self.product.currencyRaw
 
     @field
-    async def description(self) -> Optional[str]:
+    def description(self) -> Optional[str]:
         return self.product.description
 
     @field
-    async def descriptionHtml(self) -> Optional[str]:
+    def descriptionHtml(self) -> Optional[str]:
         return self.product.descriptionHtml
 
     @field
-    async def features(self) -> Optional[List[str]]:
+    def features(self) -> Optional[List[str]]:
         return self.product.features
 
     @field
-    async def gtin(self) -> Optional[List[Gtin]]:
+    def gtin(self) -> Optional[List[Gtin]]:
         return self.product.gtin
 
     @field
-    async def images(self) -> Optional[List[Image]]:
+    def images(self) -> Optional[List[Image]]:
         return self.product.images
 
     @field
-    async def mainImage(self) -> Optional[Image]:
+    def mainImage(self) -> Optional[Image]:
         return self.product.mainImage
 
     @field
-    async def metadata(self) -> Optional[ProductMetadata]:
+    def metadata(self) -> Optional[ProductMetadata]:
         return self.product.metadata
 
     @field
-    async def mpn(self) -> Optional[str]:
+    def mpn(self) -> Optional[str]:
         return self.product.mpn
 
     @field
-    async def name(self) -> Optional[str]:
+    def name(self) -> Optional[str]:
         return self.product.name
 
     @field
-    async def price(self) -> Optional[str]:
+    def price(self) -> Optional[str]:
         return self.product.price
 
     @field
-    async def productId(self) -> Optional[str]:
+    def productId(self) -> Optional[str]:
         return self.product.productId
 
     @field
-    async def regularPrice(self) -> Optional[str]:
+    def regularPrice(self) -> Optional[str]:
         return self.product.regularPrice
 
     @field
-    async def size(self) -> Optional[str]:
+    def size(self) -> Optional[str]:
         return self.product.size
 
     @field
-    async def sku(self) -> Optional[str]:
+    def sku(self) -> Optional[str]:
         return self.product.sku
 
     @field
-    async def style(self) -> Optional[str]:
+    def style(self) -> Optional[str]:
         return self.product.style
 
     @field
-    async def url(self) -> str:
+    def url(self) -> str:
         return self.product.url
 
     @field
-    async def variants(self) -> Optional[List[ProductVariant]]:
+    def variants(self) -> Optional[List[ProductVariant]]:
         return self.product.variants
 
 
@@ -572,35 +572,35 @@ class AutoProductListPage(BaseProductListPage):
     product_list: ProductList
 
     @field
-    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+    def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
         return self.product_list.breadcrumbs
 
     @field
-    async def canonicalUrl(self) -> Optional[str]:
+    def canonicalUrl(self) -> Optional[str]:
         return self.product_list.canonicalUrl
 
     @field
-    async def categoryName(self) -> Optional[str]:
+    def categoryName(self) -> Optional[str]:
         return self.product_list.categoryName
 
     @field
-    async def metadata(self) -> Optional[ProductListMetadata]:
+    def metadata(self) -> Optional[ProductListMetadata]:
         return self.product_list.metadata
 
     @field
-    async def pageNumber(self) -> Optional[int]:
+    def pageNumber(self) -> Optional[int]:
         return self.product_list.pageNumber
 
     @field
-    async def paginationNext(self) -> Optional[Link]:
+    def paginationNext(self) -> Optional[Link]:
         return self.product_list.paginationNext
 
     @field
-    async def products(self) -> Optional[List[ProductFromList]]:
+    def products(self) -> Optional[List[ProductFromList]]:
         return self.product_list.products
 
     @field
-    async def url(self) -> Optional[str]:
+    def url(self) -> Optional[str]:
         return self.product_list.url
 
 
@@ -609,31 +609,31 @@ class AutoProductNavigationPage(BaseProductNavigationPage):
     product_navigation: ProductNavigation
 
     @field
-    async def categoryName(self) -> Optional[str]:
+    def categoryName(self) -> Optional[str]:
         return self.product_navigation.categoryName
 
     @field
-    async def items(self) -> Optional[List[ProbabilityRequest]]:
+    def items(self) -> Optional[List[ProbabilityRequest]]:
         return self.product_navigation.items
 
     @field
-    async def metadata(self) -> Optional[ProductNavigationMetadata]:
+    def metadata(self) -> Optional[ProductNavigationMetadata]:
         return self.product_navigation.metadata
 
     @field
-    async def nextPage(self) -> Optional[Request]:
+    def nextPage(self) -> Optional[Request]:
         return self.product_navigation.nextPage
 
     @field
-    async def pageNumber(self) -> Optional[int]:
+    def pageNumber(self) -> Optional[int]:
         return self.product_navigation.pageNumber
 
     @field
-    async def subCategories(self) -> Optional[List[ProbabilityRequest]]:
+    def subCategories(self) -> Optional[List[ProbabilityRequest]]:
         return self.product_navigation.subCategories
 
     @field
-    async def url(self) -> Optional[str]:
+    def url(self) -> Optional[str]:
         return self.product_navigation.url
 
 
@@ -642,75 +642,75 @@ class AutoArticlePage(BaseArticlePage):
     article: Article
 
     @field
-    async def headline(self) -> Optional[str]:
+    def headline(self) -> Optional[str]:
         return self.article.headline
 
     @field
-    async def datePublished(self) -> Optional[str]:
+    def datePublished(self) -> Optional[str]:
         return self.article.datePublished
 
     @field
-    async def datePublishedRaw(self) -> Optional[str]:
+    def datePublishedRaw(self) -> Optional[str]:
         return self.article.datePublishedRaw
 
     @field
-    async def dateModified(self) -> Optional[str]:
+    def dateModified(self) -> Optional[str]:
         return self.article.dateModified
 
     @field
-    async def dateModifiedRaw(self) -> Optional[str]:
+    def dateModifiedRaw(self) -> Optional[str]:
         return self.article.dateModifiedRaw
 
     @field
-    async def authors(self) -> Optional[List[Author]]:
+    def authors(self) -> Optional[List[Author]]:
         return self.article.authors
 
     @field
-    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+    def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
         return self.article.breadcrumbs
 
     @field
-    async def inLanguage(self) -> Optional[str]:
+    def inLanguage(self) -> Optional[str]:
         return self.article.inLanguage
 
     @field
-    async def mainImage(self) -> Optional[Image]:
+    def mainImage(self) -> Optional[Image]:
         return self.article.mainImage
 
     @field
-    async def images(self) -> Optional[List[Image]]:
+    def images(self) -> Optional[List[Image]]:
         return self.article.images
 
     @field
-    async def description(self) -> Optional[str]:
+    def description(self) -> Optional[str]:
         return self.article.description
 
     @field
-    async def articleBody(self) -> Optional[str]:
+    def articleBody(self) -> Optional[str]:
         return self.article.articleBody
 
     @field
-    async def articleBodyHtml(self) -> Optional[str]:
+    def articleBodyHtml(self) -> Optional[str]:
         return self.article.articleBodyHtml
 
     @field
-    async def videos(self) -> Optional[List[Video]]:
+    def videos(self) -> Optional[List[Video]]:
         return self.article.videos
 
     @field
-    async def audios(self) -> Optional[List[Audio]]:
+    def audios(self) -> Optional[List[Audio]]:
         return self.article.audios
 
     @field
-    async def canonicalUrl(self) -> Optional[str]:
+    def canonicalUrl(self) -> Optional[str]:
         return self.article.canonicalUrl
 
     @field
-    async def url(self) -> Optional[str]:
+    def url(self) -> Optional[str]:
         return self.article.url
 
     @field
-    async def metadata(self) -> Optional[ArticleMetadata]:
+    def metadata(self) -> Optional[ArticleMetadata]:
         return self.article.metadata
 
 
@@ -719,23 +719,23 @@ class AutoArticleListPage(BaseArticleListPage):
     article_list: ArticleList
 
     @field
-    async def articles(self) -> Optional[List[ArticleFromList]]:
+    def articles(self) -> Optional[List[ArticleFromList]]:
         return self.article_list.articles
 
     @field
-    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+    def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
         return self.article_list.breadcrumbs
 
     @field
-    async def canonicalUrl(self) -> Optional[str]:
+    def canonicalUrl(self) -> Optional[str]:
         return self.article_list.canonicalUrl
 
     @field
-    async def metadata(self) -> Optional[ArticleListMetadata]:
+    def metadata(self) -> Optional[ArticleListMetadata]:
         return self.article_list.metadata
 
     @field
-    async def url(self) -> Optional[str]:
+    def url(self) -> Optional[str]:
         return self.article_list.url
 
 
@@ -744,31 +744,31 @@ class AutoArticleNavigationPage(BaseArticleNavigationPage):
     article_navigation: ArticleNavigation
 
     @field
-    async def categoryName(self) -> Optional[str]:
+    def categoryName(self) -> Optional[str]:
         return self.article_navigation.categoryName
 
     @field
-    async def items(self) -> Optional[List[ProbabilityRequest]]:
+    def items(self) -> Optional[List[ProbabilityRequest]]:
         return self.article_navigation.items
 
     @field
-    async def metadata(self) -> Optional[ArticleNavigationMetadata]:
+    def metadata(self) -> Optional[ArticleNavigationMetadata]:
         return self.article_navigation.metadata
 
     @field
-    async def nextPage(self) -> Optional[Request]:
+    def nextPage(self) -> Optional[Request]:
         return self.article_navigation.nextPage
 
     @field
-    async def pageNumber(self) -> Optional[int]:
+    def pageNumber(self) -> Optional[int]:
         return self.article_navigation.pageNumber
 
     @field
-    async def subCategories(self) -> Optional[List[ProbabilityRequest]]:
+    def subCategories(self) -> Optional[List[ProbabilityRequest]]:
         return self.article_navigation.subCategories
 
     @field
-    async def url(self) -> Optional[str]:
+    def url(self) -> Optional[str]:
         return self.article_navigation.url
 
 
@@ -777,103 +777,103 @@ class AutoBusinessPlacePage(BaseBusinessPlacePage):
     business_place: BusinessPlace
 
     @field
-    async def actions(self) -> Optional[List[NamedLink]]:
+    def actions(self) -> Optional[List[NamedLink]]:
         return self.business_place.actions
 
     @field
-    async def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
+    def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
         return self.business_place.additionalProperties
 
     @field
-    async def address(self) -> Optional[Address]:
+    def address(self) -> Optional[Address]:
         return self.business_place.address
 
     @field
-    async def aggregateRating(self) -> Optional[AggregateRating]:
+    def aggregateRating(self) -> Optional[AggregateRating]:
         return self.business_place.aggregateRating
 
     @field
-    async def amenityFeatures(self) -> Optional[List[Amenity]]:
+    def amenityFeatures(self) -> Optional[List[Amenity]]:
         return self.business_place.amenityFeatures
 
     @field
-    async def categories(self) -> Optional[List[str]]:
+    def categories(self) -> Optional[List[str]]:
         return self.business_place.categories
 
     @field
-    async def containedInPlace(self) -> Optional[ParentPlace]:
+    def containedInPlace(self) -> Optional[ParentPlace]:
         return self.business_place.containedInPlace
 
     @field
-    async def description(self) -> Optional[str]:
+    def description(self) -> Optional[str]:
         return self.business_place.description
 
     @field
-    async def features(self) -> Optional[List[str]]:
+    def features(self) -> Optional[List[str]]:
         return self.business_place.features
 
     @field
-    async def images(self) -> Optional[List[Image]]:
+    def images(self) -> Optional[List[Image]]:
         return self.business_place.images
 
     @field
-    async def isVerified(self) -> Optional[bool]:
+    def isVerified(self) -> Optional[bool]:
         return self.business_place.isVerified
 
     @field
-    async def map(self) -> Optional[str]:
+    def map(self) -> Optional[str]:
         return self.business_place.map
 
     @field
-    async def metadata(self) -> Optional[BusinessPlaceMetadata]:
+    def metadata(self) -> Optional[BusinessPlaceMetadata]:
         return self.business_place.metadata
 
     @field
-    async def name(self) -> Optional[str]:
+    def name(self) -> Optional[str]:
         return self.business_place.name
 
     @field
-    async def openingHours(self) -> Optional[List[OpeningHoursItem]]:
+    def openingHours(self) -> Optional[List[OpeningHoursItem]]:
         return self.business_place.openingHours
 
     @field
-    async def placeId(self) -> Optional[str]:
+    def placeId(self) -> Optional[str]:
         return self.business_place.placeId
 
     @field
-    async def priceRange(self) -> Optional[str]:
+    def priceRange(self) -> Optional[str]:
         return self.business_place.priceRange
 
     @field
-    async def reservationAction(self) -> Optional[NamedLink]:
+    def reservationAction(self) -> Optional[NamedLink]:
         return self.business_place.reservationAction
 
     @field
-    async def reviewSites(self) -> Optional[List[NamedLink]]:
+    def reviewSites(self) -> Optional[List[NamedLink]]:
         return self.business_place.reviewSites
 
     @field
-    async def starRating(self) -> Optional[StarRating]:
+    def starRating(self) -> Optional[StarRating]:
         return self.business_place.starRating
 
     @field
-    async def tags(self) -> Optional[List[str]]:
+    def tags(self) -> Optional[List[str]]:
         return self.business_place.tags
 
     @field
-    async def telephone(self) -> Optional[str]:
+    def telephone(self) -> Optional[str]:
         return self.business_place.telephone
 
     @field
-    async def timezone(self) -> Optional[str]:
+    def timezone(self) -> Optional[str]:
         return self.business_place.timezone
 
     @field
-    async def url(self) -> Optional[str]:
+    def url(self) -> Optional[str]:
         return self.business_place.url
 
     @field
-    async def website(self) -> Optional[str]:
+    def website(self) -> Optional[str]:
         return self.business_place.website
 
 
@@ -882,107 +882,107 @@ class AutoRealEstatePage(BaseRealEstatePage):
     real_estate: RealEstate
 
     @field
-    async def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
+    def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
         return self.real_estate.additionalProperties
 
     @field
-    async def address(self) -> Optional[Address]:
+    def address(self) -> Optional[Address]:
         return self.real_estate.address
 
     @field
-    async def area(self) -> Optional[RealEstateArea]:
+    def area(self) -> Optional[RealEstateArea]:
         return self.real_estate.area
 
     @field
-    async def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+    def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
         return self.real_estate.breadcrumbs
 
     @field
-    async def currency(self) -> Optional[str]:
+    def currency(self) -> Optional[str]:
         return self.real_estate.currency
 
     @field
-    async def currencyRaw(self) -> Optional[str]:
+    def currencyRaw(self) -> Optional[str]:
         return self.real_estate.currencyRaw
 
     @field
-    async def datePublished(self) -> Optional[str]:
+    def datePublished(self) -> Optional[str]:
         return self.real_estate.datePublished
 
     @field
-    async def datePublishedRaw(self) -> Optional[str]:
+    def datePublishedRaw(self) -> Optional[str]:
         return self.real_estate.datePublishedRaw
 
     @field
-    async def description(self) -> Optional[str]:
+    def description(self) -> Optional[str]:
         return self.real_estate.description
 
     @field
-    async def images(self) -> Optional[List[Image]]:
+    def images(self) -> Optional[List[Image]]:
         return self.real_estate.images
 
     @field
-    async def mainImage(self) -> Optional[Image]:
+    def mainImage(self) -> Optional[Image]:
         return self.real_estate.mainImage
 
     @field
-    async def metadata(self) -> Optional[RealEstateMetadata]:
+    def metadata(self) -> Optional[RealEstateMetadata]:
         return self.real_estate.metadata
 
     @field
-    async def name(self) -> Optional[str]:
+    def name(self) -> Optional[str]:
         return self.real_estate.name
 
     @field
-    async def numberOfBathroomsTotal(self) -> Optional[int]:
+    def numberOfBathroomsTotal(self) -> Optional[int]:
         return self.real_estate.numberOfBathroomsTotal
 
     @field
-    async def numberOfBedrooms(self) -> Optional[int]:
+    def numberOfBedrooms(self) -> Optional[int]:
         return self.real_estate.numberOfBedrooms
 
     @field
-    async def numberOfFullBathrooms(self) -> Optional[int]:
+    def numberOfFullBathrooms(self) -> Optional[int]:
         return self.real_estate.numberOfFullBathrooms
 
     @field
-    async def numberOfPartialBathrooms(self) -> Optional[int]:
+    def numberOfPartialBathrooms(self) -> Optional[int]:
         return self.real_estate.numberOfPartialBathrooms
 
     @field
-    async def numberOfRooms(self) -> Optional[int]:
+    def numberOfRooms(self) -> Optional[int]:
         return self.real_estate.numberOfRooms
 
     @field
-    async def price(self) -> Optional[str]:
+    def price(self) -> Optional[str]:
         return self.real_estate.price
 
     @field
-    async def propertyType(self) -> Optional[str]:
+    def propertyType(self) -> Optional[str]:
         return self.real_estate.propertyType
 
     @field
-    async def realEstateId(self) -> Optional[str]:
+    def realEstateId(self) -> Optional[str]:
         return self.real_estate.realEstateId
 
     @field
-    async def rentalPeriod(self) -> Optional[str]:
+    def rentalPeriod(self) -> Optional[str]:
         return self.real_estate.rentalPeriod
 
     @field
-    async def tradeType(self) -> Optional[str]:
+    def tradeType(self) -> Optional[str]:
         return self.real_estate.tradeType
 
     @field
-    async def url(self) -> Optional[str]:
+    def url(self) -> Optional[str]:
         return self.real_estate.url
 
     @field
-    async def virtualTourUrl(self) -> Optional[str]:
+    def virtualTourUrl(self) -> Optional[str]:
         return self.real_estate.virtualTourUrl
 
     @field
-    async def yearBuilt(self) -> Optional[int]:
+    def yearBuilt(self) -> Optional[int]:
         return self.real_estate.yearBuilt
 
 
@@ -991,87 +991,87 @@ class AutoJobPostingPage(BaseJobPostingPage):
     job_posting: JobPosting
 
     @field
-    async def url(self) -> Optional[str]:
+    def url(self) -> Optional[str]:
         return self.job_posting.url
 
     @field
-    async def jobPostingId(self) -> Optional[str]:
+    def jobPostingId(self) -> Optional[str]:
         return self.job_posting.jobPostingId
 
     @field
-    async def datePublished(self) -> Optional[str]:
+    def datePublished(self) -> Optional[str]:
         return self.job_posting.datePublished
 
     @field
-    async def datePublishedRaw(self) -> Optional[str]:
+    def datePublishedRaw(self) -> Optional[str]:
         return self.job_posting.datePublishedRaw
 
     @field
-    async def dateModified(self) -> Optional[str]:
+    def dateModified(self) -> Optional[str]:
         return self.job_posting.dateModified
 
     @field
-    async def dateModifiedRaw(self) -> Optional[str]:
+    def dateModifiedRaw(self) -> Optional[str]:
         return self.job_posting.dateModifiedRaw
 
     @field
-    async def validThrough(self) -> Optional[str]:
+    def validThrough(self) -> Optional[str]:
         return self.job_posting.validThrough
 
     @field
-    async def validThroughRaw(self) -> Optional[str]:
+    def validThroughRaw(self) -> Optional[str]:
         return self.job_posting.validThroughRaw
 
     @field
-    async def jobTitle(self) -> Optional[str]:
+    def jobTitle(self) -> Optional[str]:
         return self.job_posting.jobTitle
 
     @field
-    async def headline(self) -> Optional[str]:
+    def headline(self) -> Optional[str]:
         return self.job_posting.headline
 
     @field
-    async def jobLocation(self) -> Optional[JobLocation]:
+    def jobLocation(self) -> Optional[JobLocation]:
         return self.job_posting.jobLocation
 
     @field
-    async def description(self) -> Optional[str]:
+    def description(self) -> Optional[str]:
         return self.job_posting.description
 
     @field
-    async def descriptionHtml(self) -> Optional[str]:
+    def descriptionHtml(self) -> Optional[str]:
         return self.job_posting.descriptionHtml
 
     @field
-    async def employmentType(self) -> Optional[str]:
+    def employmentType(self) -> Optional[str]:
         return self.job_posting.employmentType
 
     @field
-    async def baseSalary(self) -> Optional[BaseSalary]:
+    def baseSalary(self) -> Optional[BaseSalary]:
         return self.job_posting.baseSalary
 
     @field
-    async def requirements(self) -> Optional[List[str]]:
+    def requirements(self) -> Optional[List[str]]:
         return self.job_posting.requirements
 
     @field
-    async def hiringOrganization(self) -> Optional[HiringOrganization]:
+    def hiringOrganization(self) -> Optional[HiringOrganization]:
         return self.job_posting.hiringOrganization
 
     @field
-    async def jobStartDate(self) -> Optional[str]:
+    def jobStartDate(self) -> Optional[str]:
         return self.job_posting.jobStartDate
 
     @field
-    async def jobStartDateRaw(self) -> Optional[str]:
+    def jobStartDateRaw(self) -> Optional[str]:
         return self.job_posting.jobStartDateRaw
 
     @field
-    async def remoteStatus(self) -> Optional[str]:
+    def remoteStatus(self) -> Optional[str]:
         return self.job_posting.remoteStatus
 
     @field
-    async def metadata(self) -> Optional[JobPostingMetadata]:
+    def metadata(self) -> Optional[JobPostingMetadata]:
         return self.job_posting.metadata
 
 
@@ -1080,37 +1080,37 @@ class AutoSocialMediaPostPage(BaseSocialMediaPostPage):
     social_media_post: SocialMediaPost
 
     @field
-    async def url(self) -> Optional[str]:
+    def url(self) -> Optional[str]:
         return self.social_media_post.url
 
     @field
-    async def postId(self) -> Optional[str]:
+    def postId(self) -> Optional[str]:
         return self.social_media_post.postId
 
     @field
-    async def reactions(self) -> Optional[Reactions]:
+    def reactions(self) -> Optional[Reactions]:
         return self.social_media_post.reactions
 
     @field
-    async def text(self) -> Optional[str]:
+    def text(self) -> Optional[str]:
         return self.social_media_post.text
 
     @field
-    async def datePublished(self) -> Optional[str]:
+    def datePublished(self) -> Optional[str]:
         return self.social_media_post.datePublished
 
     @field
-    async def hashtags(self) -> Optional[List[str]]:
+    def hashtags(self) -> Optional[List[str]]:
         return self.social_media_post.hashtags
 
     @field
-    async def mediaUrls(self) -> Optional[List[Url]]:
+    def mediaUrls(self) -> Optional[List[Url]]:
         return self.social_media_post.mediaUrls
 
     @field
-    async def author(self) -> Optional[SocialMediaPostAuthor]:
+    def author(self) -> Optional[SocialMediaPostAuthor]:
         return self.social_media_post.author
 
     @field
-    async def metadata(self) -> Optional[SocialMediaPostMetadata]:
+    def metadata(self) -> Optional[SocialMediaPostMetadata]:
         return self.social_media_post.metadata

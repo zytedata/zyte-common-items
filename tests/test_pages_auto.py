@@ -3,6 +3,7 @@ from typing import Any, Dict, Type
 
 import attrs
 import pytest
+from itemadapter import ItemAdapter
 from web_poet import RequestUrl, Returns, field
 
 from zyte_common_items import (
@@ -79,6 +80,13 @@ PARAMS = (
 )
 
 
+async def assert_expected_item(page, item):
+    assert await page.to_item() == item
+    # Ensure that all fields are sync.
+    for k, v in ItemAdapter(item).items():
+        assert getattr(page, k) == v
+
+
 @pytest.mark.parametrize(*PARAMS)
 @pytest.mark.asyncio
 async def test_unmodified(
@@ -90,7 +98,7 @@ async def test_unmodified(
         "request_url": RequestUrl("https://example.com"),
     }
     page = cls(**kwargs)
-    assert await page.to_item() == item
+    await assert_expected_item(page, item)
 
 
 @pytest.mark.parametrize(*PARAMS)
@@ -102,7 +110,7 @@ async def test_modified(
 
     class CustomPage(cls):
         @field
-        async def url(self):
+        def url(self):
             return modified_url
 
     item = item_cls(**item_kwargs)
@@ -113,7 +121,7 @@ async def test_modified(
     page = CustomPage(**kwargs)
     expected_item = copy(item)
     expected_item.url = modified_url
-    assert await page.to_item() == expected_item
+    await assert_expected_item(page, expected_item)
 
 
 @pytest.mark.parametrize(*PARAMS)
@@ -127,7 +135,7 @@ async def test_extended(
 
     class ExtendedPage(cls, Returns[ExtendedItem]):
         @field
-        async def foo(self):
+        def foo(self):
             return "bar"
 
     kwargs = {
@@ -136,4 +144,4 @@ async def test_extended(
     }
     page = ExtendedPage(**kwargs)
     expected_item = ExtendedItem(**item_kwargs, foo="bar")
-    assert await page.to_item() == expected_item
+    await assert_expected_item(page, expected_item)

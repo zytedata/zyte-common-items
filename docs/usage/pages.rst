@@ -63,11 +63,11 @@ extra fields. For example:
     class ExtendedProductPage(AutoProductPage, Returns[ExtendedProduct]):
 
         @field
-        async def name(self):
+        def name(self):
             return f"{self.product.brand.name} {self.product.name}"
 
         @field
-        async def foo(self):
+        def foo(self):
             return "bar"
 
 .. _extractors:
