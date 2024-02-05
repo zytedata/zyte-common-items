@@ -3,6 +3,7 @@ from typing import Any, Dict, Type
 
 import attrs
 import pytest
+from itemadapter import ItemAdapter
 from web_poet import RequestUrl, Returns, field
 
 from zyte_common_items import (
@@ -82,8 +83,8 @@ PARAMS = (
 async def assert_expected_item(page, item):
     assert await page.to_item() == item
     # Ensure that all fields are sync.
-    for key in item.__slots__:
-        assert getattr(page, key) == getattr(item, key)
+    for k, v in ItemAdapter(item).items():
+        assert getattr(page, k) == v
 
 
 @pytest.mark.parametrize(*PARAMS)
