@@ -2,6 +2,13 @@
 Changelog
 =========
 
+0.16.0 (unreleased)
+===================
+
+* ``Auto``-prefixed versions of :ref:`page objects <page-objects>`, such as
+  :meth:`~zyte_common_items.AutoProductPage`, now have all their fields defined
+  as synchronous instead of asynchronous.
+
 0.15.0 (2024-01-30)
 ===================
 
