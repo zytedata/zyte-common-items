@@ -40,6 +40,74 @@ class AERating(Item):
     reviewCount: Optional[int] = None
 
 
+def _remove_fields(data, fields):
+    for field in fields:
+        if field in data:
+            del data[field]
+
+
+def _is_truthy(data, field):
+    return field in data and data[field]
+
+
+def _is_truthy_else_remove(data, field):
+    if field not in data:
+        return False
+    if data[field]:
+        return True
+    else:
+        del data[field]
+        return False
+
+
+def _is_not_none(data, field):
+    return field in data and data[field] is not None
+
+
+_OFFER_FIELD_MAP = {
+    "price": "price",
+    "regularPrice": "regularPrice",
+    "availability": "availability",
+    "currencyRaw": "currency",
+}
+
+
+def _convert_offer(data):
+    offer = {}
+    for old_k, new_k in _OFFER_FIELD_MAP.items():
+        if _is_not_none(data, old_k):
+            offer[new_k] = data.pop(old_k)
+    if offer:
+        data["offers"] = [offer]
+    else:
+        data["offers"] = []
+
+
+def _convert_images(data):
+    if _is_truthy_else_remove(data, "mainImage"):
+        main_image = data.pop("mainImage")
+        if _is_truthy(main_image, "url"):
+            data["mainImage"] = main_image["url"]
+    if _is_truthy(data, "images"):
+        images = []
+        for image in data.pop("images"):
+            if _is_truthy(image, "url"):
+                images.append(image["url"])
+        if images:
+            data["images"] = images
+        else:
+            data["images"] = []
+    else:
+        data["images"] = []
+
+
+def _convert_breadcrumbs(data):
+    if _is_truthy_else_remove(data, "breadcrumbs"):
+        for entry in data["breadcrumbs"]:
+            if _is_truthy_else_remove(entry, "link"):
+                entry["url"] = entry.pop("link")
+
+
 @attrs.define(kw_only=True)
 class AEProduct(Item):
     url: Optional[str] = None
@@ -64,55 +132,29 @@ class AEProduct(Item):
 
     @classmethod
     def from_item(cls, item: Item):
+        def convert(data):
+            _remove_fields(data, ["currency", "features"])
+            if "metadata" in data:
+                _remove_fields(data["metadata"], ["dateDownloaded"])
+                if _is_not_none(data["metadata"], "probability"):
+                    data["probability"] = data["metadata"].pop("probability")
+                _remove_fields(data, ["metadata"])
+            _convert_offer(data)
+            if _is_truthy_else_remove(data, "brand"):
+                brand = data.pop("brand")
+                if _is_truthy(brand, "name"):
+                    data["brand"] = brand["name"]
+            _convert_breadcrumbs(data)
+            _convert_images(data)
+            if _is_truthy_else_remove(data, "additionalProperties"):
+                data["additionalProperty"] = data.pop("additionalProperties")
+
         data = ItemAdapter(item).asdict()
-        if "currency" in data:
-            del data["currency"]
-        if "features" in data:
-            del data["features"]
-        if "metadata" in data:
-            if "dateDownloaded" in data["metadata"]:
-                del data["metadata"]["dateDownloaded"]
-            if "probability" in data["metadata"]:
-                data["probability"] = data["metadata"].pop("probability")
-            if not data["metadata"]:
-                del data["metadata"]
-        offer_fields = {
-            "price": "price",
-            "regularPrice": "regularPrice",
-            "availability": "availability",
-            "currencyRaw": "currency",
-        }
-        if any(k in data and data[k] is not None for k in offer_fields):
-            offer = {}
-            for old_k, new_k in offer_fields.items():
-                if old_k in data:
-                    offer[new_k] = data.pop(old_k)
-            data["offers"] = [offer]
-        else:
-            data["offers"] = []
-        if "brand" in data:
-            brand = data.pop("brand")
-            if "name" in brand:
-                data["brand"] = brand["name"]
-        if "breadcrumbs" in data:
-            for entry in data["breadcrumbs"]:
-                if "link" in entry:
-                    entry["url"] = entry.pop("link")
-        if "mainImage" in data:
-            main_image = data.pop("mainImage")
-            if "url" in main_image:
-                data["mainImage"] = main_image["url"]
-        if "images" in data:
-            images = []
-            for image in data.pop("images"):
-                if "url" in image:
-                    images.append(image["url"])
-            if images:
-                data["images"] = images
-        else:
-            data["images"] = []
-        if "additionalProperties" in data:
-            data["additionalProperty"] = data.pop("additionalProperties")
+        convert(data)
+        if _is_truthy_else_remove(data, "variants"):
+            for variant in data["variants"]:
+                convert(variant)
+            data["hasVariants"] = data.pop("variants")
         return super().from_dict(data)
 
 
@@ -149,46 +191,15 @@ class AEProductList(Item):
         data = ItemAdapter(item).asdict()
         if "products" in data:
             for product in data["products"]:
-                if "currency" in product:
-                    del product["currency"]
-                offer_fields = {
-                    "price": "price",
-                    "regularPrice": "regularPrice",
-                    "currencyRaw": "currency",
-                }
-                if any(k in product and product[k] is not None for k in offer_fields):
-                    offer = {}
-                    for old_k, new_k in offer_fields.items():
-                        if old_k in product:
-                            offer[new_k] = product.pop(old_k)
-                    product["offers"] = [offer]
-                else:
-                    product["offers"] = []
-                if "mainImage" in product:
-                    main_image = product.pop("mainImage")
-                    if main_image and "url" in main_image:
-                        product["mainImage"] = main_image["url"]
-                if "images" in product:
-                    images = []
-                    for image in product.pop("images"):
-                        if "url" in image:
-                            images.append(image["url"])
-                    if images:
-                        product["images"] = images
-                else:
-                    product["images"] = []
-                if "metadata" in product and product["metadata"]:
-                    if "probability" in product["metadata"]:
+                _remove_fields(data, ["currency"])
+                _convert_offer(product)
+                _convert_images(product)
+                if _is_truthy_else_remove(product, "metadata"):
+                    if _is_not_none(product["metadata"], "probability"):
                         product["probability"] = product["metadata"].pop("probability")
                     del product["metadata"]
-        if "metadata" in data:
-            del data["metadata"]
-        if "categoryName" in data:
-            del data["categoryName"]
-        if "breadcrumbs" in data:
-            for entry in data["breadcrumbs"]:
-                if "link" in entry:
-                    entry["url"] = entry.pop("link")
+        _remove_fields(data, ["metadata", "categoryName"])
+        _convert_breadcrumbs(data)
         return super().from_dict(data)
 
 
