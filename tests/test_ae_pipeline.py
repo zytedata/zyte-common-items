@@ -1,15 +1,18 @@
-from zyte_common_items import Product
+from zyte_common_items import Product, ProductList
 from zyte_common_items.pipelines import (
     AEGTIN,
     AEAdditionalProperty,
     AEBreadcrumb,
     AEOffer,
+    AEPaginationLink,
     AEPipeline,
     AEProduct,
+    AEProductFromList,
+    AEProductList,
     AERating,
 )
 
-from .test_items import _PRODUCT_ALL_KWARGS
+from .test_items import _PRODUCT_ALL_KWARGS, _PRODUCT_LIST_ALL_KWARGS
 
 
 def test_product():
@@ -41,11 +44,9 @@ def test_product():
         breadcrumbs=[
             AEBreadcrumb(
                 name="Level 1",
-                link=None,
             ),
             AEBreadcrumb(
                 name="Level 2",
-                link=None,
             ),
         ],
         mainImage="http://example.com/image1.png",
@@ -78,4 +79,21 @@ def test_product():
         color="white",
         size="XL",
         style="polka dots",
+    )
+
+
+def test_product_list():
+    product_list = ProductList(**_PRODUCT_LIST_ALL_KWARGS)
+    pipeline = AEPipeline()
+    ae_product_list = pipeline.process_item(product_list, spider=None)
+    assert ae_product_list == AEProductList(
+        url="https://example.com/swiss-watches?sort=new-first",
+        products=[AEProductFromList()],
+        breadcrumbs=[
+            AEBreadcrumb(name="Level 1"),
+            AEBreadcrumb(name="Level 2"),
+        ],
+        paginationNext=AEPaginationLink(
+            url="https://example.com/swiss-watches?sort=new-first&page=2", text="foo"
+        ),
     )

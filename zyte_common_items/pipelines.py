@@ -3,7 +3,7 @@ from typing import List, Optional
 import attrs
 from itemadapter import ItemAdapter
 
-from zyte_common_items import Product
+from zyte_common_items import Product, ProductList
 from zyte_common_items.base import Item
 
 
@@ -82,12 +82,14 @@ class AEProduct(Item):
             "availability": "availability",
             "currencyRaw": "currency",
         }
-        if any(k in data for k in offer_fields):
+        if any(k in data and data[k] is not None for k in offer_fields):
             offer = {}
             for old_k, new_k in offer_fields.items():
                 if old_k in data:
                     offer[new_k] = data.pop(old_k)
             data["offers"] = [offer]
+        else:
+            data["offers"] = []
         if "brand" in data:
             brand = data.pop("brand")
             if "name" in brand:
@@ -107,13 +109,92 @@ class AEProduct(Item):
                     images.append(image["url"])
             if images:
                 data["images"] = images
+        else:
+            data["images"] = []
         if "additionalProperties" in data:
             data["additionalProperty"] = data.pop("additionalProperties")
         return super().from_dict(data)
 
 
+@attrs.define(kw_only=True)
+class AEProductFromList(Item):
+    probability: Optional[float] = None
+    url: Optional[str] = None
+    name: Optional[str] = None
+    offers: List[AEOffer] = attrs.Factory(list)
+    sku: Optional[str] = None
+    brand: Optional[str] = None
+    mainImage: Optional[str] = None
+    images: List[str] = attrs.Factory(list)
+    description: Optional[str] = None
+    aggregateRating: Optional[AERating] = None
+
+
+@attrs.define(kw_only=True)
+class AEPaginationLink(Item):
+    url: Optional[str] = None
+    text: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
+class AEProductList(Item):
+    url: Optional[str] = None
+    products: List[AEProductFromList] = attrs.Factory(list)
+    breadcrumbs: List[AEBreadcrumb] = attrs.Factory(list)
+    paginationNext: Optional[AEPaginationLink] = None
+    paginationPrevious: Optional[AEPaginationLink] = None
+
+    @classmethod
+    def from_item(cls, item: Item):
+        data = ItemAdapter(item).asdict()
+        if "products" in data:
+            for product in data["products"]:
+                if "currency" in product:
+                    del product["currency"]
+                offer_fields = {
+                    "price": "price",
+                    "regularPrice": "regularPrice",
+                    "currencyRaw": "currency",
+                }
+                if any(k in product and product[k] is not None for k in offer_fields):
+                    offer = {}
+                    for old_k, new_k in offer_fields.items():
+                        if old_k in product:
+                            offer[new_k] = product.pop(old_k)
+                    product["offers"] = [offer]
+                else:
+                    product["offers"] = []
+                if "mainImage" in product:
+                    main_image = product.pop("mainImage")
+                    if main_image and "url" in main_image:
+                        product["mainImage"] = main_image["url"]
+                if "images" in product:
+                    images = []
+                    for image in product.pop("images"):
+                        if "url" in image:
+                            images.append(image["url"])
+                    if images:
+                        product["images"] = images
+                else:
+                    product["images"] = []
+                if "metadata" in product and product["metadata"]:
+                    if "probability" in product["metadata"]:
+                        product["probability"] = product["metadata"].pop("probability")
+                    del product["metadata"]
+        if "metadata" in data:
+            del data["metadata"]
+        if "categoryName" in data:
+            del data["categoryName"]
+        if "breadcrumbs" in data:
+            for entry in data["breadcrumbs"]:
+                if "link" in entry:
+                    entry["url"] = entry.pop("link")
+        return super().from_dict(data)
+
+
 _CONVERSION_MAP = {
     Product: AEProduct,
+    ProductList: AEProductList,
 }
 
 
@@ -127,4 +208,4 @@ class AEPipeline:
     def process_item(self, item, spider):
         if item.__class__ not in _CONVERSION_MAP:
             return item
-        return _CONVERSION_MAP[item.__class__].from_item(item)
+        return _CONVERSION_MAP[item.__class__].from_item(item)  # type: ignore[attr-defined]
