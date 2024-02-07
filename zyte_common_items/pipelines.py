@@ -1,3 +1,4 @@
+from collections import deque
 from typing import List, Optional
 
 import attrs
@@ -9,7 +10,7 @@ from zyte_common_items.base import Item
 
 
 class ItemAdapter(_ItemAdapter):
-    ADAPTER_CLASSES = [ZyteItemAdapter]
+    ADAPTER_CLASSES = deque([ZyteItemAdapter])
 
 
 @attrs.define(kw_only=True)
@@ -127,9 +128,9 @@ class AEProduct(Item):
     style: Optional[str] = None
     additionalProperty: List[AEAdditionalProperty] = attrs.Factory(list)
     hasVariants: List["AEProduct"] = attrs.Factory(list)
-    probability: float = None
+    probability: float
     canonicalUrl: Optional[str] = None
-    url: str = None
+    url: str
 
     @classmethod
     def from_item(cls, item: Item):
@@ -155,6 +156,9 @@ class AEProduct(Item):
         if _is_truthy_else_remove(data, "variants"):
             for variant in data["variants"]:
                 convert(variant)
+                for field in ("probability", "url"):
+                    if field not in variant:
+                        variant[field] = data[field]
             data["hasVariants"] = data.pop("variants")
         return super().from_dict(data)
 

@@ -79,7 +79,12 @@ def test_product():
         color="white",
         size="XL",
         style="polka dots",
-        hasVariants=[AEProduct()],
+        hasVariants=[
+            AEProduct(
+                url="https://example.com/?product=product22",
+                probability=1.0,
+            )
+        ],
     )
 
 
