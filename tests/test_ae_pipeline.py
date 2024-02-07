@@ -1,7 +1,7 @@
 import pytest
 
 from zyte_common_items import Article, ArticleList, JobPosting, Product, ProductList
-from zyte_common_items.pipelines import (
+from zyte_common_items.ae import (
     AEGTIN,
     AEAdditionalProperty,
     AEArticle,
@@ -13,13 +13,13 @@ from zyte_common_items.pipelines import (
     AEOffer,
     AEOrganization,
     AEPaginationLink,
-    AEPipeline,
     AEProduct,
     AEProductFromList,
     AEProductList,
     AERating,
     AESalary,
 )
+from zyte_common_items.pipelines import AEPipeline
 
 from .test_items import (
     _ARTICLE_ALL_KWARGS,
