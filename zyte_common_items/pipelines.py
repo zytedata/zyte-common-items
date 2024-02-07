@@ -4,7 +4,7 @@ from typing import List, Optional
 import attrs
 from itemadapter import ItemAdapter as _ItemAdapter
 
-from zyte_common_items import Article, ArticleList, Product, ProductList
+from zyte_common_items import Article, ArticleList, JobPosting, Product, ProductList
 from zyte_common_items.adapter import ZyteItemAdapter
 from zyte_common_items.base import Item
 
@@ -15,10 +15,10 @@ class ItemAdapter(_ItemAdapter):
 
 def _convert_details_metadata(data):
     if "metadata" in data:
-        _remove_fields(data["metadata"], ["dateDownloaded"])
+        _remove(data["metadata"], ["dateDownloaded"])
         if _is_not_none(data["metadata"], "probability"):
             data["probability"] = data["metadata"].pop("probability")
-        _remove_fields(data, ["metadata"])
+        _remove(data, ["metadata"])
     data.setdefault("probability", 1.0)
 
 
@@ -140,7 +140,62 @@ class AEArticleList(Item):
                 _convert_authors(article)
                 _convert_images(article)
                 _convert_list_item_metadata(article)
-        _remove_fields(data, ["metadata"])
+        _remove(data, ["metadata"])
+        return super().from_dict(data)
+
+
+@attrs.define(kw_only=True)
+class AELocation(Item):
+    raw: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
+class AEOrganization(Item):
+    raw: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
+class AESalary(Item):
+    raw: Optional[str] = None
+    value: Optional[float] = None
+    currency: Optional[str] = None
+
+
+def _rename(data, old_k, new_k):
+    if _is_truthy_else_remove(data, old_k):
+        data[new_k] = data.pop(old_k)
+
+
+# https://docs.zyte.com/automatic-extraction/job-posting.html#available-fields
+@attrs.define(kw_only=True)
+class AEJobPosting(Item):
+    title: Optional[str] = None
+    datePosted: Optional[str] = None
+    validThrough: Optional[str] = None
+    description: Optional[str] = None
+    descriptionHtml: Optional[str] = None
+    employmentType: Optional[str] = None
+    hiringOrganization: Optional[AEOrganization] = None
+    baseSalary: Optional[AESalary] = None
+    jobLocation: Optional[AELocation] = None
+    probability: float
+    url: str
+
+    @classmethod
+    def from_item(cls, item: Item):
+        assert isinstance(item, JobPosting)
+        data = ItemAdapter(item).asdict()
+        _convert_details_metadata(data)
+        _remove(data, ["datePublishedRaw"])
+        _rename(data, "jobTitle", "title")
+        _rename(data, "datePublished", "datePosted")
+        if _is_truthy(data, "hiringOrganization"):
+            _rename(data["hiringOrganization"], "name", "raw")
+        if _is_truthy(data, "baseSalary"):
+            _remove(data["baseSalary"], ["currency"])
+            if _is_truthy_else_remove(data["baseSalary"], "valueMax"):
+                data["baseSalary"]["value"] = float(data["baseSalary"].pop("valueMax"))
+            _rename(data["baseSalary"], "currencyRaw", "currency")
         return super().from_dict(data)
 
 
@@ -171,7 +226,7 @@ class AERating(Item):
     reviewCount: Optional[int] = None
 
 
-def _remove_fields(data, fields):
+def _remove(data, fields):
     for field in fields:
         if field in data:
             del data[field]
@@ -223,8 +278,7 @@ def _convert_images(data):
 def _convert_breadcrumbs(data):
     if _is_truthy_else_remove(data, "breadcrumbs"):
         for entry in data["breadcrumbs"]:
-            if _is_truthy_else_remove(entry, "link"):
-                entry["url"] = entry.pop("link")
+            _rename(entry, "link", "url")
 
 
 # https://docs.zyte.com/automatic-extraction/product.html#available-fields
@@ -256,7 +310,7 @@ class AEProduct(Item):
         assert isinstance(item, Product)
 
         def convert(data):
-            _remove_fields(data, ["currency", "features"])
+            _remove(data, ["currency", "features"])
             _convert_details_metadata(data)
             _convert_offer(data)
             if _is_truthy_else_remove(data, "brand"):
@@ -265,8 +319,7 @@ class AEProduct(Item):
                     data["brand"] = brand["name"]
             _convert_breadcrumbs(data)
             _convert_images(data)
-            if _is_truthy_else_remove(data, "additionalProperties"):
-                data["additionalProperty"] = data.pop("additionalProperties")
+            _rename(data, "additionalProperties", "additionalProperty")
 
         data = ItemAdapter(item).asdict()
         convert(data)
@@ -311,7 +364,7 @@ class AEProductList(Item):
         data = ItemAdapter(item).asdict()
         if "products" in data:
             for product in data["products"]:
-                _remove_fields(product, ["currency"])
+                _remove(product, ["currency"])
                 _convert_offer(product)
                 _convert_images(product)
                 if _is_truthy_else_remove(product, "metadata"):
@@ -319,7 +372,7 @@ class AEProductList(Item):
                         product["probability"] = product["metadata"].pop("probability")
                     del product["metadata"]
                 product.setdefault("probability", 1.0)
-        _remove_fields(data, ["metadata", "categoryName"])
+        _remove(data, ["metadata", "categoryName"])
         _convert_breadcrumbs(data)
         return super().from_dict(data)
 
@@ -327,6 +380,7 @@ class AEProductList(Item):
 _CONVERSION_MAP = {
     Article: AEArticle,
     ArticleList: AEArticleList,
+    JobPosting: AEJobPosting,
     Product: AEProduct,
     ProductList: AEProductList,
 }

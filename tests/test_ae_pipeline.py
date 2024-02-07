@@ -1,6 +1,6 @@
 import pytest
 
-from zyte_common_items import Article, ArticleList, Product, ProductList
+from zyte_common_items import Article, ArticleList, JobPosting, Product, ProductList
 from zyte_common_items.pipelines import (
     AEGTIN,
     AEAdditionalProperty,
@@ -8,13 +8,17 @@ from zyte_common_items.pipelines import (
     AEArticleFromList,
     AEArticleList,
     AEBreadcrumb,
+    AEJobPosting,
+    AELocation,
     AEOffer,
+    AEOrganization,
     AEPaginationLink,
     AEPipeline,
     AEProduct,
     AEProductFromList,
     AEProductList,
     AERating,
+    AESalary,
 )
 
 from .test_items import (
@@ -22,6 +26,8 @@ from .test_items import (
     _ARTICLE_LIST_ALL_KWARGS,
     _ARTICLE_LIST_MIN_KWARGS,
     _ARTICLE_MIN_KWARGS,
+    _JOB_POSTING_ALL_KWARGS,
+    _JOB_POSTING_MIN_KWARGS,
     _PRODUCT_ALL_KWARGS,
     _PRODUCT_LIST_ALL_KWARGS,
     _PRODUCT_LIST_MIN_KWARGS,
@@ -89,6 +95,31 @@ from .test_items import (
                         probability=1.0,
                     )
                 ],
+            ),
+        ),
+        (
+            JobPosting(**_JOB_POSTING_MIN_KWARGS),
+            AEJobPosting(
+                probability=1.0,
+                url="https://example.com/viewjob/12345",
+            ),
+        ),
+        (
+            JobPosting(**_JOB_POSTING_ALL_KWARGS),
+            AEJobPosting(
+                title="Software Engineer",
+                datePosted="2019-06-19T00:00:00-05:00",
+                validThrough="2019-07-19T00:00:00-05:00",
+                description="We are looking for a Software Engineer to join our team.- 35 days holiday- 15% bonus- flexible working arrangements",
+                descriptionHtml="<p>We are looking for a Software Engineer to join our team.</p><ul><li>35 days holiday</li><li>15% bonus</li><li>flexible working arrangements</li></ul>",
+                employmentType="Full-time",
+                hiringOrganization=AEOrganization(raw="ACME Corp."),
+                baseSalary=AESalary(
+                    raw="$53,000-$55,000 a year", value=55000.0, currency="$"
+                ),
+                jobLocation=AELocation(raw="New York, NY"),
+                probability=0.95,
+                url="https://example.com/viewjob/12345",
             ),
         ),
         (
