@@ -94,7 +94,7 @@ def test_product_list():
     ae_product_list = pipeline.process_item(product_list, spider=None)
     assert ae_product_list == AEProductList(
         url="https://example.com/swiss-watches?sort=new-first",
-        products=[AEProductFromList()],
+        products=[AEProductFromList(probability=1.0)],
         breadcrumbs=[
             AEBreadcrumb(name="Level 1"),
             AEBreadcrumb(name="Level 2"),

@@ -163,10 +163,9 @@ class AEProduct(Item):
         return super().from_dict(data)
 
 
+# https://docs.zyte.com/automatic-extraction/product-list.html#individual-products
 @attrs.define(kw_only=True)
 class AEProductFromList(Item):
-    probability: Optional[float] = None
-    url: Optional[str] = None
     name: Optional[str] = None
     offers: List[AEOffer] = attrs.Factory(list)
     sku: Optional[str] = None
@@ -174,7 +173,10 @@ class AEProductFromList(Item):
     mainImage: Optional[str] = None
     images: List[str] = attrs.Factory(list)
     description: Optional[str] = None
+    descriptionHtml: Optional[str] = None
     aggregateRating: Optional[AERating] = None
+    probability: float
+    url: Optional[str] = None
 
 
 @attrs.define(kw_only=True)
@@ -183,9 +185,10 @@ class AEPaginationLink(Item):
     text: Optional[str] = None
 
 
+# https://docs.zyte.com/automatic-extraction/product-list.html#available-fields
 @attrs.define(kw_only=True)
 class AEProductList(Item):
-    url: Optional[str] = None
+    url: str
     products: List[AEProductFromList] = attrs.Factory(list)
     breadcrumbs: List[AEBreadcrumb] = attrs.Factory(list)
     paginationNext: Optional[AEPaginationLink] = None
@@ -203,6 +206,7 @@ class AEProductList(Item):
                     if _is_not_none(product["metadata"], "probability"):
                         product["probability"] = product["metadata"].pop("probability")
                     del product["metadata"]
+                product.setdefault("probability", 1.0)
         _remove_fields(data, ["metadata", "categoryName"])
         _convert_breadcrumbs(data)
         return super().from_dict(data)
