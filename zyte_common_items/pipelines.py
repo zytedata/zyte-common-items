@@ -4,7 +4,7 @@ from typing import List, Optional
 import attrs
 from itemadapter import ItemAdapter as _ItemAdapter
 
-from zyte_common_items import Product, ProductList
+from zyte_common_items import Article, Product, ProductList
 from zyte_common_items.adapter import ZyteItemAdapter
 from zyte_common_items.base import Item
 
@@ -13,16 +13,85 @@ class ItemAdapter(_ItemAdapter):
     ADAPTER_CLASSES = deque([ZyteItemAdapter])
 
 
-@attrs.define(kw_only=True)
-class AEAdditionalProperty(Item):
-    name: str
-    value: Optional[str] = None
+def _convert_metadata(data):
+    if "metadata" in data:
+        _remove_fields(data["metadata"], ["dateDownloaded"])
+        if _is_not_none(data["metadata"], "probability"):
+            data["probability"] = data["metadata"].pop("probability")
+        _remove_fields(data, ["metadata"])
+
+
+def _set_if_truthy(data, field, value):
+    if value:
+        data[field] = value
+
+
+def _to_url_list(data, old_k, new_k):
+    if _is_truthy_else_remove(data, old_k):
+        entries = []
+        for entry in data.pop(old_k):
+            if _is_truthy(entry, "url"):
+                entries.append(entry["url"])
+        if entries:
+            data[new_k] = entries
 
 
 @attrs.define(kw_only=True)
 class AEBreadcrumb(Item):
     name: Optional[str] = None
     link: Optional[str] = None
+
+
+# https://docs.zyte.com/automatic-extraction/article.html#available-fields
+@attrs.define(kw_only=True)
+class AEArticle(Item):
+    headline: Optional[str] = None
+    datePublished: Optional[str] = None
+    datePublishedRaw: Optional[str] = None
+    dateModified: Optional[str] = None
+    dateModifiedRaw: Optional[str] = None
+    author: Optional[str] = None
+    authorsList: List[str] = attrs.Factory(list)
+    inLanguage: Optional[str] = None
+    breadcrumbs: List[AEBreadcrumb] = attrs.Factory(list)
+    mainImage: Optional[str] = None
+    images: List[str] = attrs.Factory(list)
+    description: Optional[str] = None
+    articleBody: Optional[str] = None
+    articleBodyHtml: Optional[str] = None
+    articleBodyRaw: Optional[str] = None
+    videoUrls: List[str] = attrs.Factory(list)
+    audioUrls: List[str] = attrs.Factory(list)
+    probability: float
+    canonicalUrl: Optional[str] = None
+    url: str
+
+    @classmethod
+    def from_item(cls, item: Item):
+        assert isinstance(item, Article)
+        data = ItemAdapter(item).asdict()
+        _convert_metadata(data)
+        if _is_truthy_else_remove(data, "authors"):
+            author = None
+            author_list = []
+            for _author in data.pop("authors") or []:
+                if author is None and _is_truthy(_author, "nameRaw"):
+                    author = _author["nameRaw"]
+                if _is_truthy(_author, "name"):
+                    author_list.append(_author["name"])
+            _set_if_truthy(data, "author", author)
+            _set_if_truthy(data, "authorList", author_list)
+        _convert_breadcrumbs(data)
+        _convert_images(data)
+        _to_url_list(data, "audios", "audioUrls")
+        _to_url_list(data, "videos", "videoUrls")
+        return super().from_dict(data)
+
+
+@attrs.define(kw_only=True)
+class AEAdditionalProperty(Item):
+    name: str
+    value: Optional[str] = None
 
 
 @attrs.define(kw_only=True)
@@ -92,13 +161,7 @@ def _convert_images(data):
         main_image = data.pop("mainImage")
         if _is_truthy(main_image, "url"):
             data["mainImage"] = main_image["url"]
-    if _is_truthy(data, "images"):
-        images = []
-        for image in data.pop("images"):
-            if _is_truthy(image, "url"):
-                images.append(image["url"])
-        if images:
-            data["images"] = images
+    _to_url_list(data, "images", "images")
 
 
 def _convert_breadcrumbs(data):
@@ -134,13 +197,11 @@ class AEProduct(Item):
 
     @classmethod
     def from_item(cls, item: Item):
+        assert isinstance(item, Product)
+
         def convert(data):
             _remove_fields(data, ["currency", "features"])
-            if "metadata" in data:
-                _remove_fields(data["metadata"], ["dateDownloaded"])
-                if _is_not_none(data["metadata"], "probability"):
-                    data["probability"] = data["metadata"].pop("probability")
-                _remove_fields(data, ["metadata"])
+            _convert_metadata(data)
             _convert_offer(data)
             if _is_truthy_else_remove(data, "brand"):
                 brand = data.pop("brand")
@@ -196,6 +257,7 @@ class AEProductList(Item):
 
     @classmethod
     def from_item(cls, item: Item):
+        assert isinstance(item, ProductList)
         data = ItemAdapter(item).asdict()
         if "products" in data:
             for product in data["products"]:
@@ -213,6 +275,7 @@ class AEProductList(Item):
 
 
 _CONVERSION_MAP = {
+    Article: AEArticle,
     Product: AEProduct,
     ProductList: AEProductList,
 }
