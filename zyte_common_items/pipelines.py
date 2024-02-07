@@ -4,7 +4,7 @@ from typing import List, Optional
 import attrs
 from itemadapter import ItemAdapter as _ItemAdapter
 
-from zyte_common_items import Article, Product, ProductList
+from zyte_common_items import Article, ArticleList, Product, ProductList
 from zyte_common_items.adapter import ZyteItemAdapter
 from zyte_common_items.base import Item
 
@@ -13,7 +13,7 @@ class ItemAdapter(_ItemAdapter):
     ADAPTER_CLASSES = deque([ZyteItemAdapter])
 
 
-def _convert_metadata(data):
+def _convert_details_metadata(data):
     if "metadata" in data:
         _remove_fields(data["metadata"], ["dateDownloaded"])
         if _is_not_none(data["metadata"], "probability"):
@@ -41,6 +41,19 @@ def _to_url_list(data, old_k, new_k):
 class AEBreadcrumb(Item):
     name: Optional[str] = None
     link: Optional[str] = None
+
+
+def _convert_authors(data):
+    if _is_truthy_else_remove(data, "authors"):
+        author = None
+        author_list = []
+        for _author in data.pop("authors") or []:
+            if author is None and _is_truthy(_author, "nameRaw"):
+                author = _author["nameRaw"]
+            if _is_truthy(_author, "name"):
+                author_list.append(_author["name"])
+        _set_if_truthy(data, "author", author)
+        _set_if_truthy(data, "authorList", author_list)
 
 
 # https://docs.zyte.com/automatic-extraction/article.html#available-fields
@@ -71,21 +84,63 @@ class AEArticle(Item):
     def from_item(cls, item: Item):
         assert isinstance(item, Article)
         data = ItemAdapter(item).asdict()
-        _convert_metadata(data)
-        if _is_truthy_else_remove(data, "authors"):
-            author = None
-            author_list = []
-            for _author in data.pop("authors") or []:
-                if author is None and _is_truthy(_author, "nameRaw"):
-                    author = _author["nameRaw"]
-                if _is_truthy(_author, "name"):
-                    author_list.append(_author["name"])
-            _set_if_truthy(data, "author", author)
-            _set_if_truthy(data, "authorList", author_list)
+        _convert_details_metadata(data)
+        _convert_authors(data)
         _convert_breadcrumbs(data)
         _convert_images(data)
         _to_url_list(data, "audios", "audioUrls")
         _to_url_list(data, "videos", "videoUrls")
+        return super().from_dict(data)
+
+
+# https://docs.zyte.com/automatic-extraction/article-list.html#individual-articles
+@attrs.define(kw_only=True)
+class AEArticleFromList(Item):
+    headline: Optional[str] = None
+    datePublished: Optional[str] = None
+    datePublishedRaw: Optional[str] = None
+    author: Optional[str] = None
+    authorsList: List[str] = attrs.Factory(list)
+    inLanguage: Optional[str] = None
+    mainImage: Optional[str] = None
+    images: List[str] = attrs.Factory(list)
+    articleBody: Optional[str] = None
+    url: Optional[str] = None
+    probability: float
+
+
+@attrs.define(kw_only=True)
+class AEPaginationLink(Item):
+    url: Optional[str] = None
+    text: Optional[str] = None
+
+
+def _convert_list_item_metadata(item):
+    if _is_truthy_else_remove(item, "metadata"):
+        if _is_not_none(item["metadata"], "probability"):
+            item["probability"] = item["metadata"].pop("probability")
+        del item["metadata"]
+    item.setdefault("probability", 1.0)
+
+
+# https://docs.zyte.com/automatic-extraction/article-list.html#available-fields
+@attrs.define(kw_only=True)
+class AEArticleList(Item):
+    url: str
+    articles: List[AEArticleFromList] = attrs.Factory(list)
+    paginationNext: Optional[AEPaginationLink] = None
+    paginationPrevious: Optional[AEPaginationLink] = None
+
+    @classmethod
+    def from_item(cls, item: Item):
+        assert isinstance(item, ArticleList)
+        data = ItemAdapter(item).asdict()
+        if "articles" in data:
+            for article in data["articles"]:
+                _convert_authors(article)
+                _convert_images(article)
+                _convert_list_item_metadata(article)
+        _remove_fields(data, ["metadata"])
         return super().from_dict(data)
 
 
@@ -202,7 +257,7 @@ class AEProduct(Item):
 
         def convert(data):
             _remove_fields(data, ["currency", "features"])
-            _convert_metadata(data)
+            _convert_details_metadata(data)
             _convert_offer(data)
             if _is_truthy_else_remove(data, "brand"):
                 brand = data.pop("brand")
@@ -241,12 +296,6 @@ class AEProductFromList(Item):
     url: Optional[str] = None
 
 
-@attrs.define(kw_only=True)
-class AEPaginationLink(Item):
-    url: Optional[str] = None
-    text: Optional[str] = None
-
-
 # https://docs.zyte.com/automatic-extraction/product-list.html#available-fields
 @attrs.define(kw_only=True)
 class AEProductList(Item):
@@ -262,7 +311,7 @@ class AEProductList(Item):
         data = ItemAdapter(item).asdict()
         if "products" in data:
             for product in data["products"]:
-                _remove_fields(data, ["currency"])
+                _remove_fields(product, ["currency"])
                 _convert_offer(product)
                 _convert_images(product)
                 if _is_truthy_else_remove(product, "metadata"):
@@ -277,6 +326,7 @@ class AEProductList(Item):
 
 _CONVERSION_MAP = {
     Article: AEArticle,
+    ArticleList: AEArticleList,
     Product: AEProduct,
     ProductList: AEProductList,
 }

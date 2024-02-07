@@ -1,10 +1,12 @@
 import pytest
 
-from zyte_common_items import Article, Product, ProductList
+from zyte_common_items import Article, ArticleList, Product, ProductList
 from zyte_common_items.pipelines import (
     AEGTIN,
     AEAdditionalProperty,
     AEArticle,
+    AEArticleFromList,
+    AEArticleList,
     AEBreadcrumb,
     AEOffer,
     AEPaginationLink,
@@ -17,6 +19,8 @@ from zyte_common_items.pipelines import (
 
 from .test_items import (
     _ARTICLE_ALL_KWARGS,
+    _ARTICLE_LIST_ALL_KWARGS,
+    _ARTICLE_LIST_MIN_KWARGS,
     _ARTICLE_MIN_KWARGS,
     _PRODUCT_ALL_KWARGS,
     _PRODUCT_LIST_ALL_KWARGS,
@@ -67,6 +71,24 @@ from .test_items import (
                 probability=1.0,
                 canonicalUrl="https://www.zyte.com/blog/product-data-extraction-automatic/",
                 url="https://www.zyte.com/blog/product-data-extraction-automatic",
+            ),
+        ),
+        (
+            ArticleList(**_ARTICLE_LIST_MIN_KWARGS),
+            AEArticleList(
+                url="https://www.zyte.com/blog/extract-summit-blog/",
+            ),
+        ),
+        (
+            ArticleList(**_ARTICLE_LIST_ALL_KWARGS),
+            AEArticleList(
+                url="https://www.zyte.com/blog/extract-summit-blog/",
+                articles=[
+                    AEArticleFromList(
+                        url="https://www.zyte.com/blog/reflecting-on-the-2022-web-data-extraction-summit-zyte/",
+                        probability=1.0,
+                    )
+                ],
             ),
         ),
         (
