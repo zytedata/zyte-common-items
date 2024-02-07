@@ -387,10 +387,35 @@ _CONVERSION_MAP = {
 
 
 class AEPipeline:
-    """Replaces standard items with matching items with the old Zyte Automatic
+    """Replace standard items with matching items with the old Zyte Automatic
     Extraction schema.
 
-    See https://docs.zyte.com/zyte-api/migration/zyte/autoextract.html.
+    This item pipeline is intended to help in the `migration from Zyte
+    Automatic Extraction to Zyte API automatic extraction
+    <https://docs.zyte.com/zyte-api/migration/zyte/autoextract.html>`_.
+
+    In the simplest scenarios, it can be added to the ``ITEM_PIPELINES``
+    setting in migrated code to ensure that the schema of output items matches
+    the old schema.
+
+    In scenarios where page object classes were being used to fix, extend or
+    customize extraction, it is recommended to migrate page object classes to
+    the new schemas, or move page object class code to the corresponding spider
+    callback.
+
+    If you have callbacks with custom code based on the old schema, you can
+    either migrate that code, and ideally move it to a page object class, or
+    use this item pipeline directly at the beginning of the callback, e.g.:
+
+    .. code-block:: python
+
+        ae_pipeline = AEPipeline()
+
+        ...
+
+        def parse_product(self, response: DummyResponse, product: Product):
+            product = ae_pipeline.process_item(product, spider=self)
+            ...
     """
 
     def process_item(self, item, spider):
