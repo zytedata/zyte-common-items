@@ -19,6 +19,7 @@ def _convert_metadata(data):
         if _is_not_none(data["metadata"], "probability"):
             data["probability"] = data["metadata"].pop("probability")
         _remove_fields(data, ["metadata"])
+    data.setdefault("probability", 1.0)
 
 
 def _set_if_truthy(data, field, value):
