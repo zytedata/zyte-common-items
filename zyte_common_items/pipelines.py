@@ -22,7 +22,7 @@ class AEPipeline:
 
     If you have callbacks with custom code based on the old schema, you can
     either migrate that code, and ideally move it to a page object class, or
-    use zyte_common_items.ae.convert at the beginning of the callback, e.g.:
+    use zyte_common_items.ae.downgrade at the beginning of the callback, e.g.:
 
     .. code-block:: python
 
