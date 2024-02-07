@@ -1,13 +1,14 @@
 """The ``Item`` class should be used as the parent class for data containers."""
 
 from collections import ChainMap
-from typing import Dict, List, Optional, Union, get_args, get_origin
+from typing import Dict, List, Optional, Union, get_args, get_origin, get_type_hints
 
 import attrs
 
 from .util import split_in_unknown_and_known_fields
 
 _Trail = Optional[str]
+_UNDEFINED = object()
 
 
 def is_data_container(cls_or_obj):
@@ -75,7 +76,7 @@ class Item(ProbabilityMixin, _ItemBase):
     @classmethod
     def _from_dict(cls, item: Optional[Dict], *, trail: _Trail = None):
         """Read an item from a dictionary."""
-        if not item:
+        if item is None:
             return None
 
         if not isinstance(item, dict):
@@ -126,9 +127,7 @@ class Item(ProbabilityMixin, _ItemBase):
         """
         from_dict, from_list = {}, {}
 
-        annotations = ChainMap(
-            *(c.__annotations__ for c in cls.__mro__ if "__annotations__" in c.__dict__)
-        )
+        annotations = ChainMap(*(get_type_hints(c) for c in cls.__mro__))
         for field, type_annotation in annotations.items():
             origin = get_origin(type_annotation)
             is_optional = False
@@ -148,8 +147,12 @@ class Item(ProbabilityMixin, _ItemBase):
                 origin = get_origin(type_annotation)
 
             if origin is list:
-                value = item.get(field)
-                if not isinstance(value, list) and not (is_optional and value is None):
+                value = item.get(field, _UNDEFINED)
+                if (
+                    not isinstance(value, list)
+                    and value is not _UNDEFINED
+                    and not (is_optional and value is None)
+                ):
                     field_trail = _extend_trail(trail, field)
                     raise ValueError(
                         f"Expected {field_trail} to be a list, got " f"{value!r}."

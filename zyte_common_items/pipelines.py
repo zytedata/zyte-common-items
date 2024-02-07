@@ -1,10 +1,15 @@
 from typing import List, Optional
 
 import attrs
-from itemadapter import ItemAdapter
+from itemadapter import ItemAdapter as _ItemAdapter
 
 from zyte_common_items import Product, ProductList
+from zyte_common_items.adapter import ZyteItemAdapter
 from zyte_common_items.base import Item
+
+
+class ItemAdapter(_ItemAdapter):
+    ADAPTER_CLASSES = [ZyteItemAdapter]
 
 
 @attrs.define(kw_only=True)
@@ -79,8 +84,6 @@ def _convert_offer(data):
             offer[new_k] = data.pop(old_k)
     if offer:
         data["offers"] = [offer]
-    else:
-        data["offers"] = []
 
 
 def _convert_images(data):
@@ -95,10 +98,6 @@ def _convert_images(data):
                 images.append(image["url"])
         if images:
             data["images"] = images
-        else:
-            data["images"] = []
-    else:
-        data["images"] = []
 
 
 def _convert_breadcrumbs(data):
@@ -108,27 +107,29 @@ def _convert_breadcrumbs(data):
                 entry["url"] = entry.pop("link")
 
 
+# https://docs.zyte.com/automatic-extraction/product.html#available-fields
 @attrs.define(kw_only=True)
 class AEProduct(Item):
-    url: Optional[str] = None
-    canonicalUrl: Optional[str] = None
-    probability: Optional[float] = None
     name: Optional[str] = None
     offers: List[AEOffer] = attrs.Factory(list)
     sku: Optional[str] = None
-    gtin: List[AEGTIN] = attrs.Factory(list)
     mpn: Optional[str] = None
+    gtin: List[AEGTIN] = attrs.Factory(list)
     brand: Optional[str] = None
     breadcrumbs: List[AEBreadcrumb] = attrs.Factory(list)
     mainImage: Optional[str] = None
     images: List[str] = attrs.Factory(list)
     description: Optional[str] = None
     descriptionHtml: Optional[str] = None
-    additionalProperty: List[AEAdditionalProperty] = attrs.Factory(list)
     aggregateRating: Optional[AERating] = None
     color: Optional[str] = None
     size: Optional[str] = None
     style: Optional[str] = None
+    additionalProperty: List[AEAdditionalProperty] = attrs.Factory(list)
+    hasVariants: List["AEProduct"] = attrs.Factory(list)
+    probability: float = None
+    canonicalUrl: Optional[str] = None
+    url: str = None
 
     @classmethod
     def from_item(cls, item: Item):

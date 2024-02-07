@@ -79,6 +79,7 @@ def test_product():
         color="white",
         size="XL",
         style="polka dots",
+        hasVariants=[AEProduct()],
     )
 
 
