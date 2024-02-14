@@ -2,6 +2,15 @@
 Changelog
 =========
 
+0.17.0 (unreleased)
+===================
+
+Implement the ``zyte_common_items.ae`` module and the
+``zyte_common_items.pipelines.AEPipeline`` item pipeline to make it easier to
+`migrate from Zyte Automatic Extraction to Zyte API automatic extraction
+<https://docs.zyte.com/zyte-api/migration/zyte/autoextract.html>`_.
+
+
 0.16.0 (2024-02-06)
 ===================
 
