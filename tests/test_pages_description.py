@@ -223,7 +223,7 @@ def test_description_simple(page_class: type):
     assert page.description == TEXT_CLEANED
 
 
-def test_node():
+def test_non_html_node():
     class CustomPage(ProductPage):
         @field
         def description(self):
@@ -232,4 +232,5 @@ def test_node():
     url = "https://example.com"
     body = b"""<div></div><!-- test -->"""
     page = CustomPage(response=HttpResponse(url=url, body=body))
-    assert page.description is None
+    with pytest.raises(ValueError):
+        page.description

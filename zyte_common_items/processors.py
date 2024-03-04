@@ -163,7 +163,10 @@ def description_html_processor(value: Union[Selector, HtmlElement], page: Any) -
     if value is None:
         return None
     if not isinstance(value, HtmlElement):
-        return None
+        raise ValueError(
+            f"description_html_processor expects an HtmlElement node, got "
+            f"{value.__class__}"
+        )
     cleaned_node = clean_node(value, _get_base_url(page))
     page._descriptionHtml_node = cleaned_node
     return cleaned_node_to_html(cleaned_node)
@@ -192,7 +195,10 @@ def description_processor(value: Any, page: Any) -> Any:
     if value is None:
         return None
     if not isinstance(value, HtmlElement):
-        return None
+        raise ValueError(
+            f"description_processor expects an HtmlElement node, got "
+            f"{value.__class__}"
+        )
     cleaned_node = clean_node(value, _get_base_url(page))
     cleaned_text = cleaned_node_to_text(cleaned_node)
     page._description_node = cleaned_node
