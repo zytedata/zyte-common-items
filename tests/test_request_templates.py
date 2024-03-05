@@ -1,4 +1,4 @@
-from urllib.parse import quote, quote_plus
+from urllib.parse import quote, quote_plus, urlparse
 
 import attrs
 import pytest
@@ -53,6 +53,19 @@ class UrlBasedSearchRequestPage(ItemPage[SearchRequest]):
         return f"{self.request_url}?search={quote(self.page_params['keyword'])}"
 
 
+@attrs.define
+class DynamicSearchRequestPage(ItemPage[SearchRequest]):
+    page_params: PageParams
+    request_url: RequestUrl
+
+    @field
+    def url(self):
+        if "/category/" in urlparse(str(self.request_url)).path:
+            return f"{self.request_url}?category_search={quote(self.page_params['keyword'])}"
+        else:
+            return f"{self.request_url}?search={quote(self.page_params['keyword'])}"
+
+
 @pytest.mark.parametrize(
     ("page", "inputs", "keyword", "url"),
     (
@@ -85,6 +98,18 @@ class UrlBasedSearchRequestPage(ItemPage[SearchRequest]):
             {"request_url": RequestUrl("https://foo.example/")},
             "foo bar",
             "https://foo.example/?search=foo%20bar",
+        ),
+        (
+            DynamicSearchRequestPage,
+            {"request_url": RequestUrl("https://foo.example/")},
+            "foo bar",
+            "https://foo.example/?search=foo%20bar",
+        ),
+        (
+            DynamicSearchRequestPage,
+            {"request_url": RequestUrl("https://foo.example/category/")},
+            "foo bar",
+            "https://foo.example/category/?category_search=foo%20bar",
         ),
     ),
 )
