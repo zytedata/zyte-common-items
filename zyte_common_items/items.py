@@ -1206,4 +1206,4 @@ class SocialMediaPost(Item):
 
 @attrs.define(kw_only=True)
 class SearchRequest(Request):
-    url: str
+    pass
