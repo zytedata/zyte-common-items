@@ -1,6 +1,8 @@
-from typing import List, Optional
+from typing import Callable, Dict, List, Optional
 
 import attrs
+import jinja2
+from itemadapter import ItemAdapter
 
 from zyte_common_items.base import Item
 from zyte_common_items.components import (
@@ -1202,3 +1204,26 @@ class SocialMediaPost(Item):
     metadata: Optional[SocialMediaPostMetadata] = attrs.field(
         default=None, converter=attrs.converters.optional(MetadataCaster(SocialMediaPostMetadata)), kw_only=True  # type: ignore
     )
+
+
+@attrs.define(kw_only=True)
+class RequestTemplate:
+    filters: Dict[str, Callable]
+
+    def request(self, **kwargs) -> Request:
+        template_environment = jinja2.Environment()
+        template_environment.filters = {
+            **template_environment.filters,
+            **self.filters,
+        }
+        rendered_kwargs = {
+            k: template_environment.from_string(v).render(**kwargs)
+            for k, v in ItemAdapter(self).asdict().items()
+            if k != "filters"
+        }
+        return Request(**rendered_kwargs)
+
+
+@attrs.define(kw_only=True)
+class SearchRequestTemplate(RequestTemplate):
+    url: str
