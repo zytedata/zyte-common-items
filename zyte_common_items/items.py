@@ -1,4 +1,4 @@
-from typing import Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 import attrs
 import jinja2
@@ -1216,7 +1216,7 @@ class RequestTemplate:
             **template_environment.filters,
             **self.filters,
         }
-        rendered_kwargs = {
+        rendered_kwargs: Dict[str, Any] = {
             k: template_environment.from_string(v).render(**kwargs)
             for k, v in ItemAdapter(self).asdict().items()
             if k != "filters"
