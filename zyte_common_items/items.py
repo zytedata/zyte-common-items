@@ -1202,3 +1202,8 @@ class SocialMediaPost(Item):
     metadata: Optional[SocialMediaPostMetadata] = attrs.field(
         default=None, converter=attrs.converters.optional(MetadataCaster(SocialMediaPostMetadata)), kw_only=True  # type: ignore
     )
+
+
+@attrs.define(kw_only=True)
+class SearchRequest(Request):
+    url: str
