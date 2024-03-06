@@ -1216,9 +1216,18 @@ def _render(string: str, **kwargs) -> str:
 
 @attrs.define(kw_only=True)
 class SearchRequestTemplate:
+    """:ref:`Request template <request-templates>` to build a search
+    :class:`~zyte_common_items.Request`."""
+
+    #: `Jinja template`_ for :class:`Request.url
+    #: <zyte_common_items.Request.url>`.
+    #:
+    #: .. _Jinja template: https://jinja.palletsprojects.com/en/latest/templates/
     url: str
 
     def request(self, *, keyword: str) -> Request:
+        """Return a :class:`~zyte_common_items.Request` to search for
+        *keyword*."""
         return Request(
             url=_render(self.url, keyword=keyword),
         )

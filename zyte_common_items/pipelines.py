@@ -30,6 +30,7 @@ class AEPipeline:
 
         ...
 
+
         def parse_product(self, response: DummyResponse, product: Product):
             product = ae.downgrade(product)
             ...

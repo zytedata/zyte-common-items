@@ -2,7 +2,7 @@ import attrs
 import pytest
 from web_poet import RequestUrl, field
 
-from zyte_common_items.pages import SearchRequestTemplatePage
+from zyte_common_items import SearchRequestTemplatePage
 
 
 class VerbatimSearchRequestTemplatePage(SearchRequestTemplatePage):

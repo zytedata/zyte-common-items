@@ -60,6 +60,7 @@ from .items import (
     ProductNavigation,
     ProductVariant,
     RealEstate,
+    SearchRequestTemplate,
     SocialMediaPost,
 )
 from .pages import (
@@ -96,5 +97,6 @@ from .pages import (
     ProductNavigationPage,
     ProductPage,
     RealEstatePage,
+    SearchRequestTemplatePage,
     SocialMediaPostPage,
 )

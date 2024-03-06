@@ -86,6 +86,15 @@ Social media post
    :members:
    :inherited-members:
 
+.. _request-template-api:
+
+Request templates
+=================
+
+.. autoclass:: zyte_common_items.SearchRequestTemplate(**kwargs)
+   :members:
+   :inherited-members:
+
 Custom items
 ============
 
