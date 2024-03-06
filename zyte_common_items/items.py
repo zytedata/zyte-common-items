@@ -1219,10 +1219,8 @@ class SearchRequestTemplate:
     """:ref:`Request template <request-templates>` to build a search
     :class:`~zyte_common_items.Request`."""
 
-    #: `Jinja template`_ for :class:`Request.url
+    #: :doc:`Jinja template <jinja:templates>` for :class:`Request.url
     #: <zyte_common_items.Request.url>`.
-    #:
-    #: .. _Jinja template: https://jinja.palletsprojects.com/en/latest/templates/
     url: str
 
     def request(self, *, keyword: str) -> Request:

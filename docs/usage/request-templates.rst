@@ -73,20 +73,16 @@ https://quotes.toscrape.com/ by tag, create the following page object class:
         def url(self):
             return "https://quotes.toscrape.com/tag/{{ keyword|lower|replace(' ', '-') }}/"
 
-Strings returned by request template page object fields are `Jinja
-templates`_, and may use the keyword arguments of the ``request`` method of
-the corresponding :ref:`request template item class <request-template-api>`.
+Strings returned by request template page object fields are :doc:`Jinja
+templates <jinja:templates>`, and may use the keyword arguments of the
+``request`` method of the corresponding :ref:`request template item class
+<request-template-api>`.
 
-.. _Jinja templates: https://jinja.palletsprojects.com/en/latest/templates/
-
-The most useful Jinja feature to build request templates is filters_.
-`Jinja built-in filters`_ include ``urlencode``, ``replace``, or ``lower``. In
-addition to those, request templates can use a ``quote_plus`` filter, which
-implements Python’s quote_plus_.
-
-.. _filters: https://jinja.palletsprojects.com/en/latest/templates/#filters
-.. _Jinja built-in filters: https://jinja.palletsprojects.com/en/latest/templates/#builtin-filters
-.. _quote_plus: https://docs.python.org/3/library/urllib.parse.html#urllib.parse.quote_plus
+The most useful Jinja feature to build request templates is :ref:`filters
+<filters>`. :ref:`Jinja built-in filters <builtin-filters>` include
+:func:`~jinja-filters.urlencode`, :func:`~jinja-filters.replace`, or
+:func:`~jinja-filters.lower`. In addition to those, request templates can use a
+:func:`~urllib.parse.quote_plus` filter.
 
 Jinja allows a clean syntax for most use cases, while enabling very complex
 scenarios, for example:
