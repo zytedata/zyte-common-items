@@ -769,12 +769,18 @@ def test_metadata():
 
     -   If the generic Metadata object is assigned as input, it gets converted
         into an object of the right, more specific metadata class.
+
+    Request templates are an exception.
     """
     item_names = {
         obj_name[:-4]
         for obj_name in zyte_common_items.__dict__
         if (
-            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
+            not (
+                obj_name.startswith("Base")
+                or obj_name.startswith("Auto")
+                or obj_name.endswith("RequestTemplatePage")
+            )
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )
