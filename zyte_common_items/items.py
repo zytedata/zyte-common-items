@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional
+from typing import List, Optional
 from urllib.parse import quote_plus
 
 import attrs
@@ -1210,12 +1210,15 @@ _TEMPLATE_ENVIRONMENT = jinja2.Environment()
 _TEMPLATE_ENVIRONMENT.filters["quote_plus"] = quote_plus
 
 
+def _render(string: str, **kwargs) -> str:
+    return _TEMPLATE_ENVIRONMENT.from_string(string).render(**kwargs)
+
+
 @attrs.define(kw_only=True)
 class SearchRequestTemplate:
     url: str
 
-    def request(self, **kwargs) -> Request:
-        rendered_kwargs: Dict[str, Any] = {
-            "url": _TEMPLATE_ENVIRONMENT.from_string(self.url).render(**kwargs),
-        }
-        return Request(**rendered_kwargs)
+    def request(self, *, keyword: str) -> Request:
+        return Request(
+            url=_render(self.url, keyword=keyword),
+        )
