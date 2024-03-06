@@ -3,7 +3,6 @@ from urllib.parse import quote_plus
 
 import attrs
 import jinja2
-from itemadapter import ItemAdapter
 
 from zyte_common_items.base import Item
 from zyte_common_items.components import (
@@ -1218,8 +1217,6 @@ class SearchRequestTemplate:
             "quote_plus": quote_plus,
         }
         rendered_kwargs: Dict[str, Any] = {
-            k: template_environment.from_string(v).render(**kwargs)
-            for k, v in ItemAdapter(self).asdict().items()
-            if k != "filters"
+            "url": template_environment.from_string(self.url).render(**kwargs),
         }
         return Request(**rendered_kwargs)
