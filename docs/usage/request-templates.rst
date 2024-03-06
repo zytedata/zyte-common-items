@@ -71,7 +71,7 @@ https://quotes.toscrape.com/ by tag, create the following page object class:
     class QuotesToScrapeComSearchRequestTemplatePage(SearchRequestTemplatePage):
         @field
         def url(self):
-            return "https://quotes.toscrape.com/tag/{{ keyword|lower|replace(' ', '-') }}/"
+            return "https://quotes.toscrape.com/tag/{{ keyword|lower|replace(' ', '-')|urlencode }}/"
 
 Strings returned by request template page object fields are :doc:`Jinja
 templates <jinja:templates>`, and may use the keyword arguments of the
