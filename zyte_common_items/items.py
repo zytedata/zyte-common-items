@@ -1206,17 +1206,16 @@ class SocialMediaPost(Item):
     )
 
 
+_TEMPLATE_ENVIRONMENT = jinja2.Environment()
+_TEMPLATE_ENVIRONMENT.filters["quote_plus"] = quote_plus
+
+
 @attrs.define(kw_only=True)
 class SearchRequestTemplate:
     url: str
 
     def request(self, **kwargs) -> Request:
-        template_environment = jinja2.Environment()
-        template_environment.filters = {
-            **template_environment.filters,
-            "quote_plus": quote_plus,
-        }
         rendered_kwargs: Dict[str, Any] = {
-            "url": template_environment.from_string(self.url).render(**kwargs),
+            "url": _TEMPLATE_ENVIRONMENT.from_string(self.url).render(**kwargs),
         }
         return Request(**rendered_kwargs)
