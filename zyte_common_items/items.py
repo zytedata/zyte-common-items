@@ -1,4 +1,5 @@
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Dict, List, Optional
+from urllib.parse import quote_plus
 
 import attrs
 import jinja2
@@ -1207,14 +1208,14 @@ class SocialMediaPost(Item):
 
 
 @attrs.define(kw_only=True)
-class RequestTemplate:
-    filters: Dict[str, Callable]
+class SearchRequestTemplate:
+    url: str
 
     def request(self, **kwargs) -> Request:
         template_environment = jinja2.Environment()
         template_environment.filters = {
             **template_environment.filters,
-            **self.filters,
+            "quote_plus": quote_plus,
         }
         rendered_kwargs: Dict[str, Any] = {
             k: template_environment.from_string(v).render(**kwargs)
@@ -1222,8 +1223,3 @@ class RequestTemplate:
             if k != "filters"
         }
         return Request(**rendered_kwargs)
-
-
-@attrs.define(kw_only=True)
-class SearchRequestTemplate(RequestTemplate):
-    url: str

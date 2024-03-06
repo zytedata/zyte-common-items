@@ -5,32 +5,28 @@ from web_poet import RequestUrl, field
 from zyte_common_items.pages import SearchRequestTemplatePage
 
 
-class NoFilterSearchRequestTemplatePage(SearchRequestTemplatePage):
+class VerbatimSearchRequestTemplatePage(SearchRequestTemplatePage):
     @field
     def url(self):
         return "https://example.com/?search={{ keyword }}"
 
 
-class JinjaBuiltInFilterSearchRequestTemplatePage(SearchRequestTemplatePage):
+class QuoteSearchRequestTemplatePage(SearchRequestTemplatePage):
     @field
     def url(self):
         return "https://example.com/?search={{ keyword|urlencode }}"
 
 
-class OurBuiltInFilterSearchRequestTemplatePage(SearchRequestTemplatePage):
+class QuotePlusSearchRequestTemplatePage(SearchRequestTemplatePage):
     @field
     def url(self):
         return "https://example.com/?search={{ keyword|quote_plus }}"
 
 
-class CustomFilterSearchRequestTemplatePage(SearchRequestTemplatePage):
-    @field
-    def filters(self):
-        return {**super().filters, "foo": lambda v: f"{v} baz"}
-
+class ReplaceSearchRequestTemplatePage(SearchRequestTemplatePage):
     @field
     def url(self):
-        return "https://example.com/?search={{ keyword|foo }}"
+        return "https://example.com/search/{{ keyword|replace(' ', '/') }}"
 
 
 @attrs.define
@@ -63,28 +59,28 @@ class DynamicSearchRequestTemplatePage(SearchRequestTemplatePage):
     ("page", "inputs", "keyword", "url"),
     (
         (
-            NoFilterSearchRequestTemplatePage,
+            VerbatimSearchRequestTemplatePage,
             {},
             "foo bar",
             "https://example.com/?search=foo bar",
         ),
         (
-            JinjaBuiltInFilterSearchRequestTemplatePage,
+            QuoteSearchRequestTemplatePage,
             {},
             "foo bar",
             "https://example.com/?search=foo%20bar",
         ),
         (
-            OurBuiltInFilterSearchRequestTemplatePage,
+            QuotePlusSearchRequestTemplatePage,
             {},
             "foo bar",
             "https://example.com/?search=foo+bar",
         ),
         (
-            CustomFilterSearchRequestTemplatePage,
+            ReplaceSearchRequestTemplatePage,
             {},
             "foo bar",
-            "https://example.com/?search=foo bar baz",
+            "https://example.com/search/foo/bar",
         ),
         (
             UrlBasedSearchRequestTemplatePage,

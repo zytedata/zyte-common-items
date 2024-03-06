@@ -1,7 +1,6 @@
 import html
 from datetime import datetime
-from typing import Any, Callable, Dict, Generic, List, Optional, Type, TypeVar, Union
-from urllib.parse import quote_plus
+from typing import Any, Generic, List, Optional, Type, TypeVar, Union
 
 import attrs
 import html_text
@@ -64,7 +63,6 @@ from .items import (
     ProductNavigation,
     ProductVariant,
     RealEstate,
-    RequestTemplate,
     SearchRequestTemplate,
     SocialMediaPost,
 )
@@ -1119,13 +1117,5 @@ class AutoSocialMediaPostPage(BaseSocialMediaPostPage):
         return self.social_media_post.metadata
 
 
-class RequestTemplatePage(ItemPage[RequestTemplate]):
-    @field
-    def filters(self) -> Dict[str, Callable]:
-        return {
-            "quote_plus": quote_plus,
-        }
-
-
-class SearchRequestTemplatePage(RequestTemplatePage, Returns[SearchRequestTemplate]):
+class SearchRequestTemplatePage(ItemPage[SearchRequestTemplate]):
     pass
