@@ -63,6 +63,7 @@ from .items import (
     ProductNavigation,
     ProductVariant,
     RealEstate,
+    SearchRequest,
     SocialMediaPost,
 )
 from .processors import (
@@ -1114,3 +1115,7 @@ class AutoSocialMediaPostPage(BaseSocialMediaPostPage):
     @field
     def metadata(self) -> Optional[SocialMediaPostMetadata]:
         return self.social_media_post.metadata
+
+
+class SearchRequestPage(ItemPage[SearchRequest]):
+    pass

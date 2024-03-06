@@ -1,14 +1,14 @@
-from urllib.parse import quote, quote_plus, urlparse
+from urllib.parse import quote, quote_plus
 
 import attrs
 import pytest
-from web_poet import ItemPage, PageParams, RequestUrl, field
+from web_poet import PageParams, RequestUrl, field
 
-from zyte_common_items.items import SearchRequest
+from zyte_common_items.pages import SearchRequestPage
 
 
 @attrs.define
-class UnquotedSearchRequestPage(ItemPage[SearchRequest]):
+class UnquotedSearchRequestPage(SearchRequestPage):
     page_params: PageParams
 
     @field
@@ -17,7 +17,7 @@ class UnquotedSearchRequestPage(ItemPage[SearchRequest]):
 
 
 @attrs.define
-class QuoteSearchRequestPage(ItemPage[SearchRequest]):
+class QuoteSearchRequestPage(SearchRequestPage):
     page_params: PageParams
 
     @field
@@ -26,7 +26,7 @@ class QuoteSearchRequestPage(ItemPage[SearchRequest]):
 
 
 @attrs.define
-class QuotePlusSearchRequestPage(ItemPage[SearchRequest]):
+class QuotePlusSearchRequestPage(SearchRequestPage):
     page_params: PageParams
 
     @field
@@ -35,7 +35,7 @@ class QuotePlusSearchRequestPage(ItemPage[SearchRequest]):
 
 
 @attrs.define
-class CustomFilterSearchRequestPage(ItemPage[SearchRequest]):
+class CustomFilterSearchRequestPage(SearchRequestPage):
     page_params: PageParams
 
     @field
@@ -44,7 +44,7 @@ class CustomFilterSearchRequestPage(ItemPage[SearchRequest]):
 
 
 @attrs.define
-class UrlBasedSearchRequestPage(ItemPage[SearchRequest]):
+class UrlBasedSearchRequestPage(SearchRequestPage):
     page_params: PageParams
     request_url: RequestUrl
 
@@ -54,16 +54,16 @@ class UrlBasedSearchRequestPage(ItemPage[SearchRequest]):
 
 
 @attrs.define
-class DynamicSearchRequestPage(ItemPage[SearchRequest]):
+class DynamicSearchRequestPage(SearchRequestPage):
     page_params: PageParams
-    request_url: RequestUrl
 
     @field
     def url(self):
-        if "/category/" in urlparse(str(self.request_url)).path:
-            return f"{self.request_url}?category_search={quote(self.page_params['keyword'])}"
+        keyword = self.page_params["keyword"]
+        if len(keyword) >= 2 and keyword[0].lower() == "p" and keyword[1:].isdigit():
+            return f"https://example.com/p/{self.page_params['keyword'].upper()}"
         else:
-            return f"{self.request_url}?search={quote(self.page_params['keyword'])}"
+            return f"https://example.com/?search={quote(self.page_params['keyword'])}"
 
 
 @pytest.mark.parametrize(
@@ -101,15 +101,15 @@ class DynamicSearchRequestPage(ItemPage[SearchRequest]):
         ),
         (
             DynamicSearchRequestPage,
-            {"request_url": RequestUrl("https://foo.example/")},
+            {},
             "foo bar",
-            "https://foo.example/?search=foo%20bar",
+            "https://example.com/?search=foo%20bar",
         ),
         (
             DynamicSearchRequestPage,
-            {"request_url": RequestUrl("https://foo.example/category/")},
-            "foo bar",
-            "https://foo.example/category/?category_search=foo%20bar",
+            {},
+            "p250",
+            "https://example.com/p/P250",
         ),
     ),
 )
