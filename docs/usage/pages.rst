@@ -54,7 +54,8 @@ extra fields. For example:
 .. code-block:: python
 
     import attrs
-    from zyte_common_items import AutoProductPage, Product, Returns, field
+    from web_poet import Returns, field
+    from zyte_common_items import AutoProductPage, Product
 
     @attrs.define
     class ExtendedProduct(Product):
