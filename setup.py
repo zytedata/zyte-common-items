@@ -27,7 +27,7 @@ setup(
         "attrs>=22.1.0",
         "clear-html>=0.4.0",
         "itemadapter>=0.8.0",
-        "Jinja2>=3.0.0",
+        "Jinja2>=2.7",
         "price-parser>=0.3.4",
         "web-poet>=0.14.0",
         "zyte-parsers>=0.5.0",
