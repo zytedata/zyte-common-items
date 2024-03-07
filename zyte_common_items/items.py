@@ -1212,9 +1212,7 @@ _TEMPLATE_ENVIRONMENT = jinja2.Environment()
 _TEMPLATE_ENVIRONMENT.filters["quote_plus"] = quote_plus
 
 
-def _render(string: Optional[str], **kwargs) -> str:
-    if string is None:
-        return None
+def _render(string: str, **kwargs) -> str:
     return _TEMPLATE_ENVIRONMENT.from_string(string).render(**kwargs)
 
 
@@ -1251,11 +1249,7 @@ class SearchRequestTemplate:
     def request(self, *, keyword: str) -> Request:
         """Return a :class:`~zyte_common_items.Request` to search for
         *keyword*."""
-        body = _render(self.body, keyword=keyword)
-        if body:
-            body = b64encode(body.encode()).decode()
-        else:
-            body = None
+        body = _render(self.body or "", keyword=keyword).encode()
 
         headers = []
         for header in self.headers or []:
@@ -1264,11 +1258,10 @@ class SearchRequestTemplate:
                 continue
             value = _render(header.value, keyword=keyword)
             headers.append(Header(name=name, value=value))
-        headers = headers or None
 
         return Request(
             url=_render(self.url, keyword=keyword),
-            method=_render(self.method, keyword=keyword),
-            body=body,
-            headers=headers,
+            method=_render(self.method, keyword=keyword) if self.method else "GET",
+            body=b64encode(body).decode() if body else None,
+            headers=headers or None,
         )
