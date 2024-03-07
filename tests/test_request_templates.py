@@ -1,16 +1,22 @@
 import json
 from base64 import b64encode
 from copy import copy
+from importlib.metadata import version
 
 import attrs
 import pytest
 from itemadapter import ItemAdapter
+from packaging.version import Version
 from w3lib.url import add_or_replace_parameters
 from web_poet import RequestUrl, field
 
 from zyte_common_items import Header, Request, SearchRequestTemplatePage
 
 
+@pytest.mark.skipif(
+    Version(version("jinja2")) < Version("2.9"),
+    reason="The tojson filter was added in Jinja 2.9",
+)
 @pytest.mark.asyncio
 async def test_all():
     class HolisticSearchRequestTemplatePage(SearchRequestTemplatePage):
