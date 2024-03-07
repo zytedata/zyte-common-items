@@ -1,3 +1,5 @@
+import json
+from base64 import b64encode
 from copy import copy
 
 import attrs
@@ -6,7 +8,89 @@ from itemadapter import ItemAdapter
 from w3lib.url import add_or_replace_parameters
 from web_poet import RequestUrl, field
 
-from zyte_common_items import SearchRequestTemplatePage
+from zyte_common_items import Header, Request, SearchRequestTemplatePage
+
+
+@pytest.mark.asyncio
+async def test_all():
+    class HolisticSearchRequestTemplatePage(SearchRequestTemplatePage):
+        @field
+        def url(self):
+            return """
+                {%-
+                    if keyword|length > 1
+                    and keyword[0]|lower == 'p'
+                    and keyword[1:]|int(-1) != -1
+                -%}
+                    https://example.com/p/{{ keyword|upper }}
+                {%- else -%}
+                    https://example.com/search
+                {%- endif -%}
+            """
+
+        @field
+        def method(self):
+            return """
+                {%-
+                    if keyword|length > 1
+                    and keyword[0]|lower == 'p'
+                    and keyword[1:]|int(-1) != -1
+                -%}
+                    GET
+                {%- else -%}
+                    POST
+                {%- endif -%}
+            """
+
+        @field
+        def body(self):
+            return """
+                {%-
+                    if keyword|length > 1
+                    and keyword[0]|lower == 'p'
+                    and keyword[1:]|int(-1) != -1
+                -%}
+                {%- else -%}
+                    {"query": {{ keyword|tojson }}}
+                {%- endif -%}
+            """
+
+        @field
+        def headers(self):
+            return [
+                Header(
+                    name=(
+                        """
+                            {%-
+                                if keyword|length > 1
+                                and keyword[0]|lower == 'p'
+                                and keyword[1:]|int(-1) != -1
+                            -%}
+                            {%- else -%}
+                                Query
+                            {%- endif -%}
+                        """
+                    ),
+                    value="{{ keyword }}",
+                ),
+            ]
+
+    search_request_template = await HolisticSearchRequestTemplatePage().to_item()
+
+    search_request = search_request_template.request(keyword="p250")
+    expected_request = Request("https://example.com/p/P250")
+    assert search_request == expected_request
+
+    search_request = search_request_template.request(keyword="foo bar")
+    expected_request = Request(
+        "https://example.com/search",
+        method="POST",
+        body=b64encode(json.dumps({"query": "foo bar"}).encode()).decode(),
+        headers=[
+            Header(name="Query", value="foo bar"),
+        ],
+    )
+    assert search_request == expected_request
 
 
 class VerbatimSearchRequestTemplatePage(SearchRequestTemplatePage):
@@ -165,3 +249,35 @@ async def test_url(page, inputs, keyword, url):
     search_request_template = await page(**inputs).to_item()
     search_request = search_request_template.request(keyword=keyword)
     assert search_request.url == url
+
+
+@pytest.mark.asyncio
+async def test_body_space():
+    class BodySpaceSearchRequestTemplatePage(SearchRequestTemplatePage):
+        @field
+        def url(self):
+            return "https://example.com"
+
+        @field
+        def body(self):
+            return " "
+
+    search_request_template = await BodySpaceSearchRequestTemplatePage().to_item()
+    search_request = search_request_template.request(keyword="foo bar")
+    assert search_request.body == b64encode(b" ").decode()
+
+
+@pytest.mark.asyncio
+async def test_header_empty_value():
+    class BodySpaceSearchRequestTemplatePage(SearchRequestTemplatePage):
+        @field
+        def url(self):
+            return "https://example.com"
+
+        @field
+        def headers(self):
+            return [Header(name="Foo", value="")]
+
+    search_request_template = await BodySpaceSearchRequestTemplatePage().to_item()
+    search_request = search_request_template.request(keyword="foo bar")
+    assert search_request.headers == [Header(name="Foo", value="")]

@@ -1,3 +1,4 @@
+from base64 import b64encode
 from typing import List, Optional
 from urllib.parse import quote_plus
 
@@ -20,6 +21,7 @@ from zyte_common_items.components import (
     Breadcrumb,
     BusinessPlaceMetadata,
     Gtin,
+    Header,
     HiringOrganization,
     Image,
     JobLocation,
@@ -1210,7 +1212,9 @@ _TEMPLATE_ENVIRONMENT = jinja2.Environment()
 _TEMPLATE_ENVIRONMENT.filters["quote_plus"] = quote_plus
 
 
-def _render(string: str, **kwargs) -> str:
+def _render(string: Optional[str], **kwargs) -> str:
+    if string is None:
+        return None
     return _TEMPLATE_ENVIRONMENT.from_string(string).render(**kwargs)
 
 
@@ -1223,9 +1227,48 @@ class SearchRequestTemplate:
     #: <zyte_common_items.Request.url>`.
     url: str
 
+    #: :doc:`Jinja template <jinja:templates>` for :class:`Request.method
+    #: <zyte_common_items.Request.method>`.
+    method: str = "GET"
+
+    #: :doc:`Jinja template <jinja:templates>` for :class:`Request.body
+    #: <zyte_common_items.Request.body>`.
+    #:
+    #: It must be a plain :class:`str`, not :class:`bytes` or a Base64-encoded
+    #: :class:`str`. Base64-encoding is done by :meth:`request` after rendering
+    #: this value as a Jinja template.
+    #:
+    #: Defining a non-UTF-8 body is not supported.
+    body: Optional[str] = None
+
+    #: List of :class:`Header`, for :class:`Request.headers
+    #: <zyte_common_items.Request.headers>`, where every :attr:`~Header.name`
+    #: and :attr:`~Header.value` is a :doc:`Jinja template <jinja:templates>`.
+    #:
+    #:
+    headers: Optional[List[Header]] = None
+
     def request(self, *, keyword: str) -> Request:
         """Return a :class:`~zyte_common_items.Request` to search for
         *keyword*."""
+        body = _render(self.body, keyword=keyword)
+        if body:
+            body = b64encode(body.encode()).decode()
+        else:
+            body = None
+
+        headers = []
+        for header in self.headers or []:
+            name = _render(header.name, keyword=keyword).strip()
+            if not name:
+                continue
+            value = _render(header.value, keyword=keyword)
+            headers.append(Header(name=name, value=value))
+        headers = headers or None
+
         return Request(
             url=_render(self.url, keyword=keyword),
+            method=_render(self.method, keyword=keyword),
+            body=body,
+            headers=headers,
         )
