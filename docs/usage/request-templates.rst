@@ -100,6 +100,53 @@ scenarios, for example:
                 -%}
                     https://example.com/p/{{ keyword|upper }}
                 {%- else -%}
-                    https://example.com/?search={{ keyword|urlencode }}
+                    https://example.com/search
                 {%- endif -%}
             """
+
+        @field
+        def method(self):
+            return """
+                {%-
+                    if keyword|length > 1
+                    and keyword[0]|lower == 'p'
+                    and keyword[1:]|int(-1) != -1
+                -%}
+                    GET
+                {%- else -%}
+                    POST
+                {%- endif -%}
+            """
+
+        @field
+        def body(self):
+            return """
+                {%-
+                    if keyword|length > 1
+                    and keyword[0]|lower == 'p'
+                    and keyword[1:]|int(-1) != -1
+                -%}
+                {%- else -%}
+                    {"query": {{ keyword|tojson }}}
+                {%- endif -%}
+            """
+
+        @field
+        def headers(self):
+            return [
+                Header(
+                    name=(
+                        """
+                            {%-
+                                if keyword|length > 1
+                                and keyword[0]|lower == 'p'
+                                and keyword[1:]|int(-1) != -1
+                            -%}
+                            {%- else -%}
+                                Query
+                            {%- endif -%}
+                        """
+                    ),
+                    value="{{ keyword }}",
+                ),
+            ]
