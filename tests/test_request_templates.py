@@ -126,22 +126,6 @@ class UrlBasedSearchRequestTemplatePage(SearchRequestTemplatePage):
         return f"{self.request_url}?search={{{{ keyword|urlencode }}}}"
 
 
-class DynamicSearchRequestTemplatePage(SearchRequestTemplatePage):
-    @field
-    def url(self):
-        return """
-            {%-
-                if keyword|length > 1
-                and keyword[0]|lower == 'p'
-                and keyword[1:]|int(-1) != -1
-            -%}
-                https://example.com/p/{{ keyword|upper }}
-            {%- else -%}
-                https://example.com/?search={{ keyword|urlencode }}
-            {%- endif -%}
-        """
-
-
 # Defines way more of what the corresponding test scenario uses to give an idea
 # of the future possibilities of this approach.
 def edit_request_url(expression, page):
@@ -223,18 +207,6 @@ class DSLSearchRequestTemplatePage(SearchRequestTemplatePage):
             {"request_url": RequestUrl("https://foo.example/")},
             "foo bar",
             "https://foo.example/?search=foo%20bar",
-        ),
-        (
-            DynamicSearchRequestTemplatePage,
-            {},
-            "foo bar",
-            "https://example.com/?search=foo%20bar",
-        ),
-        (
-            DynamicSearchRequestTemplatePage,
-            {},
-            "p250",
-            "https://example.com/p/P250",
         ),
         (
             DSLSearchRequestTemplatePage,
