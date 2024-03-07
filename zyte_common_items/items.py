@@ -1263,7 +1263,7 @@ class SearchRequestTemplate:
 
         return Request(
             url=_render(self.url, keyword=keyword),
-            method=_render(self.method, keyword=keyword) if self.method else "GET",
+            method=_render(self.method, keyword=keyword),
             body=b64encode(body).decode() if body else None,
             headers=headers or None,
         )
