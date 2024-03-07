@@ -1243,7 +1243,9 @@ class SearchRequestTemplate:
     #: <zyte_common_items.Request.headers>`, where every :attr:`~Header.name`
     #: and :attr:`~Header.value` is a :doc:`Jinja template <jinja:templates>`.
     #:
-    #:
+    #: When a header name template renders into an empty string (after
+    #: stripping spacing), that header is removed from the resulting list of
+    #: headers.
     headers: Optional[List[Header]] = None
 
     def request(self, *, keyword: str) -> Request:
