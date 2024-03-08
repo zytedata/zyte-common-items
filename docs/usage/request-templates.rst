@@ -78,14 +78,21 @@ templates <jinja:templates>`, and may use the keyword arguments of the
 ``request`` method of the corresponding :ref:`request template item class
 <request-template-api>`.
 
-The most useful Jinja feature to build request templates is :ref:`filters
-<filters>`. :ref:`Jinja built-in filters <builtin-filters>` include
-:func:`~jinja-filters.urlencode`, :func:`~jinja-filters.replace`, or
-:func:`~jinja-filters.lower`. In addition to those, request templates can use a
-:func:`~urllib.parse.quote_plus` filter.
+Often, you only need to build a URL template by figuring out where request
+parameters go and using the right URL-encoding :ref:`filters <filters>`,
+:func:`~jinja-filters.urlencode` or :func:`~urllib.parse.quote_plus`, depending
+on how spaces are encoded:
 
-Jinja allows a clean syntax for most use cases, while enabling very complex
-scenarios, for example:
+=================================== ===================================================
+Example search URL for “foo bar”    URL template
+=================================== ===================================================
+https://example.com/?q=foo%20bar    ``https://example.com/?q={{ keyword|urlencode }}``
+https://example.com/?q=foo+bar      ``https://example.com/?q={{ keyword|quote_plus }}``
+=================================== ===================================================
+
+You can use any of :ref:`Jinja’s built-in filters <builtin-filters>`, plus
+:func:`~urllib.parse.quote_plus`, and all other Jinja features. Jinja enables
+very complex scenarios:
 
 .. code-block:: python
 
