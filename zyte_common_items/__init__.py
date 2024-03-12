@@ -35,6 +35,7 @@ from .components import (
     RealEstateArea,
     RealEstateMetadata,
     Request,
+    SearchRequestTemplateMetadata,
     SocialMediaPostAuthor,
     SocialMediaPostMetadata,
     StarRating,

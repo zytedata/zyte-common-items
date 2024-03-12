@@ -116,7 +116,12 @@ class RealEstateMetadata(_DetailsMetadata):
 
 @attrs.define(kw_only=True)
 class SocialMediaPostMetadata(Metadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.SocialMediaPost.metadata`."""
+
+
+@attrs.define(kw_only=True)
+class SearchRequestTemplateMetadata(_DetailsMetadata):
+    """Metadata class for :data:`zyte_common_items.SearchRequestTemplate.metadata`."""
 
 
 ###############################################################################

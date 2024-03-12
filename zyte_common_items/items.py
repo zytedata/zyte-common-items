@@ -39,6 +39,7 @@ from zyte_common_items.components import (
     RealEstateArea,
     RealEstateMetadata,
     Request,
+    SearchRequestTemplateMetadata,
     SocialMediaPostAuthor,
     SocialMediaPostMetadata,
     StarRating,
@@ -1217,7 +1218,7 @@ def _render(string: str, **kwargs) -> str:
 
 
 @attrs.define(kw_only=True)
-class SearchRequestTemplate:
+class SearchRequestTemplate(Item):
     """:ref:`Request template <request-templates>` to build a search
     :class:`~zyte_common_items.Request`."""
 
@@ -1247,6 +1248,11 @@ class SearchRequestTemplate:
     #: stripping spacing), that header is removed from the resulting list of
     #: headers.
     headers: Optional[List[Header]] = None
+
+    #: Data extraction process metadata.
+    metadata: Optional[SearchRequestTemplateMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(SearchRequestTemplateMetadata)), kw_only=True  # type: ignore
+    )
 
     def request(self, *, keyword: str) -> Request:
         """Return a :class:`~zyte_common_items.Request` to search for

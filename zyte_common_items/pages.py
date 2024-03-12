@@ -43,6 +43,7 @@ from .components import (
     RealEstateArea,
     RealEstateMetadata,
     Request,
+    SearchRequestTemplateMetadata,
     SocialMediaPostAuthor,
     SocialMediaPostMetadata,
     StarRating,
@@ -1117,5 +1118,7 @@ class AutoSocialMediaPostPage(BaseSocialMediaPostPage):
         return self.social_media_post.metadata
 
 
-class SearchRequestTemplatePage(ItemPage[SearchRequestTemplate]):
+class SearchRequestTemplatePage(
+    ItemPage[SearchRequestTemplate], HasMetadata[SearchRequestTemplateMetadata]
+):
     pass
