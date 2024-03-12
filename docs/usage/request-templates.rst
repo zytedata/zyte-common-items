@@ -14,13 +14,7 @@ Using request templates
 After you :ref:`write a request template page object
 <custom-request-template-page>` for a website, you can get a request template
 item for that website and call its ``request`` method to build a request with
-specific parameters.
-
-For example, after implementing the page object :ref:`below
-<custom-request-template-page>`, you can get a
-:class:`~zyte_common_items.SearchRequestTemplate` object for
-https://quotes.toscrape.com/, and build a search request for a specific
-keyword. Using :doc:`scrapy-poet <scrapy-poet:index>`:
+specific parameters. For example:
 
 .. code-block:: python
 
@@ -29,25 +23,25 @@ keyword. Using :doc:`scrapy-poet <scrapy-poet:index>`:
     from zyte_common_items import SearchRequestTemplate
 
 
-    class QuotesToScrapeComSpider(Spider):
-        name = "quotes_toscrape_com"
+    class ExampleComSpider(Spider):
+        name = "example_com"
 
         def start_requests(self):
-            yield Request("https://quotes.toscrape.com", callback=self.start_search)
+            yield Request("https://example.com", callback=self.start_search)
 
         def start_search(
             self, response: DummyResponse, search_request_template: SearchRequestTemplate
         ):
-            yield search_request_template.render(keyword="Unhappy Marriage").to_scrapy(
-                callback=self.parse_quotes
+            yield search_request_template.render(keyword="foo").to_scrapy(
+                callback=self.parse_result
             )
 
-        def parse_quotes(self, response):
+        def parse_result(self, response):
             ...
 
-``search_request_template.render(keyword="Unhappy Marriage")`` builds a
-:class:`~zyte_common_items.Request` object with URL
-``https://quotes.toscrape.com/tag/unhappy-marriage/``.
+``search_request_template.render(keyword="foo bar")`` builds a
+:class:`~zyte_common_items.Request` object, e.g. with URL
+``https://example.com/search?q=foo+bar``.
 
 
 .. _custom-request-template-page:
@@ -57,9 +51,7 @@ Writing a request template page object
 
 To enable building a request template for a given website, build a page object
 for that website that returns the corresponding request template item class.
-
-For example, to build a search request template to search for quotes in
-https://quotes.toscrape.com/ by tag, create the following page object class:
+For example:
 
 .. code-block:: python
 
@@ -67,11 +59,11 @@ https://quotes.toscrape.com/ by tag, create the following page object class:
     from zyte_common_items import SearchRequestTemplatePage
 
 
-    @handle_urls("quotes.toscrape.com")
-    class QuotesToScrapeComSearchRequestTemplatePage(SearchRequestTemplatePage):
+    @handle_urls("example.com")
+    class ExampleComSearchRequestTemplatePage(SearchRequestTemplatePage):
         @field
         def url(self):
-            return "https://quotes.toscrape.com/tag/{{ keyword|lower|replace(' ', '-')|urlencode }}/"
+            return "https://example.com/search?q={{ keyword|quote_plus }}"
 
 Strings returned by request template page object fields are :doc:`Jinja
 templates <jinja:templates>`, and may use the keyword arguments of the
@@ -79,7 +71,7 @@ templates <jinja:templates>`, and may use the keyword arguments of the
 <request-template-api>`.
 
 Often, you only need to build a URL template by figuring out where request
-parameters go and using the right URL-encoding :ref:`filters <filters>`,
+parameters go and using the right URL-encoding :ref:`filter <filters>`,
 :func:`~jinja-filters.urlencode` or :func:`~urllib.parse.quote_plus`, depending
 on how spaces are encoded:
 
