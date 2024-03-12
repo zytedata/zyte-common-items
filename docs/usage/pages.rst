@@ -199,6 +199,21 @@ work on built-in page object and extractor classes:
 +-----------------------------------------------+---------------------------------------------------+
 | .. code-block:: html                          | .. code-block:: python                            |
 |                                               |                                                   |
+|     <span class="gtin">                       |     @field                                        |
+|       978-1-933624-34-1                       |     def gtin(self):                               |
+|     </span>                                   |         return self.css(".gtin")                  |
+|                                               |                                                   |
+|                                               | .. code-block:: python                            |
+|                                               |                                                   |
+|                                               |     Product(                                      |
+|                                               |         gtin=[                                    |
+|                                               |             ("isbn13", "9781933624341"),          |
+|                                               |         ],                                        |
+|                                               |     )                                             |
+|                                               |                                                   |
++-----------------------------------------------+---------------------------------------------------+
+| .. code-block:: html                          | .. code-block:: python                            |
+|                                               |                                                   |
 |     <div class="price">                       |     @field                                        |
 |       <del>13,2 €</del>                       |     def price(self):                              |
 |       <b>10,2 €</b>                           |         return self.css(".price b")               |
