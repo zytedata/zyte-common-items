@@ -2,6 +2,7 @@
 
 Instead, take a look at the ``tests/test_mypy.py``.
 """
+
 import pytest
 from web_poet import HttpResponse, RequestUrl, ResponseUrl
 
@@ -36,10 +37,10 @@ def test_webpoet_URL_classes(cls, fields):
     response = HttpResponse(url, b"")
 
     response_url_obj = response.url
-    assert type(response_url_obj) == ResponseUrl
+    assert type(response_url_obj) is ResponseUrl
 
     request_url_obj = response.urljoin("/another-page")
-    assert type(request_url_obj) == RequestUrl
+    assert type(request_url_obj) is RequestUrl
 
     # Ensure that both types of URL classes are covered
     for url_obj in [response_url_obj, request_url_obj]:
@@ -49,13 +50,13 @@ def test_webpoet_URL_classes(cls, fields):
         for field in fields:
             # The URL classes should be converted to strings on instantiation
             attribute = getattr(obj, field)
-            assert type(attribute) == str
+            assert type(attribute) is str
             assert attribute == str(url_obj)
 
             # The conversion should also work via field assignment
             setattr(obj, field, response.urljoin("/somewhere"))
             attribute = getattr(obj, field)
-            assert type(attribute) == str
+            assert type(attribute) is str
             assert attribute == "https://www.some-url.com/somewhere"
 
             # Setting other values that are not strings or URL classes would
@@ -73,18 +74,18 @@ def test_webpoet_URL_mainImage(cls):
         },
         "url": response.url,
     }
-    assert type(data["mainImage"]["url"]) == RequestUrl
+    assert type(data["mainImage"]["url"]) is RequestUrl
 
     # The URL classes should be converted to strings on instantiation
     obj = cls.from_dict(data)
-    assert type(obj.mainImage) == Image
+    assert type(obj.mainImage) is Image
     assert obj.mainImage.url == "https://www.some-page/img1.png"
 
     # The conversion should also work via field assignment
     img_url = response.urljoin("/different-img.png")
-    assert type(img_url) == RequestUrl
+    assert type(img_url) is RequestUrl
     obj.mainImage.url = img_url
-    assert type(obj.mainImage) == Image
+    assert type(obj.mainImage) is Image
     assert obj.mainImage.url == "https://www.some-page/different-img.png"
 
     # Setting other values that are not strings or URL classes would
@@ -107,11 +108,11 @@ def test_webpoet_URL_images(cls):
         ],
         "url": response.url,
     }
-    assert type(data["images"][0]["url"]) == RequestUrl
+    assert type(data["images"][0]["url"]) is RequestUrl
 
     # The URL classes should be converted to strings on instantiation
     obj = cls.from_dict(data)
-    assert type(obj.images[0]) == Image
+    assert type(obj.images[0]) is Image
     assert [img.url for img in obj.images] == [
         "https://www.some-page/img1.png",
         "https://www.some-page/img2.png",
@@ -119,9 +120,9 @@ def test_webpoet_URL_images(cls):
 
     # The conversion should also work via field assignment
     img_url = response.urljoin("/different-img.png")
-    assert type(img_url) == RequestUrl
+    assert type(img_url) is RequestUrl
     obj.images[0].url = img_url
-    assert type(obj.images[0]) == Image
+    assert type(obj.images[0]) is Image
     assert obj.images[0].url == "https://www.some-page/different-img.png"
 
     # Setting other values that are not strings or URL classes would

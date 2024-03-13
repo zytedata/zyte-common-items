@@ -43,7 +43,7 @@ def test_from_dict():
     assert BigItem(sub_item=None).sub_item is None
 
     item = BigItem.from_dict({"sub_item": {"name": "hello"}})
-    type(item.sub_item) == SubItem  # noqa: B015
+    type(item.sub_item) is SubItem  # noqa: B015
 
 
 def test_from_dict_bad_annotation():
