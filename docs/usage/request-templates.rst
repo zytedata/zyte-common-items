@@ -36,8 +36,7 @@ specific parameters. For example:
                 callback=self.parse_result
             )
 
-        def parse_result(self, response):
-            ...
+        def parse_result(self, response): ...
 
 ``search_request_template.render(keyword="foo bar")`` builds a
 :class:`~zyte_common_items.Request` object, e.g. with URL
