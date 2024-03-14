@@ -1,4 +1,5 @@
 """Classes for data nested within items."""
+
 import base64
 from typing import List, Optional, Type, TypeVar
 

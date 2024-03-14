@@ -227,7 +227,7 @@ def check_default_metadata(cls, kwargs, item_name):
     obj = cls(**kwargs)
 
     metadata_cls = zyte_common_items.__dict__[f"{item_name}Metadata"]
-    assert type(obj.metadata) == metadata_cls
+    assert type(obj.metadata) is metadata_cls
 
     expected_fields = METADATA_FIELDS[item_name]
 
@@ -329,7 +329,7 @@ def test_metadata_generic():
     with catch_warnings():
         warnings.simplefilter("error")
         metadata1 = page1.metadata
-    assert type(metadata1) == ProductMetadata
+    assert type(metadata1) is ProductMetadata
     assert metadata1.dateDownloaded == "foo"
     assert metadata1.probability == 0.5
 
@@ -341,7 +341,7 @@ def test_metadata_generic():
     page2 = ExtraAttrProductPage(response=HttpResponse(url=url, body=html))
     with pytest.warns(RuntimeWarning, match=r"dropping the non-default values"):
         metadata2 = page2.metadata
-    assert type(metadata2) == ProductMetadata
+    assert type(metadata2) is ProductMetadata
     assert metadata2.dateDownloaded == "foo"
     assert metadata2.probability == 0.5
 
@@ -359,10 +359,10 @@ def test_metadata_generic():
         warnings.simplefilter("error")
         metadata3 = page3.metadata
         metadata4 = page3.products[0].metadata
-    assert type(metadata3) == ProductListMetadata
+    assert type(metadata3) is ProductListMetadata
     assert metadata3.dateDownloaded == "foo"
     assert not hasattr(metadata3, "probability")
-    assert type(metadata4) == ProbabilityMetadata
+    assert type(metadata4) is ProbabilityMetadata
     assert metadata4.probability == 1.0
 
 
@@ -389,7 +389,7 @@ def test_metadata_override():
     """
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     metadata = page.metadata
-    assert type(metadata) == CustomProductMetadata
+    assert type(metadata) is CustomProductMetadata
     assert metadata.new_field is None
 
 
@@ -413,7 +413,7 @@ def test_hasmetadata_inheritance():
     """
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     metadata = page.metadata
-    assert type(metadata) == ProductMetadata
+    assert type(metadata) is ProductMetadata
 
 
 def test_metadata_cls_none():
@@ -455,7 +455,7 @@ def test_request():
     url = RequestUrl("https://example.com")
     page = CustomNavPage(url)
     for request in [page.subCategories[0], page.items[0]]:
-        assert type(request) == ProbabilityRequest
+        assert type(request) is ProbabilityRequest
         assert request.metadata is not None
         assert request.metadata.probability == 1.0
-    assert type(page.nextPage) == Request
+    assert type(page.nextPage) is Request

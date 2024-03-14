@@ -786,14 +786,14 @@ def test_metadata():
         obj1 = cls.from_dict(
             {"url": "https://example.com", "metadata": {"dateDownloaded": "foo"}}
         )
-        assert type(obj1.metadata) == metadata_cls
+        assert type(obj1.metadata) is metadata_cls
         assert obj1.metadata.dateDownloaded == "foo"
 
         obj2 = cls(url="https://example.com", metadata=Metadata(dateDownloaded="foo"))
-        assert type(obj2.metadata) == metadata_cls
+        assert type(obj2.metadata) is metadata_cls
         assert obj2.metadata.dateDownloaded == "foo"
         obj2.metadata = Metadata(dateDownloaded="foo")
-        assert type(obj2.metadata) == metadata_cls
+        assert type(obj2.metadata) is metadata_cls
         assert obj2.metadata.dateDownloaded == "foo"
 
 

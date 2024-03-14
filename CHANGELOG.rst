@@ -2,13 +2,25 @@
 Changelog
 =========
 
+0.17.1 (2024-03-13)
+===================
+
+* Added Python 3.12 support.
+
+* :func:`~zyte_common_items.processors.description_processor` and
+  :func:`~zyte_common_items.processors.description_html_processor` now
+  raise an exception when they receive an unsupported input value such as a
+  non-HtmlElement node.
+
+* Documentation improvements.
+
 0.17.0 (2024-02-14)
 ===================
 
-Implement the ``zyte_common_items.ae`` module and the
-``zyte_common_items.pipelines.AEPipeline`` item pipeline to make it easier to
-`migrate from Zyte Automatic Extraction to Zyte API automatic extraction
-<https://docs.zyte.com/zyte-api/migration/zyte/autoextract.html>`_.
+* Implement the ``zyte_common_items.ae`` module and the
+  ``zyte_common_items.pipelines.AEPipeline`` item pipeline to make it easier to
+  `migrate from Zyte Automatic Extraction to Zyte API automatic extraction
+  <https://docs.zyte.com/zyte-api/migration/zyte/autoextract.html>`_.
 
 
 0.16.0 (2024-02-06)

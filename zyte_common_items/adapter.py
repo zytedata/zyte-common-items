@@ -1,4 +1,5 @@
 """This module offers better integration with the itemadapter package."""
+
 from types import MappingProxyType
 from typing import Any, Collection, Iterator, KeysView
 

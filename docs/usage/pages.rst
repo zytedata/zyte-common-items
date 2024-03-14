@@ -54,7 +54,8 @@ extra fields. For example:
 .. code-block:: python
 
     import attrs
-    from zyte_common_items import AutoProductPage, Product, Returns, field
+    from web_poet import Returns, field
+    from zyte_common_items import AutoProductPage, Product
 
 
     @attrs.define
@@ -194,6 +195,21 @@ work on built-in page object and extractor classes:
 |                                               |             "\n"                                  |
 |                                               |             "</article>"                          |
 |                                               |         ),                                        |
+|                                               |     )                                             |
+|                                               |                                                   |
++-----------------------------------------------+---------------------------------------------------+
+| .. code-block:: html                          | .. code-block:: python                            |
+|                                               |                                                   |
+|     <span class="gtin">                       |     @field                                        |
+|       978-1-933624-34-1                       |     def gtin(self):                               |
+|     </span>                                   |         return self.css(".gtin")                  |
+|                                               |                                                   |
+|                                               | .. code-block:: python                            |
+|                                               |                                                   |
+|                                               |     Product(                                      |
+|                                               |         gtin=[                                    |
+|                                               |             ("isbn13", "9781933624341"),          |
+|                                               |         ],                                        |
 |                                               |     )                                             |
 |                                               |                                                   |
 +-----------------------------------------------+---------------------------------------------------+

@@ -221,3 +221,16 @@ def test_description_simple(page_class: type):
     url = "https://example.com"
     page = CustomPage(response=HttpResponse(url=url, body=HTML))
     assert page.description == TEXT_CLEANED
+
+
+def test_non_html_node():
+    class CustomPage(ProductPage):
+        @field
+        def description(self):
+            return self.xpath("//div/following-sibling::node()")
+
+    url = "https://example.com"
+    body = b"""<div></div><!-- test -->"""
+    page = CustomPage(response=HttpResponse(url=url, body=body))
+    with pytest.raises(ValueError):
+        page.description
