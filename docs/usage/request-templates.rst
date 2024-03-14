@@ -32,7 +32,7 @@ specific parameters. For example:
         def start_search(
             self, response: DummyResponse, search_request_template: SearchRequestTemplate
         ):
-            yield search_request_template.render(keyword="foo").to_scrapy(
+            yield search_request_template.render(keyword="foo bar").to_scrapy(
                 callback=self.parse_result
             )
 
