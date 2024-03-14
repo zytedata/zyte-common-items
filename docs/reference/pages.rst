@@ -126,6 +126,12 @@ Social media post
 .. autoclass:: zyte_common_items.AutoSocialMediaPostPage(**kwargs)
    :show-inheritance:
 
+Request templates
+=================
+
+.. autoclass:: zyte_common_items.SearchRequestTemplatePage(**kwargs)
+   :show-inheritance:
+
 .. _mixins:
 
 Mixins

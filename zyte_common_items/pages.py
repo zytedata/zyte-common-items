@@ -43,6 +43,7 @@ from .components import (
     RealEstateArea,
     RealEstateMetadata,
     Request,
+    SearchRequestTemplateMetadata,
     SocialMediaPostAuthor,
     SocialMediaPostMetadata,
     StarRating,
@@ -63,6 +64,7 @@ from .items import (
     ProductNavigation,
     ProductVariant,
     RealEstate,
+    SearchRequestTemplate,
     SocialMediaPost,
 )
 from .processors import (
@@ -1114,3 +1116,9 @@ class AutoSocialMediaPostPage(BaseSocialMediaPostPage):
     @field
     def metadata(self) -> Optional[SocialMediaPostMetadata]:
         return self.social_media_post.metadata
+
+
+class SearchRequestTemplatePage(
+    ItemPage[SearchRequestTemplate], HasMetadata[SearchRequestTemplateMetadata]
+):
+    pass

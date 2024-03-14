@@ -39,8 +39,8 @@ whose ``to_item`` method returns an instance of
     import attrs
     from zyte_common_items import ProductPage
 
-    class CustomProductPage(ProductPage):
 
+    class CustomProductPage(ProductPage):
         @field
         def name(self):
             return self.css("h1::text").get()
@@ -57,12 +57,13 @@ extra fields. For example:
     from web_poet import Returns, field
     from zyte_common_items import AutoProductPage, Product
 
+
     @attrs.define
     class ExtendedProduct(Product):
         foo: str
 
-    class ExtendedProductPage(AutoProductPage, Returns[ExtendedProduct]):
 
+    class ExtendedProductPage(AutoProductPage, Returns[ExtendedProduct]):
         @field
         def name(self):
             return f"{self.product.brand.name} {self.product.name}"

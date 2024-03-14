@@ -42,10 +42,12 @@ nitpick_ignore = [
 
 intersphinx_disabled_reftypes = []
 intersphinx_mapping = {
-    "python": ("https://docs.python.org/3", None),
+    "jinja": ("https://jinja.palletsprojects.com/en/latest/", None),
     "lxml": ("https://lxml.de/apidoc/", None),
     "parsel": ("https://parsel.readthedocs.io/en/stable", None),
+    "python": ("https://docs.python.org/3", None),
     "scrapy": ("https://docs.scrapy.org/en/stable", None),
+    "scrapy-poet": ("https://scrapy-poet.readthedocs.io/en/stable", None),
     "web-poet": ("https://web-poet.readthedocs.io/en/stable", None),
     "zyte-parsers": ("https://zyte-parsers.readthedocs.io/en/stable", None),
 }

@@ -160,7 +160,11 @@ def test_page_pairs():
         obj_name
         for obj_name in zyte_common_items.__dict__
         if (
-            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
+            not (
+                obj_name.startswith("Base")
+                or obj_name.startswith("Auto")
+                or obj_name.endswith("RequestTemplatePage")
+            )
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )
@@ -270,7 +274,11 @@ def test_metadata():
         obj_name
         for obj_name in zyte_common_items.__dict__
         if (
-            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
+            not (
+                obj_name.startswith("Base")
+                or obj_name.startswith("Auto")
+                or obj_name.endswith("RequestTemplatePage")
+            )
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )
