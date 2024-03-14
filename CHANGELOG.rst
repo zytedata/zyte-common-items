@@ -2,6 +2,12 @@
 Changelog
 =========
 
+0.18.0 (unreleased)
+===================
+
+* Initial support for :ref:`request templates <request-templates>`, starting
+  with search requests.
+
 0.17.1 (2024-03-13)
 ===================
 
