@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.18.0 (unreleased)
+0.18.0 (2024-03-15)
 ===================
 
 * Initial support for :ref:`request templates <request-templates>`, starting
