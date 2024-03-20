@@ -32,13 +32,13 @@ specific parameters. For example:
         def start_search(
             self, response: DummyResponse, search_request_template: SearchRequestTemplate
         ):
-            yield search_request_template.render(keyword="foo bar").to_scrapy(
+            yield search_request_template.request(keyword="foo bar").to_scrapy(
                 callback=self.parse_result
             )
 
         def parse_result(self, response): ...
 
-``search_request_template.render(keyword="foo bar")`` builds a
+``search_request_template.request(keyword="foo bar")`` builds a
 :class:`~zyte_common_items.Request` object, e.g. with URL
 ``https://example.com/search?q=foo+bar``.
 
