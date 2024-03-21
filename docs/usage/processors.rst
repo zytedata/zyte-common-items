@@ -3,19 +3,24 @@
 Field processors
 ================
 
-This library provides some :ref:`field processors <processor-api>`
+This library provides useful :ref:`field processors <processor-api>`
 (:ref:`web-poet documentation <web-poet:field-processors>`) and complementary
-:ref:`mixins <mixins>`, and built-in :ref:`page object classes
+:ref:`mixins <mixins>`. Built-in :ref:`page object classes
 <page-object-api>` and :ref:`extractor classes <extractor-api>` use them by
-default for :ref:`some fields <field-processor-map>`.
+default for the :ref:`corresponding fields <field-processor-map>`.
 
-For most :ref:`built-in field processors <processor-api>`, your field must
-return a :class:`~parsel.selector.Selector`,
+By design, the processors enabled by default are "transparent": they
+don't change the output of the field if the result is of the expected
+final type. For example, if there is a :class:`str` attribute in the item,
+and the field returns :class:`str` value, the default processor returns
+the value as-is.
+
+Usually, to engage a :ref:`built-in field processors <processor-api>`, your
+field must return a :class:`~parsel.selector.Selector`,
 :class:`~parsel.selector.SelectorList`, or :class:`~lxml.html.HtmlElement`
-object (as opposed to :class:`str`, :class:`int`, etc.). Then the field
-processor will take care of extracting the right data.
+object. Then the field processor takes care of extracting the right data.
 
-Here are some examples of inputs and matching field implementations that will
+Here are examples of inputs and matching field implementations that
 work on built-in page object and extractor classes:
 
 +-----------------------------------------------+---------------------------------------------------+
