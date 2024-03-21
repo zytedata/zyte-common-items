@@ -18,6 +18,7 @@ zyte-common-items |version| documentation
 
    usage/items
    usage/pages
+   usage/processors
    usage/request-templates
 
 .. toctree::
