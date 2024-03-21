@@ -3,6 +3,9 @@
 Field processors
 ================
 
+Overview
+--------
+
 This library provides useful :ref:`field processors <processor-api>`
 (:ref:`web-poet documentation <web-poet:field-processors>`) and complementary
 :ref:`mixins <mixins>`. Built-in :ref:`page object classes
@@ -15,10 +18,37 @@ final type. For example, if there is a :class:`str` attribute in the item,
 and the field returns :class:`str` value, the default processor returns
 the value as-is.
 
-Usually, to engage a :ref:`built-in field processors <processor-api>`, your
+Usually, to engage a :ref:`built-in field processor <processor-api>`, a
 field must return a :class:`~parsel.selector.Selector`,
 :class:`~parsel.selector.SelectorList`, or :class:`~lxml.html.HtmlElement`
 object. Then the field processor takes care of extracting the right data.
+
+.. _field-processor-map:
+
+Field mapping
+-------------
+
+The following table indicates which fields use which processors by default in
+:ref:`built-in page object classes <page-objects>` and
+:ref:`extractor classes <extractor-api>`:
+
+==================================== ====================================
+Field                                Default processor
+==================================== ====================================
+``aggregateRating``                  :func:`~.rating_processor`
+``brand``                            :func:`~.brand_processor`
+``breadcrumbs``                      :func:`~.breadcrumbs_processor`
+``description`` (excluding articles) :func:`~.description_processor`
+``descriptionHtml``                  :func:`~.description_html_processor`
+``gtin``                             :func:`~.gtin_processor`
+``price``                            :func:`~.price_processor`
+``regularPrice``                     :func:`~.simple_price_processor`
+==================================== ====================================
+
+.. _field-processor-examples:
+
+Examples
+--------
 
 Here are examples of inputs and matching field implementations that
 work on built-in page object and extractor classes:

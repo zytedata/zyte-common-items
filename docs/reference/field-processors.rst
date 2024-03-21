@@ -6,28 +6,6 @@ Field processor API
 
 API reference of provided :ref:`field processors <processors>`.
 
-.. _field-processor-map:
-
-Field mapping
-=============
-
-The following table indicates which fields use which processors by default in
-:ref:`built-in page object classes <page-objects>`:
-
-==================================== ====================================
-Fields                               Default processor
-==================================== ====================================
-``aggregateRating``                  :func:`~.rating_processor`
-``brand``                            :func:`~.brand_processor`
-``breadcrumbs``                      :func:`~.breadcrumbs_processor`
-``description`` (excluding articles) :func:`~.description_processor`
-``descriptionHtml``                  :func:`~.description_html_processor`
-``gtin``                             :func:`~.gtin_processor`
-``price``                            :func:`~.price_processor`
-``regularPrice``                     :func:`~.simple_price_processor`
-==================================== ====================================
-
-
 Built-in field processors
 =========================
 
