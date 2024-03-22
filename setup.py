@@ -22,11 +22,15 @@ setup(
     package_data={
         "zyte_common_items": ["py.typed", "VERSION"],
     },
+    # needs to be in sync with the tox.ini min env
     install_requires=[
-        "attrs>=21.3.0",
+        "attrs>=22.1.0",
+        "clear-html>=0.4.0",
         "itemadapter>=0.8.0",
-        "web-poet>=0.7.0",
-        "zyte-parsers>=0.2.0",
+        "Jinja2>=2.7",
+        "price-parser>=0.3.4",
+        "web-poet>=0.14.0",
+        "zyte-parsers>=0.5.0",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -39,6 +43,7 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: Implementation :: CPython",
     ],
     python_requires=">=3.8",

@@ -2,6 +2,157 @@
 Changelog
 =========
 
+0.18.0 (2024-03-15)
+===================
+
+* Initial support for :ref:`request templates <request-templates>`, starting
+  with search requests.
+
+0.17.1 (2024-03-13)
+===================
+
+* Added Python 3.12 support.
+
+* :func:`~zyte_common_items.processors.description_processor` and
+  :func:`~zyte_common_items.processors.description_html_processor` now
+  raise an exception when they receive an unsupported input value such as a
+  non-HtmlElement node.
+
+* Documentation improvements.
+
+0.17.0 (2024-02-14)
+===================
+
+* Implement the ``zyte_common_items.ae`` module and the
+  ``zyte_common_items.pipelines.AEPipeline`` item pipeline to make it easier to
+  `migrate from Zyte Automatic Extraction to Zyte API automatic extraction
+  <https://docs.zyte.com/zyte-api/migration/zyte/autoextract.html>`_.
+
+
+0.16.0 (2024-02-06)
+===================
+
+* ``Auto``-prefixed versions of :ref:`page objects <page-objects>`, such as
+  :meth:`~zyte_common_items.AutoProductPage`, now have all their fields defined
+  as synchronous instead of asynchronous.
+
+0.15.0 (2024-01-30)
+===================
+
+* Now requires ``zyte-parsers >= 0.5.0``.
+
+* Added :class:`~.SocialMediaPost` and related classes.
+
+* Added :class:`~.ProductFromListExtractor`,
+  :class:`~.ProductFromListSelectorExtractor`,
+  :class:`~.ProductVariantExtractor` and
+  :class:`~.ProductVariantSelectorExtractor`.
+
+* Added :func:`zyte_common_items.processors.rating_processor` and enabled it
+  for the ``aggregateRating`` fields in the page classes for
+  :class:`~.BusinessPlace` and :class:`~.Product`.
+
+* Improved the documentation about the processors.
+
+0.14.0 (2024-01-16)
+===================
+
+* Now requires ``zyte-parsers >= 0.4.0``.
+
+* Added :func:`zyte_common_items.processors.gtin_processor` and enabled it for
+  the ``gtin`` fields in the page classes for
+  :class:`~zyte_common_items.Product`.
+
+* Improved the API documentation.
+
+0.13.0 (2023-11-09)
+===================
+
+* Added ``Auto``-prefixed versions of :ref:`page objects <page-objects>`, such
+  as :meth:`~zyte_common_items.AutoProductPage`, that return data from Zyte API
+  automatic extraction from their fields by default, and can be used to more
+  easily override that data with custom parsing logic.
+
+
+0.12.0 (2023-10-27)
+===================
+
+* Added :meth:`~zyte_common_items.base.ProbabilityMixin.get_probability` helper
+  method in item classes (e.g. :class:`~zyte_common_items.Product`,
+  :class:`~zyte_common_items.Article`) and
+  :class:`~zyte_common_items.ProbabilityRequest`.
+
+
+0.11.0 (2023-09-08)
+===================
+
+* Now requires ``clear-html >= 0.4.0``.
+
+* Added :func:`zyte_common_items.processors.description_processor` and enabled
+  it for the ``description`` fields in the page classes for
+  :class:`~zyte_common_items.BusinessPlace`,
+  :class:`~zyte_common_items.JobPosting`, :class:`~zyte_common_items.Product`
+  and :class:`~zyte_common_items.RealEstate`.
+
+* Added :func:`zyte_common_items.processors.description_html_processor` and
+  enabled it for the ``descriptionHtml`` fields in the page classes for
+  :class:`~zyte_common_items.JobPosting` and
+  :class:`~zyte_common_items.Product`.
+
+* Added default implementations for the ``description`` (in the page classes
+  for :class:`~zyte_common_items.BusinessPlace`,
+  :class:`~zyte_common_items.JobPosting`, :class:`~zyte_common_items.Product`
+  and :class:`~zyte_common_items.RealEstate`) and ``descriptionHtml`` (in the
+  page classes for :class:`~zyte_common_items.JobPosting` and
+  :class:`~zyte_common_items.Product`) fields: if one of these fields is
+  user-defined, another one will use it.
+
+* :func:`~zyte_common_items.processors.price_processor` and
+  :func:`~zyte_common_items.processors.simple_price_processor` now keep at
+  least two decimal places when formatting the result.
+
+
+0.10.0 (2023-08-24)
+===================
+
+* Now requires ``price-parser >= 0.3.4`` (a new dependency) and
+  ``zyte-parsers >= 0.3.0`` (a version increase).
+
+* Added :func:`zyte_common_items.processors.price_processor` and enabled
+  it for the ``price`` fields.
+
+* Added :func:`zyte_common_items.processors.simple_price_processor` and enabled
+  it for the ``regularPrice`` fields.
+
+* Added default implementations for the ``currency`` (uses the ``CURRENCY``
+  attribute on the page class) and ``currencyRaw`` (uses the data extracted by
+  the ``price`` field) fields.
+
+0.9.0 (2023-08-03)
+==================
+
+* Now requires ``web-poet >= 0.14.0``.
+
+* Fixed detection of the :class:`~.HasMetadata` base class.
+
+0.8.0 (2023-07-27)
+==================
+
+* Updated minimum versions for the following requirements:
+
+  * ``attrs >= 22.1.0``
+  * ``web-poet >= 0.9.0``
+  * ``zyte-parsers >= 0.2.0``
+
+* Added :class:`~zyte_common_items.JobPosting` and related classes.
+
+* Added :func:`zyte_common_items.processors.brand_processor` and enabled
+  it for the ``brand`` fields.
+
+* Added :meth:`zyte_common_items.Request.to_scrapy` to convert
+  :class:`zyte_common_items.Request` instances to :class:`scrapy.http.Request`
+  instances.
+
 0.7.0 (2023-07-11)
 ==================
 

@@ -16,12 +16,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
+        include:
+        - python-version: '3.8'
+        - python-version: '3.9'
+        - python-version: '3.10'
+        - python-version: '3.11'
+        - python-version: '3.12'
+        - python-version: '3.8'
+          toxenv: min
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
@@ -30,7 +37,7 @@ jobs:
         python -m pip install tox
     - name: tox
       run: |
-        tox -e py
+        tox -e ${{ matrix.toxenv || 'py' }}
     - name: coverage
       if: ${{ success() }}
       run: bash <(curl -s https://codecov.io/bash)
@@ -40,12 +47,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.11']
+        python-version: ['3.12']
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
@@ -58,6 +65,4 @@ jobs:
         tox -e mypy
         tox -e docs
         tox -e twinecheck
-    - name: pre-commit linters
-      run: |
-        pre-commit install && pre-commit run --all-files
+        tox -e linters

@@ -6,5 +6,7 @@ Reference
 
    items
    pages
+   extractors
+   field-processors
    components
    adapter

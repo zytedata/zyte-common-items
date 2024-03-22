@@ -13,6 +13,8 @@ Product
 .. autoclass:: zyte_common_items.ProductPage(**kwargs)
    :show-inheritance:
 
+.. autoclass:: zyte_common_items.AutoProductPage(**kwargs)
+   :show-inheritance:
 
 Product list
 ============
@@ -21,6 +23,9 @@ Product list
    :show-inheritance:
 
 .. autoclass:: zyte_common_items.ProductListPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoProductListPage(**kwargs)
    :show-inheritance:
 
 Product navigation
@@ -32,6 +37,9 @@ Product navigation
 .. autoclass:: zyte_common_items.ProductNavigationPage(**kwargs)
    :show-inheritance:
 
+.. autoclass:: zyte_common_items.AutoProductNavigationPage(**kwargs)
+   :show-inheritance:
+
 Article
 =======
 
@@ -39,6 +47,9 @@ Article
    :show-inheritance:
 
 .. autoclass:: zyte_common_items.ArticlePage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoArticlePage(**kwargs)
    :show-inheritance:
 
 
@@ -51,6 +62,9 @@ Article list
 .. autoclass:: zyte_common_items.ArticleListPage(**kwargs)
    :show-inheritance:
 
+.. autoclass:: zyte_common_items.AutoArticleListPage(**kwargs)
+   :show-inheritance:
+
 
 Article navigation
 ==================
@@ -61,6 +75,8 @@ Article navigation
 .. autoclass:: zyte_common_items.ArticleNavigationPage(**kwargs)
    :show-inheritance:
 
+.. autoclass:: zyte_common_items.AutoArticleNavigationPage(**kwargs)
+   :show-inheritance:
 
 Business place
 ==============
@@ -69,6 +85,9 @@ Business place
    :show-inheritance:
 
 .. autoclass:: zyte_common_items.BusinessPlacePage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoBusinessPlacePage(**kwargs)
    :show-inheritance:
 
 Real estate
@@ -80,6 +99,73 @@ Real estate
 .. autoclass:: zyte_common_items.RealEstatePage(**kwargs)
    :show-inheritance:
 
+.. autoclass:: zyte_common_items.AutoRealEstatePage(**kwargs)
+   :show-inheritance:
+
+Job posting
+===========
+
+.. autoclass:: zyte_common_items.BaseJobPostingPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.JobPostingPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoJobPostingPage(**kwargs)
+   :show-inheritance:
+
+Social media post
+=================
+
+.. autoclass:: zyte_common_items.BaseSocialMediaPostPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.SocialMediaPostPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoSocialMediaPostPage(**kwargs)
+   :show-inheritance:
+
+Request templates
+=================
+
+.. autoclass:: zyte_common_items.SearchRequestTemplatePage(**kwargs)
+   :show-inheritance:
+
+.. _mixins:
+
+Mixins
+======
+
+.. autoclass:: zyte_common_items.pages.DescriptionMixin
+
+   .. data:: description
+      :type: str
+
+      Plain-text description. The default implementation makes it from the
+      ``descriptionHtml`` field if that is user-defined.
+
+   .. data:: descriptionHtml
+      :type: str
+
+      HTML description. The default implementation makes it from the
+      ``description`` field if that is user-defined.
+
+.. autoclass:: zyte_common_items.pages.PriceMixin
+
+   .. data:: currency
+      :type: str
+
+      Price currency ISO 4217 alphabetic code (e.g. ``"USD"``). The default
+      implementation returns ``self.CURRENCY`` if this attribute is defined.
+
+   .. data:: currencyRaw
+      :type: str
+
+      Price currency as it appears on the webpage (no post-processing), e.g.
+      ``"$"``. The default implementation uses the data extracted by
+      :func:`~zyte_common_items.processors.price_processor` from the ``price``
+      field.
 
 Custom page objects
 ===================
@@ -98,9 +184,6 @@ indicate their item and metadata classes.
    :show-inheritance:
    :members: no_item_found
 
-   Base class for page object classes that has
-   :class:`~web_poet.page_inputs.http.RequestUrl` as a dependency.
-
    .. data:: metadata
 
       Data extraction process metadata.
@@ -118,9 +201,6 @@ indicate their item and metadata classes.
 .. autoclass:: zyte_common_items.Page(**kwargs)
    :show-inheritance:
    :members: no_item_found
-
-   Base class for page object classes that has
-   :class:`~web_poet.page_inputs.http.HttpResponse` as a dependency.
 
    .. data:: metadata
       :type: zyte_common_items.Metadata

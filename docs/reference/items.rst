@@ -72,13 +72,40 @@ Real estate
    :members:
    :inherited-members:
 
+Job posting
+===========
+
+.. autoclass:: zyte_common_items.JobPosting(**kwargs)
+   :members:
+   :inherited-members:
+
+Social media post
+=================
+
+.. autoclass:: zyte_common_items.SocialMediaPost(**kwargs)
+   :members:
+   :inherited-members:
+
+.. _request-template-api:
+
+Request templates
+=================
+
+.. autoclass:: zyte_common_items.SearchRequestTemplate(**kwargs)
+   :members:
+   :inherited-members:
+
 Custom items
 ============
 
 Subclass :class:`~zyte_common_items.Item` to create your own item classes.
 
+.. autoclass:: zyte_common_items.base.ProbabilityMixin(**kwargs)
+   :members:
+
 .. autoclass:: zyte_common_items.Item(**kwargs)
    :members:
+   :inherited-members:
 
    .. attribute:: _unknown_fields_dict
       :type: dict

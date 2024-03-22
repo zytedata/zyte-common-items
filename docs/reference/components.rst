@@ -123,5 +123,8 @@ Item metadata components
 .. autoclass:: zyte_common_items.RealEstateMetadata(**kwargs)
    :members: dateDownloaded, probability, validation
 
+.. autoclass:: zyte_common_items.SearchRequestTemplateMetadata(**kwargs)
+   :members: dateDownloaded, probability, validation
+
 .. autoclass:: zyte_common_items.SocialMediaPostMetadata(**kwargs)
    :members: dateDownloaded, probability, searchText, validation

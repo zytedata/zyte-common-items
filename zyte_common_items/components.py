@@ -1,9 +1,11 @@
 """Classes for data nested within items."""
-from typing import List, Optional, Type
+
+import base64
+from typing import List, Optional, Type, TypeVar
 
 import attrs
 
-from zyte_common_items.base import Item
+from zyte_common_items.base import Item, ProbabilityMixin
 from zyte_common_items.util import convert_to_class, url_to_str
 
 # Metadata ####################################################################
@@ -71,42 +73,57 @@ class Metadata(_DetailsMetadata):
 
 @attrs.define(kw_only=True)
 class ArticleMetadata(_DetailsMetadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.Article.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class ArticleListMetadata(_ListMetadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.ArticleList.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class ArticleNavigationMetadata(_ListMetadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.ArticleNavigation.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class BusinessPlaceMetadata(Metadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.BusinessPlace.metadata`."""
+
+
+@attrs.define(kw_only=True)
+class JobPostingMetadata(Metadata):
+    """Metadata class for :data:`zyte_common_items.JobPosting.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class ProductMetadata(_DetailsMetadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.Product.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class ProductListMetadata(_ListMetadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.ProductList.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class ProductNavigationMetadata(_ListMetadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.ProductNavigation.metadata`."""
 
 
 @attrs.define(kw_only=True)
 class RealEstateMetadata(_DetailsMetadata):
-    pass
+    """Metadata class for :data:`zyte_common_items.RealEstate.metadata`."""
+
+
+@attrs.define(kw_only=True)
+class SocialMediaPostMetadata(Metadata):
+    """Metadata class for :data:`zyte_common_items.SocialMediaPost.metadata`."""
+
+
+@attrs.define(kw_only=True)
+class SearchRequestTemplateMetadata(_DetailsMetadata):
+    """Metadata class for :data:`zyte_common_items.SearchRequestTemplate.metadata`."""
 
 
 ###############################################################################
@@ -403,12 +420,9 @@ class Header(Item):
     value: str
 
 
-@attrs.define(kw_only=True)
+@attrs.define(slots=False)
 class Request(Item):
     """Describe a web request to load a page"""
-
-    #: Name of the page being requested.
-    name: Optional[str] = None
 
     #: HTTP URL
     url: str = attrs.field(converter=url_to_str)
@@ -422,6 +436,46 @@ class Request(Item):
     #: HTTP headers
     headers: Optional[List[Header]] = None
 
+    #: Name of the page being requested.
+    name: Optional[str] = None
+
+    _body_bytes = None
+
+    @property
+    def body_bytes(self) -> Optional[bytes]:
+        """Request.body as bytes"""
+        # todo: allow to set body bytes in __init__, to avoid encoding/decoding.
+        if self._body_bytes is None:
+            if self.body is not None:
+                self._body_bytes = base64.b64decode(self.body)
+        return self._body_bytes
+
+    def to_scrapy(self, callback, **kwargs):
+        """
+        Convert a request to scrapy.Request.
+        All kwargs are passed to scrapy.Request as-is.
+        """
+        import scrapy
+
+        header_list = [(header.name, header.value) for header in self.headers or []]
+
+        return scrapy.Request(
+            url=self.url,
+            callback=callback,
+            method=self.method or "GET",
+            headers=header_list,
+            body=self.body_bytes,
+            **kwargs,
+        )
+
+
+@attrs.define(kw_only=True)
+class Url(Item):
+    """A URL."""
+
+    # : URL.
+    url: str = attrs.field(converter=url_to_str)
+
 
 @attrs.define
 class Video(_Media):
@@ -431,20 +485,108 @@ class Video(_Media):
     """
 
 
-def cast_request(value: Request, cls: Type[Request]) -> Request:
+@attrs.define(kw_only=True)
+class ProbabilityRequest(Request, ProbabilityMixin):
+    """A :class:`Request` that includes a probability value."""
+
+    #: Data extraction process metadata.
+    metadata: Optional[ProbabilityMetadata] = None
+
+
+RequestT = TypeVar("RequestT", bound=Request)
+
+
+def cast_request(value: Request, cls: Type[RequestT]) -> RequestT:
+    """Convert *value*, an instance of :class:`Request` or a subclass, into
+    *cls*, a different class that is also either :class:`Request` or a
+    subclass."""
     new_value = convert_to_class(value, cls)
     if type(value) is Request and cls is ProbabilityRequest:
         new_value.metadata = ProbabilityMetadata(probability=1.0)
     return new_value
 
 
-def request_list_processor(request_list):
+def request_list_processor(request_list: List[Request]) -> List[ProbabilityRequest]:
+    """Convert all objects in *request_list*, which are instances of
+    :class:`Request` or a subclass, into instances of
+    :class:`ProbabilityRequest`."""
     return [cast_request(request, ProbabilityRequest) for request in request_list]
 
 
 @attrs.define(kw_only=True)
-class ProbabilityRequest(Request):
-    """A :class:`Request` that includes a probability value."""
+class JobLocation(Item):
+    """Location of a job offer."""
 
-    #: Data extraction process metadata.
-    metadata: Optional[ProbabilityMetadata] = None
+    #: Job location, as it appears on the website.
+    raw: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
+class BaseSalary(Item):
+    """Base salary of a job offer."""
+
+    #: Salary amount as it appears on the website.
+    raw: Optional[str] = None
+
+    #: The minimum value of the base salary as a number string.
+    valueMin: Optional[str] = None
+
+    #: The maximum value of the base salary as a number string.
+    valueMax: Optional[str] = None
+
+    #: The type of rate associated with the salary, e.g. monthly, annual, daily.
+    rateType: Optional[str] = None
+
+    #: Currency associated with the salary amount.
+    currency: Optional[str] = None
+
+    #: Currency associated with the salary amount, without normalization.
+    currencyRaw: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
+class HiringOrganization(Item):
+    """Organization that is hiring for a job offer."""
+
+    #: Name of the hiring organization.
+    name: Optional[str] = None
+
+    #: Organization information as available on the website.
+    nameRaw: Optional[str] = None
+
+    #: Identifier of the organization used by job posting website.
+    id: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
+class Reactions(Item):
+    """Details of reactions to a post."""
+
+    #: Number of times the post has been shared.
+    reposts: Optional[int] = None
+
+    #: Number of likes or other positive reactions to the post.
+    likes: Optional[int] = None
+
+    #: Number of dislikes or other negative reactions to the post.
+    dislikes: Optional[int] = None
+
+
+@attrs.define(kw_only=True)
+class SocialMediaPostAuthor(Item):
+    """Details of the author of a social media post."""
+
+    #: The number of the followers that observe the author.
+    numberOfFollowers: Optional[int] = None
+
+    #: The number of the users that the author follows.
+    numberOfFollowing: Optional[int] = None
+
+    #: The date of the creation of the author's account.
+    dateAccountCreated: Optional[str] = None
+
+    #: The location of the author, if it's available in the author profile. Country or city location only.
+    location: Optional[str] = None
+
+    #: Indication if the author's account is verified.
+    isVerified: Optional[bool] = None

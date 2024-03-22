@@ -17,13 +17,18 @@ from zyte_common_items import (
     ArticleNavigationMetadata,
     Audio,
     Author,
+    BaseSalary,
     Brand,
     Breadcrumb,
     BusinessPlace,
     BusinessPlaceMetadata,
     Gtin,
     Header,
+    HiringOrganization,
     Image,
+    JobLocation,
+    JobPosting,
+    JobPostingMetadata,
     Link,
     Metadata,
     NamedLink,
@@ -39,11 +44,16 @@ from zyte_common_items import (
     ProductNavigation,
     ProductNavigationMetadata,
     ProductVariant,
+    Reactions,
     RealEstate,
     RealEstateArea,
     RealEstateMetadata,
     Request,
+    SocialMediaPost,
+    SocialMediaPostAuthor,
+    SocialMediaPostMetadata,
     StarRating,
+    Url,
     Video,
 )
 
@@ -433,6 +443,104 @@ _PRODUCT_NAVIGATION_ALL_KWARGS: dict = {
     "metadata": ProductNavigationMetadata(dateDownloaded="2022-12-31T13:01:54Z"),
 }
 
+_JOB_POSTING_MIN_KWARGS: dict = {
+    "url": "https://example.com/viewjob/12345",
+}
+
+_JOB_POSTING_ALL_KWARGS: dict = {
+    **_JOB_POSTING_MIN_KWARGS,
+    "jobPostingId": "12345",
+    "datePublished": "2019-06-19T00:00:00-05:00",
+    "datePublishedRaw": "19 June 2019",
+    "dateModified": "2019-06-21T00:00:00-05:00",
+    "dateModifiedRaw": "21 June 2019",
+    "validThrough": "2019-07-19T00:00:00-05:00",
+    "validThroughRaw": "19 July 2019",
+    "jobTitle": "Software Engineer",
+    "headline": "Are you our next Software Engineer?",
+    "jobLocation": JobLocation(raw="New York, NY"),
+    "description": "We are looking for a Software Engineer to join our team."
+    "- 35 days holiday"
+    "- 15% bonus"
+    "- flexible working arrangements",
+    "descriptionHtml": "<p>We are looking for a Software Engineer to join our team.</p>"
+    "<ul>"
+    "<li>35 days holiday</li>"
+    "<li>15% bonus</li>"
+    "<li>flexible working arrangements</li>"
+    "</ul>",
+    "employmentType": "Full-time",
+    "baseSalary": BaseSalary(
+        raw="$53,000-$55,000 a year",
+        valueMin="53000",
+        valueMax="55000",
+        rateType="yearly",
+        currencyRaw="$",
+        currency="USD",
+    ),
+    "requirements": [
+        "Experience in managing diverse teams",
+        "Great sense of responsibility",
+        "5+ years of proven experience in sales",
+        "Ability to travel",
+    ],
+    "hiringOrganization": HiringOrganization(
+        name="ACME Corp.", nameRaw="ACME Corp., US", id="54321"
+    ),
+    "jobStartDate": "2019-08-01T00:00:00-05:00",
+    "jobStartDateRaw": "01 August 2019",
+    "remoteStatus": "Remote",
+    "metadata": JobPostingMetadata(
+        dateDownloaded="2022-12-31T13:01:54Z",
+        probability=0.95,
+        searchText="Software Engineer",
+    ),
+}
+
+_SOCIAL_MEDIA_POST_MIN_KWARGS: dict = {
+    "url": "https://example.com/viewjob/12345",
+}
+
+_SOCIAL_MEDIA_POST_ALL_KWARGS: dict = {
+    **_SOCIAL_MEDIA_POST_MIN_KWARGS,
+    "postId": "1569750785201676290",
+    "reactions": Reactions(reposts=1, likes=1, dislikes=1),
+    "text": (
+        "Join us for the @usertag_1 2022 Coding Contest and stand a chance to win bragging rights plus awesome "
+        "prizes! Register for free - https://hubs.li/Q01mcRlk0 #coding #webdata #dataextraction #webscraping "
+        "#scrapy #python"
+    ),
+    "datePublished": "2023-10-04T00:00:00Z",
+    "hashtags": [
+        "coding",
+        "webdata",
+        "dataextraction",
+        "webscraping",
+        "scrapy",
+        "python",
+    ],
+    "mediaUrls": [
+        {
+            "url": Url(url="https://example.com/image1.png"),
+        },
+        {
+            "url": Url(url="https://video.twimg.com/tweet_video/FcjgBTkX0AAXPUh.mp4"),
+        },
+    ],
+    "author": SocialMediaPostAuthor(
+        numberOfFollowers=5,
+        numberOfFollowing=5,
+        dateAccountCreated="2022-10-04",
+        location="San Francisco, CA",
+        isVerified=True,
+    ),
+    "metadata": SocialMediaPostMetadata(
+        dateDownloaded="2022-12-31T13:01:54Z",
+        probability=0.95,
+        searchText="Extract Summit",
+    ),
+}
+
 
 def test_article_all_fields():
     article = Article(**_ARTICLE_ALL_KWARGS)
@@ -666,7 +774,7 @@ def test_metadata():
         obj_name[:-4]
         for obj_name in zyte_common_items.__dict__
         if (
-            not obj_name.startswith("Base")
+            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )
@@ -678,14 +786,14 @@ def test_metadata():
         obj1 = cls.from_dict(
             {"url": "https://example.com", "metadata": {"dateDownloaded": "foo"}}
         )
-        assert type(obj1.metadata) == metadata_cls
+        assert type(obj1.metadata) is metadata_cls
         assert obj1.metadata.dateDownloaded == "foo"
 
         obj2 = cls(url="https://example.com", metadata=Metadata(dateDownloaded="foo"))
-        assert type(obj2.metadata) == metadata_cls
+        assert type(obj2.metadata) is metadata_cls
         assert obj2.metadata.dateDownloaded == "foo"
         obj2.metadata = Metadata(dateDownloaded="foo")
-        assert type(obj2.metadata) == metadata_cls
+        assert type(obj2.metadata) is metadata_cls
         assert obj2.metadata.dateDownloaded == "foo"
 
 
@@ -704,3 +812,83 @@ def test_request():
         name="Mystery",
         metadata=ProbabilityMetadata(probability=1.0),
     )
+
+
+def test_job_posting_all_fields():
+    job_posting = JobPosting(**_JOB_POSTING_ALL_KWARGS)
+    for field in list(_JOB_POSTING_ALL_KWARGS):
+        assert getattr(job_posting, field) == _JOB_POSTING_ALL_KWARGS[field]
+
+
+def test_job_posting_min_fields():
+    job_posting = JobPosting(**_JOB_POSTING_MIN_KWARGS)
+    for field in list(_JOB_POSTING_ALL_KWARGS):
+        if field in _JOB_POSTING_MIN_KWARGS:
+            continue
+        assert getattr(job_posting, field) is None
+
+
+def test_job_posting_missing_fields():
+    for required_field in list(_JOB_POSTING_MIN_KWARGS):
+        incomplete_kwargs: dict = copy(_JOB_POSTING_MIN_KWARGS)
+        del incomplete_kwargs[required_field]
+        with pytest.raises(TypeError):
+            JobPosting(**incomplete_kwargs)
+
+
+def test_social_media_post_all_fields():
+    social_media_post = SocialMediaPost(**_SOCIAL_MEDIA_POST_ALL_KWARGS)
+    for field in list(_SOCIAL_MEDIA_POST_ALL_KWARGS):
+        assert getattr(social_media_post, field) == _SOCIAL_MEDIA_POST_ALL_KWARGS[field]
+
+
+def test_social_media_post_min_fields():
+    social_media_post = SocialMediaPost(**_SOCIAL_MEDIA_POST_MIN_KWARGS)
+    for field in list(_SOCIAL_MEDIA_POST_ALL_KWARGS):
+        if field in _SOCIAL_MEDIA_POST_MIN_KWARGS:
+            continue
+        assert getattr(social_media_post, field) is None
+
+
+def test_social_media_post_missing_fields():
+    for required_field in list(_SOCIAL_MEDIA_POST_MIN_KWARGS):
+        incomplete_kwargs: dict = copy(_SOCIAL_MEDIA_POST_MIN_KWARGS)
+        del incomplete_kwargs[required_field]
+        with pytest.raises(TypeError):
+            SocialMediaPost(**incomplete_kwargs)
+
+
+@pytest.mark.parametrize(
+    "cls,has_proba",
+    (
+        (Article, True),
+        (ArticleFromList, True),
+        (ArticleList, False),
+        (ArticleNavigation, False),
+        (BusinessPlace, True),
+        (JobPosting, True),
+        (Product, True),
+        (ProductFromList, True),
+        (ProductList, False),
+        (ProductNavigation, False),
+        (ProductVariant, False),
+        (RealEstate, True),
+    ),
+)
+def test_get_probability_request(cls, has_proba):
+    data = {"url": "https://example.com"}
+
+    item = cls.from_dict(data)
+    assert item.get_probability() is None
+
+    item = cls.from_dict({**data, "metadata": {"probability": 0.5}})
+    if has_proba:
+        assert item.get_probability() == 0.5
+    else:
+        assert item.get_probability() is None
+
+    item = cls.from_dict({**data, "metadata": {"probability": 0.0}})
+    if has_proba:
+        assert item.get_probability() == 0.0
+    else:
+        assert item.get_probability() is None

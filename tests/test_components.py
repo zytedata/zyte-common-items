@@ -4,9 +4,13 @@ from zyte_common_items import (
     Address,
     AggregateRating,
     Amenity,
+    BaseSalary,
     Breadcrumb,
     BusinessPlaceMetadata,
     Header,
+    HiringOrganization,
+    JobLocation,
+    JobPostingMetadata,
     Link,
     Metadata,
     NamedLink,
@@ -14,9 +18,13 @@ from zyte_common_items import (
     ParentPlace,
     ProbabilityMetadata,
     ProbabilityRequest,
+    Reactions,
     RealEstateArea,
     Request,
+    SocialMediaPostAuthor,
+    SocialMediaPostMetadata,
     StarRating,
+    Url,
 )
 
 
@@ -103,7 +111,7 @@ def test_probability_request():
         Header(name="Content-Type", value="application/x-www-form-urlencoded"),
         Header(name="Host", value="foo.example"),
     ]
-    ProbabilityRequest(
+    request = ProbabilityRequest(
         name="Post Test",
         url="https://example.com/test",
         method="POST",
@@ -111,6 +119,7 @@ def test_probability_request():
         headers=headers,
         metadata=ProbabilityMetadata(probability=0.5),
     )
+    assert request.get_probability() == 0.5
 
     request = ProbabilityRequest(
         name="Get with RequestURL object",
@@ -118,6 +127,7 @@ def test_probability_request():
     )
 
     assert request.url == "https://example.com/test"
+    assert request.get_probability() is None
 
 
 def test_request():
@@ -140,3 +150,52 @@ def test_request():
     )
 
     assert request.url == "https://example.com/test"
+
+
+def test_job_location():
+    JobLocation(raw="New York, NY")
+
+
+def test_base_salary():
+    BaseSalary(
+        raw="$53,000-$55,000 a year",
+        valueMin="53000",
+        valueMax="55000",
+        rateType="yearly",
+        currencyRaw="$",
+        currency="USD",
+    )
+
+
+def test_hiring_organization():
+    HiringOrganization(name="Example Inc.", nameRaw="Example Inc. USA", id="12345")
+
+
+def test_job_posting_metadata():
+    JobPostingMetadata(
+        dateDownloaded="2020-01-01", probability=0.5, searchText="Software Engineer"
+    )
+
+
+def test_reactions():
+    Reactions(reposts=1, likes=2, dislikes=3)
+
+
+def test_social_media_post_author():
+    SocialMediaPostAuthor(
+        numberOfFollowers=5,
+        numberOfFollowing=5,
+        dateAccountCreated="2020-01-01",
+        location="New York, NY",
+        isVerified=True,
+    )
+
+
+def test_social_media_post_metadata():
+    SocialMediaPostMetadata(
+        dateDownloaded="2020-01-01", probability=0.5, searchText="Extract Summit"
+    )
+
+
+def test_url():
+    Url(url="https://example.com")

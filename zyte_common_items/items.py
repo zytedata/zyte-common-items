@@ -1,6 +1,9 @@
+from base64 import b64encode
 from typing import List, Optional
+from urllib.parse import quote_plus
 
 import attrs
+import jinja2
 
 from zyte_common_items.base import Item
 from zyte_common_items.components import (
@@ -13,11 +16,16 @@ from zyte_common_items.components import (
     ArticleNavigationMetadata,
     Audio,
     Author,
+    BaseSalary,
     Brand,
     Breadcrumb,
     BusinessPlaceMetadata,
     Gtin,
+    Header,
+    HiringOrganization,
     Image,
+    JobLocation,
+    JobPostingMetadata,
     Link,
     NamedLink,
     OpeningHoursItem,
@@ -27,10 +35,15 @@ from zyte_common_items.components import (
     ProductListMetadata,
     ProductMetadata,
     ProductNavigationMetadata,
+    Reactions,
     RealEstateArea,
     RealEstateMetadata,
     Request,
+    SearchRequestTemplateMetadata,
+    SocialMediaPostAuthor,
+    SocialMediaPostMetadata,
     StarRating,
+    Url,
     Video,
     cast_request,
 )
@@ -103,6 +116,12 @@ class ArticleFromList(Item):
 
 @attrs.define(kw_only=True)
 class Article(Item):
+    """Article, typically seen on online news websites, blogs, or announcement
+    sections.
+
+    :attr:`url` is the only required attribute.
+    """
+
     #: Headline or title.
     headline: Optional[str] = None
 
@@ -253,7 +272,8 @@ class ArticleList(Item):
 class ProductVariant(Item):
     """:class:`Product` variant.
 
-    See :attr:`Product.variants`.
+    See :attr:`Product.variants`, :class:`ProductVariantExtractor`,
+    :class:`ProductVariantSelectorExtractor`.
     """
 
     #: List of name-value pais of data about a specific, otherwise unmapped
@@ -398,8 +418,7 @@ class ProductVariant(Item):
 class Product(Item):
     """Product from an e-commerce website.
 
-    The :attr:`url` attribute is the only required attribute, all other fields
-    are optional.
+    :attr:`url` is the only required attribute.
     """
 
     #: List of name-value pais of data about a specific, otherwise unmapped
@@ -625,7 +644,8 @@ class ProductFromList(Item):
     """Product from a product list from a product listing page of an e-commerce
     webpage.
 
-    See :class:`ProductList`.
+    See :class:`ProductList`, :class:`ProductFromListExtractor`,
+    :class:`ProductFromListSelectorExtractor`.
     """
 
     #: Price currency `ISO 4217`_ alphabetic code (e.g. ``"USD"``).
@@ -692,8 +712,7 @@ class ProductList(Item):
 
     It represents, for example, a single page from a category.
 
-    The :attr:`url` attribute is the only required attribute, all other fields
-    are optional.
+    :attr:`url` is the only required attribute.
     """
 
     #: Webpage `breadcrumb trail`_.
@@ -748,7 +767,10 @@ class ProductList(Item):
 @attrs.define(slots=True, kw_only=True)
 class BusinessPlace(Item):
     """Business place, with properties typically seen on maps or business
-    listings."""
+    listings.
+
+    :attr:`url` is the only required attribute.
+    """
 
     #: Unique identifier of the place on the website.
     placeId: Optional[str] = None
@@ -847,6 +869,12 @@ class BusinessPlace(Item):
 
 @attrs.define(slots=True, kw_only=True)
 class RealEstate(Item):
+    """Real state offer, typically seen on real estate offer aggregator
+    websites.
+
+    :attr:`url` is the only required attribute.
+    """
+
     #: The url of the final response, after any redirects.
     url: str = attrs.field(converter=url_to_str)
 
@@ -947,6 +975,9 @@ class RealEstate(Item):
 
 
 class RequestListCaster:
+    """attrs converter to turn lists of :class:`Request` instances into lists
+    of :class:`ProbabilityRequest` instances."""
+
     def __init__(self, target):
         self._target = target
 
@@ -1038,3 +1069,207 @@ class ArticleNavigation(Item):
     metadata: Optional[ArticleNavigationMetadata] = attrs.field(
         default=None, converter=attrs.converters.optional(MetadataCaster(ArticleNavigationMetadata)), kw_only=True  # type: ignore
     )
+
+
+@attrs.define(kw_only=True)
+class JobPosting(Item):
+    """A job posting, typically seen on job posting websites or websites of
+    companies that are hiring.
+
+    :attr:`url` is the only required attribute.
+    """
+
+    #: The url of the final response, after any redirects.
+    url: str = attrs.field(converter=url_to_str)
+
+    #: The identifier of the job posting.
+    jobPostingId: Optional[str] = None
+
+    #: Publication date of the job posting.
+    #:
+    #: Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
+    #:
+    #: With timezone, if available.
+    datePublished: Optional[str] = None
+
+    #: Same date as datePublished, but before parsing/normalization, i.e. as it appears on the website.
+    datePublishedRaw: Optional[str] = None
+
+    #: The date when the job posting was most recently modified.
+    #:
+    #: Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
+    #:
+    #: With timezone, if available.
+    dateModified: Optional[str] = None
+
+    #: Same date as dateModified, but before parsing/normalization, i.e. as it appears on the website.
+    dateModifiedRaw: Optional[str] = None
+
+    #: The date after which the job posting is not valid, e.g. the end of an offer.
+    #:
+    #: Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
+    #:
+    #: With timezone, if available.
+    validThrough: Optional[str] = None
+
+    #: Same date as validThrough, but before parsing/normalization, i.e. as it appears on the website.
+    validThroughRaw: Optional[str] = None
+
+    #: The title of the job posting.
+    jobTitle: Optional[str] = None
+
+    #: The headline of the job posting.
+    headline: Optional[str] = None
+
+    #: A (typically single) geographic location associated with the job position.
+    jobLocation: Optional[JobLocation] = None
+
+    #: A description of the job posting including sub-headings, with newline separators.
+    #:
+    #: Format:
+    #:
+    #: - trimmed (no whitespace at the beginning or the end of the description string),
+    #:
+    #: - line breaks included,
+    #:
+    #: - no length limit,
+    #:
+    #: - no normalization of Unicode characters.
+    description: Optional[str] = None
+
+    #: Simplified HTML of the description, including sub-headings, image captions and embedded content.
+    descriptionHtml: Optional[str] = None
+
+    #: Type of employment (e.g. full-time, part-time, contract, temporary, seasonal, internship).
+    employmentType: Optional[str] = None
+
+    #: The base salary of the job or of an employee in the proposed role.
+    baseSalary: Optional[BaseSalary] = None
+
+    #: Candidate requirements for the job.
+    requirements: Optional[List[str]] = None
+
+    #: Information about the organization offering the job position.
+    hiringOrganization: Optional[HiringOrganization] = None
+
+    #: Job start date
+    #:
+    #: Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
+    #:
+    #: With timezone, if available.
+    jobStartDate: Optional[str] = None
+
+    #: Same date as jobStartDate, but before parsing/normalization, i.e. as it appears on the website.
+    jobStartDateRaw: Optional[str] = None
+
+    #: Specifies the remote status of the position.
+    remoteStatus: Optional[str] = None
+
+    #: Contains metadata about the data extraction process.
+    metadata: Optional[JobPostingMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(JobPostingMetadata)), kw_only=True  # type: ignore
+    )
+
+
+@attrs.define(kw_only=True)
+class SocialMediaPost(Item):
+    """Represents a single social media post."""
+
+    #: The URL of the final response, after any redirects.
+    url: str = attrs.field(converter=url_to_str)
+
+    #: The identifier of the post.
+    postId: Optional[str] = None
+
+    #: Details of reactions to the post.
+    reactions: Optional[Reactions] = None
+
+    #: The text content of the post.
+    text: Optional[str] = None
+
+    #: The timestamp at which the post was created.
+    #:
+    #: Format: Timezone: UTC. ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
+    datePublished: Optional[str] = None
+
+    #: The list of hashtags contained in the post.
+    hashtags: Optional[List[str]] = None
+
+    #: The list of URLs of media files (images, videos, etc.) linked from the post.
+    mediaUrls: Optional[List[Url]] = None
+
+    #: Details of the author of the post.
+    #:
+    #: No easily identifiable information can be contained in here, such as usernames.
+    author: Optional[SocialMediaPostAuthor] = None
+
+    #: Contains metadata about the data extraction process.
+    metadata: Optional[SocialMediaPostMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(SocialMediaPostMetadata)), kw_only=True  # type: ignore
+    )
+
+
+_TEMPLATE_ENVIRONMENT = jinja2.Environment()
+_TEMPLATE_ENVIRONMENT.filters["quote_plus"] = quote_plus
+
+
+def _render(string: str, **kwargs) -> str:
+    return _TEMPLATE_ENVIRONMENT.from_string(string).render(**kwargs)
+
+
+@attrs.define(kw_only=True)
+class SearchRequestTemplate(Item):
+    """:ref:`Request template <request-templates>` to build a search
+    :class:`~zyte_common_items.Request`."""
+
+    #: :doc:`Jinja template <jinja:templates>` for :class:`Request.url
+    #: <zyte_common_items.Request.url>`.
+    url: str
+
+    #: :doc:`Jinja template <jinja:templates>` for :class:`Request.method
+    #: <zyte_common_items.Request.method>`.
+    method: str = "GET"
+
+    #: :doc:`Jinja template <jinja:templates>` for :class:`Request.body
+    #: <zyte_common_items.Request.body>`.
+    #:
+    #: It must be a plain :class:`str`, not :class:`bytes` or a Base64-encoded
+    #: :class:`str`. Base64-encoding is done by :meth:`request` after rendering
+    #: this value as a Jinja template.
+    #:
+    #: Defining a non-UTF-8 body is not supported.
+    body: Optional[str] = None
+
+    #: List of :class:`Header`, for :class:`Request.headers
+    #: <zyte_common_items.Request.headers>`, where every :attr:`~Header.name`
+    #: and :attr:`~Header.value` is a :doc:`Jinja template <jinja:templates>`.
+    #:
+    #: When a header name template renders into an empty string (after
+    #: stripping spacing), that header is removed from the resulting list of
+    #: headers.
+    headers: Optional[List[Header]] = None
+
+    #: Data extraction process metadata.
+    metadata: Optional[SearchRequestTemplateMetadata] = attrs.field(
+        default=None, converter=attrs.converters.optional(MetadataCaster(SearchRequestTemplateMetadata)), kw_only=True  # type: ignore
+    )
+
+    def request(self, *, keyword: str) -> Request:
+        """Return a :class:`~zyte_common_items.Request` to search for
+        *keyword*."""
+        body = _render(self.body or "", keyword=keyword).encode()
+
+        headers = []
+        for header in self.headers or []:
+            name = _render(header.name, keyword=keyword).strip()
+            if not name:
+                continue
+            value = _render(header.value, keyword=keyword)
+            headers.append(Header(name=name, value=value))
+
+        return Request(
+            url=_render(self.url, keyword=keyword),
+            method=_render(self.method, keyword=keyword),
+            body=b64encode(body).decode() if body else None,
+            headers=headers or None,
+        )
