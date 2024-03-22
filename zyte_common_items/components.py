@@ -36,6 +36,7 @@ class _ListMetadata(Item):
     #: Date and time when the product data was downloaded, in UTC timezone and
     #: the following format: ``YYYY-MM-DDThh:mm:ssZ``.
     dateDownloaded: Optional[str] = None
+    validation: Optional[dict] = None
 
 
 @attrs.define(kw_only=True)
