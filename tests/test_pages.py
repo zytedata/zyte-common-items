@@ -211,13 +211,23 @@ METADATA_FIELDS = {
     "Article": {"dateDownloaded", "probability", "validationMessages"},
     "ArticleList": {"dateDownloaded", "validationMessages"},
     "ArticleNavigation": {"dateDownloaded", "validationMessages"},
-    "BusinessPlace": {"dateDownloaded", "probability", "searchText", "validationMessages"},
+    "BusinessPlace": {
+        "dateDownloaded",
+        "probability",
+        "searchText",
+        "validationMessages",
+    },
     "Product": {"dateDownloaded", "probability", "validationMessages"},
     "ProductList": {"dateDownloaded", "validationMessages"},
     "ProductNavigation": {"dateDownloaded", "validationMessages"},
     "RealEstate": {"dateDownloaded", "probability", "validationMessages"},
     "JobPosting": {"dateDownloaded", "probability", "searchText", "validationMessages"},
-    "SocialMediaPost": {"dateDownloaded", "probability", "searchText", "validationMessages"},
+    "SocialMediaPost": {
+        "dateDownloaded",
+        "probability",
+        "searchText",
+        "validationMessages",
+    },
 }
 
 
