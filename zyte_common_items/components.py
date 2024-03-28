@@ -1,12 +1,13 @@
 """Classes for data nested within items."""
 
 import base64
-from typing import List, Optional, Type, TypeVar
+from typing import List, Optional, Type, TypeVar, Dict
 
 import attrs
 
 from zyte_common_items.base import Item, ProbabilityMixin
 from zyte_common_items.util import convert_to_class, url_to_str
+
 
 # Metadata ####################################################################
 
@@ -38,6 +39,9 @@ class _ListMetadata(Item):
     #: Date and time when the product data was downloaded, in UTC timezone and
     #: the following format: ``YYYY-MM-DDThh:mm:ssZ``.
     dateDownloaded: Optional[str] = None
+
+    #: Contains paths to fields with the description of issues found with their values.
+    validationMessages: Optional[Dict[str, List[str]]] = None
 
 
 @attrs.define(kw_only=True)
