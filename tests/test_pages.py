@@ -208,16 +208,16 @@ def test_matching_items():
 
 
 METADATA_FIELDS = {
-    "Article": {"dateDownloaded", "probability", "validation"},
-    "ArticleList": {"dateDownloaded", "validation"},
-    "ArticleNavigation": {"dateDownloaded", "validation"},
-    "BusinessPlace": {"dateDownloaded", "probability", "searchText", "validation"},
-    "Product": {"dateDownloaded", "probability", "validation"},
-    "ProductList": {"dateDownloaded", "validation"},
-    "ProductNavigation": {"dateDownloaded", "validation"},
-    "RealEstate": {"dateDownloaded", "probability", "validation"},
-    "JobPosting": {"dateDownloaded", "probability", "searchText", "validation"},
-    "SocialMediaPost": {"dateDownloaded", "probability", "searchText", "validation"},
+    "Article": {"dateDownloaded", "probability", "validationMessages"},
+    "ArticleList": {"dateDownloaded", "validationMessages"},
+    "ArticleNavigation": {"dateDownloaded", "validationMessages"},
+    "BusinessPlace": {"dateDownloaded", "probability", "searchText", "validationMessages"},
+    "Product": {"dateDownloaded", "probability", "validationMessages"},
+    "ProductList": {"dateDownloaded", "validationMessages"},
+    "ProductNavigation": {"dateDownloaded", "validationMessages"},
+    "RealEstate": {"dateDownloaded", "probability", "validationMessages"},
+    "JobPosting": {"dateDownloaded", "probability", "searchText", "validationMessages"},
+    "SocialMediaPost": {"dateDownloaded", "probability", "searchText", "validationMessages"},
 }
 
 

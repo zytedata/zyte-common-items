@@ -38,7 +38,9 @@ class _ListMetadata(Item):
     #: Date and time when the product data was downloaded, in UTC timezone and
     #: the following format: ``YYYY-MM-DDThh:mm:ssZ``.
     dateDownloaded: Optional[str] = None
-    validation: Optional[dict] = None
+
+    #: Contains paths to fields with the description of issues found with their values.
+    validationMessages: Optional[List[str]] = None
 
 
 @attrs.define(kw_only=True)
