@@ -1,13 +1,12 @@
 """Classes for data nested within items."""
 
 import base64
-from typing import List, Optional, Type, TypeVar, Dict
+from typing import Dict, List, Optional, Type, TypeVar
 
 import attrs
 
 from zyte_common_items.base import Item, ProbabilityMixin
 from zyte_common_items.util import convert_to_class, url_to_str
-
 
 # Metadata ####################################################################
 
