@@ -13,7 +13,7 @@ from zyte_common_items.util import convert_to_class, url_to_str
 
 @attrs.define(kw_only=True)
 class ProbabilityMetadata(Item):
-    """Data extraction process metadata that indicates a probability."""
+    """Data extraction process metadata."""
 
     #: The probability (0 for 0%, 1 for 100%) that the resource features the
     #: expected data type.
@@ -29,7 +29,7 @@ class ProbabilityMetadata(Item):
 
 @attrs.define(kw_only=True)
 class _ListMetadata(Item):
-    """Data extraction process metadata that indicates the download date.
+    """Data extraction process metadata.
 
     See
     :class:`ArticleList.metadata <zyte_common_items.ArticleList.metadata>`.
@@ -45,8 +45,7 @@ class _ListMetadata(Item):
 
 @attrs.define(kw_only=True)
 class _DetailsMetadata(_ListMetadata):
-    """Data extraction process metadata that indicates the download date and a
-    probability."""
+    """Data extraction process metadata."""
 
     #: The probability (0 for 0%, 1 for 100%) that the resource features the
     #: expected data type.
