@@ -94,37 +94,37 @@ Item metadata components
 ========================
 
 .. autoclass:: zyte_common_items.Metadata(**kwargs)
-   :members: dateDownloaded, probability, searchText
+   :members: dateDownloaded, probability, searchText, validationMessages
 
 .. autoclass:: zyte_common_items.ArticleMetadata(**kwargs)
-   :members: dateDownloaded, probability
+   :members: dateDownloaded, probability, validationMessages
 
 .. autoclass:: zyte_common_items.ArticleListMetadata(**kwargs)
-   :members: dateDownloaded
+   :members: dateDownloaded, validationMessages
 
 .. autoclass:: zyte_common_items.ArticleNavigationMetadata(**kwargs)
-   :members: dateDownloaded
+   :members: dateDownloaded, validationMessages
 
 .. autoclass:: zyte_common_items.BusinessPlaceMetadata(**kwargs)
-   :members: dateDownloaded, probability, searchText
+   :members: dateDownloaded, probability, searchText, validationMessages
 
 .. autoclass:: zyte_common_items.JobPostingMetadata(**kwargs)
-   :members: dateDownloaded, probability
+   :members: dateDownloaded, probability, validationMessages
 
 .. autoclass:: zyte_common_items.ProductMetadata(**kwargs)
-   :members: dateDownloaded, probability
+   :members: dateDownloaded, probability, validationMessages
 
 .. autoclass:: zyte_common_items.ProductListMetadata(**kwargs)
-   :members: dateDownloaded
+   :members: dateDownloaded, validationMessages
 
 .. autoclass:: zyte_common_items.ProductNavigationMetadata(**kwargs)
-   :members: dateDownloaded
+   :members: dateDownloaded, validationMessages
 
 .. autoclass:: zyte_common_items.RealEstateMetadata(**kwargs)
-   :members: dateDownloaded, probability
+   :members: dateDownloaded, probability, validationMessages
 
 .. autoclass:: zyte_common_items.SearchRequestTemplateMetadata(**kwargs)
-   :members: dateDownloaded, probability
+   :members: dateDownloaded, probability, validationMessages
 
 .. autoclass:: zyte_common_items.SocialMediaPostMetadata(**kwargs)
-   :members: dateDownloaded, probability, searchText
+   :members: dateDownloaded, probability, searchText, validationMessages

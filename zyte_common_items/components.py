@@ -1,7 +1,7 @@
 """Classes for data nested within items."""
 
 import base64
-from typing import List, Optional, Type, TypeVar
+from typing import Dict, List, Optional, Type, TypeVar
 
 import attrs
 
@@ -13,7 +13,7 @@ from zyte_common_items.util import convert_to_class, url_to_str
 
 @attrs.define(kw_only=True)
 class ProbabilityMetadata(Item):
-    """Data extraction process metadata that indicates a probability."""
+    """Data extraction process metadata."""
 
     #: The probability (0 for 0%, 1 for 100%) that the resource features the
     #: expected data type.
@@ -29,7 +29,7 @@ class ProbabilityMetadata(Item):
 
 @attrs.define(kw_only=True)
 class _ListMetadata(Item):
-    """Data extraction process metadata that indicates the download date.
+    """Data extraction process metadata.
 
     See
     :class:`ArticleList.metadata <zyte_common_items.ArticleList.metadata>`.
@@ -39,11 +39,13 @@ class _ListMetadata(Item):
     #: the following format: ``YYYY-MM-DDThh:mm:ssZ``.
     dateDownloaded: Optional[str] = None
 
+    #: Contains paths to fields with the description of issues found with their values.
+    validationMessages: Optional[Dict[str, List[str]]] = None
+
 
 @attrs.define(kw_only=True)
 class _DetailsMetadata(_ListMetadata):
-    """Data extraction process metadata that indicates the download date and a
-    probability."""
+    """Data extraction process metadata."""
 
     #: The probability (0 for 0%, 1 for 100%) that the resource features the
     #: expected data type.

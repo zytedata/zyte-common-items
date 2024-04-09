@@ -208,16 +208,26 @@ def test_matching_items():
 
 
 METADATA_FIELDS = {
-    "Article": {"dateDownloaded", "probability"},
-    "ArticleList": {"dateDownloaded"},
-    "ArticleNavigation": {"dateDownloaded"},
-    "BusinessPlace": {"dateDownloaded", "probability", "searchText"},
-    "Product": {"dateDownloaded", "probability"},
-    "ProductList": {"dateDownloaded"},
-    "ProductNavigation": {"dateDownloaded"},
-    "RealEstate": {"dateDownloaded", "probability"},
-    "JobPosting": {"dateDownloaded", "probability", "searchText"},
-    "SocialMediaPost": {"dateDownloaded", "probability", "searchText"},
+    "Article": {"dateDownloaded", "probability", "validationMessages"},
+    "ArticleList": {"dateDownloaded", "validationMessages"},
+    "ArticleNavigation": {"dateDownloaded", "validationMessages"},
+    "BusinessPlace": {
+        "dateDownloaded",
+        "probability",
+        "searchText",
+        "validationMessages",
+    },
+    "Product": {"dateDownloaded", "probability", "validationMessages"},
+    "ProductList": {"dateDownloaded", "validationMessages"},
+    "ProductNavigation": {"dateDownloaded", "validationMessages"},
+    "RealEstate": {"dateDownloaded", "probability", "validationMessages"},
+    "JobPosting": {"dateDownloaded", "probability", "searchText", "validationMessages"},
+    "SocialMediaPost": {
+        "dateDownloaded",
+        "probability",
+        "searchText",
+        "validationMessages",
+    },
 }
 
 
