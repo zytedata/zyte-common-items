@@ -13,3 +13,8 @@ exclude = [
     'test_mypy\.py$',
     'test_conversion\.py$',
 ]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    'ignore:The zyte_common_items.ae module .*:DeprecationWarning',
+]
