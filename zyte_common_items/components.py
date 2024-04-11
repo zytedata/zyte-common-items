@@ -1,12 +1,13 @@
 """Classes for data nested within items."""
 
 import base64
+from datetime import datetime
 from typing import Dict, List, Optional, Type, TypeVar
 
 import attrs
 
 from zyte_common_items.base import Item, ProbabilityMixin
-from zyte_common_items.util import convert_to_class, url_to_str
+from zyte_common_items.util import convert_to_class, parse_iso_datetime, url_to_str
 
 # Metadata ####################################################################
 
@@ -41,6 +42,12 @@ class _ListMetadata(Item):
 
     #: Contains paths to fields with the description of issues found with their values.
     validationMessages: Optional[Dict[str, List[str]]] = None
+
+    def get_date_downloaded_parsed(self) -> Optional[datetime]:
+        """Return dateDownloaded as a TZ-aware datetime object"""
+        if self.dateDownloaded is None:
+            return None
+        return parse_iso_datetime(self.dateDownloaded)
 
 
 @attrs.define(kw_only=True)
