@@ -59,11 +59,13 @@ class AEPipeline:
 
 class DropItem(Exception):
     """Drop item from the item pipeline."""
+
     pass
 
 
 class DropLowProbabilityItemPipeline:
     """Drop item with a probability less than threshold."""
+
     def __init__(self, stats):
         self.stats = stats
         self.threshold = None
