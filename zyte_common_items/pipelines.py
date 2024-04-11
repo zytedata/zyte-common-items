@@ -2,6 +2,8 @@ from warnings import warn
 
 from zyte_common_items import ae
 
+DEFAULT_ITEM_PROBABILITY_THRESHOLD = 0.1
+
 
 class AEPipeline:
     """Replace standard items with matching items with the old Zyte Automatic
@@ -53,3 +55,41 @@ class AEPipeline:
 
     def process_item(self, item, spider):
         return ae.downgrade(item)
+
+
+class DropItem(Exception):
+    """Drop item from the item pipeline."""
+    pass
+
+
+class DropLowProbabilityItemPipeline:
+    """Drop item with a probability less than threshold."""
+    def __init__(self, stats):
+        self.stats = stats
+        self.threshold = None
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        o = cls(crawler.stats)
+        return o
+
+    def get_threshold(self, item, spider):
+        return spider.settings.get("ITEM_PROBABILITY_THRESHOLDS", {}).get(
+            item.__class__.__name__, DEFAULT_ITEM_PROBABILITY_THRESHOLD
+        )
+
+    async def process_item(self, item, spider):
+        if not self.threshold:
+            self.threshold = self.get_threshold(item, spider)
+
+        self.stats.inc_value("item/crawl/total", spider=spider)
+        item_proba = item.get_probability()
+        if item_proba is None or item_proba >= self.threshold:
+            self.stats.inc_value("item/crawl/extracted_with_high_proba", spider=spider)
+            return item
+
+        self.stats.inc_value("item/crawl/dropped_with_low_proba", spider=spider)
+        raise DropItem(
+            f"The item: {item!r} is dropped as the probability ({item_proba}) "
+            f"is below the threshold ({self.threshold})"
+        )
