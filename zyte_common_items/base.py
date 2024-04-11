@@ -23,7 +23,7 @@ def is_data_container(cls_or_obj):
 
 
 class _ItemBase:
-    # Reserving an slot for _unknown_fields_dict.
+    # Reserving a slot for _unknown_fields_dict.
     # This is done in a base class because otherwise attr.s won't pick it up
     __slots__ = ("_unknown_fields_dict",)
 
@@ -66,7 +66,7 @@ class Item(ProbabilityMixin, _ItemBase):
     """Base class for :ref:`items <items>`."""
 
     def __attrs_post_init__(self):
-        self._unknown_fields_dict = {}
+        self._unknown_fields_dict = {}  # type: ignore[misc]
 
     @classmethod
     def from_dict(cls, item: Optional[Dict]):
@@ -90,7 +90,7 @@ class Item(ProbabilityMixin, _ItemBase):
         item = cls._apply_field_types_to_sub_fields(item, trail=trail)
         unknown_fields, known_fields = split_in_unknown_and_known_fields(item, cls)
         obj = cls(**known_fields)  # type: ignore
-        obj._unknown_fields_dict = unknown_fields
+        obj._unknown_fields_dict = unknown_fields  # type: ignore[misc]
         return obj
 
     @classmethod
