@@ -31,6 +31,7 @@ setup(
         "price-parser>=0.3.4",
         "web-poet>=0.14.0",
         "zyte-parsers>=0.5.0",
+        "scrapy>=2.10",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",

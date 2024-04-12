@@ -9,10 +9,20 @@ from zyte_common_items.pipelines import DropItem, DropLowProbabilityItemPipeline
 @pytest.mark.parametrize(
     "item_class_name, settings, default_threshold, expected_threshold",
     [
-        ("Article", {"Article": 0.1, "Product": 0.2}, 0.01, 0.1),
-        ("Product", {"Article": 0.1, "Product": 0.2}, 0.01, 0.2),
+        (
+            "Article",
+            {"unittest.mock.Article": 0.1, "unittest.mock.Product": 0.2},
+            0.01,
+            0.1,
+        ),
+        (
+            "Product",
+            {"unittest.mock.Article": 0.1, "unittest.mock.Product": 0.2},
+            0.01,
+            0.2,
+        ),
         ("Article", {}, 0.01, 0.01),
-        ("Article", {"Product": 0.2}, 0.01, 0.01),
+        ("Article", {"unittest.mock.Product": 0.2}, 0.01, 0.01),
     ],
 )
 def test_get_threshold(
