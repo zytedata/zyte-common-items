@@ -116,7 +116,7 @@ input:
 >>> product = Product.from_dict(data)
 Traceback (most recent call last):
 ...
-ValueError: Expected mainImage to be a dict with fields from zyte_common_items.components.Image, got 'not a dictionary'.
+ValueError: Expected mainImage to be a dict with fields from zyte_common_items.components.media.Image, got 'not a dictionary'.
 >>> data = {
 ...     'url': 'https://example.com/',
 ...     'breadcrumbs': 3,

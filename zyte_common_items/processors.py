@@ -18,8 +18,7 @@ from zyte_parsers import (
     extract_review_count,
 )
 
-from . import AggregateRating, Gtin
-from .items import Breadcrumb
+from .components import AggregateRating, Breadcrumb, Gtin
 
 
 def _get_base_url(page: Any) -> Optional[str]:
