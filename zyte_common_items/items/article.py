@@ -130,6 +130,6 @@ class Article(Item):
     #: Data extraction process metadata.
     metadata: Optional[ArticleMetadata] = attrs.field(
         default=None,
-        converter=attrs.converters.optional(MetadataCaster(ArticleMetadata)),
+        converter=attrs.converters.optional(MetadataCaster(ArticleMetadata)),  # type: ignore[misc]
         kw_only=True,
     )

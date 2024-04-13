@@ -118,7 +118,7 @@ class ArticleFromList(Item):
     #: Data extraction process metadata.
     metadata: Optional[ProbabilityMetadata] = attrs.field(
         default=None,
-        converter=attrs.converters.optional(MetadataCaster(ProbabilityMetadata)),
+        converter=attrs.converters.optional(MetadataCaster(ProbabilityMetadata)),  # type: ignore[misc]
         kw_only=True,
     )
 
