@@ -2,12 +2,10 @@
 A module with common attrs converters
 """
 
-from typing import Optional, Type, Union
+from typing import Optional, Union
 
 import attrs
 from web_poet.page_inputs.url import _Url
-
-from zyte_common_items.components import MetadataT, ProbabilityRequest
 
 
 def url_to_str(url: Union[str, _Url]) -> str:
@@ -30,8 +28,8 @@ def url_to_str_optional(url: Union[str, _Url, None]) -> Optional[str]:
 
 
 class RequestListCaster:
-    """attrs converter to turn lists of :class:`Request` instances into lists
-    of ``target`` instances."""
+    """[DEPRECATED] attrs converter to turn lists of :class:`Request`
+    instances into lists of ``target`` instances."""
 
     def __init__(self, target):
         self._target = target
@@ -44,22 +42,32 @@ class MetadataCaster:
     """attrs converter that converts an input metadata object into the metadata
     class declared by the container page object class."""
 
-    def __init__(self, target: Type[MetadataT]):
+    def __init__(self, target):
         self._target = target
 
-    def __call__(self, value: MetadataT) -> MetadataT:
+    def __call__(self, value):
         return value.cast(self._target)
 
 
-to_probability_request_list = RequestListCaster(ProbabilityRequest)
-to_probability_request_list_optional = attrs.converters.optional(
-    to_probability_request_list
-)
+def to_probability_request_list(request_list):
+    """attrs converter to turn lists of :class:`Request` instances into lists
+    of :class:`ProbabilityRequest` instances."""
+    from zyte_common_items.components import ProbabilityRequest
+
+    return [request.cast(ProbabilityRequest) for request in request_list]
 
 
-def to_metadata(metadata_cls: Type[MetadataT]):
+def to_probability_request_list_optional(request_list):
+    """attrs converter to turn lists of :class:`Request` instances into lists
+    of :class:`ProbabilityRequest` instances. If None is passed, None is returned."""
+    if request_list is None:
+        return None
+    return to_probability_request_list(request_list)
+
+
+def to_metadata(metadata_cls: type):
     return MetadataCaster(metadata_cls)
 
 
-def to_metadata_optional(metadata_cls: Type[MetadataT]):
+def to_metadata_optional(metadata_cls: type):
     return attrs.converters.optional(MetadataCaster(metadata_cls))
