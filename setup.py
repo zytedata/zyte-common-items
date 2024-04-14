@@ -24,7 +24,7 @@ setup(
     },
     # needs to be in sync with the tox.ini min env
     install_requires=[
-        "attrs>=22.1.0",
+        "attrs>=22.2.0",
         "clear-html>=0.4.0",
         "itemadapter>=0.8.0",
         "Jinja2>=2.7",
