@@ -124,5 +124,5 @@ class BusinessPlace(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[BusinessPlaceMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(BusinessPlaceMetadata), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(BusinessPlaceMetadata), kw_only=True  # type: ignore[misc]
     )

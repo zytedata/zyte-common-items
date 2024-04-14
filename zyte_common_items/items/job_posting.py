@@ -115,5 +115,5 @@ class JobPosting(Item):
 
     #: Contains metadata about the data extraction process.
     metadata: Optional[JobPostingMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(JobPostingMetadata), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(JobPostingMetadata), kw_only=True  # type: ignore[misc]
     )

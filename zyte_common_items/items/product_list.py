@@ -54,7 +54,7 @@ class ProductList(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[ProductListMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ProductListMetadata), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(ProductListMetadata), kw_only=True  # type: ignore[misc]
     )
 
     #: Current page number, if displayed explicitly on the list page.
@@ -109,7 +109,7 @@ class ProductFromList(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[ProbabilityMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ProbabilityMetadata), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(ProbabilityMetadata), kw_only=True  # type: ignore[misc]
     )
 
     #: Name as it appears on the webpage (no post-processing).

@@ -62,7 +62,7 @@ class ArticleList(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[ArticleListMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ArticleListMetadata), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(ArticleListMetadata), kw_only=True  # type: ignore[misc]
     )
 
 

@@ -48,5 +48,5 @@ class SocialMediaPost(Item):
 
     #: Contains metadata about the data extraction process.
     metadata: Optional[SocialMediaPostMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(SocialMediaPostMetadata), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(SocialMediaPostMetadata), kw_only=True  # type: ignore[misc]
     )

@@ -124,5 +124,5 @@ class RealEstate(Item):
 
     #: Contains metadata about the data extraction process.
     metadata: Optional[RealEstateMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(RealEstateMetadata), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(RealEstateMetadata), kw_only=True  # type: ignore[misc]
     )

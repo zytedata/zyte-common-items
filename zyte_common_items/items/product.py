@@ -146,7 +146,7 @@ class Product(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[ProductMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ProductMetadata), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(ProductMetadata), kw_only=True  # type: ignore[misc]
     )
 
     #: `Manufacturer part number (MPN)`_.

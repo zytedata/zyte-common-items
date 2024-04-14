@@ -37,12 +37,12 @@ class ArticleNavigation(Item):
 
     #: List of sub-category links ordered by their position in the page.
     subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore
+        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
     )
 
     #: Links to listed items in order of appearance.
     items: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore
+        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
     )
 
     #: A link to the next page, if available.
@@ -58,5 +58,5 @@ class ArticleNavigation(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[ArticleNavigationMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ArticleNavigationMetadata), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(ArticleNavigationMetadata), kw_only=True  # type: ignore[misc]
     )

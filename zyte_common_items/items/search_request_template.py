@@ -58,7 +58,7 @@ class SearchRequestTemplate(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[SearchRequestTemplateMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(SearchRequestTemplateMetadata), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(SearchRequestTemplateMetadata), kw_only=True  # type: ignore[misc]
     )
 
     def request(self, *, keyword: str) -> Request:

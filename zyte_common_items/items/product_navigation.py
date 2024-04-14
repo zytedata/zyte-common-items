@@ -35,12 +35,12 @@ class ProductNavigation(Item):
 
     #: List of sub-category links ordered by their position in the page.
     subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore
+        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
     )
 
     #: List of product links found on the page category ordered by their position in the page.
     items: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore
+        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
     )
 
     #: A link to the next page, if available.
@@ -56,5 +56,5 @@ class ProductNavigation(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[ProductNavigationMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ProductNavigationMetadata), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(ProductNavigationMetadata), kw_only=True  # type: ignore[misc]
     )
