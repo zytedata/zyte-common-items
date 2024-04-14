@@ -17,8 +17,7 @@ from zyte_common_items.components import (
     ParentPlace,
     StarRating,
 )
-from zyte_common_items.converters import to_metadata_optional
-from zyte_common_items.util import url_to_str
+from zyte_common_items.converters import to_metadata_optional, url_to_str_optional
 
 
 @attrs.define(kw_only=True)
@@ -44,7 +43,7 @@ class BusinessPlace(Item):
     #: In case there is no product data on the page or the page was not reached, the returned "empty"
     #: item would still contain url field and metadata field with dateDownloaded.
     url: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+        default=None, converter=url_to_str_optional, kw_only=True
     )
 
     #: The name of the place.
@@ -77,7 +76,7 @@ class BusinessPlace(Item):
 
     #: URL to a map of the place.
     map: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+        default=None, converter=url_to_str_optional, kw_only=True
     )
 
     #: A list of URL values of all images of the place.
@@ -117,7 +116,7 @@ class BusinessPlace(Item):
 
     #: The URL pointing to the official website of the place.
     website: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+        default=None, converter=url_to_str_optional, kw_only=True
     )
 
     #:  List of the tags associated with the place.

@@ -6,8 +6,7 @@ import attrs
 
 from zyte_common_items.base import Item
 from zyte_common_items.components import Metadata, Reactions, SocialMediaPostAuthor, Url
-from zyte_common_items.converters import to_metadata_optional
-from zyte_common_items.util import url_to_str
+from zyte_common_items.converters import to_metadata_optional, url_to_str
 
 
 @attrs.define(kw_only=True)

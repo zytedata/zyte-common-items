@@ -12,8 +12,11 @@ from zyte_common_items.components import (
     ListMetadata,
     ProbabilityMetadata,
 )
-from zyte_common_items.converters import to_metadata_optional
-from zyte_common_items.util import url_to_str
+from zyte_common_items.converters import (
+    to_metadata_optional,
+    url_to_str,
+    url_to_str_optional,
+)
 
 
 @attrs.define(kw_only=True)
@@ -39,7 +42,7 @@ class ProductList(Item):
     #:
     #: See also ``url``.
     canonicalUrl: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+        default=None, converter=url_to_str_optional, kw_only=True
     )
 
     #: Name of the product listing as it appears on the webpage
@@ -142,5 +145,5 @@ class ProductFromList(Item):
 
     #: Main URL from which the product data could be extracted.
     url: Optional[str] = attrs.field(
-        default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
+        default=None, converter=url_to_str_optional, kw_only=True
     )

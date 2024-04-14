@@ -9,8 +9,8 @@ from zyte_common_items.components import ListMetadata, ProbabilityRequest, Reque
 from zyte_common_items.converters import (
     to_metadata_optional,
     to_probability_request_list_optional,
+    url_to_str,
 )
-from zyte_common_items.util import url_to_str
 
 
 @attrs.define(kw_only=True)

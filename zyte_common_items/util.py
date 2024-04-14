@@ -1,12 +1,12 @@
-from typing import Any, Callable, Dict, Optional, Tuple, Type, TypeVar, Union
+from typing import Any, Callable, Dict, Optional, Tuple, Type, TypeVar
 from warnings import warn
 from weakref import WeakKeyDictionary
 
 import attrs
-from web_poet.page_inputs.url import _Url
 
-# backwards compatibility import
+# backwards compatibility imports
 from ._dateutils import format_datetime  # noqa: F401
+from .converters import MetadataCaster, url_to_str  # noqa: F401
 
 # Caches the attribute names for attr.s classes.
 _CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
@@ -47,17 +47,6 @@ def split_dict(dict: Dict, key_pred: Callable[[Any], Any]) -> Tuple[Dict, Dict]:
         else:
             no[k] = v
     return (no, yes)
-
-
-def url_to_str(url: Union[str, _Url]) -> str:
-    """Return the input :class:`~web_poet.RequestUrl` or
-    :class:`~web_poet.ResponseUrl` object as a string."""
-
-    if not isinstance(url, (str, _Url)):
-        raise ValueError(
-            f"{url!r} is neither a string nor an instance of RequestUrl or ResponseUrl."
-        )
-    return str(url)
 
 
 NewClassT = TypeVar("NewClassT", bound=attrs.AttrsInstance)

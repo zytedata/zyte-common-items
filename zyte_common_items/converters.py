@@ -2,11 +2,31 @@
 A module with common attrs converters
 """
 
-from typing import Type
+from typing import Optional, Type, Union
 
 import attrs
+from web_poet.page_inputs.url import _Url
 
 from zyte_common_items.components import MetadataT, ProbabilityRequest
+
+
+def url_to_str(url: Union[str, _Url]) -> str:
+    """Return the input :class:`~web_poet.RequestUrl` or
+    :class:`~web_poet.ResponseUrl` object as a string."""
+
+    if not isinstance(url, (str, _Url)):
+        raise ValueError(
+            f"{url!r} is neither a string nor an instance of RequestUrl or ResponseUrl."
+        )
+    return str(url)
+
+
+def url_to_str_optional(url: Union[str, _Url, None]) -> Optional[str]:
+    """Return the input :class:`~web_poet.RequestUrl` or
+    :class:`~web_poet.ResponseUrl` object as a string, or None if url is None."""
+    if url is None:
+        return None
+    return url_to_str(url)
 
 
 class RequestListCaster:
