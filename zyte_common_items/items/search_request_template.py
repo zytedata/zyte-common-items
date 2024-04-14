@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from base64 import b64encode
 from typing import List, Optional
 from urllib.parse import quote_plus
