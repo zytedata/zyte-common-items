@@ -1,5 +1,5 @@
 import html
-from typing import Any, Generic, Optional, Type, TypeVar, Union
+from typing import Any, Generic, Optional, Type, Union
 
 import html_text
 from clear_html import cleaned_node_to_text
@@ -8,8 +8,7 @@ from price_parser import Price
 from web_poet.fields import FieldsMixin, field
 from web_poet.utils import ensure_awaitable, get_generic_param
 
-#: Generic type for metadata classes for specific item types.
-MetadataT = TypeVar("MetadataT")
+from zyte_common_items.components import MetadataT
 
 
 class HasMetadata(Generic[MetadataT]):

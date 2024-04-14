@@ -6,7 +6,8 @@ import attrs
 
 from zyte_common_items.base import Item
 from zyte_common_items.components import Metadata, Reactions, SocialMediaPostAuthor, Url
-from zyte_common_items.util import MetadataCaster, url_to_str
+from zyte_common_items.converters import to_metadata_optional
+from zyte_common_items.util import url_to_str
 
 
 @attrs.define(kw_only=True)
@@ -48,5 +49,5 @@ class SocialMediaPost(Item):
 
     #: Contains metadata about the data extraction process.
     metadata: Optional[SocialMediaPostMetadata] = attrs.field(
-        default=None, converter=attrs.converters.optional(MetadataCaster(SocialMediaPostMetadata)), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(SocialMediaPostMetadata), kw_only=True  # type: ignore
     )

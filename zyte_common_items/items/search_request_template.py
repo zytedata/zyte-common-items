@@ -9,7 +9,7 @@ import jinja2
 
 from zyte_common_items.base import Item
 from zyte_common_items.components import DetailsMetadata, Header, Request
-from zyte_common_items.util import MetadataCaster
+from zyte_common_items.converters import to_metadata_optional
 
 _TEMPLATE_ENVIRONMENT = jinja2.Environment()
 _TEMPLATE_ENVIRONMENT.filters["quote_plus"] = quote_plus
@@ -58,7 +58,7 @@ class SearchRequestTemplate(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[SearchRequestTemplateMetadata] = attrs.field(
-        default=None, converter=attrs.converters.optional(MetadataCaster(SearchRequestTemplateMetadata)), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(SearchRequestTemplateMetadata), kw_only=True  # type: ignore
     )
 
     def request(self, *, keyword: str) -> Request:

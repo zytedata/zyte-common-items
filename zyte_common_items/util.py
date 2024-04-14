@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, Optional, Tuple, Type, Union
+from typing import Any, Callable, Dict, Optional, Tuple, Type, TypeVar, Union
 from warnings import warn
 from weakref import WeakKeyDictionary
 
@@ -60,7 +60,10 @@ def url_to_str(url: Union[str, _Url]) -> str:
     return str(url)
 
 
-def convert_to_class(value: Any, new_cls: type) -> Any:
+NewClassT = TypeVar("NewClassT", bound=attrs.AttrsInstance)
+
+
+def convert_to_class(value: Any, new_cls: Type[NewClassT]) -> NewClassT:
     """Convert *value* into *type* keeping all shared attributes, and
     triggering a run-time warning if any attribute is removed."""
     if type(value) is new_cls:
@@ -87,28 +90,3 @@ def convert_to_class(value: Any, new_cls: type) -> Any:
             RuntimeWarning,
         )
     return new_value
-
-
-def cast_metadata(value, cls):
-    """Convert a metadata object into a given metadata class, keeping all
-    shared attributes, and triggering a run-time warning if any attribute is
-    removed."""
-    new_value = convert_to_class(value, cls)
-    return new_value
-
-
-def metadata_processor(metadata, page):
-    """Processor for a metadata field that ensures that the output metadata
-    object uses the metadata class declared by *page*."""
-    return cast_metadata(metadata, page.metadata_cls)
-
-
-class MetadataCaster:
-    """attrs converter that converts an input metadata object into the metadata
-    class declared by the container page object class."""
-
-    def __init__(self, target):
-        self._target = target
-
-    def __call__(self, value):
-        return cast_metadata(value, self._target)

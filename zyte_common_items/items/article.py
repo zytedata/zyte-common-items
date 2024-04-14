@@ -13,7 +13,8 @@ from zyte_common_items.components import (
     Image,
     Video,
 )
-from zyte_common_items.util import MetadataCaster, url_to_str
+from zyte_common_items.converters import to_metadata_optional
+from zyte_common_items.util import url_to_str
 
 
 @attrs.define(kw_only=True)
@@ -130,6 +131,6 @@ class Article(Item):
     #: Data extraction process metadata.
     metadata: Optional[ArticleMetadata] = attrs.field(
         default=None,
-        converter=attrs.converters.optional(MetadataCaster(ArticleMetadata)),  # type: ignore[misc]
+        converter=to_metadata_optional(ArticleMetadata),  # type: ignore[misc]
         kw_only=True,
     )

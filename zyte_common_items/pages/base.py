@@ -3,7 +3,7 @@ from web_poet import ItemPage, RequestUrl, WebPage, field
 from web_poet.pages import ItemT
 
 from .._dateutils import utcnow_formatted
-from ..util import metadata_processor
+from ..processors import metadata_processor
 from .mixins import HasMetadata, MetadataT
 
 

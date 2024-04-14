@@ -9,15 +9,15 @@ from .gtin import Gtin
 from .job_posting import BaseSalary, HiringOrganization, JobLocation
 from .links import Link, NamedLink, Url
 from .media import Audio, Image, Video
-from .metadata import DetailsMetadata, ListMetadata, Metadata, ProbabilityMetadata
+from .metadata import (
+    BaseMetadata,
+    DetailsMetadata,
+    ListMetadata,
+    Metadata,
+    MetadataT,
+    ProbabilityMetadata,
+)
 from .ratings import AggregateRating, StarRating
 from .real_estate import RealEstateArea
-from .request import (
-    Header,
-    ProbabilityRequest,
-    Request,
-    RequestListCaster,
-    cast_request,
-    request_list_processor,
-)
+from .request import Header, ProbabilityRequest, Request
 from .social_media_post import Reactions, SocialMediaPostAuthor

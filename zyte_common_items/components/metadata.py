@@ -1,14 +1,25 @@
 from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Type, TypeVar
 
 import attrs
 
 from zyte_common_items import Item
 from zyte_common_items._dateutils import parse_iso_datetime
+from zyte_common_items.util import convert_to_class
+
+MetadataT = TypeVar("MetadataT", bound="BaseMetadata")
+
+
+class BaseMetadata(Item):
+    def cast(self, cls: Type[MetadataT]) -> MetadataT:
+        """Convert *value*, an instance of :class:`Request` or a subclass, into
+        *cls*, a different class that is also either :class:`Request` or a
+        subclass."""
+        return convert_to_class(self, cls)
 
 
 @attrs.define(kw_only=True)
-class ProbabilityMetadata(Item):
+class ProbabilityMetadata(BaseMetadata):
     """Data extraction process metadata."""
 
     #: The probability (0 for 0%, 1 for 100%) that the resource features the
@@ -24,7 +35,7 @@ class ProbabilityMetadata(Item):
 
 
 @attrs.define(kw_only=True)
-class ListMetadata(Item):
+class ListMetadata(BaseMetadata):
     """Minimal metadata for list item classes, such as ProductList or ArticleList.
 
     See

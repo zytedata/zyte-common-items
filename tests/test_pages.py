@@ -243,6 +243,8 @@ def check_default_metadata(cls, kwargs, item_name):
         for prefix in ["_", "from_", "get_"]:
             if field_name.startswith(prefix):
                 return False
+        if field_name in {"cast"}:
+            return False
         return True
 
     actual_fields = {field for field in dir(obj.metadata) if allow_field(field)}

@@ -12,7 +12,8 @@ from zyte_common_items.components import (
     ListMetadata,
     ProbabilityMetadata,
 )
-from zyte_common_items.util import MetadataCaster, url_to_str
+from zyte_common_items.converters import to_metadata_optional
+from zyte_common_items.util import url_to_str
 
 
 @attrs.define(kw_only=True)
@@ -58,7 +59,7 @@ class ArticleList(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[ArticleListMetadata] = attrs.field(
-        default=None, converter=attrs.converters.optional(MetadataCaster(ArticleListMetadata)), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(ArticleListMetadata), kw_only=True  # type: ignore
     )
 
 
@@ -118,7 +119,7 @@ class ArticleFromList(Item):
     #: Data extraction process metadata.
     metadata: Optional[ProbabilityMetadata] = attrs.field(
         default=None,
-        converter=attrs.converters.optional(MetadataCaster(ProbabilityMetadata)),  # type: ignore[misc]
+        converter=to_metadata_optional(ProbabilityMetadata),  # type: ignore[misc]
         kw_only=True,
     )
 

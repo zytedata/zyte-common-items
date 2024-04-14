@@ -3,12 +3,9 @@ from typing import List, Optional
 import attrs
 from web_poet import Returns, field
 
-from zyte_common_items.components import (
-    ProbabilityRequest,
-    Request,
-    request_list_processor,
-)
+from zyte_common_items.components import ProbabilityRequest, Request
 from zyte_common_items.items import ProductNavigation, ProductNavigationMetadata
+from zyte_common_items.processors import probability_request_list_processor
 
 from .base import BasePage, Page
 from .mixins import HasMetadata
@@ -20,8 +17,8 @@ class BaseProductNavigationPage(
     """:class:`BasePage` subclass for :class:`ProductNavigation`."""
 
     class Processors(BasePage.Processors):
-        subCategories = [request_list_processor]
-        items = [request_list_processor]
+        subCategories = [probability_request_list_processor]
+        items = [probability_request_list_processor]
 
 
 class ProductNavigationPage(

@@ -17,7 +17,8 @@ from zyte_common_items.components import (
     ParentPlace,
     StarRating,
 )
-from zyte_common_items.util import MetadataCaster, url_to_str
+from zyte_common_items.converters import to_metadata_optional
+from zyte_common_items.util import url_to_str
 
 
 @attrs.define(kw_only=True)
@@ -124,5 +125,5 @@ class BusinessPlace(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[BusinessPlaceMetadata] = attrs.field(
-        default=None, converter=attrs.converters.optional(MetadataCaster(BusinessPlaceMetadata)), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(BusinessPlaceMetadata), kw_only=True  # type: ignore
     )

@@ -11,7 +11,8 @@ from zyte_common_items.components import (
     JobLocation,
     Metadata,
 )
-from zyte_common_items.util import MetadataCaster, url_to_str
+from zyte_common_items.converters import to_metadata_optional
+from zyte_common_items.util import url_to_str
 
 
 @attrs.define(kw_only=True)
@@ -115,5 +116,5 @@ class JobPosting(Item):
 
     #: Contains metadata about the data extraction process.
     metadata: Optional[JobPostingMetadata] = attrs.field(
-        default=None, converter=attrs.converters.optional(MetadataCaster(JobPostingMetadata)), kw_only=True  # type: ignore
+        default=None, converter=to_metadata_optional(JobPostingMetadata), kw_only=True  # type: ignore
     )
