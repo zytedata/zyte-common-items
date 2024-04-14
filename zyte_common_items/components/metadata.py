@@ -12,9 +12,7 @@ MetadataT = TypeVar("MetadataT", bound="BaseMetadata")
 
 class BaseMetadata(Item):
     def cast(self, cls: Type[MetadataT]) -> MetadataT:
-        """Convert *value*, an instance of :class:`Request` or a subclass, into
-        *cls*, a different class that is also either :class:`Request` or a
-        subclass."""
+        """Convert *value*, a metadata instance, into a different metadata *cls*."""
         return convert_to_class(self, cls)
 
 
