@@ -4,7 +4,7 @@ from typing import Dict, List, Optional
 import attrs
 
 from zyte_common_items import Item
-from zyte_common_items.util import parse_iso_datetime
+from zyte_common_items._dateutils import parse_iso_datetime
 
 
 @attrs.define(kw_only=True)
