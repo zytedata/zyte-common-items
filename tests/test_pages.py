@@ -243,7 +243,7 @@ def check_default_metadata(cls, kwargs, item_name):
         for prefix in ["_", "from_", "get_"]:
             if field_name.startswith(prefix):
                 return False
-        if field_name in {"cast"}:
+        if field_name == "cast":
             return False
         return True
 
