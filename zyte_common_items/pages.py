@@ -1,5 +1,13 @@
 import html
 from datetime import datetime
+
+try:
+    from datetime import UTC
+except ImportError:
+    # Python < 3.11
+    from datetime import timezone
+
+    UTC = timezone.utc
 from typing import Any, Generic, List, Optional, Type, TypeVar, Union
 
 import attrs
@@ -84,7 +92,7 @@ MetadataT = TypeVar("MetadataT")
 
 
 def _date_downloaded_now():
-    return format_datetime(datetime.utcnow())
+    return format_datetime(datetime.now(UTC))
 
 
 class HasMetadata(Generic[MetadataT]):

@@ -223,6 +223,7 @@ from .test_items import (
     ),
 )
 def test_main(item, expected):
-    pipeline = AEPipeline()
+    with pytest.deprecated_call():
+        pipeline = AEPipeline()
     actual = pipeline.process_item(item, spider=None)
     assert expected == actual

@@ -1,5 +1,14 @@
 import warnings
 from datetime import datetime
+
+try:
+    from datetime import UTC
+except ImportError:
+    # Python < 3.11
+    from datetime import timezone
+
+    UTC = timezone.utc
+
 from typing import Optional
 from warnings import catch_warnings
 
@@ -67,7 +76,7 @@ def test_pages_default(page_class):
 
 @pytest.mark.asyncio
 async def test_example():
-    datetime_before = datetime.utcnow().replace(microsecond=0)
+    datetime_before = datetime.now(UTC).replace(microsecond=0)
 
     @attrs.define
     class BookPage(ProductPage):
@@ -92,10 +101,8 @@ async def test_example():
     assert item.name == "Foo"
     assert item.metadata.probability == 1.0
 
-    item_datetime_string = item.metadata.dateDownloaded
-    assert item_datetime_string.endswith("Z")
-    item_datetime = datetime.fromisoformat(item_datetime_string[:-1])
-    datetime_after = datetime.utcnow().replace(microsecond=0)
+    item_datetime = item.metadata.get_date_downloaded_parsed()
+    datetime_after = datetime.now(UTC).replace(microsecond=0)
     assert datetime_before <= item_datetime <= datetime_after
 
 
@@ -232,7 +239,7 @@ METADATA_FIELDS = {
 
 
 def check_default_metadata(cls, kwargs, item_name):
-    start = datetime.utcnow().replace(microsecond=0)
+    start = datetime.now(UTC).replace(microsecond=0)
 
     obj = cls(**kwargs)
 
@@ -259,8 +266,8 @@ def check_default_metadata(cls, kwargs, item_name):
             obj.metadata.dateDownloaded, str
         ), f"{cls} does not get dateDownloaded set by default"
         assert obj.metadata.dateDownloaded.endswith("Z")
-        actual = datetime.fromisoformat(obj.metadata.dateDownloaded[:-1])
-        end = datetime.utcnow().replace(microsecond=0)
+        actual = obj.metadata.get_date_downloaded_parsed()
+        end = datetime.now(UTC).replace(microsecond=0)
         assert start <= actual <= end
 
     if "probability" in actual_fields:

@@ -1,3 +1,5 @@
+import datetime
+import sys
 from typing import Any, Callable, Dict, Optional, Tuple, Type, Union
 from warnings import warn
 from weakref import WeakKeyDictionary
@@ -57,11 +59,24 @@ def url_to_str(url: Union[str, _Url]) -> str:
     return str(url)
 
 
-def format_datetime(dt):
+def format_datetime(dt) -> str:
     """Return the specified :class:`~datetime.datetime` object, assumed to be
     in the UTC timezone, in ISO format, with the timezone specified as
     ``Z``."""
-    return f"{dt.isoformat(timespec='seconds')}Z"
+    return f"{dt.replace(tzinfo=None).isoformat(timespec='seconds')}Z"
+
+
+def parse_iso_datetime(date_str) -> datetime.datetime:
+    """
+    Parse ISO-formatted UTC date (with a timezone specified as Z)
+    to a TZ-aware datetime object.
+    """
+    if sys.version_info < (3, 11):
+        assert date_str[-1] == "Z"
+        return datetime.datetime.fromisoformat(date_str[:-1]).replace(
+            tzinfo=datetime.timezone.utc
+        )
+    return datetime.datetime.fromisoformat(date_str)
 
 
 def convert_to_class(value: Any, new_cls: type) -> Any:

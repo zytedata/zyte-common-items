@@ -1,3 +1,5 @@
+import datetime
+
 from web_poet import RequestUrl
 
 from zyte_common_items import (
@@ -47,7 +49,23 @@ def test_link_optional_fields():
 def test_metadata_default_values():
     metadata = Metadata()
     assert metadata.dateDownloaded is None
+    assert metadata.get_date_downloaded_parsed() is None
     assert metadata.probability == 1.0
+
+
+def test_metadata_get_date_downloaded():
+    metadata = Metadata(dateDownloaded="2024-04-11T15:06:02Z")
+    dt = metadata.get_date_downloaded_parsed()
+    assert dt == datetime.datetime(
+        year=2024,
+        month=4,
+        day=11,
+        hour=15,
+        minute=6,
+        second=2,
+        microsecond=0,
+        tzinfo=datetime.timezone.utc,
+    )
 
 
 def test_named_link_optional_fields():

@@ -1,7 +1,9 @@
+import datetime
+
 import attrs
 import pytest
 
-from zyte_common_items.util import split_in_unknown_and_known_fields
+from zyte_common_items.util import parse_iso_datetime, split_in_unknown_and_known_fields
 
 
 @attrs.define(auto_attribs=True, slots=True)
@@ -26,3 +28,16 @@ def test_split_in_unknown_and_known_fields():
 
     with pytest.raises(ValueError):
         split_in_unknown_and_known_fields(input, str)
+
+
+def test_parse_iso_datetime():
+    assert parse_iso_datetime("2024-04-11T15:06:02Z") == datetime.datetime(
+        year=2024,
+        month=4,
+        day=11,
+        hour=15,
+        minute=6,
+        second=2,
+        microsecond=0,
+        tzinfo=datetime.timezone.utc,
+    )
