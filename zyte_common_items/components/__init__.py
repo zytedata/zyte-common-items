@@ -1,4 +1,5 @@
 # flake8: noqa
+from ._compat import request_list_processor
 from .additional_property import AdditionalProperty
 from .address import Address
 from .author import Author
