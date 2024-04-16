@@ -28,8 +28,8 @@ For example, to create a :class:`~zyte_common_items.Product`:
 >>> product = Product.from_dict(data)
 
 :meth:`~zyte_common_items.Item.from_dict` applies the right classes to
-nested data, such as :class:`~zyte_common_items.components.Image` and
-:class:`~zyte_common_items.components.Gtin` for the input above.
+nested data, such as :class:`~zyte_common_items.components.media.Image` and
+:class:`~zyte_common_items.components.gtin.Gtin` for the input above.
 
 >>> product.url
 'https://example.com/'

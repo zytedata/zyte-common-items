@@ -19,6 +19,7 @@ class Header(Item):
     value: str
 
 
+#: type var for Request
 RequestT = TypeVar("RequestT", bound="Request")
 
 
@@ -71,8 +72,8 @@ class Request(Item):
         )
 
     def cast(self, cls: Type[RequestT]) -> RequestT:
-        """Convert *value*, an instance of :class:`Request` or a subclass, into
-        *cls*, a different class that is also either :class:`Request` or a
+        """Convert *value*, an instance of :class:`~.Request` or a subclass, into
+        *cls*, a different class that is also either :class:`~.Request` or a
         subclass."""
         new_value = convert_to_class(self, cls)
         if type(self) is Request and cls is ProbabilityRequest:

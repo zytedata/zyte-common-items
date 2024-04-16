@@ -94,37 +94,24 @@ Item metadata components
 ========================
 
 .. autoclass:: zyte_common_items.Metadata(**kwargs)
+   :show-inheritance:
    :members: dateDownloaded, probability, searchText, validationMessages
 
-.. autoclass:: zyte_common_items.ArticleMetadata(**kwargs)
-   :members: dateDownloaded, probability, validationMessages
+.. autoclass:: zyte_common_items.components.metadata.ProbabilityMetadata(**kwargs)
+   :show-inheritance:
+   :members: probability
 
-.. autoclass:: zyte_common_items.ArticleListMetadata(**kwargs)
-   :members: dateDownloaded, validationMessages
+.. autoclass:: zyte_common_items.components.metadata.ListMetadata(**kwargs)
+   :show-inheritance:
+   :members: dateDownloaded, validationMessages, get_date_downloaded_parsed
 
-.. autoclass:: zyte_common_items.ArticleNavigationMetadata(**kwargs)
-   :members: dateDownloaded, validationMessages
+.. autoclass:: zyte_common_items.components.metadata.DetailsMetadata(**kwargs)
+   :show-inheritance:
+   :members: probability, dateDownloaded, validationMessages, get_date_downloaded_parsed
 
-.. autoclass:: zyte_common_items.BusinessPlaceMetadata(**kwargs)
-   :members: dateDownloaded, probability, searchText, validationMessages
+.. autoclass:: zyte_common_items.components.metadata.BaseMetadata(**kwargs)
+   :show-inheritance:
+   :members: cast
 
-.. autoclass:: zyte_common_items.JobPostingMetadata(**kwargs)
-   :members: dateDownloaded, probability, validationMessages
-
-.. autoclass:: zyte_common_items.ProductMetadata(**kwargs)
-   :members: dateDownloaded, probability, validationMessages
-
-.. autoclass:: zyte_common_items.ProductListMetadata(**kwargs)
-   :members: dateDownloaded, validationMessages
-
-.. autoclass:: zyte_common_items.ProductNavigationMetadata(**kwargs)
-   :members: dateDownloaded, validationMessages
-
-.. autoclass:: zyte_common_items.RealEstateMetadata(**kwargs)
-   :members: dateDownloaded, probability, validationMessages
-
-.. autoclass:: zyte_common_items.SearchRequestTemplateMetadata(**kwargs)
-   :members: dateDownloaded, probability, validationMessages
-
-.. autoclass:: zyte_common_items.SocialMediaPostMetadata(**kwargs)
-   :members: dateDownloaded, probability, searchText, validationMessages
+.. autodata:: zyte_common_items.MetadataT
+    :noindex:

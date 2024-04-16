@@ -7,10 +7,13 @@ from zyte_common_items import Item
 from zyte_common_items._dateutils import parse_iso_datetime
 from zyte_common_items.util import convert_to_class
 
+#: type var for metadata
 MetadataT = TypeVar("MetadataT", bound="BaseMetadata")
 
 
 class BaseMetadata(Item):
+    """Base metadata class"""
+
     def cast(self, cls: Type[MetadataT]) -> MetadataT:
         """Convert *value*, a metadata instance, into a different metadata *cls*."""
         return convert_to_class(self, cls)
