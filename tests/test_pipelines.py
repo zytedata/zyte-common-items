@@ -17,15 +17,15 @@ from zyte_common_items.pipelines import DropItem, DropLowProbabilityItemPipeline
                 "zyte_common_items.items.Product": 0.3,
             },
             {
-                "zyte_common_items.items.Article": 0.2,
-                "zyte_common_items.items.Product": 0.3,
+                Article: 0.2,
+                Product: 0.3,
             },
         ),
         (
             {Article: 0.4, Product: 0.5},
             {
-                "zyte_common_items.items.Article": 0.4,
-                "zyte_common_items.items.Product": 0.5,
+                Article: 0.4,
+                Product: 0.5,
             },
         ),
     ],
@@ -38,34 +38,32 @@ def test_init_thresholds(thresholds_settings, expected_thresholds):
 
 
 @pytest.mark.parametrize(
-    "item_class_name, thresholds_settings, default_threshold, expected_threshold",
+    "item, thresholds_settings, default_threshold, expected_threshold",
     [
         (
-            "Article",
-            {"unittest.mock.Article": 0.1, "unittest.mock.Product": 0.2},
+            Article,
+            {Article: 0.1, Product: 0.2},
             0.01,
             0.1,
         ),
         (
-            "Product",
-            {"unittest.mock.Article": 0.1, "unittest.mock.Product": 0.2},
+            Product,
+            {Article: 0.1, Product: 0.2},
             0.01,
             0.2,
         ),
-        ("Article", {}, 0.01, 0.01),
-        ("Article", {"unittest.mock.Product": 0.2}, 0.01, 0.01),
+        (Article, {}, 0.01, 0.01),
+        (Article, {Product: 0.2}, 0.01, 0.01),
     ],
 )
 def test_get_threshold(
-    thresholds_settings, item_class_name, default_threshold, expected_threshold
+    thresholds_settings, item, default_threshold, expected_threshold
 ):
     mock_crawler = MagicMock(spec=["spider", "stats"])
     mock_crawler.spider.settings.get.return_value = thresholds_settings
     pipeline = DropLowProbabilityItemPipeline(mock_crawler)
     zyte_common_items.pipelines.DEFAULT_ITEM_PROBABILITY_THRESHOLD = default_threshold
 
-    item = MagicMock()
-    item.__class__.__name__ = item_class_name
     threshold = pipeline.get_threshold(item, mock_crawler.spider)
 
     assert threshold == expected_threshold
