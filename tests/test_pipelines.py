@@ -69,7 +69,6 @@ def test_get_threshold(
     assert threshold == expected_threshold
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize(
     "item, item_proba, threshold, expected_stats_calls, expected_return",
     [
@@ -96,7 +95,7 @@ def test_get_threshold(
         ),
     ],
 )
-async def test_process_item(
+def test_process_item(
     item, item_proba, threshold, expected_stats_calls, expected_return
 ):
     mock_crawler = MagicMock(spec=["spider", "stats"])
@@ -109,7 +108,7 @@ async def test_process_item(
         mock_get_threshold.return_value = threshold
 
         try:
-            returned_item = await pipeline.process_item(item, mock_crawler.spider)
+            returned_item = pipeline.process_item(item, mock_crawler.spider)
         except DropItem as e:
             assert (
                 f"The item: {item!r} is dropped as the probability ({item_proba}) is "
