@@ -87,10 +87,11 @@ class DropLowProbabilityItemPipeline:
         self.stats.inc_value("item/crawl/total", spider=spider)
         item_proba = item.get_probability()
         if item_proba is None or item_proba >= threshold:
-            self.stats.inc_value("item/crawl/extracted_with_high_proba", spider=spider)
             return item
 
-        self.stats.inc_value("item/crawl/dropped_with_low_proba", spider=spider)
+        self.stats.inc_value(
+            f"drop_item/{self.get_item_name(item)}/low_probability", spider=spider
+        )
         raise DropItem(
             f"The item: {item!r} is dropped as the probability ({item_proba}) "
             f"is below the threshold ({threshold})"
