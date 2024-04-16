@@ -68,32 +68,38 @@ class DropItem(Exception):
 class DropLowProbabilityItemPipeline:
     """Drop item with a probability less than threshold."""
 
-    def __init__(self, stats):
-        self.stats = stats
-        self.threshold = None
+    def __init__(self, crawler):
+        self.stats = crawler.stats
+        self.thresholds = {}
+        self.init_thresholds(crawler.spider)
 
     @classmethod
     def from_crawler(cls, crawler):
-        o = cls(crawler.stats)
+        o = cls(crawler)
         return o
 
+    def init_thresholds(self, spider):
+        thresholds_settings = spider.settings.get("ITEM_PROBABILITY_THRESHOLDS", {})
+        for item, threshold in thresholds_settings.items():
+            item_type = item if isinstance(item, str) else global_object_name(item)
+            self.thresholds[item_type] = threshold
+
     def get_threshold(self, item, spider):
-        return spider.settings.get("ITEM_PROBABILITY_THRESHOLDS", {}).get(
+        return self.thresholds.get(
             global_object_name(item.__class__), DEFAULT_ITEM_PROBABILITY_THRESHOLD
         )
 
     async def process_item(self, item, spider):
-        if not self.threshold:
-            self.threshold = self.get_threshold(item, spider)
+        threshold = self.get_threshold(item, spider)
 
         self.stats.inc_value("item/crawl/total", spider=spider)
         item_proba = item.get_probability()
-        if item_proba is None or item_proba >= self.threshold:
+        if item_proba is None or item_proba >= threshold:
             self.stats.inc_value("item/crawl/extracted_with_high_proba", spider=spider)
             return item
 
         self.stats.inc_value("item/crawl/dropped_with_low_proba", spider=spider)
         raise DropItem(
             f"The item: {item!r} is dropped as the probability ({item_proba}) "
-            f"is below the threshold ({self.threshold})"
+            f"is below the threshold ({threshold})"
         )
