@@ -81,7 +81,7 @@ class DropLowProbabilityItemPipeline:
     def get_threshold(self, item, spider):
         return self.thresholds.get(item, DEFAULT_ITEM_PROBABILITY_THRESHOLD)
 
-    async def process_item(self, item, spider):
+    def process_item(self, item, spider):
         threshold = self.get_threshold(item, spider)
 
         self.stats.inc_value("item/crawl/total", spider=spider)
