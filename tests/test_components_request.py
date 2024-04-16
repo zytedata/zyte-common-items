@@ -1,8 +1,12 @@
 import base64
 
 import pytest
+import scrapy
+from packaging.version import Version
 
 from zyte_common_items import Header, Request
+
+_SCRAPY_VERSION = Version(scrapy.__version__)
 
 
 def test_request_no_kwargs():
@@ -23,7 +27,6 @@ def test_request_body_bytes():
 
 
 def test_request_to_scrapy_basic():
-    scrapy = pytest.importorskip("scrapy")
     req = Request("http://example.com")
     scrapy_req = req.to_scrapy(None)
 
@@ -34,7 +37,6 @@ def test_request_to_scrapy_basic():
 
 
 def test_request_to_scrapy_complex():
-    scrapy = pytest.importorskip("scrapy")
 
     def callback():
         pass
@@ -62,11 +64,12 @@ def test_request_to_scrapy_complex():
     assert scrapy_req.priority == 5
 
 
+@pytest.mark.skipif(
+    _SCRAPY_VERSION < Version("2.7.0"),
+    reason="https://github.com/scrapy/scrapy/issues/5515",
+)
 def test_request_to_scrapy_headers_with_the_same_name():
-    pytest.importorskip("scrapy")
-
     headers = [Header(name="name", value="value1"), Header(name="name", value="value2")]
-
     req = Request("http://example.com", headers=headers)
     scrapy_req = req.to_scrapy(callback=None)
     assert scrapy_req.headers.getlist("name") == [b"value1", b"value2"]
