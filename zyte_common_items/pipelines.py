@@ -1,5 +1,6 @@
 from warnings import warn
 
+from scrapy.exceptions import DropItem
 from scrapy.utils.python import global_object_name
 
 from zyte_common_items import ae
@@ -57,12 +58,6 @@ class AEPipeline:
 
     def process_item(self, item, spider):
         return ae.downgrade(item)
-
-
-class DropItem(Exception):
-    """Drop item from the item pipeline."""
-
-    pass
 
 
 class DropLowProbabilityItemPipeline:
