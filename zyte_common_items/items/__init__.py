@@ -1,4 +1,5 @@
 # flake8: noqa
+from ._compat import RequestListCaster
 from .article import Article, ArticleMetadata
 from .article_list import ArticleFromList, ArticleList, ArticleListMetadata
 from .article_navigation import ArticleNavigation, ArticleNavigationMetadata

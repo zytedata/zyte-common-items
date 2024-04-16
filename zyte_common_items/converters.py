@@ -27,17 +27,6 @@ def url_to_str_optional(url: Union[str, _Url, None]) -> Optional[str]:
     return url_to_str(url)
 
 
-class RequestListCaster:
-    """[DEPRECATED] attrs converter to turn lists of :class:`Request`
-    instances into lists of ``target`` instances."""
-
-    def __init__(self, target):
-        self._target = target
-
-    def __call__(self, value):
-        return [item.cast(self._target) for item in value]
-
-
 class MetadataCaster:
     """attrs converter that converts an input metadata object into the metadata
     class declared by the container page object class."""
