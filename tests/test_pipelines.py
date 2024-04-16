@@ -90,7 +90,7 @@ def test_get_threshold(
             MagicMock(),
             0.01,
             0.1,
-            ["item/crawl/total", "drop_item/magicmock/low_probability"],
+            ["item/crawl/total", "drop_item/magicMock/low_probability"],
             None,
         ),
     ],
