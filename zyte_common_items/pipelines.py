@@ -79,7 +79,7 @@ class DropLowProbabilityItemPipeline:
             self.thresholds[item_type] = threshold
 
     def get_threshold(self, item, spider):
-        return self.thresholds.get(item, DEFAULT_ITEM_PROBABILITY_THRESHOLD)
+        return self.thresholds.get(type(item), DEFAULT_ITEM_PROBABILITY_THRESHOLD)
 
     def get_item_name(self, item):
         return item.__class__.__name__.lower()
