@@ -1,3 +1,4 @@
+import warnings
 from typing import Any, Callable, Dict, Optional, Tuple, Type, TypeVar
 from warnings import warn
 from weakref import WeakKeyDictionary
@@ -79,3 +80,15 @@ def convert_to_class(value: Any, new_cls: Type[NewClassT]) -> NewClassT:
             RuntimeWarning,
         )
     return new_value
+
+
+def metadata_processor(metadata, page):
+    from zyte_common_items.processors import metadata_processor
+
+    warnings.warn(
+        "zyte_common_items.util.metadata_processor is moved to"
+        "zyte_common_items.processors.metadata_processor",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return metadata_processor(metadata, page)
