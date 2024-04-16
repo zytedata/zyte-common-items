@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 import zyte_common_items.pipelines
-from zyte_common_items import Article, Product
+from zyte_common_items import Article, ArticleListPage, Product, ProductNavigation
 from zyte_common_items.pipelines import DropItem, DropLowProbabilityItemPipeline
 
 
@@ -133,6 +133,14 @@ def test_process_item(
         (
             Product(url="http://example.com"),
             "product",
+        ),
+        (
+            ProductNavigation(url="http://example.com"),
+            "productNavigation",
+        ),
+        (
+            ArticleListPage(response=MagicMock()),
+            "articleListPage",
         ),
     ],
 )
