@@ -70,8 +70,7 @@ class DropLowProbabilityItemPipeline:
 
     @classmethod
     def from_crawler(cls, crawler):
-        o = cls(crawler)
-        return o
+        return cls(crawler)
 
     def init_thresholds(self, spider):
         thresholds_settings = spider.settings.get("ITEM_PROBABILITY_THRESHOLDS", {})
