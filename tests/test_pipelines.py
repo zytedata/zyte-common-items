@@ -41,19 +41,19 @@ def test_init_thresholds(thresholds_settings, expected_thresholds):
     "item, thresholds_settings, default_threshold, expected_threshold",
     [
         (
-            Article,
-            {Article: 0.1, Product: 0.2},
+            Article(url="http://example.com"),
+            {Article: 0.3, Product: 0.4},
             0.01,
-            0.1,
+            0.3,
         ),
         (
-            Product,
-            {Article: 0.1, Product: 0.2},
+            Product(url="http://example.com"),
+            {Article: 0.3, Product: 0.4},
             0.01,
-            0.2,
+            0.4,
         ),
-        (Article, {}, 0.01, 0.01),
-        (Article, {Product: 0.2}, 0.01, 0.01),
+        (Article(url="http://example.com"), {}, 0.01, 0.01),
+        (Article(url="http://example.com"), {Product: 0.2}, 0.01, 0.01),
     ],
 )
 def test_get_threshold(
@@ -76,21 +76,21 @@ def test_get_threshold(
             MagicMock(),
             None,
             0.1,
-            ["item/crawl/total", "item/crawl/extracted_with_high_proba"],
+            ["item/crawl/total"],
             True,
         ),
         (
             MagicMock(),
             0.5,
             0.1,
-            ["item/crawl/total", "item/crawl/extracted_with_high_proba"],
+            ["item/crawl/total"],
             True,
         ),
         (
             MagicMock(),
             0.01,
             0.1,
-            ["item/crawl/total", "item/crawl/dropped_with_low_proba"],
+            ["item/crawl/total", "drop_item/magicmock/low_probability"],
             None,
         ),
     ],
@@ -121,3 +121,22 @@ def test_process_item(
             mock_crawler.stats.inc_value.assert_any_call(
                 call, spider=mock_crawler.spider
             )
+
+
+@pytest.mark.parametrize(
+    "item, expected_name",
+    [
+        (
+            Article(url="http://example.com"),
+            "article",
+        ),
+        (
+            Product(url="http://example.com"),
+            "product",
+        ),
+    ],
+)
+def test_get_item_name(item, expected_name):
+    assert (
+        DropLowProbabilityItemPipeline.get_item_name(MagicMock(), item) == expected_name
+    )
