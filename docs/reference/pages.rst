@@ -220,5 +220,3 @@ indicate their item and metadata classes.
       Main URL from which the data has been extracted.
 
 .. autoclass:: zyte_common_items.HasMetadata
-
-.. autodata:: zyte_common_items.MetadataT

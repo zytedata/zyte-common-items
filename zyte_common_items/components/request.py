@@ -19,7 +19,7 @@ class Header(Item):
     value: str
 
 
-#: type var for Request
+#: :class:`~typing.TypeVar` for :class:`Request`.
 RequestT = TypeVar("RequestT", bound="Request")
 
 

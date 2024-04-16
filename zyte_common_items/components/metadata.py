@@ -7,7 +7,7 @@ from zyte_common_items import Item
 from zyte_common_items._dateutils import parse_iso_datetime
 from zyte_common_items.util import convert_to_class
 
-#: type var for metadata
+#: :class:`~typing.TypeVar` for :class:`BaseMetadata`.
 MetadataT = TypeVar("MetadataT", bound="BaseMetadata")
 
 

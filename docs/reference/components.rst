@@ -84,7 +84,6 @@ tied to any specific item type.
 
 .. autoclass:: zyte_common_items.Url(**kwargs)
    :members: url
-
 .. autoclass:: zyte_common_items.Video(**kwargs)
    :members: url
 
@@ -113,5 +112,10 @@ Item metadata components
    :show-inheritance:
    :members: cast
 
-.. autodata:: zyte_common_items.MetadataT
-    :noindex:
+
+Typing
+======
+
+.. autoclass:: zyte_common_items.components.metadata.MetadataT()
+
+.. autoclass:: zyte_common_items.components.request.RequestT()
