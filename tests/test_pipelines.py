@@ -4,7 +4,7 @@ import pytest
 
 import zyte_common_items.pipelines
 from zyte_common_items import Article, ArticleListPage, Product, ProductNavigation
-from zyte_common_items.pipelines import DropItem, DropLowProbabilityItemPipeline
+from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
 
 
 @pytest.mark.parametrize(
@@ -31,6 +31,8 @@ from zyte_common_items.pipelines import DropItem, DropLowProbabilityItemPipeline
     ],
 )
 def test_init_thresholds(thresholds_settings, expected_thresholds):
+    scrapy = pytest.importorskip("scrapy")  # noqa
+
     mock_crawler = MagicMock(spec=["spider", "stats"])
     mock_crawler.spider.settings.get.return_value = thresholds_settings
     pipeline = DropLowProbabilityItemPipeline(mock_crawler)
@@ -59,6 +61,8 @@ def test_init_thresholds(thresholds_settings, expected_thresholds):
 def test_get_threshold(
     thresholds_settings, item, default_threshold, expected_threshold
 ):
+    scrapy = pytest.importorskip("scrapy")  # noqa
+
     mock_crawler = MagicMock(spec=["spider", "stats"])
     mock_crawler.spider.settings.get.return_value = thresholds_settings
     pipeline = DropLowProbabilityItemPipeline(mock_crawler)
@@ -98,6 +102,8 @@ def test_get_threshold(
 def test_process_item(
     item, item_proba, threshold, expected_stats_calls, expected_return
 ):
+    scrapy = pytest.importorskip("scrapy")
+
     mock_crawler = MagicMock(spec=["spider", "stats"])
     item.get_probability.return_value = item_proba
 
@@ -109,7 +115,7 @@ def test_process_item(
 
         try:
             returned_item = pipeline.process_item(item, mock_crawler.spider)
-        except DropItem as e:
+        except scrapy.exceptions.DropItem as e:
             assert (
                 f"The item: {item!r} is dropped as the probability ({item_proba}) is "
                 f"below the threshold ({threshold})"
