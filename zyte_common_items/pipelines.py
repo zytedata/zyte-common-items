@@ -1,7 +1,5 @@
 from warnings import warn
 
-from scrapy.exceptions import DropItem
-
 from zyte_common_items import ae
 
 DEFAULT_ITEM_PROBABILITY_THRESHOLD = 0.1
@@ -87,6 +85,8 @@ class DropLowProbabilityItemPipeline:
         return item_name[0].lower() + item_name[1:]
 
     def process_item(self, item, spider):
+        import scrapy
+
         threshold = self.get_threshold(item, spider)
 
         self.stats.inc_value("item/crawl/total", spider=spider)
@@ -97,7 +97,7 @@ class DropLowProbabilityItemPipeline:
         self.stats.inc_value(
             f"drop_item/{self.get_item_name(item)}/low_probability", spider=spider
         )
-        raise DropItem(
+        raise scrapy.exceptions.DropItem(
             f"The item: {item!r} is dropped as the probability ({item_proba}) "
             f"is below the threshold ({threshold})"
         )
