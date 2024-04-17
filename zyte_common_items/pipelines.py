@@ -58,9 +58,9 @@ class AEPipeline:
 
 
 class DropLowProbabilityItemPipeline:
-    """Drop items when their probability is less than the threshold.
+    """Drop item when it's probability is less than the threshold.
 
-    This pipeline drops items if their probability, defined in the settings,
+    This pipeline drops item if it's probability, defined in the settings,
     is less than the specified threshold. Thresholds can be defined per item type
     using `ITEM_PROBABILITY_THRESHOLDS` in two ways:
 
