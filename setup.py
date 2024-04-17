@@ -29,7 +29,6 @@ setup(
         "itemadapter>=0.8.0",
         "Jinja2>=2.7",
         "price-parser>=0.3.4",
-        "scrapy>=2.0.1",
         "web-poet>=0.14.0",
         "zyte-parsers>=0.5.0",
     ],

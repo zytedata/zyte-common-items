@@ -1,7 +1,6 @@
 from warnings import warn
 
 from scrapy.exceptions import DropItem
-from scrapy.utils.misc import load_object
 
 from zyte_common_items import ae
 
@@ -73,6 +72,8 @@ class DropLowProbabilityItemPipeline:
         return cls(crawler)
 
     def init_thresholds(self, spider):
+        from scrapy.utils.misc import load_object
+
         thresholds_settings = spider.settings.get("ITEM_PROBABILITY_THRESHOLDS", {})
         for item, threshold in thresholds_settings.items():
             item_type = load_object(item) if isinstance(item, str) else item
