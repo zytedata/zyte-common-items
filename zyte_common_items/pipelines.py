@@ -58,7 +58,25 @@ class AEPipeline:
 
 
 class DropLowProbabilityItemPipeline:
-    """Drop item with a probability less than threshold."""
+    """Drop items when their probability is less than the threshold.
+
+    This pipeline drops items if their probability, defined in the settings,
+    is less than the specified threshold. Thresholds can be defined per item type
+    using `ITEM_PROBABILITY_THRESHOLDS` in two ways:
+
+    With paths to Item classes:
+        ITEM_PROBABILITY_THRESHOLDS = {
+            "zyte_common_items.items.Article": 0.1,
+            "zyte_common_items.items.Product": 0.2
+        }
+
+    With Item classes:
+        from zyte_common_items import Article, Product
+        ITEM_PROBABILITY_THRESHOLDS = {
+            Article: 0.1,
+            Product: 0.2
+        }
+    """
 
     def __init__(self, crawler):
         self.stats = crawler.stats
