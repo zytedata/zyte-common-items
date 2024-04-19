@@ -15,6 +15,9 @@ Product
    :members:
    :inherited-members:
 
+.. autoclass:: zyte_common_items.ProductMetadata(**kwargs)
+   :members: dateDownloaded, probability, validationMessages
+
 Product list
 ============
 
@@ -26,6 +29,9 @@ Product list
    :members:
    :inherited-members:
 
+.. autoclass:: zyte_common_items.ProductListMetadata(**kwargs)
+   :members: dateDownloaded, validationMessages
+
 Product navigation
 ==================
 
@@ -33,12 +39,19 @@ Product navigation
    :members:
    :inherited-members:
 
+.. autoclass:: zyte_common_items.ProductNavigationMetadata(**kwargs)
+   :members: dateDownloaded, validationMessages
+
 Article
 =======
 
 .. autoclass:: zyte_common_items.Article(**kwargs)
    :members:
    :inherited-members:
+
+.. autoclass:: zyte_common_items.ArticleMetadata(**kwargs)
+   :members: dateDownloaded, probability, validationMessages
+
 
 Article list
 ============
@@ -51,12 +64,18 @@ Article list
    :members:
    :inherited-members:
 
+.. autoclass:: zyte_common_items.ArticleListMetadata(**kwargs)
+   :members: dateDownloaded, validationMessages
+
 Article navigation
 ==================
 
 .. autoclass:: zyte_common_items.ArticleNavigation(**kwargs)
    :members:
    :inherited-members:
+
+.. autoclass:: zyte_common_items.ArticleNavigationMetadata(**kwargs)
+   :members: dateDownloaded, validationMessages
 
 Business place
 ==============
@@ -65,12 +84,19 @@ Business place
    :members:
    :inherited-members:
 
+.. autoclass:: zyte_common_items.BusinessPlaceMetadata(**kwargs)
+   :members: dateDownloaded, probability, searchText, validationMessages
+
+
 Real estate
 ===========
 
 .. autoclass:: zyte_common_items.RealEstate(**kwargs)
    :members:
    :inherited-members:
+
+.. autoclass:: zyte_common_items.RealEstateMetadata(**kwargs)
+   :members: dateDownloaded, probability, validationMessages
 
 Job posting
 ===========
@@ -79,6 +105,10 @@ Job posting
    :members:
    :inherited-members:
 
+.. autoclass:: zyte_common_items.JobPostingMetadata(**kwargs)
+   :members: dateDownloaded, probability, validationMessages
+
+
 Social media post
 =================
 
@@ -86,14 +116,20 @@ Social media post
    :members:
    :inherited-members:
 
+.. autoclass:: zyte_common_items.SocialMediaPostMetadata(**kwargs)
+   :members: dateDownloaded, probability, searchText, validationMessages
+
 .. _request-template-api:
 
-Request templates
-=================
+Search Request templates
+========================
 
 .. autoclass:: zyte_common_items.SearchRequestTemplate(**kwargs)
    :members:
    :inherited-members:
+
+.. autoclass:: zyte_common_items.SearchRequestTemplateMetadata(**kwargs)
+   :members: dateDownloaded, probability, validationMessages
 
 Custom items
 ============

@@ -3,6 +3,8 @@ import base64
 import pytest
 
 from zyte_common_items import Header, Request
+from zyte_common_items.components import request_list_processor
+from zyte_common_items.processors import probability_request_list_processor
 
 
 def test_request_no_kwargs():
@@ -70,3 +72,11 @@ def test_request_to_scrapy_headers_with_the_same_name():
     req = Request("http://example.com", headers=headers)
     scrapy_req = req.to_scrapy(callback=None)
     assert scrapy_req.headers.getlist("name") == [b"value1", b"value2"]
+
+
+def test_deprecated_request_list_processor():
+    request_list = [Request("http://example.com")]
+    with pytest.deprecated_call():
+        old_result = request_list_processor(request_list)
+
+    assert old_result == probability_request_list_processor(request_list)

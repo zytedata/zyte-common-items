@@ -1,14 +1,4 @@
 import warnings
-from datetime import datetime
-
-try:
-    from datetime import UTC
-except ImportError:
-    # Python < 3.11
-    from datetime import timezone
-
-    UTC = timezone.utc
-
 from typing import Optional
 from warnings import catch_warnings
 
@@ -34,6 +24,7 @@ from zyte_common_items import (
     ProductPage,
     Request,
 )
+from zyte_common_items._dateutils import utcnow
 
 
 @pytest.mark.parametrize(
@@ -76,7 +67,7 @@ def test_pages_default(page_class):
 
 @pytest.mark.asyncio
 async def test_example():
-    datetime_before = datetime.now(UTC).replace(microsecond=0)
+    datetime_before = utcnow().replace(microsecond=0)
 
     @attrs.define
     class BookPage(ProductPage):
@@ -102,7 +93,7 @@ async def test_example():
     assert item.metadata.probability == 1.0
 
     item_datetime = item.metadata.get_date_downloaded_parsed()
-    datetime_after = datetime.now(UTC).replace(microsecond=0)
+    datetime_after = utcnow().replace(microsecond=0)
     assert datetime_before <= item_datetime <= datetime_after
 
 
@@ -239,7 +230,7 @@ METADATA_FIELDS = {
 
 
 def check_default_metadata(cls, kwargs, item_name):
-    start = datetime.now(UTC).replace(microsecond=0)
+    start = utcnow().replace(microsecond=0)
 
     obj = cls(**kwargs)
 
@@ -252,6 +243,8 @@ def check_default_metadata(cls, kwargs, item_name):
         for prefix in ["_", "from_", "get_"]:
             if field_name.startswith(prefix):
                 return False
+        if field_name == "cast":
+            return False
         return True
 
     actual_fields = {field for field in dir(obj.metadata) if allow_field(field)}
@@ -267,7 +260,7 @@ def check_default_metadata(cls, kwargs, item_name):
         ), f"{cls} does not get dateDownloaded set by default"
         assert obj.metadata.dateDownloaded.endswith("Z")
         actual = obj.metadata.get_date_downloaded_parsed()
-        end = datetime.now(UTC).replace(microsecond=0)
+        end = utcnow().replace(microsecond=0)
         assert start <= actual <= end
 
     if "probability" in actual_fields:

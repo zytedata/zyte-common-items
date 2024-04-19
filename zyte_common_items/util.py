@@ -1,11 +1,13 @@
-import datetime
-import sys
-from typing import Any, Callable, Dict, Optional, Tuple, Type, Union
+import warnings
+from typing import Any, Callable, Dict, Optional, Tuple, Type, TypeVar
 from warnings import warn
 from weakref import WeakKeyDictionary
 
 import attrs
-from web_poet.page_inputs.url import _Url
+
+# backwards compatibility imports
+from ._dateutils import format_datetime  # noqa: F401
+from .converters import MetadataCaster, url_to_str  # noqa: F401
 
 # Caches the attribute names for attr.s classes.
 _CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
@@ -48,38 +50,10 @@ def split_dict(dict: Dict, key_pred: Callable[[Any], Any]) -> Tuple[Dict, Dict]:
     return (no, yes)
 
 
-def url_to_str(url: Union[str, _Url]) -> str:
-    """Return the input :class:`~web_poet.RequestUrl` or
-    :class:`~web_poet.ResponseUrl` object as a string."""
-
-    if not isinstance(url, (str, _Url)):
-        raise ValueError(
-            f"{url!r} is neither a string nor an instance of RequestUrl or ResponseUrl."
-        )
-    return str(url)
+NewClassT = TypeVar("NewClassT", bound=attrs.AttrsInstance)
 
 
-def format_datetime(dt) -> str:
-    """Return the specified :class:`~datetime.datetime` object, assumed to be
-    in the UTC timezone, in ISO format, with the timezone specified as
-    ``Z``."""
-    return f"{dt.replace(tzinfo=None).isoformat(timespec='seconds')}Z"
-
-
-def parse_iso_datetime(date_str) -> datetime.datetime:
-    """
-    Parse ISO-formatted UTC date (with a timezone specified as Z)
-    to a TZ-aware datetime object.
-    """
-    if sys.version_info < (3, 11):
-        assert date_str[-1] == "Z"
-        return datetime.datetime.fromisoformat(date_str[:-1]).replace(
-            tzinfo=datetime.timezone.utc
-        )
-    return datetime.datetime.fromisoformat(date_str)
-
-
-def convert_to_class(value: Any, new_cls: type) -> Any:
+def convert_to_class(value: Any, new_cls: Type[NewClassT]) -> NewClassT:
     """Convert *value* into *type* keeping all shared attributes, and
     triggering a run-time warning if any attribute is removed."""
     if type(value) is new_cls:
@@ -108,26 +82,13 @@ def convert_to_class(value: Any, new_cls: type) -> Any:
     return new_value
 
 
-def cast_metadata(value, cls):
-    """Convert a metadata object into a given metadata class, keeping all
-    shared attributes, and triggering a run-time warning if any attribute is
-    removed."""
-    new_value = convert_to_class(value, cls)
-    return new_value
-
-
 def metadata_processor(metadata, page):
-    """Processor for a metadata field that ensures that the output metadata
-    object uses the metadata class declared by *page*."""
-    return cast_metadata(metadata, page.metadata_cls)
+    from zyte_common_items.processors import metadata_processor
 
-
-class MetadataCaster:
-    """attrs converter that converts an input metadata object into the metadata
-    class declared by the container page object class."""
-
-    def __init__(self, target):
-        self._target = target
-
-    def __call__(self, value):
-        return cast_metadata(value, self._target)
+    warnings.warn(
+        "zyte_common_items.util.metadata_processor is moved to"
+        "zyte_common_items.processors.metadata_processor",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return metadata_processor(metadata, page)
