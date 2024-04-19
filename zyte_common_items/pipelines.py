@@ -126,6 +126,6 @@ class DropLowProbabilityItemPipeline:
         )
 
         raise DropItem(
-            f"The item: {item!r} is dropped as the probability ({item_proba}) "
-            f"is below the threshold ({threshold})"
+            f"This item is dropped since the probability ({item_proba}) "
+            f"is below the threshold ({threshold}):\n{item!r}"
         )
