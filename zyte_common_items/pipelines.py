@@ -61,8 +61,8 @@ class DropLowProbabilityItemPipeline:
     """This pipeline drops an item if its probability, defined in the settings,
     is less than the specified threshold.
 
-    There are two ways that thresholds can be defined per item type using
-    the `ITEM_PROBABILITY_THRESHOLDS` setting:
+    There are two ways that the thresholds can be defined per item type using
+    the ``ITEM_PROBABILITY_THRESHOLDS`` setting:
 
     With paths to Item classes:
         ITEM_PROBABILITY_THRESHOLDS = {
@@ -72,6 +72,7 @@ class DropLowProbabilityItemPipeline:
 
     With Item classes:
         from zyte_common_items import Article, Product
+
         ITEM_PROBABILITY_THRESHOLDS = {
             Article: 0.1,
             Product: 0.2
