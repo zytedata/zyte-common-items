@@ -148,8 +148,8 @@ def test_process_item(
                 returned_item = pipeline.process_item(item, mock_crawler.spider)
             except scrapy.exceptions.DropItem as e:
                 assert (
-                    f"The item: {item!r} is dropped as the probability ({item_proba}) is "
-                    f"below the threshold ({threshold})"
+                    f"This item is dropped since the probability ({item_proba}) "
+                    f"is below the threshold ({threshold}):\n{item!r}"
                 ) in str(e)
             else:
                 assert returned_item == item
