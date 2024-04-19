@@ -99,22 +99,32 @@ class DropLowProbabilityItemPipeline:
         return self.thresholds.get(type(item), DEFAULT_ITEM_PROBABILITY_THRESHOLD)
 
     def get_item_name(self, item):
-        item_name = item.__class__.__name__
-        return item_name[0].lower() + item_name[1:]
+        return item.__class__.__name__
 
     def process_item(self, item, spider):
         from scrapy.exceptions import DropItem
 
+        item_name = self.get_item_name(item)
+        item_proba = item.get_probability()
         threshold = self.get_threshold(item, spider)
 
-        self.stats.inc_value("item/crawl/total", spider=spider)
-        item_proba = item.get_probability()
+        self.stats.inc_value("drop_low_probability_item/processed", spider=spider)
+        self.stats.inc_value(
+            f"drop_low_probability_item/processed/{item_name}", spider=spider
+        )
+
         if item_proba is None or item_proba >= threshold:
+            self.stats.inc_value("drop_low_probability_item/kept", spider=spider)
+            self.stats.inc_value(
+                f"drop_low_probability_item/kept/{item_name}", spider=spider
+            )
             return item
 
+        self.stats.inc_value("drop_low_probability_item/dropped", spider=spider)
         self.stats.inc_value(
-            f"drop_item/{self.get_item_name(item)}/low_probability", spider=spider
+            f"drop_low_probability_item/dropped/{item_name}", spider=spider
         )
+
         raise DropItem(
             f"The item: {item!r} is dropped as the probability ({item_proba}) "
             f"is below the threshold ({threshold})"

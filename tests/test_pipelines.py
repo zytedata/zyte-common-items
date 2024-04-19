@@ -74,38 +74,67 @@ def test_get_threshold(
 
 
 @pytest.mark.parametrize(
-    "item, item_proba, threshold, expected_stats_calls, expected_return",
+    "items, item_proba, threshold, expected_stats_calls, expected_return",
     [
         (
-            MagicMock(),
+            [
+                MagicMock(spec=Product(url="http://example.com")),
+                MagicMock(spec=Article(url="http://example.com")),
+            ],
             None,
             0.1,
-            ["item/crawl/total"],
+            [
+                ("drop_low_probability_item/processed", 2),
+                ("drop_low_probability_item/processed/Product", 1),
+                ("drop_low_probability_item/processed/Article", 1),
+                ("drop_low_probability_item/kept", 2),
+                ("drop_low_probability_item/kept/Product", 1),
+                ("drop_low_probability_item/kept/Article", 1),
+            ],
             True,
         ),
         (
-            MagicMock(),
+            [
+                MagicMock(spec=Product(url="http://example.com")),
+                MagicMock(spec=Article(url="http://example.com")),
+            ],
             0.5,
             0.1,
-            ["item/crawl/total"],
+            [
+                ("drop_low_probability_item/processed", 2),
+                ("drop_low_probability_item/processed/Product", 1),
+                ("drop_low_probability_item/processed/Article", 1),
+                ("drop_low_probability_item/kept", 2),
+                ("drop_low_probability_item/kept/Product", 1),
+                ("drop_low_probability_item/kept/Article", 1),
+            ],
             True,
         ),
         (
-            MagicMock(),
+            [
+                MagicMock(spec=Product(url="http://example.com")),
+                MagicMock(spec=Article(url="http://example.com")),
+            ],
             0.01,
             0.1,
-            ["item/crawl/total", "drop_item/magicMock/low_probability"],
+            [
+                ("drop_low_probability_item/processed", 2),
+                ("drop_low_probability_item/processed/Product", 1),
+                ("drop_low_probability_item/processed/Article", 1),
+                ("drop_low_probability_item/dropped", 2),
+                ("drop_low_probability_item/dropped/Product", 1),
+                ("drop_low_probability_item/dropped/Article", 1),
+            ],
             None,
         ),
     ],
 )
 def test_process_item(
-    item, item_proba, threshold, expected_stats_calls, expected_return
+    items, item_proba, threshold, expected_stats_calls, expected_return
 ):
     scrapy = pytest.importorskip("scrapy")
 
     mock_crawler = MagicMock(spec=["spider", "stats"])
-    item.get_probability.return_value = item_proba
 
     pipeline = DropLowProbabilityItemPipeline(mock_crawler)
     with patch.object(
@@ -113,20 +142,25 @@ def test_process_item(
     ) as mock_get_threshold:
         mock_get_threshold.return_value = threshold
 
-        try:
-            returned_item = pipeline.process_item(item, mock_crawler.spider)
-        except scrapy.exceptions.DropItem as e:
-            assert (
-                f"The item: {item!r} is dropped as the probability ({item_proba}) is "
-                f"below the threshold ({threshold})"
-            ) in str(e)
-        else:
-            assert returned_item == item
+        for item in items:
+            item.get_probability.return_value = item_proba
+            try:
+                returned_item = pipeline.process_item(item, mock_crawler.spider)
+            except scrapy.exceptions.DropItem as e:
+                assert (
+                    f"The item: {item!r} is dropped as the probability ({item_proba}) is "
+                    f"below the threshold ({threshold})"
+                ) in str(e)
+            else:
+                assert returned_item == item
 
-        for call in expected_stats_calls:
-            mock_crawler.stats.inc_value.assert_any_call(
-                call, spider=mock_crawler.spider
-            )
+        for call, count in expected_stats_calls:
+            calls = [
+                args
+                for args, kwargs in mock_crawler.stats.inc_value.call_args_list
+                if args[0] == call
+            ]
+            assert len(calls) == count
 
 
 @pytest.mark.parametrize(
@@ -134,19 +168,19 @@ def test_process_item(
     [
         (
             Article(url="http://example.com"),
-            "article",
+            "Article",
         ),
         (
             Product(url="http://example.com"),
-            "product",
+            "Product",
         ),
         (
             ProductNavigation(url="http://example.com"),
-            "productNavigation",
+            "ProductNavigation",
         ),
         (
             ArticleListPage(response=MagicMock()),
-            "articleListPage",
+            "ArticleListPage",
         ),
     ],
 )
