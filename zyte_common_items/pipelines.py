@@ -95,7 +95,7 @@ class DropLowProbabilityItemPipeline:
             item_type = load_object(item) if isinstance(item, str) else item
             self.thresholds[item_type] = threshold
 
-    def get_threshold(self, item, spider):
+    def get_threshold_for_item(self, item, spider):
         return self.thresholds.get(type(item), DEFAULT_ITEM_PROBABILITY_THRESHOLD)
 
     def get_item_name(self, item):
@@ -106,7 +106,7 @@ class DropLowProbabilityItemPipeline:
 
         item_name = self.get_item_name(item)
         item_proba = item.get_probability()
-        threshold = self.get_threshold(item, spider)
+        threshold = self.get_threshold_for_item(item, spider)
 
         self.stats.inc_value("drop_low_probability_item/processed", spider=spider)
         self.stats.inc_value(

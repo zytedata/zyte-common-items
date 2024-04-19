@@ -58,7 +58,7 @@ def test_init_thresholds(thresholds_settings, expected_thresholds):
         (Article(url="http://example.com"), {Product: 0.2}, 0.01, 0.01),
     ],
 )
-def test_get_threshold(
+def test_get_threshold_for_item(
     thresholds_settings, item, default_threshold, expected_threshold
 ):
     scrapy = pytest.importorskip("scrapy")  # noqa
@@ -68,7 +68,7 @@ def test_get_threshold(
     pipeline = DropLowProbabilityItemPipeline(mock_crawler)
     zyte_common_items.pipelines.DEFAULT_ITEM_PROBABILITY_THRESHOLD = default_threshold
 
-    threshold = pipeline.get_threshold(item, mock_crawler.spider)
+    threshold = pipeline.get_threshold_for_item(item, mock_crawler.spider)
 
     assert threshold == expected_threshold
 
@@ -138,9 +138,9 @@ def test_process_item(
 
     pipeline = DropLowProbabilityItemPipeline(mock_crawler)
     with patch.object(
-        DropLowProbabilityItemPipeline, "get_threshold"
-    ) as mock_get_threshold:
-        mock_get_threshold.return_value = threshold
+        DropLowProbabilityItemPipeline, "get_threshold_for_item"
+    ) as mock_get_threshold_for_item:
+        mock_get_threshold_for_item.return_value = threshold
 
         for item in items:
             item.get_probability.return_value = item_proba
