@@ -81,7 +81,8 @@ class DropLowProbabilityItemPipeline:
 
     def __init__(self, crawler):
         self.stats = crawler.stats
-        self.thresholds = {}
+        self.thresholds_for_item = {}
+        self.default_threshold = None
         self.init_thresholds(crawler.spider)
 
     @classmethod
@@ -92,12 +93,19 @@ class DropLowProbabilityItemPipeline:
         from scrapy.utils.misc import load_object
 
         thresholds_settings = spider.settings.get("ITEM_PROBABILITY_THRESHOLDS", {})
+
+        self.default_threshold = (
+            thresholds_settings.pop(None, None)
+            or thresholds_settings.pop("default", None)
+            or self.DEFAULT_ITEM_PROBABILITY_THRESHOLD
+        )
+
         for item, threshold in thresholds_settings.items():
             item_type = load_object(item)
-            self.thresholds[item_type] = threshold
+            self.thresholds_for_item[item_type] = threshold
 
     def get_threshold_for_item(self, item, spider):
-        return self.thresholds.get(type(item), self._DEFAULT_ITEM_PROBABILITY_THRESHOLD)
+        return self.thresholds_for_item.get(type(item), self.default_threshold)
 
     def get_item_name(self, item):
         return item.__class__.__name__

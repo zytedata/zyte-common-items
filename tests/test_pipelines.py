@@ -7,35 +7,72 @@ from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
 
 
 @pytest.mark.parametrize(
-    "thresholds_settings, expected_thresholds",
+    "thresholds_settings, default_threshold, expected_thresholds, expected_default_thresholds",
     [
-        ({}, {}),
+        ({}, 0.09, {}, 0.09),
         (
             {
                 "zyte_common_items.items.Article": 0.2,
                 "zyte_common_items.items.Product": 0.3,
             },
+            None,
             {
                 Article: 0.2,
                 Product: 0.3,
             },
-        ),
+            None,
+        ),  # thresholds for items per Item's path
         (
             {Article: 0.4, Product: 0.5},
+            None,
             {
                 Article: 0.4,
                 Product: 0.5,
             },
-        ),
+            None,
+        ),  # thresholds for items per Item's class
+        (
+            {Article: 0.4},
+            0.09,
+            {
+                Article: 0.4,
+            },
+            0.09,
+        ),  # default threshold is taken from DEFAULT_ITEM_PROBABILITY_THRESHOLD
+        (
+            {None: 0.5, Article: 0.4},
+            0.09,
+            {
+                Article: 0.4,
+            },
+            0.5,
+        ),  # default threshold is taken from settings with the key 'None'
+        (
+            {"default": 0.6, Article: 0.4},
+            0.09,
+            {
+                Article: 0.4,
+            },
+            0.6,
+        ),  # default threshold is taken from settings with the key 'default'
     ],
 )
-def test_init_thresholds(thresholds_settings, expected_thresholds):
+def test_init_thresholds(
+    thresholds_settings,
+    default_threshold,
+    expected_thresholds,
+    expected_default_thresholds,
+):
     scrapy = pytest.importorskip("scrapy")  # noqa
 
     mock_crawler = MagicMock(spec=["spider", "stats"])
     mock_crawler.spider.settings.get.return_value = thresholds_settings
+    DropLowProbabilityItemPipeline.DEFAULT_ITEM_PROBABILITY_THRESHOLD = (
+        default_threshold
+    )
     pipeline = DropLowProbabilityItemPipeline(mock_crawler)
-    assert pipeline.thresholds == expected_thresholds
+    assert pipeline.thresholds_for_item == expected_thresholds
+    assert pipeline.default_threshold == expected_default_thresholds
 
 
 @pytest.mark.parametrize(
@@ -65,7 +102,7 @@ def test_get_threshold_for_item(
     mock_crawler = MagicMock(spec=["spider", "stats"])
     mock_crawler.spider.settings.get.return_value = thresholds_settings
     pipeline = DropLowProbabilityItemPipeline(mock_crawler)
-    pipeline._DEFAULT_ITEM_PROBABILITY_THRESHOLD = default_threshold
+    pipeline.default_threshold = default_threshold
 
     threshold = pipeline.get_threshold_for_item(item, mock_crawler.spider)
 
