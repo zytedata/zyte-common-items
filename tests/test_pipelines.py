@@ -2,7 +2,6 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-import zyte_common_items.pipelines
 from zyte_common_items import Article, ArticleListPage, Product, ProductNavigation
 from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
 
@@ -66,7 +65,7 @@ def test_get_threshold_for_item(
     mock_crawler = MagicMock(spec=["spider", "stats"])
     mock_crawler.spider.settings.get.return_value = thresholds_settings
     pipeline = DropLowProbabilityItemPipeline(mock_crawler)
-    zyte_common_items.pipelines.DEFAULT_ITEM_PROBABILITY_THRESHOLD = default_threshold
+    pipeline._DEFAULT_ITEM_PROBABILITY_THRESHOLD = default_threshold
 
     threshold = pipeline.get_threshold_for_item(item, mock_crawler.spider)
 
