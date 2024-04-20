@@ -77,7 +77,7 @@ class DropLowProbabilityItemPipeline:
         }
     """
 
-    _DEFAULT_ITEM_PROBABILITY_THRESHOLD = 0.1
+    DEFAULT_ITEM_PROBABILITY_THRESHOLD = 0.1
 
     def __init__(self, crawler):
         self.stats = crawler.stats
