@@ -109,22 +109,16 @@ class DropLowProbabilityItemPipeline:
         item_proba = item.get_probability()
         threshold = self.get_threshold_for_item(item, spider)
 
-        self.stats.inc_value("drop_low_probability_item/processed", spider=spider)
-        self.stats.inc_value(
-            f"drop_low_probability_item/processed/{item_name}", spider=spider
-        )
+        self.stats.inc_value("drop_low_probability_item/processed")
+        self.stats.inc_value(f"drop_low_probability_item/processed/{item_name}")
 
         if item_proba is None or item_proba >= threshold:
-            self.stats.inc_value("drop_low_probability_item/kept", spider=spider)
-            self.stats.inc_value(
-                f"drop_low_probability_item/kept/{item_name}", spider=spider
-            )
+            self.stats.inc_value("drop_low_probability_item/kept")
+            self.stats.inc_value(f"drop_low_probability_item/kept/{item_name}")
             return item
 
-        self.stats.inc_value("drop_low_probability_item/dropped", spider=spider)
-        self.stats.inc_value(
-            f"drop_low_probability_item/dropped/{item_name}", spider=spider
-        )
+        self.stats.inc_value("drop_low_probability_item/dropped")
+        self.stats.inc_value(f"drop_low_probability_item/dropped/{item_name}")
 
         raise DropItem(
             f"This item is dropped since the probability ({item_proba}) "
