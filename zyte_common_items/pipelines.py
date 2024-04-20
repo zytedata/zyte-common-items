@@ -101,7 +101,7 @@ class DropLowProbabilityItemPipeline:
         )
 
         for item, threshold in thresholds_settings.items():
-            item_type = load_object(item)
+            item_type = load_object(item) if isinstance(item, str) else item
             self.thresholds_for_item[item_type] = threshold
 
     def get_threshold_for_item(self, item, spider):
