@@ -2,8 +2,6 @@ from warnings import warn
 
 from zyte_common_items import ae
 
-DEFAULT_ITEM_PROBABILITY_THRESHOLD = 0.1
-
 
 class AEPipeline:
     """Replace standard items with matching items with the old Zyte Automatic
@@ -79,6 +77,8 @@ class DropLowProbabilityItemPipeline:
         }
     """
 
+    _DEFAULT_ITEM_PROBABILITY_THRESHOLD = 0.1
+
     def __init__(self, crawler):
         self.stats = crawler.stats
         self.thresholds = {}
@@ -97,7 +97,7 @@ class DropLowProbabilityItemPipeline:
             self.thresholds[item_type] = threshold
 
     def get_threshold_for_item(self, item, spider):
-        return self.thresholds.get(type(item), DEFAULT_ITEM_PROBABILITY_THRESHOLD)
+        return self.thresholds.get(type(item), self._DEFAULT_ITEM_PROBABILITY_THRESHOLD)
 
     def get_item_name(self, item):
         return item.__class__.__name__
