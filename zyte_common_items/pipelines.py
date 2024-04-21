@@ -61,21 +61,26 @@ class DropLowProbabilityItemPipeline:
     is less than the specified threshold.
 
     There are two ways that the thresholds can be defined per item type using
-    the ``ITEM_PROBABILITY_THRESHOLDS`` setting:
+    the ``ITEM_PROBABILITY_THRESHOLDS`` setting
+    - with paths to Item classes,
+    - with Item classes.
+    Additionally, for Item's classes without their own threshold, you can set a default value.
 
-    With paths to Item classes:
+    The example of using ITEM_PROBABILITY_THRESHOLDS:
+
+    .. code-block:: python
+
+        from zyte_common_items import Article
+
+        ...
+
+
         ITEM_PROBABILITY_THRESHOLDS = {
-            "zyte_common_items.items.Article": 0.1,
-            "zyte_common_items.items.Product": 0.2
+            Article: 0.2,
+            "zyte_common_items.items.Product": 0.3,
+            "default": 0.15,  # if not provided, DEFAULT_ITEM_PROBABILITY_THRESHOLD is used
         }
-
-    With Item classes:
-        from zyte_common_items import Article, Product
-
-        ITEM_PROBABILITY_THRESHOLDS = {
-            Article: 0.1,
-            Product: 0.2
-        }
+        ...
     """
 
     DEFAULT_ITEM_PROBABILITY_THRESHOLD = 0.1
