@@ -13,8 +13,8 @@ from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
         ({}, 0.09, {}, 0.09),
         (
             {
-                "zyte_common_items.items.Article": 0.2,
-                "zyte_common_items.items.Product": 0.3,
+                "zyte_common_items.Article": 0.2,
+                "zyte_common_items.Product": 0.3,
             },
             None,
             {
