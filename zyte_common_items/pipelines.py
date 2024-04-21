@@ -1,3 +1,4 @@
+from copy import deepcopy
 from warnings import warn
 
 from zyte_common_items import ae
@@ -92,7 +93,9 @@ class DropLowProbabilityItemPipeline:
     def init_thresholds(self, spider):
         from scrapy.utils.misc import load_object
 
-        thresholds_settings = spider.settings.get("ITEM_PROBABILITY_THRESHOLDS", {})
+        thresholds_settings = deepcopy(
+            spider.settings.get("ITEM_PROBABILITY_THRESHOLDS", {})
+        )
 
         self.default_threshold = thresholds_settings.pop(
             "default", self.DEFAULT_ITEM_PROBABILITY_THRESHOLD
