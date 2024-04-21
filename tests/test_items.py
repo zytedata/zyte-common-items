@@ -56,6 +56,7 @@ from zyte_common_items import (
     Url,
     Video,
 )
+from zyte_common_items.items import RequestListCaster
 
 _ARTICLE_FROM_LIST_ALL_KWARGS: dict = {
     "articleBody": "We held the 2022 Web Data Extraction Summit three weeks ago. I wanted to extend a huge thank you to everyone who came, especially our guest speakers, who shared some great insights throughout the day.",
@@ -892,3 +893,8 @@ def test_get_probability_request(cls, has_proba):
         assert item.get_probability() == 0.0
     else:
         assert item.get_probability() is None
+
+
+def test_deprecated_request_list_caster():
+    with pytest.deprecated_call():
+        RequestListCaster(ProbabilityRequest)

@@ -18,8 +18,14 @@ from zyte_parsers import (
     extract_review_count,
 )
 
-from . import AggregateRating, Gtin
-from .items import Breadcrumb
+from .components import (
+    AggregateRating,
+    BaseMetadata,
+    Breadcrumb,
+    Gtin,
+    ProbabilityRequest,
+    Request,
+)
 
 
 def _get_base_url(page: Any) -> Optional[str]:
@@ -322,3 +328,20 @@ def rating_processor(value: Any, page: Any) -> Any:
             return result
         return None
     return value
+
+
+def probability_request_list_processor(
+    request_list: List[Request],
+) -> List[ProbabilityRequest]:
+    """Convert all objects in *request_list*, which are instances of
+    :class:`Request` or a subclass, into instances of
+    :class:`ProbabilityRequest`."""
+    return [request.cast(ProbabilityRequest) for request in request_list]
+
+
+def metadata_processor(metadata: BaseMetadata, page):
+    """Processor for a metadata field that ensures that the output metadata
+    object uses the metadata class declared by *page*."""
+    if page.metadata_cls is None:
+        return None
+    return metadata.cast(page.metadata_cls)

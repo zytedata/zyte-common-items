@@ -180,6 +180,8 @@ Your subclasses should also inherit generic classes
 :class:`web_poet.pages.Returns` and :class:`zyte_common_items.HasMetadata` to
 indicate their item and metadata classes.
 
+.. autoclass:: zyte_common_items.pages.base._BasePage(**kwargs)
+
 .. autoclass:: zyte_common_items.BasePage(**kwargs)
    :show-inheritance:
    :members: no_item_found
@@ -218,5 +220,3 @@ indicate their item and metadata classes.
       Main URL from which the data has been extracted.
 
 .. autoclass:: zyte_common_items.HasMetadata
-
-.. autodata:: zyte_common_items.MetadataT
