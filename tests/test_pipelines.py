@@ -40,14 +40,6 @@ from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
             0.09,
         ),  # default threshold is taken from DEFAULT_ITEM_PROBABILITY_THRESHOLD
         (
-            {None: 0.5, Article: 0.4},
-            0.09,
-            {
-                Article: 0.4,
-            },
-            0.5,
-        ),  # default threshold is taken from settings with the key 'None'
-        (
             {"default": 0.6, Article: 0.4},
             0.09,
             {
