@@ -24,6 +24,10 @@ jobs:
         - python-version: '3.12'
         - python-version: '3.8'
           toxenv: min
+        - python-version: '3.8'
+          toxenv: extra
+        - python-version: '3.8'
+          toxenv: min-extra
 
     steps:
     - uses: actions/checkout@v4
