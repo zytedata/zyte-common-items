@@ -55,6 +55,14 @@ from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
             },
             0.6,
         ),  # default threshold is taken from settings with the key 'default'
+        (
+            {"default": 0, Article: 0.4},
+            0.09,
+            {
+                Article: 0.4,
+            },
+            0,
+        ),  # default threshold is taken from settings with the key 'default' == 0
     ],
 )
 def test_init_thresholds(
