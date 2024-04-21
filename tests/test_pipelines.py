@@ -69,9 +69,7 @@ def test_init_thresholds(
     mock_crawler = MagicMock(spec=["spider", "stats"])
     initial_thresholds_settings = deepcopy(thresholds_settings)
     mock_crawler.spider.settings.get.return_value = thresholds_settings
-    DropLowProbabilityItemPipeline.DEFAULT_ITEM_PROBABILITY_THRESHOLD = (
-        default_threshold
-    )
+    DropLowProbabilityItemPipeline.DEFAULT_THRESHOLD = default_threshold
     pipeline = DropLowProbabilityItemPipeline(mock_crawler)
     assert pipeline.thresholds_for_item == expected_thresholds
     assert pipeline.default_threshold == expected_default_thresholds
