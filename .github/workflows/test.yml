@@ -25,6 +25,7 @@ jobs:
         - python-version: '3.8'
           toxenv: min
         - python-version: '3.8'
+        - python-version: '3.12'
           toxenv: extra
         - python-version: '3.8'
           toxenv: min-extra
