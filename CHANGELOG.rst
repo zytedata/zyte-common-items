@@ -21,6 +21,11 @@ Changelog
 
 * Added the :attr:`.ListMetadata.validationMessages` attribute.
 
+* Added the :meth:`.ListMetadata.get_date_downloaded_parsed` method.
+
+* Added the :mod:`zyte_common_items.converters` module with useful attrs
+  converters.
+
 * Reorganized the module structure.
 
 * Documentation improvements.
