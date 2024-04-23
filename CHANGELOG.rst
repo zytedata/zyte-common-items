@@ -7,6 +7,15 @@ Changelog
 
 * Now requires ``attrs >= 22.2.0``.
 
+* New deprecations:
+
+  * ``zyte_common_items.components.request_list_processor`` (use
+    ``zyte_common_items.processors.probability_request_list_processor``)
+  * ``zyte_common_items.items.RequestListCaster`` (use
+    ``zyte_common_items.converters.to_probability_request_list``)
+  * ``zyte_common_items.util.metadata_processor`` (use
+    ``zyte_common_items.processors.metadata_processor``)
+
 * Added :class:`~.pipelines.DropLowProbabilityItemPipeline` that drops items
   with the ``probability`` value lower than a set threshold.
 
