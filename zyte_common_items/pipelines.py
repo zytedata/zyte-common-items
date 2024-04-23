@@ -71,12 +71,14 @@ class DropLowProbabilityItemPipeline:
 
     The example of using ITEM_PROBABILITY_THRESHOLDS:
 
+    .. code-block:: python
+
         from zyte_common_items import Article
 
         ITEM_PROBABILITY_THRESHOLDS = {
             Article: 0.2,
             "zyte_common_items.Product": 0.3,
-            "default": 0.15
+            "default": 0.15,
         }
     """
 

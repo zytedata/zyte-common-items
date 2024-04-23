@@ -7,10 +7,10 @@ Changelog
 
 * Now requires ``attrs >= 22.2.0``.
 
-* Added the :class:`~.DropLowProbabilityItemPipeline` that drops items with the
-  ``probability`` value lower than a set threshold.
+* Added :class:`~.pipelines.DropLowProbabilityItemPipeline` that drops items
+  with the ``probability`` value lower than a set threshold.
 
-* Added the :attr:`~.ListMetadata.validationMessages` attribute.
+* Added the :attr:`.ListMetadata.validationMessages` attribute.
 
 * Reorganized the module structure.
 

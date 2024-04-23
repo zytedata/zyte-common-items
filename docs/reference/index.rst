@@ -10,3 +10,4 @@ Reference
    field-processors
    components
    adapter
+   pipelines
