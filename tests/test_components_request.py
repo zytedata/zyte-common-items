@@ -65,7 +65,11 @@ def test_request_to_scrapy_complex():
 
 
 def test_request_to_scrapy_headers_with_the_same_name():
-    pytest.importorskip("scrapy")
+    pytest.importorskip(
+        "scrapy",
+        minversion="2.7.0",
+        reason="https://github.com/scrapy/scrapy/issues/5515",
+    )
 
     headers = [Header(name="name", value="value1"), Header(name="name", value="value2")]
 
