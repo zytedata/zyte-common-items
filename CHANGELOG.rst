@@ -2,6 +2,22 @@
 Changelog
 =========
 
+0.19.0 (YYYY-MM-DD)
+===================
+
+* Now requires ``attrs >= 22.2.0``.
+
+* Added the :class:`~.DropLowProbabilityItemPipeline` that drops items with the
+  ``probability`` value lower than a set threshold.
+
+* Added the :attr:`~.ListMetadata.validationMessages` attribute.
+
+* Reorganized the module structure.
+
+* Documentation improvements.
+
+* Test and CI fixes and improvements.
+
 0.18.0 (2024-03-15)
 ===================
 
