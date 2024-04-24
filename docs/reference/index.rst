@@ -9,4 +9,6 @@ Reference
    extractors
    field-processors
    components
+   converters
    adapter
+   pipelines
