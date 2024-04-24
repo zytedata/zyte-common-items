@@ -19,6 +19,9 @@ Changelog
 * Added :class:`~.pipelines.DropLowProbabilityItemPipeline` that drops items
   with the ``probability`` value lower than a set threshold.
 
+* Added the :class:`~.BaseMetadata`, :class:`~.ListMetadata`, and
+  :class:`~.DetailMetadata` classes (they were previously private).
+
 * Added the :attr:`.ListMetadata.validationMessages` attribute.
 
 * Added the :meth:`.ListMetadata.get_date_downloaded_parsed` method.
