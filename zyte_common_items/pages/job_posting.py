@@ -1,9 +1,10 @@
 from typing import List, Optional
 
 import attrs
-from web_poet import Returns, field
+from web_poet import Returns
 
 from zyte_common_items.components import BaseSalary, HiringOrganization, JobLocation
+from zyte_common_items.fields import auto_field
 from zyte_common_items.items import JobPosting, JobPostingMetadata
 from zyte_common_items.processors import (
     description_html_processor,
@@ -38,86 +39,86 @@ class JobPostingPage(
 class AutoJobPostingPage(BaseJobPostingPage):
     job_posting: JobPosting
 
-    @field
+    @auto_field
     def url(self) -> Optional[str]:
         return self.job_posting.url
 
-    @field
+    @auto_field
     def jobPostingId(self) -> Optional[str]:
         return self.job_posting.jobPostingId
 
-    @field
+    @auto_field
     def datePublished(self) -> Optional[str]:
         return self.job_posting.datePublished
 
-    @field
+    @auto_field
     def datePublishedRaw(self) -> Optional[str]:
         return self.job_posting.datePublishedRaw
 
-    @field
+    @auto_field
     def dateModified(self) -> Optional[str]:
         return self.job_posting.dateModified
 
-    @field
+    @auto_field
     def dateModifiedRaw(self) -> Optional[str]:
         return self.job_posting.dateModifiedRaw
 
-    @field
+    @auto_field
     def validThrough(self) -> Optional[str]:
         return self.job_posting.validThrough
 
-    @field
+    @auto_field
     def validThroughRaw(self) -> Optional[str]:
         return self.job_posting.validThroughRaw
 
-    @field
+    @auto_field
     def jobTitle(self) -> Optional[str]:
         return self.job_posting.jobTitle
 
-    @field
+    @auto_field
     def headline(self) -> Optional[str]:
         return self.job_posting.headline
 
-    @field
+    @auto_field
     def jobLocation(self) -> Optional[JobLocation]:
         return self.job_posting.jobLocation
 
-    @field
+    @auto_field
     def description(self) -> Optional[str]:
         return self.job_posting.description
 
-    @field
+    @auto_field
     def descriptionHtml(self) -> Optional[str]:
         return self.job_posting.descriptionHtml
 
-    @field
+    @auto_field
     def employmentType(self) -> Optional[str]:
         return self.job_posting.employmentType
 
-    @field
+    @auto_field
     def baseSalary(self) -> Optional[BaseSalary]:
         return self.job_posting.baseSalary
 
-    @field
+    @auto_field
     def requirements(self) -> Optional[List[str]]:
         return self.job_posting.requirements
 
-    @field
+    @auto_field
     def hiringOrganization(self) -> Optional[HiringOrganization]:
         return self.job_posting.hiringOrganization
 
-    @field
+    @auto_field
     def jobStartDate(self) -> Optional[str]:
         return self.job_posting.jobStartDate
 
-    @field
+    @auto_field
     def jobStartDateRaw(self) -> Optional[str]:
         return self.job_posting.jobStartDateRaw
 
-    @field
+    @auto_field
     def remoteStatus(self) -> Optional[str]:
         return self.job_posting.remoteStatus
 
-    @field
+    @auto_field
     def metadata(self) -> Optional[JobPostingMetadata]:
         return self.job_posting.metadata

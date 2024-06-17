@@ -20,7 +20,7 @@ Changelog
   with the ``probability`` value lower than a set threshold.
 
 * Added the :class:`~.BaseMetadata`, :class:`~.ListMetadata`, and
-  :class:`~.DetailMetadata` classes (they were previously private).
+  :class:`~.DetailsMetadata` classes (they were previously private).
 
 * Added the :attr:`.ListMetadata.validationMessages` attribute.
 

@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 import attrs
-from web_poet import Returns, field
+from web_poet import Returns
 
 from zyte_common_items.components import (
     AdditionalProperty,
@@ -10,6 +10,7 @@ from zyte_common_items.components import (
     Image,
     RealEstateArea,
 )
+from zyte_common_items.fields import auto_field
 from zyte_common_items.items import RealEstate, RealEstateMetadata
 
 from ..processors import breadcrumbs_processor, description_processor
@@ -39,106 +40,106 @@ class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata])
 class AutoRealEstatePage(BaseRealEstatePage):
     real_estate: RealEstate
 
-    @field
+    @auto_field
     def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
         return self.real_estate.additionalProperties
 
-    @field
+    @auto_field
     def address(self) -> Optional[Address]:
         return self.real_estate.address
 
-    @field
+    @auto_field
     def area(self) -> Optional[RealEstateArea]:
         return self.real_estate.area
 
-    @field
+    @auto_field
     def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
         return self.real_estate.breadcrumbs
 
-    @field
+    @auto_field
     def currency(self) -> Optional[str]:
         return self.real_estate.currency
 
-    @field
+    @auto_field
     def currencyRaw(self) -> Optional[str]:
         return self.real_estate.currencyRaw
 
-    @field
+    @auto_field
     def datePublished(self) -> Optional[str]:
         return self.real_estate.datePublished
 
-    @field
+    @auto_field
     def datePublishedRaw(self) -> Optional[str]:
         return self.real_estate.datePublishedRaw
 
-    @field
+    @auto_field
     def description(self) -> Optional[str]:
         return self.real_estate.description
 
-    @field
+    @auto_field
     def images(self) -> Optional[List[Image]]:
         return self.real_estate.images
 
-    @field
+    @auto_field
     def mainImage(self) -> Optional[Image]:
         return self.real_estate.mainImage
 
-    @field
+    @auto_field
     def metadata(self) -> Optional[RealEstateMetadata]:
         return self.real_estate.metadata
 
-    @field
+    @auto_field
     def name(self) -> Optional[str]:
         return self.real_estate.name
 
-    @field
+    @auto_field
     def numberOfBathroomsTotal(self) -> Optional[int]:
         return self.real_estate.numberOfBathroomsTotal
 
-    @field
+    @auto_field
     def numberOfBedrooms(self) -> Optional[int]:
         return self.real_estate.numberOfBedrooms
 
-    @field
+    @auto_field
     def numberOfFullBathrooms(self) -> Optional[int]:
         return self.real_estate.numberOfFullBathrooms
 
-    @field
+    @auto_field
     def numberOfPartialBathrooms(self) -> Optional[int]:
         return self.real_estate.numberOfPartialBathrooms
 
-    @field
+    @auto_field
     def numberOfRooms(self) -> Optional[int]:
         return self.real_estate.numberOfRooms
 
-    @field
+    @auto_field
     def price(self) -> Optional[str]:
         return self.real_estate.price
 
-    @field
+    @auto_field
     def propertyType(self) -> Optional[str]:
         return self.real_estate.propertyType
 
-    @field
+    @auto_field
     def realEstateId(self) -> Optional[str]:
         return self.real_estate.realEstateId
 
-    @field
+    @auto_field
     def rentalPeriod(self) -> Optional[str]:
         return self.real_estate.rentalPeriod
 
-    @field
+    @auto_field
     def tradeType(self) -> Optional[str]:
         return self.real_estate.tradeType
 
-    @field
+    @auto_field
     def url(self) -> Optional[str]:
         return self.real_estate.url
 
-    @field
+    @auto_field
     def virtualTourUrl(self) -> Optional[str]:
         return self.real_estate.virtualTourUrl
 
-    @field
+    @auto_field
     def yearBuilt(self) -> Optional[int]:
         return self.real_estate.yearBuilt

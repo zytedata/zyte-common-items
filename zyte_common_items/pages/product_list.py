@@ -1,9 +1,10 @@
 from typing import List, Optional
 
 import attrs
-from web_poet import Returns, field
+from web_poet import Returns
 
 from zyte_common_items.components import Breadcrumb, Link
+from zyte_common_items.fields import auto_field
 from zyte_common_items.items import ProductFromList, ProductList, ProductListMetadata
 from zyte_common_items.processors import breadcrumbs_processor
 
@@ -31,34 +32,34 @@ class ProductListPage(Page, Returns[ProductList], HasMetadata[ProductListMetadat
 class AutoProductListPage(BaseProductListPage):
     product_list: ProductList
 
-    @field
+    @auto_field
     def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
         return self.product_list.breadcrumbs
 
-    @field
+    @auto_field
     def canonicalUrl(self) -> Optional[str]:
         return self.product_list.canonicalUrl
 
-    @field
+    @auto_field
     def categoryName(self) -> Optional[str]:
         return self.product_list.categoryName
 
-    @field
+    @auto_field
     def metadata(self) -> Optional[ProductListMetadata]:
         return self.product_list.metadata
 
-    @field
+    @auto_field
     def pageNumber(self) -> Optional[int]:
         return self.product_list.pageNumber
 
-    @field
+    @auto_field
     def paginationNext(self) -> Optional[Link]:
         return self.product_list.paginationNext
 
-    @field
+    @auto_field
     def products(self) -> Optional[List[ProductFromList]]:
         return self.product_list.products
 
-    @field
+    @auto_field
     def url(self) -> Optional[str]:
         return self.product_list.url
