@@ -112,10 +112,9 @@ using :func:`~zyte_common_items.fields.is_auto_field`:
     print(is_auto_field(ExtendedProductPage, "bar"))  # Raises KeyError
 
 If you are overriding a field method but the method continues to return the
-value straight from the ``Auto``-prefixed class, e.g. because you are only
-overriding field metadata or :ref:`processors <processors>`, you should also
-set ``auto_field`` to ``True``. Instead of setting it manually in the field
-meta, you can replace the :func:`~web_poet.fields.field` decorator with
+value straight from the ``Auto``-prefixed class, you should also set
+``auto_field`` to ``True``. Instead of setting it manually in the field meta,
+you can replace the :func:`~web_poet.fields.field` decorator with
 :func:`~zyte_common_items.fields.auto_field`:
 
 .. autofunction:: zyte_common_items.fields.auto_field

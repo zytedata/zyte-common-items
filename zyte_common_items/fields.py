@@ -21,7 +21,7 @@ def auto_field(
 
 
         class ProductPage(AutoProductPage):
-            @auto_field(out=[str.capitalize])
+            @auto_field
             def name(self):
                 return super().name
     """
