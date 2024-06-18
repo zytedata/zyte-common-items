@@ -1,9 +1,10 @@
 from typing import List, Optional
 
 import attrs
-from web_poet import Returns, field
+from web_poet import Returns
 
 from zyte_common_items.components import ProbabilityRequest, Request
+from zyte_common_items.fields import auto_field
 from zyte_common_items.items import ProductNavigation, ProductNavigationMetadata
 from zyte_common_items.processors import probability_request_list_processor
 
@@ -31,30 +32,30 @@ class ProductNavigationPage(
 class AutoProductNavigationPage(BaseProductNavigationPage):
     product_navigation: ProductNavigation
 
-    @field
+    @auto_field
     def categoryName(self) -> Optional[str]:
         return self.product_navigation.categoryName
 
-    @field
+    @auto_field
     def items(self) -> Optional[List[ProbabilityRequest]]:
         return self.product_navigation.items
 
-    @field
+    @auto_field
     def metadata(self) -> Optional[ProductNavigationMetadata]:
         return self.product_navigation.metadata
 
-    @field
+    @auto_field
     def nextPage(self) -> Optional[Request]:
         return self.product_navigation.nextPage
 
-    @field
+    @auto_field
     def pageNumber(self) -> Optional[int]:
         return self.product_navigation.pageNumber
 
-    @field
+    @auto_field
     def subCategories(self) -> Optional[List[ProbabilityRequest]]:
         return self.product_navigation.subCategories
 
-    @field
+    @auto_field
     def url(self) -> Optional[str]:
         return self.product_navigation.url

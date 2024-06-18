@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 import attrs
-from web_poet import Returns, field
+from web_poet import Returns
 
 from zyte_common_items.components import (
     AdditionalProperty,
@@ -11,6 +11,7 @@ from zyte_common_items.components import (
     Gtin,
     Image,
 )
+from zyte_common_items.fields import auto_field
 from zyte_common_items.items import Product, ProductMetadata, ProductVariant
 from zyte_common_items.processors import (
     brand_processor,
@@ -67,106 +68,106 @@ class ProductPage(
 class AutoProductPage(BaseProductPage):
     product: Product
 
-    @field
+    @auto_field
     def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
         return self.product.additionalProperties
 
-    @field
+    @auto_field
     def aggregateRating(self) -> Optional[AggregateRating]:
         return self.product.aggregateRating
 
-    @field
+    @auto_field
     def availability(self) -> Optional[str]:
         return self.product.availability
 
-    @field
+    @auto_field
     def brand(self) -> Optional[Brand]:
         return self.product.brand
 
-    @field
+    @auto_field
     def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
         return self.product.breadcrumbs
 
-    @field
+    @auto_field
     def canonicalUrl(self) -> Optional[str]:
         return self.product.canonicalUrl
 
-    @field
+    @auto_field
     def color(self) -> Optional[str]:
         return self.product.color
 
-    @field
+    @auto_field
     def currency(self) -> Optional[str]:
         return self.product.currency
 
-    @field
+    @auto_field
     def currencyRaw(self) -> Optional[str]:
         return self.product.currencyRaw
 
-    @field
+    @auto_field
     def description(self) -> Optional[str]:
         return self.product.description
 
-    @field
+    @auto_field
     def descriptionHtml(self) -> Optional[str]:
         return self.product.descriptionHtml
 
-    @field
+    @auto_field
     def features(self) -> Optional[List[str]]:
         return self.product.features
 
-    @field
+    @auto_field
     def gtin(self) -> Optional[List[Gtin]]:
         return self.product.gtin
 
-    @field
+    @auto_field
     def images(self) -> Optional[List[Image]]:
         return self.product.images
 
-    @field
+    @auto_field
     def mainImage(self) -> Optional[Image]:
         return self.product.mainImage
 
-    @field
+    @auto_field
     def metadata(self) -> Optional[ProductMetadata]:
         return self.product.metadata
 
-    @field
+    @auto_field
     def mpn(self) -> Optional[str]:
         return self.product.mpn
 
-    @field
+    @auto_field
     def name(self) -> Optional[str]:
         return self.product.name
 
-    @field
+    @auto_field
     def price(self) -> Optional[str]:
         return self.product.price
 
-    @field
+    @auto_field
     def productId(self) -> Optional[str]:
         return self.product.productId
 
-    @field
+    @auto_field
     def regularPrice(self) -> Optional[str]:
         return self.product.regularPrice
 
-    @field
+    @auto_field
     def size(self) -> Optional[str]:
         return self.product.size
 
-    @field
+    @auto_field
     def sku(self) -> Optional[str]:
         return self.product.sku
 
-    @field
+    @auto_field
     def style(self) -> Optional[str]:
         return self.product.style
 
-    @field
+    @auto_field
     def url(self) -> str:
         return self.product.url
 
-    @field
+    @auto_field
     def variants(self) -> Optional[List[ProductVariant]]:
         return self.product.variants

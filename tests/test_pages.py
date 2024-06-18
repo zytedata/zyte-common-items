@@ -5,6 +5,7 @@ from warnings import catch_warnings
 import attrs
 import pytest
 from web_poet import HttpResponse, RequestUrl, ResponseUrl, Returns, field
+from web_poet.fields import get_fields_dict
 
 import zyte_common_items
 from zyte_common_items import (
@@ -25,6 +26,7 @@ from zyte_common_items import (
     Request,
 )
 from zyte_common_items._dateutils import utcnow
+from zyte_common_items.fields import is_auto_field
 
 
 @pytest.mark.parametrize(
@@ -110,8 +112,6 @@ async def test_mixin_leak():
         @field
         def brand(self):
             return "baz"
-
-    from web_poet.fields import get_fields_dict
 
     assert set(get_fields_dict(MyProductListPage)) == {"metadata", "products", "url"}
     assert set(get_fields_dict(MyProductPage)) == {
@@ -469,3 +469,17 @@ def test_request():
         assert request.metadata is not None
         assert request.metadata.probability == 1.0
     assert type(page.nextPage) is Request
+
+
+def test_auto_fields():
+    """Every field of an Auto-prefixed class should have ``auto_field`` set to
+    ``True`` in its field metadata."""
+    auto_page_names = {
+        obj_name
+        for obj_name in zyte_common_items.__dict__
+        if (obj_name.startswith("Auto") and obj_name.endswith("Page"))
+    }
+    for auto_page_name in auto_page_names:
+        auto_page_cls = zyte_common_items.__dict__[auto_page_name]
+        for field_name in get_fields_dict(auto_page_cls):
+            assert is_auto_field(auto_page_cls, field_name)

@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 import attrs
-from web_poet import Returns, field
+from web_poet import Returns
 
 from zyte_common_items.components import (
     AdditionalProperty,
@@ -14,6 +14,7 @@ from zyte_common_items.components import (
     ParentPlace,
     StarRating,
 )
+from zyte_common_items.fields import auto_field
 from zyte_common_items.items import BusinessPlace, BusinessPlaceMetadata
 from zyte_common_items.processors import description_processor, rating_processor
 
@@ -45,102 +46,102 @@ class BusinessPlacePage(
 class AutoBusinessPlacePage(BaseBusinessPlacePage):
     business_place: BusinessPlace
 
-    @field
+    @auto_field
     def actions(self) -> Optional[List[NamedLink]]:
         return self.business_place.actions
 
-    @field
+    @auto_field
     def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
         return self.business_place.additionalProperties
 
-    @field
+    @auto_field
     def address(self) -> Optional[Address]:
         return self.business_place.address
 
-    @field
+    @auto_field
     def aggregateRating(self) -> Optional[AggregateRating]:
         return self.business_place.aggregateRating
 
-    @field
+    @auto_field
     def amenityFeatures(self) -> Optional[List[Amenity]]:
         return self.business_place.amenityFeatures
 
-    @field
+    @auto_field
     def categories(self) -> Optional[List[str]]:
         return self.business_place.categories
 
-    @field
+    @auto_field
     def containedInPlace(self) -> Optional[ParentPlace]:
         return self.business_place.containedInPlace
 
-    @field
+    @auto_field
     def description(self) -> Optional[str]:
         return self.business_place.description
 
-    @field
+    @auto_field
     def features(self) -> Optional[List[str]]:
         return self.business_place.features
 
-    @field
+    @auto_field
     def images(self) -> Optional[List[Image]]:
         return self.business_place.images
 
-    @field
+    @auto_field
     def isVerified(self) -> Optional[bool]:
         return self.business_place.isVerified
 
-    @field
+    @auto_field
     def map(self) -> Optional[str]:
         return self.business_place.map
 
-    @field
+    @auto_field
     def metadata(self) -> Optional[BusinessPlaceMetadata]:
         return self.business_place.metadata
 
-    @field
+    @auto_field
     def name(self) -> Optional[str]:
         return self.business_place.name
 
-    @field
+    @auto_field
     def openingHours(self) -> Optional[List[OpeningHoursItem]]:
         return self.business_place.openingHours
 
-    @field
+    @auto_field
     def placeId(self) -> Optional[str]:
         return self.business_place.placeId
 
-    @field
+    @auto_field
     def priceRange(self) -> Optional[str]:
         return self.business_place.priceRange
 
-    @field
+    @auto_field
     def reservationAction(self) -> Optional[NamedLink]:
         return self.business_place.reservationAction
 
-    @field
+    @auto_field
     def reviewSites(self) -> Optional[List[NamedLink]]:
         return self.business_place.reviewSites
 
-    @field
+    @auto_field
     def starRating(self) -> Optional[StarRating]:
         return self.business_place.starRating
 
-    @field
+    @auto_field
     def tags(self) -> Optional[List[str]]:
         return self.business_place.tags
 
-    @field
+    @auto_field
     def telephone(self) -> Optional[str]:
         return self.business_place.telephone
 
-    @field
+    @auto_field
     def timezone(self) -> Optional[str]:
         return self.business_place.timezone
 
-    @field
+    @auto_field
     def url(self) -> Optional[str]:
         return self.business_place.url
 
-    @field
+    @auto_field
     def website(self) -> Optional[str]:
         return self.business_place.website

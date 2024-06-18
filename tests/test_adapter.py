@@ -1,16 +1,15 @@
-from collections import deque
 from collections.abc import Collection
 from contextlib import contextmanager
+from copy import copy
 
 # In Python ≤ 3.8 you cannot annotate with “collections.abc.Collection[Item]”,
 # so we need to import typing.Collection for annotation instead.
 from typing import Collection as CollectionType
-from typing import Deque, Optional, Type, cast
+from typing import Optional
 
 import attrs
 import pytest
 from itemadapter import ItemAdapter
-from itemadapter.adapter import AdapterInterface
 
 from zyte_common_items import Item, Product, ZyteItemAdapter
 from zyte_common_items.adapter import ZyteItemKeepEmptyAdapter
@@ -20,11 +19,12 @@ from .test_items import _PRODUCT_ALL_KWARGS, _PRODUCT_MIN_KWARGS
 
 @contextmanager
 def configured_adapter(adapter=ZyteItemAdapter):
-    ItemAdapter.ADAPTER_CLASSES.appendleft(adapter)
+    original_value = copy(ItemAdapter.ADAPTER_CLASSES)
+    ItemAdapter.ADAPTER_CLASSES = (adapter, *ItemAdapter.ADAPTER_CLASSES)
     try:
         yield
     finally:
-        ItemAdapter.ADAPTER_CLASSES.popleft()
+        ItemAdapter.ADAPTER_CLASSES = original_value
 
 
 def test_asdict_all_fields():
@@ -391,10 +391,7 @@ def test_keep_empty_adapter_local():
         children: CollectionType[Item]
 
     class TestAdapter(ItemAdapter):
-        ADAPTER_CLASSES = (
-            cast(Deque[Type[AdapterInterface]], deque([ZyteItemKeepEmptyAdapter]))
-            + ItemAdapter.ADAPTER_CLASSES
-        )
+        ADAPTER_CLASSES = [ZyteItemKeepEmptyAdapter] + list(ItemAdapter.ADAPTER_CLASSES)
 
     item = _Item([])
     adapter = TestAdapter(item)

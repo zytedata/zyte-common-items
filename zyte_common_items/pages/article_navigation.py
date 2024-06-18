@@ -1,9 +1,10 @@
 from typing import List, Optional
 
 import attrs
-from web_poet import Returns, field
+from web_poet import Returns
 
 from zyte_common_items.components import ProbabilityRequest, Request
+from zyte_common_items.fields import auto_field
 from zyte_common_items.items import ArticleNavigation, ArticleNavigationMetadata
 
 from .base import BasePage, Page
@@ -26,30 +27,30 @@ class ArticleNavigationPage(
 class AutoArticleNavigationPage(BaseArticleNavigationPage):
     article_navigation: ArticleNavigation
 
-    @field
+    @auto_field
     def categoryName(self) -> Optional[str]:
         return self.article_navigation.categoryName
 
-    @field
+    @auto_field
     def items(self) -> Optional[List[ProbabilityRequest]]:
         return self.article_navigation.items
 
-    @field
+    @auto_field
     def metadata(self) -> Optional[ArticleNavigationMetadata]:
         return self.article_navigation.metadata
 
-    @field
+    @auto_field
     def nextPage(self) -> Optional[Request]:
         return self.article_navigation.nextPage
 
-    @field
+    @auto_field
     def pageNumber(self) -> Optional[int]:
         return self.article_navigation.pageNumber
 
-    @field
+    @auto_field
     def subCategories(self) -> Optional[List[ProbabilityRequest]]:
         return self.article_navigation.subCategories
 
-    @field
+    @auto_field
     def url(self) -> Optional[str]:
         return self.article_navigation.url
