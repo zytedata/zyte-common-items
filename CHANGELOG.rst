@@ -2,6 +2,13 @@
 Changelog
 =========
 
+0.20.0 (2024-06-19)
+===================
+
+* Now fields of :ref:`auto page object classes <auto>` have ``auto_field`` set
+  to ``True`` in their field metadata, to make it easier to check if a page
+  object subclass is overriding a given field.
+
 0.19.0 (2024-04-24)
 ===================
 
