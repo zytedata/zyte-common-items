@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.20.0 (2024-06-DD)
+0.20.0 (2024-06-19)
 ===================
 
 * Now fields of :ref:`auto page object classes <auto>` have ``auto_field`` set
