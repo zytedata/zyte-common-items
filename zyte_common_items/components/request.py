@@ -42,6 +42,9 @@ class Request(Item):
     #: Name of the page being requested.
     name: Optional[str] = None
 
+    #: Arbitrary list of information about the request.
+    notes: Optional[List[str]] = None
+
     _body_bytes = None
 
     @property
