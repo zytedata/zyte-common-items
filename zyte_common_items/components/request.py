@@ -1,5 +1,5 @@
 import base64
-from typing import List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Optional, Type, TypeVar
 
 import attrs
 
@@ -43,7 +43,7 @@ class Request(Item):
     name: Optional[str] = None
 
     #: Arbitrary list of information about the request.
-    notes: Optional[List[str]] = None
+    notes: Optional[Dict[str, Any]] = None
 
     _body_bytes = None
 

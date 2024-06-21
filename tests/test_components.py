@@ -143,12 +143,12 @@ def test_probability_request():
     request = ProbabilityRequest(
         name="Get with RequestURL object",
         url=RequestUrl("https://example.com/test"),
-        notes=["arbitrary", "info"],
+        notes={"type": "test request", "id": 782},
     )
 
     assert request.url == "https://example.com/test"
     assert request.get_probability() is None
-    assert request.notes == ["arbitrary", "info"]
+    assert request.notes == {"type": "test request", "id": 782}
 
 
 def test_request():
@@ -169,10 +169,10 @@ def test_request():
     request = Request(
         name="Get with RequestURL object",
         url=RequestUrl("https://example.com/test"),
-        notes=["arbitrary", "info"],
+        notes={"type": "test request", "id": 782},
     )
     assert request.url == "https://example.com/test"
-    assert request.notes == ["arbitrary", "info"]
+    assert request.notes == {"type": "test request", "id": 782}
 
 
 def test_job_location():
