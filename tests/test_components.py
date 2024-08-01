@@ -23,6 +23,7 @@ from zyte_common_items import (
     Reactions,
     RealEstateArea,
     Request,
+    SerpOrganicResult,
     SocialMediaPostAuthor,
     SocialMediaPostMetadata,
     StarRating,
@@ -197,6 +198,15 @@ def test_job_posting_metadata():
 
 def test_reactions():
     Reactions(reposts=1, likes=2, dislikes=3)
+
+
+def test_serp_organic_result():
+    SerpOrganicResult(
+        description="used as metasyntactic variables and placeholder names in computer programming or computer-related documentation.",
+        name="Foobar",
+        url="https://en.wikipedia.org/wiki/Foobar",
+        rank=1,
+    )
 
 
 def test_social_media_post_author():

@@ -13,4 +13,5 @@ from .search_request_template import (
     SearchRequestTemplate,
     SearchRequestTemplateMetadata,
 )
+from .serp import Serp, SerpMetadata
 from .social_media_post import SocialMediaPost, SocialMediaPostMetadata

@@ -109,6 +109,17 @@ Job posting
    :members: dateDownloaded, probability, validationMessages
 
 
+Search engine results page
+==========================
+
+.. autoclass:: zyte_common_items.Serp(**kwargs)
+   :members:
+   :inherited-members:
+
+.. autoclass:: zyte_common_items.SerpMetadata(**kwargs)
+   :members: dateDownloaded, displayedQuery, searchedQuery, totalOrganicResults, validationMessages
+
+
 Social media post
 =================
 
