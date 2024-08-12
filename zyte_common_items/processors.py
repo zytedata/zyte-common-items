@@ -147,6 +147,8 @@ def price_processor(value: Any, page: Any) -> Any:
 
     .. _price-parser: https://github.com/scrapinghub/price-parser
     """
+    value = _handle_selectorlist(value)
+
     if isinstance(value, Real):
         return f"{value:.2f}"
     elif isinstance(value, (Selector, HtmlElement, str)):
@@ -170,6 +172,8 @@ def simple_price_processor(value: Any, page: Any) -> Any:
 
     .. _price-parser: https://github.com/scrapinghub/price-parser
     """
+    value = _handle_selectorlist(value)
+
     if isinstance(value, Real):
         return f"{value:.2f}"
     elif isinstance(value, (Selector, HtmlElement, str)):
