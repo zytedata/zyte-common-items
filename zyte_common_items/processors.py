@@ -139,7 +139,7 @@ def price_processor(value: Any, page: Any) -> Any:
 
     Supported inputs are :class:`~parsel.selector.Selector`,
     :class:`~parsel.selector.SelectorList`, :class:`~lxml.html.HtmlElement`, string
-    instances and numberic values.
+    instances and numeric values.
 
     Other inputs are returned as is.
 
@@ -166,7 +166,7 @@ def simple_price_processor(value: Any, page: Any) -> Any:
 
     Supported inputs are :class:`~parsel.selector.Selector`,
     :class:`~parsel.selector.SelectorList`, :class:`~lxml.html.HtmlElement`, string
-    instances and numberic values.
+    instances and numeric values.
 
     Other inputs are returned as is.
 
