@@ -1,5 +1,6 @@
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 from functools import wraps
+from numbers import Real
 from typing import Any, Callable, List, Optional, Union
 
 from clear_html import clean_node, cleaned_node_to_html, cleaned_node_to_text
@@ -21,8 +22,10 @@ from zyte_parsers import (
 from .components import (
     AggregateRating,
     BaseMetadata,
+    Brand,
     Breadcrumb,
     Gtin,
+    Image,
     ProbabilityRequest,
     Request,
 )
@@ -104,50 +107,76 @@ def breadcrumbs_processor(value: Any, page: Any) -> Any:
     return results
 
 
-@only_handle_nodes
-def brand_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
+def brand_processor(value: Any, page: Any) -> Union[Brand, None]:
     """Convert the data into a brand name if possible.
 
-    Supported inputs are :class:`~parsel.selector.Selector`,
-    :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
-    Other inputs are returned as is.
+    If inputs are either :class:`~parsel.selector.Selector`,
+    :class:`~parsel.selector.SelectorList` or :class:`~lxml.html.HtmlElement`, attempts
+    to extract brand data from it.
+
+    If value is a string, use it to create brand object instance
+
+    Other inputs are returned unchanged
     """
-    return extract_brand_name(value, search_depth=2)
+    value = _handle_selectorlist(value)
+
+    if isinstance(value, str):
+        return Brand(name=value) if value else None
+
+    if isinstance(value, (Selector, SelectorList, HtmlElement)):
+        if brand_name := extract_brand_name(value, search_depth=2):
+            return Brand(name=brand_name)
+        else:
+            return None
+
+    return value
 
 
-@only_handle_nodes
-def price_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
+def price_processor(value: Any, page: Any) -> Any:
     """Convert the data into a price string if possible.
 
     Uses the price-parser_ library.
 
     Supported inputs are :class:`~parsel.selector.Selector`,
-    :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
+    :class:`~parsel.selector.SelectorList`, :class:`~lxml.html.HtmlElement`, string
+    instances and numberic values.
+
     Other inputs are returned as is.
 
     Puts the parsed Price object into ``page._parsed_price``.
 
     .. _price-parser: https://github.com/scrapinghub/price-parser
     """
-    price = extract_price(value)
-    page._parsed_price = price
-    return _format_price(price)
+    if isinstance(value, Real):
+        return f"{value:.2f}"
+    elif isinstance(value, (Selector, HtmlElement, str)):
+        price = extract_price(value)
+        page._parsed_price = price
+        return _format_price(price)
+    else:
+        return value
 
 
-@only_handle_nodes
-def simple_price_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
+def simple_price_processor(value: Any, page: Any) -> Any:
     """Convert the data into a price string if possible.
 
     Uses the price-parser_ library.
 
     Supported inputs are :class:`~parsel.selector.Selector`,
-    :class:`~parsel.selector.SelectorList` and :class:`~lxml.html.HtmlElement`.
+    :class:`~parsel.selector.SelectorList`, :class:`~lxml.html.HtmlElement`, string
+    instances and numberic values.
+
     Other inputs are returned as is.
 
     .. _price-parser: https://github.com/scrapinghub/price-parser
     """
-    price = extract_price(value)
-    return _format_price(price)
+    if isinstance(value, Real):
+        return f"{value:.2f}"
+    elif isinstance(value, (Selector, HtmlElement, str)):
+        price = extract_price(value)
+        return _format_price(price)
+    else:
+        return value
 
 
 @only_handle_nodes
@@ -327,6 +356,45 @@ def rating_processor(value: Any, page: Any) -> Any:
         if result.reviewCount or result.bestRating or result.ratingValue:
             return result
         return None
+    return value
+
+
+def images_processor(value: Any, page: Any) -> List[Image]:
+    """Convert the data into a list of :class:`~zyte_common_items.Image`
+    objects if possible.
+
+    If the input is a string, it's used as a url for returning image object.
+
+    If input is either an iterable of strings or mappings with "url" key, they are
+    used to populate image objects.
+
+    Other inputs are returned unchanged.
+    """
+
+    value = _handle_selectorlist(value)
+
+    # TODO: add generic-purpose extract_images utility to zyte-parsers
+    #
+    # if isinstance(value, (Selector, HtmlElement)):
+    #    images = extract_images(value)
+    #    return [Image(url=url) for url in images]
+
+    if isinstance(value, str):
+        return [Image(url=value)]
+
+    if isinstance(value, Iterable):
+        results: List[Any] = []
+        for item in value:
+            if isinstance(item, Image):
+                results.append(item)
+            elif isinstance(item, Mapping):
+                if url := item.get("url"):
+                    results.append(Image(url=url))
+            elif isinstance(item, str):
+                results.append(Image(url=item))
+
+        return results
+
     return value
 
 
