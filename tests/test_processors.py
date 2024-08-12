@@ -394,7 +394,7 @@ def test_images(input_value, expected_value):
         ("1,000", "1000.00"),
         (22.9, "22.90"),
         (22.0, "22.00"),
-    ]
+    ],
 )
 def test_prices(input_value, expected_value):
     class PricePage(BasePage):
