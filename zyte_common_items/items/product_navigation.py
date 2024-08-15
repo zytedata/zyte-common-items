@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 
@@ -56,3 +56,6 @@ class ProductNavigation(Item):
     metadata: Optional[ProductNavigationMetadata] = attrs.field(
         default=None, converter=to_metadata_optional(ProductNavigationMetadata), kw_only=True  # type: ignore[misc]
     )
+
+    #: Extracted custom attributes.
+    customAttributes: Optional[Dict[str, Any]] = None

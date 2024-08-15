@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 
@@ -48,3 +48,6 @@ class SocialMediaPost(Item):
     metadata: Optional[SocialMediaPostMetadata] = attrs.field(
         default=None, converter=to_metadata_optional(SocialMediaPostMetadata), kw_only=True  # type: ignore[misc]
     )
+
+    #: Extracted custom attributes.
+    customAttributes: Optional[Dict[str, Any]] = None

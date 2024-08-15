@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 
@@ -124,3 +124,6 @@ class BusinessPlace(Item):
     metadata: Optional[BusinessPlaceMetadata] = attrs.field(
         default=None, converter=to_metadata_optional(BusinessPlaceMetadata), kw_only=True  # type: ignore[misc]
     )
+
+    #: Extracted custom attributes.
+    customAttributes: Optional[Dict[str, Any]] = None

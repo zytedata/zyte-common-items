@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 
@@ -51,6 +51,9 @@ class ProductList(Item):
     #: For example, if the webpage is one of the pages of the Robots category,
     #: ``categoryName`` is ``'Robots'``.
     categoryName: Optional[str] = None
+
+    #: Extracted custom attributes.
+    customAttributes: Optional[Dict[str, Any]] = None
 
     #: Data extraction process metadata.
     metadata: Optional[ProductListMetadata] = attrs.field(

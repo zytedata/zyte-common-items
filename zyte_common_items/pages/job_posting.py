@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 from web_poet import Returns
@@ -122,3 +122,7 @@ class AutoJobPostingPage(BaseJobPostingPage):
     @auto_field
     def metadata(self) -> Optional[JobPostingMetadata]:
         return self.job_posting.metadata
+
+    @auto_field
+    def customAttributes(self) -> Optional[Dict[str, Any]]:
+        return self.job_posting.customAttributes

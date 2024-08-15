@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 
@@ -135,3 +135,6 @@ class Article(Item):
         converter=to_metadata_optional(ArticleMetadata),  # type: ignore[misc]
         kw_only=True,
     )
+
+    #: Extracted custom attributes.
+    customAttributes: Optional[Dict[str, Any]] = None

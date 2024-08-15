@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 from web_poet import Returns
@@ -43,6 +43,10 @@ class AutoProductListPage(BaseProductListPage):
     @auto_field
     def categoryName(self) -> Optional[str]:
         return self.product_list.categoryName
+
+    @auto_field
+    def customAttributes(self) -> Optional[Dict[str, Any]]:
+        return self.product_list.customAttributes
 
     @auto_field
     def metadata(self) -> Optional[ProductListMetadata]:

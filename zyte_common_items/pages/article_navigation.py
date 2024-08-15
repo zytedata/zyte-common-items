@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 from web_poet import Returns
@@ -54,3 +54,7 @@ class AutoArticleNavigationPage(BaseArticleNavigationPage):
     @auto_field
     def url(self) -> Optional[str]:
         return self.article_navigation.url
+
+    @auto_field
+    def customAttributes(self) -> Optional[Dict[str, Any]]:
+        return self.article_navigation.customAttributes

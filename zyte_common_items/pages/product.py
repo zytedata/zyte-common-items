@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 from web_poet import Returns
@@ -103,6 +103,10 @@ class AutoProductPage(BaseProductPage):
     @auto_field
     def currencyRaw(self) -> Optional[str]:
         return self.product.currencyRaw
+
+    @auto_field
+    def customAttributes(self) -> Optional[Dict[str, Any]]:
+        return self.product.customAttributes
 
     @auto_field
     def description(self) -> Optional[str]:

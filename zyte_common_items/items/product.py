@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 
@@ -87,6 +87,9 @@ class Product(Item):
     #:
     #: See also ``currency``.
     currencyRaw: Optional[str] = None
+
+    #: Extracted custom attributes.
+    customAttributes: Optional[Dict[str, Any]] = None
 
     #: Plain-text description.
     #:

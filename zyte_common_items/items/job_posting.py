@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 
@@ -115,3 +115,6 @@ class JobPosting(Item):
     metadata: Optional[JobPostingMetadata] = attrs.field(
         default=None, converter=to_metadata_optional(JobPostingMetadata), kw_only=True  # type: ignore[misc]
     )
+
+    #: Extracted custom attributes.
+    customAttributes: Optional[Dict[str, Any]] = None

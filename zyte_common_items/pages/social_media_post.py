@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 from web_poet import Returns
@@ -62,3 +62,7 @@ class AutoSocialMediaPostPage(BaseSocialMediaPostPage):
     @auto_field
     def metadata(self) -> Optional[SocialMediaPostMetadata]:
         return self.social_media_post.metadata
+
+    @auto_field
+    def customAttributes(self) -> Optional[Dict[str, Any]]:
+        return self.social_media_post.customAttributes

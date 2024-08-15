@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 from web_poet import Returns
@@ -35,6 +35,10 @@ class AutoProductNavigationPage(BaseProductNavigationPage):
     @auto_field
     def categoryName(self) -> Optional[str]:
         return self.product_navigation.categoryName
+
+    @auto_field
+    def customAttributes(self) -> Optional[Dict[str, Any]]:
+        return self.product_navigation.customAttributes
 
     @auto_field
     def items(self) -> Optional[List[ProbabilityRequest]]:

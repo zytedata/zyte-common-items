@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 from web_poet import Returns
@@ -145,3 +145,7 @@ class AutoBusinessPlacePage(BaseBusinessPlacePage):
     @auto_field
     def website(self) -> Optional[str]:
         return self.business_place.website
+
+    @auto_field
+    def customAttributes(self) -> Optional[Dict[str, Any]]:
+        return self.business_place.customAttributes

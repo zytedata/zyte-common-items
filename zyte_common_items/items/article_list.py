@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 
@@ -64,6 +64,9 @@ class ArticleList(Item):
     metadata: Optional[ArticleListMetadata] = attrs.field(
         default=None, converter=to_metadata_optional(ArticleListMetadata), kw_only=True  # type: ignore[misc]
     )
+
+    #: Extracted custom attributes.
+    customAttributes: Optional[Dict[str, Any]] = None
 
 
 @attrs.define(slots=True, kw_only=True)

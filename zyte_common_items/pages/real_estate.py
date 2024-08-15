@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import attrs
 from web_poet import Returns
@@ -63,6 +63,10 @@ class AutoRealEstatePage(BaseRealEstatePage):
     @auto_field
     def currencyRaw(self) -> Optional[str]:
         return self.real_estate.currencyRaw
+
+    @auto_field
+    def customAttributes(self) -> Optional[Dict[str, Any]]:
+        return self.real_estate.customAttributes
 
     @auto_field
     def datePublished(self) -> Optional[str]:
