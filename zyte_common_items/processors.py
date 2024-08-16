@@ -29,6 +29,7 @@ from .components import (
     ProbabilityRequest,
     Request,
 )
+from .items import ProductVariant
 
 
 def _get_base_url(page: Any) -> Optional[str]:
@@ -417,3 +418,21 @@ def metadata_processor(metadata: BaseMetadata, page):
     if page.metadata_cls is None:
         return None
     return metadata.cast(page.metadata_cls)
+
+
+def variants_processor(variants: list[Any], page: Any) -> list[ProductVariant]:
+    ret = []
+    for variant in variants:
+        if isinstance(variant, Mapping):
+            processors = {
+                "price": simple_price_processor,
+                "regularPrice": simple_price_processor,
+            }
+            for field, processor in processors.items():
+                if field in variant:
+                    variant[field] = processor(variant[field], page)
+
+            ret.append(ProductVariant(**variant))
+        else:
+            ret.append(variant)
+    return ret

@@ -15,6 +15,7 @@ from zyte_common_items import (
     Gtin,
     Image,
     ProductPage,
+    ProductVariant,
 )
 from zyte_common_items.processors import (
     _format_price,
@@ -24,6 +25,7 @@ from zyte_common_items.processors import (
     images_processor,
     price_processor,
     rating_processor,
+    variants_processor
 )
 
 base_url = "http://www.example.com/blog/"
@@ -404,3 +406,22 @@ def test_prices(input_value, expected_value):
 
     page = PricePage(base_url)  # type: ignore[arg-type]
     assert page.price == expected_value
+
+
+@pytest.mark.parametrize(
+    "input_value,expected_value",
+    [
+        (
+            [{"price": "12,12$"}, {"price": 100}],
+            [ProductVariant(price="12.12"), ProductVariant(price="100.00")]
+        ),
+    ],
+)
+def test_variants(input_value, expected_value):
+    class VariantPage(BasePage):
+        @field(out=[variants_processor])
+        def variants(self):
+            return input_value
+
+    page = VariantPage(base_url)  # type: ignore[arg-type]
+    assert page.variants == expected_value
