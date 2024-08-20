@@ -23,7 +23,6 @@ from zyte_common_items.processors import (
     price_processor,
     rating_processor,
     simple_price_processor,
-    variants_processor,
 )
 
 from .base import BasePage, Page
@@ -49,7 +48,6 @@ class BaseProductPage(
         price = [price_processor]
         regularPrice = [simple_price_processor]
         images = [images_processor]
-        variants = [variants_processor]
 
 
 class ProductPage(
@@ -67,7 +65,6 @@ class ProductPage(
         price = [price_processor]
         regularPrice = [simple_price_processor]
         images = [images_processor]
-        variants = [variants_processor]
 
 
 @attrs.define
