@@ -108,16 +108,16 @@ def breadcrumbs_processor(value: Any, page: Any) -> Any:
     return results
 
 
-def brand_processor(value: Any, page: Any) -> Union[Brand, None]:
+def brand_processor(value: Any, page: Any) -> Any:
     """Convert the data into a brand name if possible.
 
     If inputs are either :class:`~parsel.selector.Selector`,
     :class:`~parsel.selector.SelectorList` or :class:`~lxml.html.HtmlElement`, attempts
     to extract brand data from it.
 
-    If value is a string, use it to create brand object instance
+    If value is a string, uses it to create a :class:`~zyte_common_items.Brand` instance.
 
-    Other inputs are returned unchanged
+    Other inputs are returned unchanged.
     """
     value = _handle_selectorlist(value)
 
@@ -364,7 +364,7 @@ def rating_processor(value: Any, page: Any) -> Any:
     return value
 
 
-def images_processor(value: Any, page: Any) -> List[Image]:
+def images_processor(value: Any, page: Any) -> Any:
     """Convert the data into a list of :class:`~zyte_common_items.Image`
     objects if possible.
 
