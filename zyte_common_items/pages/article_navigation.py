@@ -12,15 +12,17 @@ from .base import BasePage, Page
 from .mixins import HasMetadata
 
 
+class _ArticleNavigationProcessors(BasePage.Processors):
+    categoryName = [string_processor]
+
+
 class BaseArticleNavigationPage(
     BasePage, Returns[ArticleNavigation], HasMetadata[ArticleNavigationMetadata]
 ):
     """:class:`BasePage` subclass for :class:`ArticleNavigation`."""
 
-    class Processors(BasePage.Processors):
-        categoryName = [string_processor]
-        pageNumber = [string_processor]
-        url = [string_processor]
+    class Processors(_ArticleNavigationProcessors):
+        pass
 
 
 class ArticleNavigationPage(
@@ -28,10 +30,8 @@ class ArticleNavigationPage(
 ):
     """:class:`Page` subclass for :class:`ArticleNavigation`."""
 
-    class Processors(Page.Processors):
-        categoryName = [string_processor]
-        pageNumber = [string_processor]
-        url = [string_processor]
+    class Processors(_ArticleNavigationProcessors):
+        pass
 
 
 @attrs.define

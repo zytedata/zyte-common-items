@@ -12,22 +12,25 @@ from .base import BasePage, Page
 from .mixins import HasMetadata
 
 
+class _ArticleListProcessors(BasePage.Processors):
+    breadcrumbs = [breadcrumbs_processor]
+    canonicalUrl = [string_processor]
+
+
 class BaseArticleListPage(
     BasePage, Returns[ArticleList], HasMetadata[ArticleListMetadata]
 ):
     """:class:`BasePage` subclass for :class:`ArticleList`."""
 
-    class Processors(BasePage.Processors):
-        breadcrumbs = [breadcrumbs_processor]
+    class Processors(_ArticleListProcessors):
+        pass
 
 
 class ArticleListPage(Page, Returns[ArticleList], HasMetadata[ArticleListMetadata]):
     """:class:`Page` subclass for :class:`ArticleList`."""
 
-    class Processors(Page.Processors):
-        breadcrumbs = [breadcrumbs_processor]
-        canonicalUrl = [string_processor]
-        url = [string_processor]
+    class Processors(_ArticleListProcessors):
+        pass
 
 
 @attrs.define

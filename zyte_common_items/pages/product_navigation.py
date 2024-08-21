@@ -15,16 +15,19 @@ from .base import BasePage, Page
 from .mixins import HasMetadata
 
 
+class _ProductNavigationProcessors(BasePage.Processors):
+    subCategories = [probability_request_list_processor]
+    items = [probability_request_list_processor]
+    categoryName = [string_processor]
+
+
 class BaseProductNavigationPage(
     BasePage, Returns[ProductNavigation], HasMetadata[ProductNavigationMetadata]
 ):
     """:class:`BasePage` subclass for :class:`ProductNavigation`."""
 
-    class Processors(BasePage.Processors):
-        subCategories = [probability_request_list_processor]
-        items = [probability_request_list_processor]
-        categoryName = [string_processor]
-        url = [string_processor]
+    class Processors(_ProductNavigationProcessors):
+        pass
 
 
 class ProductNavigationPage(
@@ -32,11 +35,8 @@ class ProductNavigationPage(
 ):
     """:class:`Page` subclass for :class:`ProductNavigation`."""
 
-    class Processors(BasePage.Processors):
-        subCategories = [probability_request_list_processor]
-        items = [probability_request_list_processor]
-        categoryName = [string_processor]
-        url = [string_processor]
+    class Processors(_ProductNavigationProcessors):
+        pass
 
 
 @attrs.define

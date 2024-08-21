@@ -12,26 +12,26 @@ from .base import BasePage, Page
 from .mixins import HasMetadata
 
 
+class _ProductListProcessors(BasePage.Processors):
+    breadcrumbs = [breadcrumbs_processor]
+    canonicalUrl = [string_processor]
+    categoryName = [string_processor]
+
+
 class BaseProductListPage(
     BasePage, Returns[ProductList], HasMetadata[ProductListMetadata]
 ):
     """:class:`BasePage` subclass for :class:`ProductList`."""
 
-    class Processors(BasePage.Processors):
-        breadcrumbs = [breadcrumbs_processor]
-        canonicalUrl = [string_processor]
-        categoryName = [string_processor]
-        url = [string_processor]
+    class Processors(_ProductListProcessors):
+        pass
 
 
 class ProductListPage(Page, Returns[ProductList], HasMetadata[ProductListMetadata]):
     """:class:`Page` subclass for :class:`ProductList`."""
 
-    class Processors(Page.Processors):
-        breadcrumbs = [breadcrumbs_processor]
-        canonicalUrl = [string_processor]
-        categoryName = [string_processor]
-        url = [string_processor]
+    class Processors(_ProductListProcessors):
+        pass
 
 
 @attrs.define

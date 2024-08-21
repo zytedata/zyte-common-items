@@ -12,40 +12,32 @@ from .base import BasePage, Page
 from .mixins import HasMetadata
 
 
+class _ArticleProcessors(BasePage.Processors):
+    breadcrumbs = [breadcrumbs_processor]
+    headline = [string_processor]
+    datePublished = [string_processor]
+    datePublishedRaw = [string_processor]
+    dateModified = [string_processor]
+    dateModifiedRaw = [string_processor]
+    inLanguage = [string_processor]
+    description = [string_processor]
+    articleBody = [string_processor]
+    articleBodyHtml = [string_processor]
+    canonicalUrl = [string_processor]
+
+
 class BaseArticlePage(BasePage, Returns[Article], HasMetadata[ArticleMetadata]):
     """:class:`BasePage` subclass for :class:`Article`."""
 
-    class Processors(BasePage.Processors):
-        breadcrumbs = [breadcrumbs_processor]
-        headline = [string_processor]
-        datePublished = [string_processor]
-        datePublishedRaw = [string_processor]
-        dateModified = [string_processor]
-        dateModifiedRaw = [string_processor]
-        inLanguage = [string_processor]
-        description = [string_processor]
-        articleBody = [string_processor]
-        articleBodyHtml = [string_processor]
-        canonicalUrl = [string_processor]
-        url = [string_processor]
+    class Processors(_ArticleProcessors):
+        pass
 
 
 class ArticlePage(Page, Returns[Article], HasMetadata[ArticleMetadata]):
     """:class:`Page` subclass for :class:`Article`."""
 
-    class Processors(Page.Processors):
-        breadcrumbs = [breadcrumbs_processor]
-        headline = [string_processor]
-        datePublished = [string_processor]
-        datePublishedRaw = [string_processor]
-        dateModified = [string_processor]
-        dateModifiedRaw = [string_processor]
-        inLanguage = [string_processor]
-        description = [string_processor]
-        articleBody = [string_processor]
-        articleBodyHtml = [string_processor]
-        canonicalUrl = [string_processor]
-        url = [string_processor]
+    class Processors(_ArticleProcessors):
+        pass
 
 
 @attrs.define

@@ -12,26 +12,25 @@ from .base import BasePage, Page
 from .mixins import HasMetadata
 
 
+class _SocialMediaPostProcessors(BasePage.Processors):
+    postId = [string_processor]
+    text = [string_processor]
+    datePublished = [string_processor]
+    hashtags = [list_processor(string_processor)]
+
+
 class BaseSocialMediaPostPage(
     BasePage, Returns[SocialMediaPost], HasMetadata[SocialMediaPostMetadata]
 ):
-    class Processors(BasePage.Processors):
-        url = [string_processor]
-        postId = [string_processor]
-        text = [string_processor]
-        datePublished = [string_processor]
-        hashtags = [list_processor(string_processor)]
+    class Processors(_SocialMediaPostProcessors):
+        pass
 
 
 class SocialMediaPostPage(
     Page, Returns[SocialMediaPost], HasMetadata[SocialMediaPostMetadata]
 ):
-    class Processors(BasePage.Processors):
-        url = [string_processor]
-        postId = [string_processor]
-        text = [string_processor]
-        datePublished = [string_processor]
-        hashtags = [list_processor(string_processor)]
+    class Processors(_SocialMediaPostProcessors):
+        pass
 
 
 @attrs.define
