@@ -14,6 +14,7 @@ from zyte_common_items import (
     Breadcrumb,
     Gtin,
     Image,
+    Page,
     ProductPage,
 )
 from zyte_common_items.processors import (
@@ -158,7 +159,7 @@ def test_brand(input_value, expected_value):
 
 
 def test_brand_page():
-    class MyProductPage(BasePage):
+    class MyProductPage(Page):
         @field(out=[brand_processor])
         def brand(self):
             return self.css("body")
