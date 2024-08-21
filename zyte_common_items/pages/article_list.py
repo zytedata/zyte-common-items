@@ -26,6 +26,8 @@ class ArticleListPage(Page, Returns[ArticleList], HasMetadata[ArticleListMetadat
 
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
+        canonicalUrl = [str.strip]
+        url = [str.strip]
 
 
 @attrs.define

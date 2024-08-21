@@ -26,6 +26,18 @@ class BaseRealEstatePage(
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
+        currency = [str.strip]
+        currencyRaw = [str.strip]
+        datePublished = [str.strip]
+        datePublishedRaw = [str.strip]
+        name = [str.strip]
+        price = [str.strip]
+        propertyType = [str.strip]
+        realEstateId = [str.strip]
+        rentalPeriod = [str.strip]
+        tradeType = [str.strip]
+        url = [str.strip]
+        virtualTourUrl = [str.strip]
 
 
 class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata]):
@@ -34,6 +46,18 @@ class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata])
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
+        currency = [str.strip]
+        currencyRaw = [str.strip]
+        datePublished = [str.strip]
+        datePublishedRaw = [str.strip]
+        name = [str.strip]
+        price = [str.strip]
+        propertyType = [str.strip]
+        realEstateId = [str.strip]
+        rentalPeriod = [str.strip]
+        tradeType = [str.strip]
+        url = [str.strip]
+        virtualTourUrl = [str.strip]
 
 
 @attrs.define

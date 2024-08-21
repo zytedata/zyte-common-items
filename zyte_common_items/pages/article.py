@@ -17,6 +17,17 @@ class BaseArticlePage(BasePage, Returns[Article], HasMetadata[ArticleMetadata]):
 
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
+        headline = [str.strip]
+        datePublished = [str.strip]
+        datePublishedRaw = [str.strip]
+        dateModified = [str.strip]
+        dateModifiedRaw = [str.strip]
+        inLanguage = [str.strip]
+        description = [str.strip]
+        articleBody = [str.strip]
+        articleBodyHtml = [str.strip]
+        canonicalUrl = [str.strip]
+        url = [str.strip]
 
 
 class ArticlePage(Page, Returns[Article], HasMetadata[ArticleMetadata]):
@@ -24,7 +35,17 @@ class ArticlePage(Page, Returns[Article], HasMetadata[ArticleMetadata]):
 
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
-
+        headline = [str.strip]
+        datePublished = [str.strip]
+        datePublishedRaw = [str.strip]
+        dateModified = [str.strip]
+        dateModifiedRaw = [str.strip]
+        inLanguage = [str.strip]
+        description = [str.strip]
+        articleBody = [str.strip]
+        articleBodyHtml = [str.strip]
+        canonicalUrl = [str.strip]
+        url = [str.strip]
 
 @attrs.define
 class AutoArticlePage(BaseArticlePage):

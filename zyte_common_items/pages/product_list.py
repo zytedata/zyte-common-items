@@ -19,6 +19,9 @@ class BaseProductListPage(
 
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
+        canonicalUrl = [str.strip]
+        categoryName = [str.strip]
+        url = [str.strip]
 
 
 class ProductListPage(Page, Returns[ProductList], HasMetadata[ProductListMetadata]):
@@ -26,6 +29,9 @@ class ProductListPage(Page, Returns[ProductList], HasMetadata[ProductListMetadat
 
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
+        canonicalUrl = [str.strip]
+        categoryName = [str.strip]
+        url = [str.strip]
 
 
 @attrs.define

@@ -18,6 +18,7 @@ from zyte_common_items.processors import (
     breadcrumbs_processor,
     description_html_processor,
     description_processor,
+    list_processor,
     gtin_processor,
     price_processor,
     rating_processor,
@@ -46,6 +47,19 @@ class BaseProductPage(
         gtin = [gtin_processor]
         price = [price_processor]
         regularPrice = [simple_price_processor]
+        availability = [str.strip]
+        canonicalUrl = [str.strip]
+        color = [str.strip]
+        currency = [str.strip]
+        currencyRaw = [str.strip]
+        features = [list_processor(str.strip)]
+        mpn = [str.strip]
+        name = [str.strip]
+        productId = [str.strip]
+        size = [str.strip]
+        sku = [str.strip]
+        style = [str.strip]
+        url = [str.strip]
 
 
 class ProductPage(
@@ -62,7 +76,19 @@ class ProductPage(
         gtin = [gtin_processor]
         price = [price_processor]
         regularPrice = [simple_price_processor]
-
+        availability = [str.strip]
+        canonicalUrl = [str.strip]
+        color = [str.strip]
+        currency = [str.strip]
+        currencyRaw = [str.strip]
+        features = [list_processor(str.strip)]
+        mpn = [str.strip]
+        name = [str.strip]
+        productId = [str.strip]
+        size = [str.strip]
+        sku = [str.strip]
+        style = [str.strip]
+        url = [str.strip]
 
 @attrs.define
 class AutoProductPage(BaseProductPage):

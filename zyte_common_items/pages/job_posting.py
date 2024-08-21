@@ -9,6 +9,7 @@ from zyte_common_items.items import JobPosting, JobPostingMetadata
 from zyte_common_items.processors import (
     description_html_processor,
     description_processor,
+    list_processor,
 )
 
 from .base import BasePage, Page
@@ -23,6 +24,21 @@ class BaseJobPostingPage(
     class Processors(BasePage.Processors):
         description = [description_processor]
         descriptionHtml = [description_html_processor]
+        url = [str.strip]
+        jobPostingId = [str.strip]
+        datePublished = [str.strip]
+        datePublishedRaw = [str.strip]
+        dateModified = [str.strip]
+        dateModifiedRaw = [str.strip]
+        validThrough = [str.strip]
+        validThroughRaw = [str.strip]
+        jobTitle = [str.strip]
+        headline = [str.strip]
+        employmentType = [str.strip]
+        requirements = [list_processor(str.strip)]
+        jobStartDate = [str.strip]
+        jobStartDateRaw = [str.strip]
+        remoteStatus = [str.strip]
 
 
 class JobPostingPage(
@@ -33,6 +49,21 @@ class JobPostingPage(
     class Processors(Page.Processors):
         description = [description_processor]
         descriptionHtml = [description_html_processor]
+        url = [str.strip]
+        jobPostingId = [str.strip]
+        datePublished = [str.strip]
+        datePublishedRaw = [str.strip]
+        dateModified = [str.strip]
+        dateModifiedRaw = [str.strip]
+        validThrough = [str.strip]
+        validThroughRaw = [str.strip]
+        jobTitle = [str.strip]
+        headline = [str.strip]
+        employmentType = [str.strip]
+        requirements = [list_processor(str.strip)]
+        jobStartDate = [str.strip]
+        jobStartDateRaw = [str.strip]
+        remoteStatus = [str.strip]
 
 
 @attrs.define

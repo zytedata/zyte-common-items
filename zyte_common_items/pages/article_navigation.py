@@ -15,12 +15,20 @@ class BaseArticleNavigationPage(
     BasePage, Returns[ArticleNavigation], HasMetadata[ArticleNavigationMetadata]
 ):
     """:class:`BasePage` subclass for :class:`ArticleNavigation`."""
+    class Processors(BasePage.Processors):
+        categoryName = [str.strip]
+        pageNumber = [str.strip]
+        url = [str.strip]
 
 
 class ArticleNavigationPage(
     Page, Returns[ArticleNavigation], HasMetadata[ArticleNavigationMetadata]
 ):
     """:class:`Page` subclass for :class:`ArticleNavigation`."""
+    class Processors(Page.Processors):
+        categoryName = [str.strip]
+        pageNumber = [str.strip]
+        url = [str.strip]
 
 
 @attrs.define

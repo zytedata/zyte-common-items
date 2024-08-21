@@ -49,7 +49,7 @@ class BasePage(_BasePage):
     :class:`~web_poet.page_inputs.http.RequestUrl` as a dependency."""
 
     class Processors(_BasePage.Processors):
-        pass
+        url = [str.strip]
 
     request_url: RequestUrl
 
@@ -64,7 +64,7 @@ class Page(_BasePage, WebPage):
     :class:`~web_poet.page_inputs.http.HttpResponse` as a dependency."""
 
     class Processors(_BasePage.Processors):
-        pass
+        url = [str.strip]
 
     @field
     def url(self) -> str:

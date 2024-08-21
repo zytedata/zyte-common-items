@@ -20,12 +20,19 @@ class BaseProductNavigationPage(
     class Processors(BasePage.Processors):
         subCategories = [probability_request_list_processor]
         items = [probability_request_list_processor]
+        categoryName = [str.strip]
+        url = [str.strip]
 
 
 class ProductNavigationPage(
     Page, Returns[ProductNavigation], HasMetadata[ProductNavigationMetadata]
 ):
     """:class:`Page` subclass for :class:`ProductNavigation`."""
+    class Processors(BasePage.Processors):
+        subCategories = [probability_request_list_processor]
+        items = [probability_request_list_processor]
+        categoryName = [str.strip]
+        url = [str.strip]
 
 
 @attrs.define

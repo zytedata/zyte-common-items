@@ -345,3 +345,12 @@ def metadata_processor(metadata: BaseMetadata, page):
     if page.metadata_cls is None:
         return None
     return metadata.cast(page.metadata_cls)
+
+
+def list_processor(processor: Callable) -> Any:
+    """Apply processor to a list of items"""
+    def loop(values):
+        if not isinstance(value, Iterable):
+            return values
+        return [processor(value) for value in values]
+    return loop
