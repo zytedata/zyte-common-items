@@ -22,6 +22,7 @@ class BaseSocialMediaPostPage(
         datePublished = [string_processor]
         hashtags = [list_processor(string_processor)]
 
+
 class SocialMediaPostPage(
     Page, Returns[SocialMediaPost], HasMetadata[SocialMediaPostMetadata]
 ):

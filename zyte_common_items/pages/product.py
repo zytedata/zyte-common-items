@@ -18,8 +18,8 @@ from zyte_common_items.processors import (
     breadcrumbs_processor,
     description_html_processor,
     description_processor,
-    list_processor,
     gtin_processor,
+    list_processor,
     price_processor,
     rating_processor,
     simple_price_processor,
@@ -90,6 +90,7 @@ class ProductPage(
         sku = [string_processor]
         style = [string_processor]
         url = [string_processor]
+
 
 @attrs.define
 class AutoProductPage(BaseProductPage):

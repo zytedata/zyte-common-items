@@ -16,6 +16,7 @@ class BaseArticleNavigationPage(
     BasePage, Returns[ArticleNavigation], HasMetadata[ArticleNavigationMetadata]
 ):
     """:class:`BasePage` subclass for :class:`ArticleNavigation`."""
+
     class Processors(BasePage.Processors):
         categoryName = [string_processor]
         pageNumber = [string_processor]
@@ -26,6 +27,7 @@ class ArticleNavigationPage(
     Page, Returns[ArticleNavigation], HasMetadata[ArticleNavigationMetadata]
 ):
     """:class:`Page` subclass for :class:`ArticleNavigation`."""
+
     class Processors(Page.Processors):
         categoryName = [string_processor]
         pageNumber = [string_processor]

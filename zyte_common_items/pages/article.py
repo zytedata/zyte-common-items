@@ -47,6 +47,7 @@ class ArticlePage(Page, Returns[Article], HasMetadata[ArticleMetadata]):
         canonicalUrl = [string_processor]
         url = [string_processor]
 
+
 @attrs.define
 class AutoArticlePage(BaseArticlePage):
     article: Article

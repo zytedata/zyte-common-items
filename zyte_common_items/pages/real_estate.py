@@ -13,11 +13,7 @@ from zyte_common_items.components import (
 from zyte_common_items.fields import auto_field
 from zyte_common_items.items import RealEstate, RealEstateMetadata
 
-from ..processors import (
-    breadcrumbs_processor,
-    description_processor,
-    string_processor,
-)
+from ..processors import breadcrumbs_processor, description_processor, string_processor
 from .base import BasePage, Page
 from .mixins import HasMetadata
 
