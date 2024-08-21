@@ -158,7 +158,7 @@ def test_brand(input_value, expected_value):
 
 
 def test_brand_page():
-    class MyProductPage(ProductPage):
+    class MyProductPage(BasePage):
         @field(out=[brand_processor])
         def brand(self):
             return self.css("body")

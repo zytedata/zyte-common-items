@@ -375,10 +375,9 @@ def images_processor(value: Any, page: Any) -> Any:
     Other inputs are returned unchanged.
     """
 
-    value = _handle_selectorlist(value)
-
     # TODO: add generic-purpose extract_images utility to zyte-parsers
     #
+    # value = _handle_selectorlist(value)
     # if isinstance(value, (Selector, HtmlElement)):
     #    images = extract_images(value)
     #    return [Image(url=url) for url in images]
