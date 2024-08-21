@@ -23,6 +23,7 @@ from zyte_common_items.processors import (
     price_processor,
     rating_processor,
     simple_price_processor,
+    string_processor,
 )
 
 from .base import BasePage, Page
@@ -47,19 +48,19 @@ class BaseProductPage(
         gtin = [gtin_processor]
         price = [price_processor]
         regularPrice = [simple_price_processor]
-        availability = [str.strip]
-        canonicalUrl = [str.strip]
-        color = [str.strip]
-        currency = [str.strip]
-        currencyRaw = [str.strip]
-        features = [list_processor(str.strip)]
-        mpn = [str.strip]
-        name = [str.strip]
-        productId = [str.strip]
-        size = [str.strip]
-        sku = [str.strip]
-        style = [str.strip]
-        url = [str.strip]
+        availability = [string_processor]
+        canonicalUrl = [string_processor]
+        color = [string_processor]
+        currency = [string_processor]
+        currencyRaw = [string_processor]
+        features = [list_processor(string_processor)]
+        mpn = [string_processor]
+        name = [string_processor]
+        productId = [string_processor]
+        size = [string_processor]
+        sku = [string_processor]
+        style = [string_processor]
+        url = [string_processor]
 
 
 class ProductPage(
@@ -76,19 +77,19 @@ class ProductPage(
         gtin = [gtin_processor]
         price = [price_processor]
         regularPrice = [simple_price_processor]
-        availability = [str.strip]
-        canonicalUrl = [str.strip]
-        color = [str.strip]
-        currency = [str.strip]
-        currencyRaw = [str.strip]
-        features = [list_processor(str.strip)]
-        mpn = [str.strip]
-        name = [str.strip]
-        productId = [str.strip]
-        size = [str.strip]
-        sku = [str.strip]
-        style = [str.strip]
-        url = [str.strip]
+        availability = [string_processor]
+        canonicalUrl = [string_processor]
+        color = [string_processor]
+        currency = [string_processor]
+        currencyRaw = [string_processor]
+        features = [list_processor(string_processor)]
+        mpn = [string_processor]
+        name = [string_processor]
+        productId = [string_processor]
+        size = [string_processor]
+        sku = [string_processor]
+        style = [string_processor]
+        url = [string_processor]
 
 @attrs.define
 class AutoProductPage(BaseProductPage):

@@ -19,7 +19,8 @@ from zyte_common_items.items import BusinessPlace, BusinessPlaceMetadata
 from zyte_common_items.processors import (
     description_processor,
     list_processor,
-    rating_processor
+    rating_processor,
+    string_processor,
 )
 
 from .base import BasePage, Page
@@ -34,17 +35,17 @@ class BaseBusinessPlacePage(
     class Processors(BasePage.Processors):
         aggregateRating = [rating_processor]
         description = [description_processor]
-        categories = [list_processor(str.strip)]
-        features = [list_processor(str.strip)]
-        map = [str.strip]
-        name = [str.strip]
-        placeId = [str.strip]
-        priceRange = [str.strip]
-        tags = [list_processor(str.strip)]
-        telephone = [str.strip]
-        timezone = [str.strip]
-        url = [str.strip]
-        website = [str.strip]
+        categories = [list_processor(string_processor)]
+        features = [list_processor(string_processor)]
+        map = [string_processor]
+        name = [string_processor]
+        placeId = [string_processor]
+        priceRange = [string_processor]
+        tags = [list_processor(string_processor)]
+        telephone = [string_processor]
+        timezone = [string_processor]
+        url = [string_processor]
+        website = [string_processor]
 
 
 class BusinessPlacePage(
@@ -55,17 +56,17 @@ class BusinessPlacePage(
     class Processors(Page.Processors):
         aggregateRating = [rating_processor]
         description = [description_processor]
-        categories = [list_processor(str.strip)]
-        features = [list_processor(str.strip)]
-        map = [str.strip]
-        name = [str.strip]
-        placeId = [str.strip]
-        priceRange = [str.strip]
-        tags = [list_processor(str.strip)]
-        telephone = [str.strip]
-        timezone = [str.strip]
-        url = [str.strip]
-        website = [str.strip]
+        categories = [list_processor(string_processor)]
+        features = [list_processor(string_processor)]
+        map = [string_processor]
+        name = [string_processor]
+        placeId = [string_processor]
+        priceRange = [string_processor]
+        tags = [list_processor(string_processor)]
+        telephone = [string_processor]
+        timezone = [string_processor]
+        url = [string_processor]
+        website = [string_processor]
 
 
 @attrs.define

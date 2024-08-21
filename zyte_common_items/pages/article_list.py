@@ -6,7 +6,7 @@ from web_poet import Returns
 from zyte_common_items.components import Breadcrumb
 from zyte_common_items.fields import auto_field
 from zyte_common_items.items import ArticleFromList, ArticleList, ArticleListMetadata
-from zyte_common_items.processors import breadcrumbs_processor
+from zyte_common_items.processors import breadcrumbs_processor, string_processor
 
 from .base import BasePage, Page
 from .mixins import HasMetadata
@@ -26,8 +26,8 @@ class ArticleListPage(Page, Returns[ArticleList], HasMetadata[ArticleListMetadat
 
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
-        canonicalUrl = [str.strip]
-        url = [str.strip]
+        canonicalUrl = [string_processor]
+        url = [string_processor]
 
 
 @attrs.define

@@ -6,7 +6,10 @@ from web_poet import Returns
 from zyte_common_items.components import ProbabilityRequest, Request
 from zyte_common_items.fields import auto_field
 from zyte_common_items.items import ProductNavigation, ProductNavigationMetadata
-from zyte_common_items.processors import probability_request_list_processor
+from zyte_common_items.processors import (
+    probability_request_list_processor,
+    string_processor
+)
 
 from .base import BasePage, Page
 from .mixins import HasMetadata
@@ -20,8 +23,8 @@ class BaseProductNavigationPage(
     class Processors(BasePage.Processors):
         subCategories = [probability_request_list_processor]
         items = [probability_request_list_processor]
-        categoryName = [str.strip]
-        url = [str.strip]
+        categoryName = [string_processor]
+        url = [string_processor]
 
 
 class ProductNavigationPage(
@@ -31,8 +34,8 @@ class ProductNavigationPage(
     class Processors(BasePage.Processors):
         subCategories = [probability_request_list_processor]
         items = [probability_request_list_processor]
-        categoryName = [str.strip]
-        url = [str.strip]
+        categoryName = [string_processor]
+        url = [string_processor]
 
 
 @attrs.define

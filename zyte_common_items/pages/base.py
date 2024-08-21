@@ -3,7 +3,7 @@ from web_poet import ItemPage, RequestUrl, WebPage, field
 from web_poet.pages import ItemT
 
 from .._dateutils import utcnow_formatted
-from ..processors import metadata_processor
+from ..processors import metadata_processor, string_processor
 from .mixins import HasMetadata, MetadataT
 
 
@@ -49,7 +49,7 @@ class BasePage(_BasePage):
     :class:`~web_poet.page_inputs.http.RequestUrl` as a dependency."""
 
     class Processors(_BasePage.Processors):
-        url = [str.strip]
+        url = [string_processor]
 
     request_url: RequestUrl
 
@@ -64,7 +64,7 @@ class Page(_BasePage, WebPage):
     :class:`~web_poet.page_inputs.http.HttpResponse` as a dependency."""
 
     class Processors(_BasePage.Processors):
-        url = [str.strip]
+        url = [string_processor]
 
     @field
     def url(self) -> str:

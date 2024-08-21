@@ -6,7 +6,7 @@ from web_poet import Returns
 from zyte_common_items.components import Audio, Author, Breadcrumb, Image, Video
 from zyte_common_items.fields import auto_field
 from zyte_common_items.items import Article, ArticleMetadata
-from zyte_common_items.processors import breadcrumbs_processor
+from zyte_common_items.processors import breadcrumbs_processor, string_processor
 
 from .base import BasePage, Page
 from .mixins import HasMetadata
@@ -17,17 +17,17 @@ class BaseArticlePage(BasePage, Returns[Article], HasMetadata[ArticleMetadata]):
 
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
-        headline = [str.strip]
-        datePublished = [str.strip]
-        datePublishedRaw = [str.strip]
-        dateModified = [str.strip]
-        dateModifiedRaw = [str.strip]
-        inLanguage = [str.strip]
-        description = [str.strip]
-        articleBody = [str.strip]
-        articleBodyHtml = [str.strip]
-        canonicalUrl = [str.strip]
-        url = [str.strip]
+        headline = [string_processor]
+        datePublished = [string_processor]
+        datePublishedRaw = [string_processor]
+        dateModified = [string_processor]
+        dateModifiedRaw = [string_processor]
+        inLanguage = [string_processor]
+        description = [string_processor]
+        articleBody = [string_processor]
+        articleBodyHtml = [string_processor]
+        canonicalUrl = [string_processor]
+        url = [string_processor]
 
 
 class ArticlePage(Page, Returns[Article], HasMetadata[ArticleMetadata]):
@@ -35,17 +35,17 @@ class ArticlePage(Page, Returns[Article], HasMetadata[ArticleMetadata]):
 
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
-        headline = [str.strip]
-        datePublished = [str.strip]
-        datePublishedRaw = [str.strip]
-        dateModified = [str.strip]
-        dateModifiedRaw = [str.strip]
-        inLanguage = [str.strip]
-        description = [str.strip]
-        articleBody = [str.strip]
-        articleBodyHtml = [str.strip]
-        canonicalUrl = [str.strip]
-        url = [str.strip]
+        headline = [string_processor]
+        datePublished = [string_processor]
+        datePublishedRaw = [string_processor]
+        dateModified = [string_processor]
+        dateModifiedRaw = [string_processor]
+        inLanguage = [string_processor]
+        description = [string_processor]
+        articleBody = [string_processor]
+        articleBodyHtml = [string_processor]
+        canonicalUrl = [string_processor]
+        url = [string_processor]
 
 @attrs.define
 class AutoArticlePage(BaseArticlePage):
