@@ -14,7 +14,6 @@ from zyte_common_items import (
     Breadcrumb,
     Gtin,
     Image,
-    Page,
     ProductPage,
 )
 from zyte_common_items.processors import (
@@ -159,8 +158,8 @@ def test_brand(input_value, expected_value):
 
 
 def test_brand_page():
-    class MyProductPage(Page):
-        @field(out=[brand_processor])
+    class MyProductPage(ProductPage):
+        @field
         def brand(self):
             return self.css("body")
 
@@ -377,6 +376,20 @@ def test_images(input_value, expected_value):
 
     page = ImagesPage(base_url)  # type: ignore[arg-type]
     assert page.images == expected_value
+
+
+def test_images_page():
+    class MyProductPage(ProductPage):
+        @field
+        def images(self):
+            return self.css("img::attr(href)").getall()
+
+    response = HttpResponse(
+        url="http://www.example.com/",
+        body="<html><body><img href='https://www.url.com/img.jpg'></body></html>".encode(),
+    )
+    page = MyProductPage(response=response)
+    assert page.images == [Image(url="https://www.url.com/img.jpg")]
 
 
 @pytest.mark.parametrize(
