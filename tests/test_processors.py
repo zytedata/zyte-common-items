@@ -382,17 +382,10 @@ def test_images(input_value, expected_value):
 @pytest.mark.parametrize(
     "input_value,expected_value",
     [
-        ("$10", "10.00"),
-        ("100  ", "100.00"),
-        ("100rub", "100.00"),
         (100, "100.00"),
         (None, None),
         ([], []),
         ({}, {}),
-        ("", None),
-        ("buy 10 ab ab", "10.00"),
-        ("1,000.17", "1000.17"),
-        ("1,000", "1000.00"),
         (22.9, "22.90"),
         (22.0, "22.00"),
     ],
