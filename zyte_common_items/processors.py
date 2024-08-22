@@ -164,8 +164,7 @@ def simple_price_processor(value: Any, page: Any) -> Any:
     Uses the price-parser_ library.
 
     Supported inputs are :class:`~parsel.selector.Selector`,
-    :class:`~parsel.selector.SelectorList`, :class:`~lxml.html.HtmlElement`, string
-    instances and numeric values.
+    :class:`~parsel.selector.SelectorList`, :class:`~lxml.html.HtmlElement` and numeric values.
 
     Other inputs are returned as is.
 
@@ -175,7 +174,7 @@ def simple_price_processor(value: Any, page: Any) -> Any:
 
     if isinstance(value, Real):
         return f"{value:.2f}"
-    elif isinstance(value, (Selector, HtmlElement, str)):
+    elif isinstance(value, (Selector, HtmlElement)):
         price = extract_price(value)
         return _format_price(price)
     else:
