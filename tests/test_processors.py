@@ -13,7 +13,9 @@ from zyte_common_items.processors import (
     brand_processor,
     breadcrumbs_processor,
     gtin_processor,
+    list_processor,
     rating_processor,
+    string_processor,
 )
 
 base_url = "http://www.example.com/blog/"
@@ -321,3 +323,46 @@ def test_rating_3_values():
     assert page.aggregateRating == AggregateRating(
         ratingValue=3.8, bestRating=10, reviewCount=5
     )
+
+
+@pytest.mark.parametrize(
+    "input_value,expected_value",
+    [
+        (None, None),
+        ("", ""),
+        ("Value ", "Value"),
+        (" Value", "Value"),
+        (" Value ", "Value"),
+        ("Multiword value ", "Multiword value"),
+        (" Multiword value", "Multiword value"),
+        (" Multiword value ", "Multiword value"),
+    ],
+)
+def test_string_processor(input_value, expected_value):
+    class RatingPage(BasePage):
+        @field(out=[string_processor])
+        def name(self):
+            return input_value
+
+    page = RatingPage(base_url)  # type: ignore[arg-type]
+    assert page.name == expected_value
+
+
+@pytest.mark.parametrize(
+    "input_value,expected_value",
+    [
+        (None, None),
+        ([], []),
+        (["a", "b"], ["a", "b"]),
+        ([" a", "b "], ["a", "b"]),
+        ([" a ", " b "], ["a", "b"]),
+    ],
+)
+def test_list_processor(input_value, expected_value):
+    class RatingPage(BasePage):
+        @field(out=[list_processor(string_processor)])
+        def name(self):
+            return input_value
+
+    page = RatingPage(base_url)  # type: ignore[arg-type]
+    assert page.name == expected_value

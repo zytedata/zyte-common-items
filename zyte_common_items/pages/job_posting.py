@@ -9,10 +9,31 @@ from zyte_common_items.items import JobPosting, JobPostingMetadata
 from zyte_common_items.processors import (
     description_html_processor,
     description_processor,
+    list_processor,
+    string_processor,
 )
 
 from .base import BasePage, Page
 from .mixins import DescriptionMixin, HasMetadata
+
+
+class _JobPostingProcessors(BasePage.Processors):
+    description = [description_processor]
+    descriptionHtml = [description_html_processor]
+    jobPostingId = [string_processor]
+    datePublished = [string_processor]
+    datePublishedRaw = [string_processor]
+    dateModified = [string_processor]
+    dateModifiedRaw = [string_processor]
+    validThrough = [string_processor]
+    validThroughRaw = [string_processor]
+    jobTitle = [string_processor]
+    headline = [string_processor]
+    employmentType = [string_processor]
+    requirements = [list_processor(string_processor)]
+    jobStartDate = [string_processor]
+    jobStartDateRaw = [string_processor]
+    remoteStatus = [string_processor]
 
 
 class BaseJobPostingPage(
@@ -20,9 +41,8 @@ class BaseJobPostingPage(
 ):
     """:class:`BasePage` subclass for :class:`JobPosting`."""
 
-    class Processors(BasePage.Processors):
-        description = [description_processor]
-        descriptionHtml = [description_html_processor]
+    class Processors(_JobPostingProcessors):
+        pass
 
 
 class JobPostingPage(
@@ -30,9 +50,8 @@ class JobPostingPage(
 ):
     """:class:`Page` subclass for :class:`JobPosting`."""
 
-    class Processors(Page.Processors):
-        description = [description_processor]
-        descriptionHtml = [description_html_processor]
+    class Processors(_JobPostingProcessors):
+        pass
 
 
 @attrs.define

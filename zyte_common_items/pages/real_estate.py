@@ -13,9 +13,25 @@ from zyte_common_items.components import (
 from zyte_common_items.fields import auto_field
 from zyte_common_items.items import RealEstate, RealEstateMetadata
 
-from ..processors import breadcrumbs_processor, description_processor
+from ..processors import breadcrumbs_processor, description_processor, string_processor
 from .base import BasePage, Page
 from .mixins import HasMetadata
+
+
+class _RealEstateProcessors(BasePage.Processors):
+    breadcrumbs = [breadcrumbs_processor]
+    description = [description_processor]
+    currency = [string_processor]
+    currencyRaw = [string_processor]
+    datePublished = [string_processor]
+    datePublishedRaw = [string_processor]
+    name = [string_processor]
+    price = [string_processor]
+    propertyType = [string_processor]
+    realEstateId = [string_processor]
+    rentalPeriod = [string_processor]
+    tradeType = [string_processor]
+    virtualTourUrl = [string_processor]
 
 
 class BaseRealEstatePage(
@@ -23,17 +39,15 @@ class BaseRealEstatePage(
 ):
     """:class:`BasePage` subclass for :class:`RealEstate`."""
 
-    class Processors(BasePage.Processors):
-        breadcrumbs = [breadcrumbs_processor]
-        description = [description_processor]
+    class Processors(_RealEstateProcessors):
+        pass
 
 
 class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata]):
     """:class:`Page` subclass for :class:`RealEstate`."""
 
-    class Processors(Page.Processors):
-        breadcrumbs = [breadcrumbs_processor]
-        description = [description_processor]
+    class Processors(_RealEstateProcessors):
+        pass
 
 
 @attrs.define

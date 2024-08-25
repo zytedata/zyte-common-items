@@ -345,3 +345,21 @@ def metadata_processor(metadata: BaseMetadata, page):
     if page.metadata_cls is None:
         return None
     return metadata.cast(page.metadata_cls)
+
+
+def string_processor(value: str) -> Union[str, None]:
+    """Processor for string values"""
+    if isinstance(value, str):
+        return value.strip()
+    return value
+
+
+def list_processor(processor: Callable) -> Any:
+    """Apply processor to a list of items"""
+
+    def loop(values):
+        if not isinstance(values, Iterable):
+            return values
+        return [processor(value) for value in values]
+
+    return loop

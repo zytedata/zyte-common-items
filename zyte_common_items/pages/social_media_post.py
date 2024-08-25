@@ -6,21 +6,31 @@ from web_poet import Returns
 from zyte_common_items.components import Reactions, SocialMediaPostAuthor, Url
 from zyte_common_items.fields import auto_field
 from zyte_common_items.items import SocialMediaPost, SocialMediaPostMetadata
+from zyte_common_items.processors import list_processor, string_processor
 
 from .base import BasePage, Page
 from .mixins import HasMetadata
 
 
+class _SocialMediaPostProcessors(BasePage.Processors):
+    postId = [string_processor]
+    text = [string_processor]
+    datePublished = [string_processor]
+    hashtags = [list_processor(string_processor)]
+
+
 class BaseSocialMediaPostPage(
     BasePage, Returns[SocialMediaPost], HasMetadata[SocialMediaPostMetadata]
 ):
-    pass
+    class Processors(_SocialMediaPostProcessors):
+        pass
 
 
 class SocialMediaPostPage(
     Page, Returns[SocialMediaPost], HasMetadata[SocialMediaPostMetadata]
 ):
-    pass
+    class Processors(_SocialMediaPostProcessors):
+        pass
 
 
 @attrs.define

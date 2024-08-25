@@ -6,9 +6,14 @@ from web_poet import Returns
 from zyte_common_items.components import ProbabilityRequest, Request
 from zyte_common_items.fields import auto_field
 from zyte_common_items.items import ArticleNavigation, ArticleNavigationMetadata
+from zyte_common_items.processors import string_processor
 
 from .base import BasePage, Page
 from .mixins import HasMetadata
+
+
+class _ArticleNavigationProcessors(BasePage.Processors):
+    categoryName = [string_processor]
 
 
 class BaseArticleNavigationPage(
@@ -16,11 +21,17 @@ class BaseArticleNavigationPage(
 ):
     """:class:`BasePage` subclass for :class:`ArticleNavigation`."""
 
+    class Processors(_ArticleNavigationProcessors):
+        pass
+
 
 class ArticleNavigationPage(
     Page, Returns[ArticleNavigation], HasMetadata[ArticleNavigationMetadata]
 ):
     """:class:`Page` subclass for :class:`ArticleNavigation`."""
+
+    class Processors(_ArticleNavigationProcessors):
+        pass
 
 
 @attrs.define

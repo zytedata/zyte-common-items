@@ -6,10 +6,16 @@ from web_poet import Returns
 from zyte_common_items.components import Breadcrumb, Link
 from zyte_common_items.fields import auto_field
 from zyte_common_items.items import ProductFromList, ProductList, ProductListMetadata
-from zyte_common_items.processors import breadcrumbs_processor
+from zyte_common_items.processors import breadcrumbs_processor, string_processor
 
 from .base import BasePage, Page
 from .mixins import HasMetadata
+
+
+class _ProductListProcessors(BasePage.Processors):
+    breadcrumbs = [breadcrumbs_processor]
+    canonicalUrl = [string_processor]
+    categoryName = [string_processor]
 
 
 class BaseProductListPage(
@@ -17,15 +23,15 @@ class BaseProductListPage(
 ):
     """:class:`BasePage` subclass for :class:`ProductList`."""
 
-    class Processors(BasePage.Processors):
-        breadcrumbs = [breadcrumbs_processor]
+    class Processors(_ProductListProcessors):
+        pass
 
 
 class ProductListPage(Page, Returns[ProductList], HasMetadata[ProductListMetadata]):
     """:class:`Page` subclass for :class:`ProductList`."""
 
-    class Processors(Page.Processors):
-        breadcrumbs = [breadcrumbs_processor]
+    class Processors(_ProductListProcessors):
+        pass
 
 
 @attrs.define
