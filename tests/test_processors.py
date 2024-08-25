@@ -333,6 +333,9 @@ def test_rating_3_values():
         ("Value ", "Value"),
         (" Value", "Value"),
         (" Value ", "Value"),
+        ("Multiword value ", "Multiword value"),
+        (" Multiword value", "Multiword value"),
+        (" Multiword value ", "Multiword value"),
     ],
 )
 def test_string_processor(input_value, expected_value):
