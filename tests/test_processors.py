@@ -7,12 +7,22 @@ from zyte_parsers import Breadcrumb as zp_Breadcrumb
 from zyte_parsers import Gtin as zp_Gtin
 from zyte_parsers import extract_breadcrumbs
 
-from zyte_common_items import AggregateRating, BasePage, Breadcrumb, Gtin, ProductPage
+from zyte_common_items import (
+    AggregateRating,
+    BasePage,
+    Brand,
+    Breadcrumb,
+    Gtin,
+    Image,
+    ProductPage,
+)
 from zyte_common_items.processors import (
     _format_price,
     brand_processor,
     breadcrumbs_processor,
     gtin_processor,
+    images_processor,
+    price_processor,
     rating_processor,
 )
 
@@ -125,16 +135,18 @@ def test_breadcrumbs_base_url():
     "input_value,expected_value",
     [
         (None, None),
-        ("", ""),
-        ("foo", "foo"),
+        ("", None),
+        (" ", None),
+        ("foo", Brand(name="foo")),
+        (" foo ", Brand(name="foo")),
         (Selector(text="<html></html>"), None),
         (SelectorList([]), None),
-        (fromstring("<p>foo</p>"), "foo"),
-        (fromstring("<img alt='foo'>"), "foo"),
-        (fromstring("<p><img alt='foo'></p>"), "foo"),
-        (fromstring("<p><p><img alt='foo'></p></p>"), "foo"),
-        (Selector(text="<p>foo</p>"), "foo"),
-        (SelectorList([Selector(text="<p>foo</p>")]), "foo"),
+        (fromstring("<p>foo</p>"), Brand(name="foo")),
+        (fromstring("<img alt='foo'>"), Brand(name="foo")),
+        (fromstring("<p><img alt='foo'></p>"), Brand(name="foo")),
+        (fromstring("<p><p><img alt='foo'></p></p>"), Brand(name="foo")),
+        (Selector(text="<p>foo</p>"), Brand(name="foo")),
+        (SelectorList([Selector(text="<p>foo</p>")]), Brand(name="foo")),
     ],
 )
 def test_brand(input_value, expected_value):
@@ -158,7 +170,7 @@ def test_brand_page():
         body="<html><body><img alt='foo'></body></html>".encode(),
     )
     page = MyProductPage(response=response)
-    assert page.brand == "foo"
+    assert page.brand == Brand(name="foo")
 
 
 @pytest.mark.parametrize(
@@ -321,3 +333,85 @@ def test_rating_3_values():
     assert page.aggregateRating == AggregateRating(
         ratingValue=3.8, bestRating=10, reviewCount=5
     )
+
+
+@pytest.mark.parametrize(
+    "input_value,expected_value",
+    [
+        (None, None),
+        ([], []),
+        ("https://www.url.com/img.jpg", [Image(url="https://www.url.com/img.jpg")]),
+        (
+            [
+                Image("https://www.url.com/img1.jpg"),
+                Image("https://www.url.com/img2.jpg"),
+            ],
+            [
+                Image("https://www.url.com/img1.jpg"),
+                Image("https://www.url.com/img2.jpg"),
+            ],
+        ),
+        (
+            ["https://www.url.com/img1.jpg", "https://www.url.com/img2.jpg"],
+            [
+                Image("https://www.url.com/img1.jpg"),
+                Image("https://www.url.com/img2.jpg"),
+            ],
+        ),
+        (
+            [
+                {"url": "https://www.url.com/img1.jpg"},
+                {"url": "https://www.url.com/img2.jpg"},
+            ],
+            [
+                Image("https://www.url.com/img1.jpg"),
+                Image("https://www.url.com/img2.jpg"),
+            ],
+        ),
+    ],
+)
+def test_images(input_value, expected_value):
+    class ImagesPage(BasePage):
+        @field(out=[images_processor])
+        def images(self):
+            return input_value
+
+    page = ImagesPage(base_url)  # type: ignore[arg-type]
+    assert page.images == expected_value
+
+
+def test_images_page():
+    class MyProductPage(ProductPage):
+        @field
+        def images(self):
+            return self.css("img::attr(href)").getall()
+
+    response = HttpResponse(
+        url="http://www.example.com/",
+        body="<html><body><img href='https://www.url.com/img.jpg'></body></html>".encode(),
+    )
+    page = MyProductPage(response=response)
+    assert page.images == [Image(url="https://www.url.com/img.jpg")]
+
+
+@pytest.mark.parametrize(
+    "input_value,expected_value",
+    [
+        (100, "100.00"),
+        (None, None),
+        ([], []),
+        ({}, {}),
+        (22.9, "22.90"),
+        (22.0, "22.00"),
+        ("22.9", "22.9"),
+        ("Do not apply to strings...", "Do not apply to strings..."),
+    ],
+)
+def test_prices(input_value, expected_value):
+    class PricePage(BasePage):
+        @field(out=[price_processor])
+        def price(self):
+            return input_value
+
+    page = PricePage(base_url)  # type: ignore[arg-type]
+    assert page.price == expected_value
