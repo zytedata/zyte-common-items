@@ -16,12 +16,15 @@ from zyte_common_items import (
     Image,
     ProductPage,
 )
+from zyte_common_items.components.metadata import Metadata
+from zyte_common_items.items.product import ProductMetadata
 from zyte_common_items.processors import (
     _format_price,
     brand_processor,
     breadcrumbs_processor,
     gtin_processor,
     images_processor,
+    metadata_processor,
     price_processor,
     rating_processor,
 )
@@ -415,3 +418,20 @@ def test_prices(input_value, expected_value):
 
     page = PricePage(base_url)  # type: ignore[arg-type]
     assert page.price == expected_value
+
+
+@pytest.mark.parametrize(
+    "input_value,page,expected_value",
+    [
+        (None, ProductPage, None),
+        (Metadata(), ProductPage, ProductMetadata()),
+    ],
+)
+def test_metadata(input_value, page, expected_value):
+    class CustomPage(page):
+        @field(out=[metadata_processor])
+        def metadata(self):
+            return input_value
+
+    page = CustomPage(base_url)  # type: ignore[arg-type]
+    assert page.metadata == expected_value
