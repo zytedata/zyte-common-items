@@ -136,7 +136,9 @@ def test_breadcrumbs_base_url():
     [
         (None, None),
         ("", None),
+        (" ", None),
         ("foo", Brand(name="foo")),
+        (" foo ", Brand(name="foo")),
         (Selector(text="<html></html>"), None),
         (SelectorList([]), None),
         (fromstring("<p>foo</p>"), Brand(name="foo")),
@@ -401,6 +403,8 @@ def test_images_page():
         ({}, {}),
         (22.9, "22.90"),
         (22.0, "22.00"),
+        ("22.9", "22.9"),
+        ("Do not apply to strings...", "Do not apply to strings..."),
     ],
 )
 def test_prices(input_value, expected_value):

@@ -121,6 +121,7 @@ def brand_processor(value: Any, page: Any) -> Any:
     value = _handle_selectorlist(value)
 
     if isinstance(value, str):
+        value = value.strip()
         return Brand(name=value) if value else None
 
     if isinstance(value, (Selector, SelectorList, HtmlElement)):
@@ -372,13 +373,6 @@ def images_processor(value: Any, page: Any) -> Any:
 
     Other inputs are returned unchanged.
     """
-
-    # TODO: add generic-purpose extract_images utility to zyte-parsers
-    #
-    # value = _handle_selectorlist(value)
-    # if isinstance(value, (Selector, HtmlElement)):
-    #    images = extract_images(value)
-    #    return [Image(url=url) for url in images]
 
     if isinstance(value, str):
         return [Image(url=value)]
