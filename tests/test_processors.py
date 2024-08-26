@@ -1,3 +1,5 @@
+from typing import Type
+
 import pytest
 from lxml.html import fromstring
 from parsel import Selector, SelectorList
@@ -421,14 +423,14 @@ def test_prices(input_value, expected_value):
 
 
 @pytest.mark.parametrize(
-    "input_value,page,expected_value",
+    "input_value,BasePage,expected_value",
     [
         (None, ProductPage, None),
         (Metadata(), ProductPage, ProductMetadata()),
     ],
 )
-def test_metadata(input_value, page, expected_value):
-    class CustomPage(page):
+def test_metadata(input_value, BasePage: Type, expected_value):
+    class CustomPage(BasePage):
         @field(out=[metadata_processor])
         def metadata(self):
             return input_value
