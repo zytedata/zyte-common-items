@@ -402,7 +402,7 @@ def probability_request_list_processor(
     return [request.cast(ProbabilityRequest) for request in request_list]
 
 
-def metadata_processor(metadata: BaseMetadata, page):
+def metadata_processor(metadata: Optional[BaseMetadata], page):
     """Processor for a metadata field that ensures that the output metadata
     object uses the metadata class declared by *page*."""
     if metadata is None or page.metadata_cls is None:
