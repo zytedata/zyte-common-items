@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.21.0 (unreleased)
+0.21.0 (2024-08-27)
 ===================
 
 * The new :func:`~zyte_common_items.processors.images_processor`, used by
