@@ -13,7 +13,7 @@ from zyte_common_items.components import (
 from zyte_common_items.fields import auto_field
 from zyte_common_items.items import RealEstate, RealEstateMetadata
 
-from ..processors import breadcrumbs_processor, description_processor
+from ..processors import breadcrumbs_processor, description_processor, images_processor
 from .base import BasePage, Page
 from .mixins import HasMetadata
 
@@ -26,6 +26,7 @@ class BaseRealEstatePage(
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
+        images = [images_processor]
 
 
 class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata]):
@@ -34,6 +35,7 @@ class RealEstatePage(Page, Returns[RealEstate], HasMetadata[RealEstateMetadata])
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
         description = [description_processor]
+        images = [images_processor]
 
 
 @attrs.define

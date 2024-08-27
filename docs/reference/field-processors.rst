@@ -19,6 +19,10 @@ Built-in field processors
 
 .. autofunction:: zyte_common_items.processors.gtin_processor
 
+.. autofunction:: zyte_common_items.processors.images_processor
+
+.. autofunction:: zyte_common_items.processors.metadata_processor
+
 .. autofunction:: zyte_common_items.processors.price_processor
 
 .. autofunction:: zyte_common_items.processors.rating_processor

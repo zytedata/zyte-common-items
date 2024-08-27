@@ -16,7 +16,11 @@ from zyte_common_items.components import (
 )
 from zyte_common_items.fields import auto_field
 from zyte_common_items.items import BusinessPlace, BusinessPlaceMetadata
-from zyte_common_items.processors import description_processor, rating_processor
+from zyte_common_items.processors import (
+    description_processor,
+    images_processor,
+    rating_processor,
+)
 
 from .base import BasePage, Page
 from .mixins import HasMetadata
@@ -30,6 +34,7 @@ class BaseBusinessPlacePage(
     class Processors(BasePage.Processors):
         aggregateRating = [rating_processor]
         description = [description_processor]
+        images = [images_processor]
 
 
 class BusinessPlacePage(
@@ -40,6 +45,7 @@ class BusinessPlacePage(
     class Processors(Page.Processors):
         aggregateRating = [rating_processor]
         description = [description_processor]
+        images = [images_processor]
 
 
 @attrs.define

@@ -6,7 +6,7 @@ from web_poet import Returns
 from zyte_common_items.components import Audio, Author, Breadcrumb, Image, Video
 from zyte_common_items.fields import auto_field
 from zyte_common_items.items import Article, ArticleMetadata
-from zyte_common_items.processors import breadcrumbs_processor
+from zyte_common_items.processors import breadcrumbs_processor, images_processor
 
 from .base import BasePage, Page
 from .mixins import HasMetadata
@@ -17,6 +17,7 @@ class BaseArticlePage(BasePage, Returns[Article], HasMetadata[ArticleMetadata]):
 
     class Processors(BasePage.Processors):
         breadcrumbs = [breadcrumbs_processor]
+        images = [images_processor]
 
 
 class ArticlePage(Page, Returns[Article], HasMetadata[ArticleMetadata]):
@@ -24,6 +25,7 @@ class ArticlePage(Page, Returns[Article], HasMetadata[ArticleMetadata]):
 
     class Processors(Page.Processors):
         breadcrumbs = [breadcrumbs_processor]
+        images = [images_processor]
 
 
 @attrs.define
