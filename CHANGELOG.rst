@@ -2,6 +2,26 @@
 Changelog
 =========
 
+0.21.0 (2024-08-27)
+===================
+
+* The new :func:`~zyte_common_items.processors.images_processor`, used by
+  default in ``images`` fields, can convert a string, a list of strings or a
+  list of dicts into an :class:`~zyte_common_items.Image` list. Strings become
+  :attr:`Image.url <zyte_common_items.Image.url>`. Dicts get their ``url`` key
+  mapped as :attr:`Image.url <zyte_common_items.Image.url>`.
+
+* :func:`~zyte_common_items.processors.brand_processor` now converts strings
+  into :class:`~zyte_common_items.Brand` objects with the input string as
+  :attr:`Brand.name <zyte_common_items.Brand.name>`.
+
+* :func:`~zyte_common_items.processors.price_processor` and
+  :func:`~zyte_common_items.processors.simple_price_processor` now convert
+  numeric values into strings with 2 decimal positions.
+
+* :func:`~zyte_common_items.processors.metadata_processor` no longer assumes
+  that the input metadata is not ``None``.
+
 0.20.0 (2024-06-19)
 ===================
 

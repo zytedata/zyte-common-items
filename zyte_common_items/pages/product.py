@@ -19,6 +19,7 @@ from zyte_common_items.processors import (
     description_html_processor,
     description_processor,
     gtin_processor,
+    images_processor,
     price_processor,
     rating_processor,
     simple_price_processor,
@@ -46,6 +47,7 @@ class BaseProductPage(
         gtin = [gtin_processor]
         price = [price_processor]
         regularPrice = [simple_price_processor]
+        images = [images_processor]
 
 
 class ProductPage(
@@ -62,6 +64,7 @@ class ProductPage(
         gtin = [gtin_processor]
         price = [price_processor]
         regularPrice = [simple_price_processor]
+        images = [images_processor]
 
 
 @attrs.define
