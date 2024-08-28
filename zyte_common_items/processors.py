@@ -30,7 +30,7 @@ from .components import (
     Request,
 )
 
-def _to_int(value) -> Any:
+def _to_int(value: Any) -> Any:
     if isinstance(value, Real):
         return int(value)
     elif isinstance(value, str):
@@ -39,7 +39,7 @@ def _to_int(value) -> Any:
         return int(value)
     return value
 
-def _to_float(value) -> Any:
+def _to_float(value: Any) -> Any:
     if isinstance(value, Real):
         return float(value)
     elif isinstance(value, str):
