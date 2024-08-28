@@ -329,6 +329,14 @@ def test_gtin(input_value, expected_value):
             },
             AggregateRating(ratingValue=2.12, bestRating=5.0, reviewCount=12),
         ),
+        (
+            {
+                "ratingValue": "2.12",
+                "bestRating": "5,",
+                "reviewCount": "12,123",
+            },
+            AggregateRating(ratingValue=2.12, bestRating=5.0, reviewCount=12123),
+        ),
     ],
 )
 def test_rating(input_value, expected_value):

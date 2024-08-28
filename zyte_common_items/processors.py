@@ -1,5 +1,5 @@
 from collections.abc import Iterable, Mapping
-from functools import partial, wraps
+from functools import wraps
 from numbers import Real
 from typing import Any, Callable, List, Optional, Union, Type
 
@@ -30,17 +30,23 @@ from .components import (
     Request,
 )
 
-def _to_number(value: Any, number_type: Type) -> Any:
+def _to_int(value) -> Any:
     if isinstance(value, Real):
-        return number_type(value)
+        return int(value)
+    elif isinstance(value, str):
+        if "," in value:
+            value = value.replace(",", "")
+        return int(value)
+    return value
+
+def _to_float(value) -> Any:
+    if isinstance(value, Real):
+        return float(value)
     elif isinstance(value, str):
         if "," in value:
             value = value.replace(",", ".")
-        return number_type(value)
+        return float(value)
     return value
-
-_to_int = partial(_to_number, number_type=int)
-_to_float = partial(_to_number, number_type=float)
 
 
 def _get_base_url(page: Any) -> Optional[str]:
