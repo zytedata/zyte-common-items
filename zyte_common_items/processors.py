@@ -1,7 +1,7 @@
 from collections.abc import Iterable, Mapping
 from functools import wraps
 from numbers import Integral, Real
-from typing import Any, Callable, List, Optional, Union, Type
+from typing import Any, Callable, List, Optional, Union
 
 from clear_html import clean_node, cleaned_node_to_html, cleaned_node_to_text
 from lxml.html import HtmlElement
@@ -30,6 +30,7 @@ from .components import (
     Request,
 )
 
+
 def _to_int(value: Any) -> Any:
     if isinstance(value, Integral):
         return int(value)
@@ -38,6 +39,7 @@ def _to_int(value: Any) -> Any:
             value = value.replace(",", "")
         return int(value)
     return value
+
 
 def _to_float(value: Any) -> Any:
     if isinstance(value, Real):
