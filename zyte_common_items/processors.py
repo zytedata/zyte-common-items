@@ -304,7 +304,7 @@ def rating_processor(value: Any, page: Any) -> Any:
     The input can also be a dictionary with one or more of the
     :class:`~zyte_common_items.AggregateRating` fields as keys. The values for
     those keys can be either final values, to be assigned to the corresponding
-    fields, or selector-like objects.
+    fields, strings to be parsed, or selector-like objects.
 
     If a returning dictionary is missing the ``bestRating`` field and
     ``ratingValue`` is a selector-like object, ``bestRating`` may be extracted.
