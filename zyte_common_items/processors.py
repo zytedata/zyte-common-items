@@ -1,6 +1,6 @@
 from collections.abc import Iterable, Mapping
 from functools import wraps
-from numbers import Real
+from numbers import Integral, Real
 from typing import Any, Callable, List, Optional, Union, Type
 
 from clear_html import clean_node, cleaned_node_to_html, cleaned_node_to_text
@@ -31,7 +31,7 @@ from .components import (
 )
 
 def _to_int(value: Any) -> Any:
-    if isinstance(value, Real):
+    if isinstance(value, Integral):
         return int(value)
     elif isinstance(value, str):
         if "," in value:
