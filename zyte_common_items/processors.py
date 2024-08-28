@@ -1,7 +1,7 @@
 from collections.abc import Iterable, Mapping
-from functools import wraps
+from functools import partial, wraps
 from numbers import Real
-from typing import Any, Callable, List, Optional, Union
+from typing import Any, Callable, List, Optional, Union, Type
 
 from clear_html import clean_node, cleaned_node_to_html, cleaned_node_to_text
 from lxml.html import HtmlElement
@@ -29,6 +29,18 @@ from .components import (
     ProbabilityRequest,
     Request,
 )
+
+def _to_number(value: Any, number_type: Type) -> Any:
+    if isinstance(value, Real):
+        return number_type(value)
+    elif isinstance(value, str):
+        if "," in value:
+            value = value.replace(",", ".")
+        return number_type(value)
+    return value
+
+_to_int = partial(_to_number, number_type=int)
+_to_float = partial(_to_number, number_type=float)
 
 
 def _get_base_url(page: Any) -> Optional[str]:
@@ -343,7 +355,7 @@ def rating_processor(value: Any, page: Any) -> Any:
         if isinstance(review_count, (Selector, HtmlElement)):
             result.reviewCount = extract_review_count(review_count)
         elif review_count is not None:
-            result.reviewCount = int(review_count)
+            result.reviewCount = _to_int(review_count)
 
         rating_value = _handle_selectorlist(value.get("ratingValue"))
         if isinstance(rating_value, (Selector, HtmlElement)):
@@ -351,10 +363,10 @@ def rating_processor(value: Any, page: Any) -> Any:
             result.ratingValue = zp_rating.ratingValue
             result.bestRating = zp_rating.bestRating
         elif rating_value is not None:
-            result.ratingValue = float(rating_value)
+            result.ratingValue = _to_float(rating_value)
 
         if (best_rating := value.get("bestRating")) is not None:
-            result.bestRating = float(best_rating)
+            result.bestRating = _to_float(best_rating)
 
         if result.reviewCount or result.bestRating or result.ratingValue:
             return result
