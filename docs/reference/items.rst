@@ -109,8 +109,8 @@ Job posting
    :members: dateDownloaded, probability, validationMessages
 
 
-Search engine results page
-==========================
+Search engine results
+=====================
 
 .. autoclass:: zyte_common_items.Serp(**kwargs)
    :members:

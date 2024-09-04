@@ -3,9 +3,8 @@ from typing import List, Optional
 import attrs
 from web_poet import Returns
 
-from zyte_common_items.components import SerpOrganicResult
 from zyte_common_items.fields import auto_field
-from zyte_common_items.items import Serp, SerpMetadata
+from zyte_common_items.items import Serp, SerpMetadata, SerpOrganicResult
 
 from .base import BasePage, Page
 from .mixins import HasMetadata

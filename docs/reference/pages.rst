@@ -114,8 +114,8 @@ Job posting
 .. autoclass:: zyte_common_items.AutoJobPostingPage(**kwargs)
    :show-inheritance:
 
-Search engine results page
-==========================
+Search engine results
+=====================
 
 .. autoclass:: zyte_common_items.BaseSerpPage(**kwargs)
    :show-inheritance:

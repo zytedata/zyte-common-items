@@ -21,5 +21,4 @@ from .metadata import (
 from .ratings import AggregateRating, StarRating
 from .real_estate import RealEstateArea
 from .request import Header, ProbabilityRequest, Request
-from .serp import SerpOrganicResult
 from .social_media_post import Reactions, SocialMediaPostAuthor

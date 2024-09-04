@@ -26,7 +26,6 @@ from .components import (
     Reactions,
     RealEstateArea,
     Request,
-    SerpOrganicResult,
     SocialMediaPostAuthor,
     StarRating,
     Url,
@@ -64,6 +63,7 @@ from .items import (
     SearchRequestTemplateMetadata,
     Serp,
     SerpMetadata,
+    SerpOrganicResult,
     SocialMediaPost,
     SocialMediaPostMetadata,
 )
