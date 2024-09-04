@@ -76,6 +76,9 @@ tied to any specific item type.
 .. autoclass:: zyte_common_items.Request(**kwargs)
    :members:
 
+.. autoclass:: zyte_common_items.SerpOrganicResult(**kwargs)
+   :members:
+
 .. autoclass:: zyte_common_items.SocialMediaPostAuthor(**kwargs)
    :members:
 

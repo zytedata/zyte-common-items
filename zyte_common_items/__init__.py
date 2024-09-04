@@ -61,6 +61,9 @@ from .items import (
     RealEstateMetadata,
     SearchRequestTemplate,
     SearchRequestTemplateMetadata,
+    Serp,
+    SerpMetadata,
+    SerpOrganicResult,
     SocialMediaPost,
     SocialMediaPostMetadata,
 )
@@ -77,6 +80,7 @@ from .pages import (
     AutoProductNavigationPage,
     AutoProductPage,
     AutoRealEstatePage,
+    AutoSerpPage,
     AutoSocialMediaPostPage,
     BaseArticleListPage,
     BaseArticleNavigationPage,
@@ -88,6 +92,7 @@ from .pages import (
     BaseProductNavigationPage,
     BaseProductPage,
     BaseRealEstatePage,
+    BaseSerpPage,
     BaseSocialMediaPostPage,
     BusinessPlacePage,
     HasMetadata,
@@ -99,5 +104,6 @@ from .pages import (
     ProductPage,
     RealEstatePage,
     SearchRequestTemplatePage,
+    SerpPage,
     SocialMediaPostPage,
 )

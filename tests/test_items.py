@@ -49,6 +49,9 @@ from zyte_common_items import (
     RealEstateArea,
     RealEstateMetadata,
     Request,
+    Serp,
+    SerpMetadata,
+    SerpOrganicResult,
     SocialMediaPost,
     SocialMediaPostAuthor,
     SocialMediaPostMetadata,
@@ -498,6 +501,30 @@ _JOB_POSTING_ALL_KWARGS: dict = {
     ),
 }
 
+_SERP_MIN_KWARGS: dict = {
+    "url": "https://example.com/search?q=foo+bar",
+}
+
+_SERP_ALL_KWARGS: dict = {
+    **_SERP_MIN_KWARGS,
+    "organicResults": [
+        SerpOrganicResult(
+            description="used as metasyntactic variables and placeholder names in computer programming or computer-related documentation.",
+            name="Foobar",
+            url="https://en.wikipedia.org/wiki/Foobar",
+            rank=1,
+        ),
+    ],
+    "url": "https://example.com/search?q=foo+bar",
+    "pageNumber": 1,
+    "metadata": SerpMetadata(
+        dateDownloaded="2022-12-31T13:01:54Z",
+        displayedQuery="foo bar",
+        searchedQuery="foo bar",
+        totalOrganicResults=999_999_999_999,
+    ),
+}
+
 _SOCIAL_MEDIA_POST_MIN_KWARGS: dict = {
     "url": "https://example.com/viewjob/12345",
 }
@@ -837,6 +864,28 @@ def test_job_posting_missing_fields():
             JobPosting(**incomplete_kwargs)
 
 
+def test_serp_all_fields():
+    serp = Serp(**_SERP_ALL_KWARGS)
+    for field in list(_SERP_ALL_KWARGS):
+        assert getattr(serp, field) == _SERP_ALL_KWARGS[field]
+
+
+def test_serp_min_fields():
+    serp = Serp(**_SERP_MIN_KWARGS)
+    for field in list(_SERP_ALL_KWARGS):
+        if field in _SERP_MIN_KWARGS:
+            continue
+        assert getattr(serp, field) is None
+
+
+def test_serp_missing_fields():
+    for required_field in list(_SERP_MIN_KWARGS):
+        incomplete_kwargs: dict = copy(_SERP_MIN_KWARGS)
+        del incomplete_kwargs[required_field]
+        with pytest.raises(TypeError):
+            Serp(**incomplete_kwargs)
+
+
 def test_social_media_post_all_fields():
     social_media_post = SocialMediaPost(**_SOCIAL_MEDIA_POST_ALL_KWARGS)
     for field in list(_SOCIAL_MEDIA_POST_ALL_KWARGS):
@@ -874,6 +923,8 @@ def test_social_media_post_missing_fields():
         (ProductNavigation, False),
         (ProductVariant, False),
         (RealEstate, True),
+        (Serp, False),
+        (SocialMediaPost, True),
     ),
 )
 def test_get_probability_request(cls, has_proba):
