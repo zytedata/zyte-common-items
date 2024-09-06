@@ -1,5 +1,5 @@
 import base64
-from typing import List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Optional, Type, TypeVar
 
 import attrs
 
@@ -41,6 +41,9 @@ class Request(Item):
 
     #: Name of the page being requested.
     name: Optional[str] = None
+
+    #: Arbitrary list of information about the request.
+    notes: Optional[Dict[str, Any]] = None
 
     _body_bytes = None
 
