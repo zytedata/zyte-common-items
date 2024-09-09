@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.22.0 (2024-09-DD)
+0.22.0 (2024-09-09)
 ===================
 
 * Added :class:`~.Serp` and related classes.
