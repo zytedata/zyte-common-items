@@ -4,6 +4,7 @@ from .article import Article, ArticleMetadata
 from .article_list import ArticleFromList, ArticleList, ArticleListMetadata
 from .article_navigation import ArticleNavigation, ArticleNavigationMetadata
 from .business_place import BusinessPlace, BusinessPlaceMetadata
+from .custom_attributes import CustomAttributes
 from .job_posting import JobPosting, JobPostingMetadata
 from .product import Product, ProductMetadata, ProductVariant
 from .product_list import ProductFromList, ProductList, ProductListMetadata

@@ -6,6 +6,7 @@ from .author import Author
 from .brand import Brand
 from .breadcrumbs import Breadcrumb
 from .business_place import Amenity, OpeningHoursItem, ParentPlace
+from .custom_attributes import CustomAttributesMetadata
 from .gtin import Gtin
 from .job_posting import BaseSalary, HiringOrganization, JobLocation
 from .links import Link, NamedLink, Url
