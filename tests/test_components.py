@@ -11,6 +11,7 @@ from zyte_common_items import (
     BusinessPlaceMetadata,
     CustomAttributes,
     CustomAttributesMetadata,
+    CustomAttributesValues,
     Header,
     HiringOrganization,
     JobLocation,
@@ -226,4 +227,8 @@ def test_custom_attributes():
     CustomAttributes(
         {"foo": "bar", "baz": 42},
         CustomAttributesMetadata(inputTokens=1, excludedPIIAttributes=["foo"]),
+    )
+    CustomAttributes(
+        CustomAttributesValues({"foo": "bar", "baz": 42}),
+        CustomAttributesMetadata(),
     )

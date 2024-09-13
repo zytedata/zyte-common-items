@@ -12,6 +12,7 @@ from .components import (
     Brand,
     Breadcrumb,
     CustomAttributesMetadata,
+    CustomAttributesValues,
     Gtin,
     Header,
     HiringOrganization,
