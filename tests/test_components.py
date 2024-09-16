@@ -223,9 +223,9 @@ def test_url():
 
 
 def test_custom_attributes():
-    CustomAttributes({}, CustomAttributesMetadata())
+    CustomAttributes(CustomAttributesValues({}), CustomAttributesMetadata())
     CustomAttributes(
-        {"foo": "bar", "baz": 42},
+        CustomAttributesValues({"foo": "bar", "baz": 42}),
         CustomAttributesMetadata(inputTokens=1, excludedPIIAttributes=["foo"]),
     )
     CustomAttributes(
