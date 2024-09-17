@@ -134,14 +134,14 @@ Search Request templates
 Custom attributes
 =================
 
+.. autoclass:: zyte_common_items.CustomAttributes(**kwargs)
+   :members:
+   :inherited-members:
+
 .. autoclass:: zyte_common_items.CustomAttributesValues(**kwargs)
    :show-inheritance:
 
 .. autoclass:: zyte_common_items.CustomAttributesMetadata(**kwargs)
-   :members:
-   :inherited-members:
-
-.. autoclass:: zyte_common_items.CustomAttributes(**kwargs)
    :members:
    :inherited-members:
 
