@@ -9,6 +9,9 @@ from zyte_common_items import (
     BaseSalary,
     Breadcrumb,
     BusinessPlaceMetadata,
+    CustomAttributes,
+    CustomAttributesMetadata,
+    CustomAttributesValues,
     Header,
     HiringOrganization,
     JobLocation,
@@ -227,3 +230,15 @@ def test_social_media_post_metadata():
 
 def test_url():
     Url(url="https://example.com")
+
+
+def test_custom_attributes():
+    CustomAttributes(CustomAttributesValues({}), CustomAttributesMetadata())
+    CustomAttributes(
+        CustomAttributesValues({"foo": "bar", "baz": 42}),
+        CustomAttributesMetadata(inputTokens=1, excludedPIIAttributes=["foo"]),
+    )
+    CustomAttributes(
+        CustomAttributesValues({"foo": "bar", "baz": 42}),
+        CustomAttributesMetadata(),
+    )

@@ -142,6 +142,20 @@ Search Request templates
 .. autoclass:: zyte_common_items.SearchRequestTemplateMetadata(**kwargs)
    :members: dateDownloaded, probability, validationMessages
 
+Custom attributes
+=================
+
+.. autoclass:: zyte_common_items.CustomAttributes(**kwargs)
+   :members:
+   :inherited-members:
+
+.. autoclass:: zyte_common_items.CustomAttributesValues(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.CustomAttributesMetadata(**kwargs)
+   :members:
+   :inherited-members:
+
 Custom items
 ============
 
