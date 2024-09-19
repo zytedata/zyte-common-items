@@ -2,11 +2,15 @@
 Changelog
 =========
 
+0.23.0 (YYYY-MM-DD)
+===================
+
+* Added :class:`~.CustomAttributes` and related classes.
+
 0.22.0 (2024-09-09)
 ===================
 
 * Added :class:`~.Serp` and related classes.
-
 
 0.21.0 (2024-08-27)
 ===================
