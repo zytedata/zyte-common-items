@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.23.0 (YYYY-MM-DD)
+0.23.0 (2024-09-19)
 ===================
 
 * Added :class:`~.CustomAttributes` and related classes.
