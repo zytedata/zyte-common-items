@@ -220,6 +220,7 @@ METADATA_FIELDS = {
     "ProductNavigation": {"dateDownloaded", "validationMessages"},
     "RealEstate": {"dateDownloaded", "probability", "validationMessages"},
     "JobPosting": {"dateDownloaded", "probability", "searchText", "validationMessages"},
+    "JobPostingNavigation": {"dateDownloaded", "validationMessages"},
     "Serp": {
         "dateDownloaded",
         "displayedQuery",

@@ -114,6 +114,18 @@ Job posting
 .. autoclass:: zyte_common_items.AutoJobPostingPage(**kwargs)
    :show-inheritance:
 
+Job posting navigation
+======================
+
+.. autoclass:: zyte_common_items.BaseJobPostingNavigationPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.JobPostingNavigationPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoJobPostingNavigationPage(**kwargs)
+   :show-inheritance:
+
 Search engine results
 =====================
 

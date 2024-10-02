@@ -52,7 +52,6 @@ Article
 .. autoclass:: zyte_common_items.ArticleMetadata(**kwargs)
    :members: dateDownloaded, probability, validationMessages
 
-
 Article list
 ============
 
@@ -87,7 +86,6 @@ Business place
 .. autoclass:: zyte_common_items.BusinessPlaceMetadata(**kwargs)
    :members: dateDownloaded, probability, searchText, validationMessages
 
-
 Real estate
 ===========
 
@@ -108,6 +106,15 @@ Job posting
 .. autoclass:: zyte_common_items.JobPostingMetadata(**kwargs)
    :members: dateDownloaded, probability, validationMessages
 
+Job posting navigation
+======================
+
+.. autoclass:: zyte_common_items.JobPostingNavigation(**kwargs)
+   :members:
+   :inherited-members:
+
+.. autoclass:: zyte_common_items.JobPostingNavigationMetadata(**kwargs)
+   :members: dateDownloaded, validationMessages
 
 Search engine results
 =====================
@@ -118,7 +125,6 @@ Search engine results
 
 .. autoclass:: zyte_common_items.SerpMetadata(**kwargs)
    :members: dateDownloaded, displayedQuery, searchedQuery, totalOrganicResults, validationMessages
-
 
 Social media post
 =================

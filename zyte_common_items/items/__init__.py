@@ -10,6 +10,7 @@ from .custom_attributes import (
     CustomAttributesValues,
 )
 from .job_posting import JobPosting, JobPostingMetadata
+from .job_posting_navigation import JobPostingNavigation, JobPostingNavigationMetadata
 from .product import Product, ProductMetadata, ProductVariant
 from .product_list import ProductFromList, ProductList, ProductListMetadata
 from .product_navigation import ProductNavigation, ProductNavigationMetadata

@@ -13,6 +13,11 @@ from .business_place import (
     BusinessPlacePage,
 )
 from .job_posting import AutoJobPostingPage, BaseJobPostingPage, JobPostingPage
+from .job_posting_navigation import (
+    AutoJobPostingNavigationPage,
+    BaseJobPostingNavigationPage,
+    JobPostingNavigationPage,
+)
 from .mixins import DescriptionMixin, HasMetadata, MetadataT, PriceMixin
 from .product import AutoProductPage, BaseProductPage, ProductPage
 from .product_list import AutoProductListPage, BaseProductListPage, ProductListPage
