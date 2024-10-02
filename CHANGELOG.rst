@@ -2,6 +2,11 @@
 Changelog
 =========
 
+0.24.0 (YYYY-MM-DD)
+===================
+
+* Added :class:`~.JobPostingNavigation` and related classes.
+
 0.23.0 (2024-09-19)
 ===================
 

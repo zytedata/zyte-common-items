@@ -19,7 +19,7 @@ class ProductNavigationMetadata(ListMetadata):
 @attrs.define(kw_only=True)
 class ProductNavigation(Item):
     """Represents the navigational aspects of a product listing page on an
-    e-commerce website"""
+    e-commerce website."""
 
     #: Main URL from which the data is extracted.
     url: str = attrs.field(converter=url_to_str)

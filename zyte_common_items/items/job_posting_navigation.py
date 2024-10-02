@@ -19,7 +19,7 @@ class JobPostingNavigationMetadata(ListMetadata):
 @attrs.define(kw_only=True)
 class JobPostingNavigation(Item):
     """Represents the navigational aspects of a job posting listing page on a
-    job website"""
+    job website."""
 
     #: Main URL from which the data is extracted.
     url: str = attrs.field(converter=url_to_str)
