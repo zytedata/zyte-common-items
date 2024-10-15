@@ -51,7 +51,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.13']
+        python-version: ['3.12']  # Keep in sync with .readthedocs.yml
 
     steps:
     - uses: actions/checkout@v4
