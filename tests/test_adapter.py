@@ -1,10 +1,6 @@
 from collections.abc import Collection
 from contextlib import contextmanager
 from copy import copy
-
-# In Python ≤ 3.8 you cannot annotate with “collections.abc.Collection[Item]”,
-# so we need to import typing.Collection for annotation instead.
-from typing import Collection as CollectionType
 from typing import Optional
 
 import attrs
@@ -125,7 +121,7 @@ class EmptyCollection(Collection):
 def test_asdict_empty_collection(value):
     @attrs.define
     class _Item(Item):
-        children: CollectionType[Item]
+        children: Collection[Item]
 
     item = _Item(value)
     with configured_adapter():
@@ -376,7 +372,7 @@ def test_unknown_field_remove_missing():
 def test_keep_empty_adapter_global():
     @attrs.define
     class _Item(Item):
-        children: CollectionType[Item]
+        children: Collection[Item]
 
     item = _Item([])
     with configured_adapter(ZyteItemKeepEmptyAdapter):
@@ -388,7 +384,7 @@ def test_keep_empty_adapter_global():
 def test_keep_empty_adapter_local():
     @attrs.define
     class _Item(Item):
-        children: CollectionType[Item]
+        children: Collection[Item]
 
     class TestAdapter(ItemAdapter):
         ADAPTER_CLASSES = [ZyteItemKeepEmptyAdapter] + list(ItemAdapter.ADAPTER_CLASSES)
