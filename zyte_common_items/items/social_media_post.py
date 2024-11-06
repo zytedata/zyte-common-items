@@ -3,7 +3,12 @@ from typing import List, Optional
 import attrs
 
 from zyte_common_items.base import Item
-from zyte_common_items.components import Metadata, Reactions, SocialMediaPostAuthor, Url
+from zyte_common_items.components import (
+    Metadata,
+    SocialMediaPostAuthor,
+    SocialMediaReactions,
+    Url,
+)
 from zyte_common_items.converters import to_metadata_optional, url_to_str
 
 
@@ -23,7 +28,7 @@ class SocialMediaPost(Item):
     postId: Optional[str] = None
 
     #: Details of reactions to the post.
-    reactions: Optional[Reactions] = None
+    reactions: Optional[SocialMediaReactions] = None
 
     #: The text content of the post.
     text: Optional[str] = None

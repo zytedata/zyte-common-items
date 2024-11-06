@@ -10,8 +10,8 @@ from zyte_common_items.base import Item
 
 
 @attrs.define(kw_only=True)
-class Reactions(Item):
-    """Details of reactions to a post."""
+class SocialMediaReactions(Item):
+    """Details of reactions to a social media post."""
 
     #: Number of times the post has been shared.
     reposts: Optional[int] = None
@@ -21,6 +21,9 @@ class Reactions(Item):
 
     #: Number of dislikes or other negative reactions to the post.
     dislikes: Optional[int] = None
+
+
+Reactions = SocialMediaReactions  # TODO: Deprecate Reactions
 
 
 @attrs.define(kw_only=True)
