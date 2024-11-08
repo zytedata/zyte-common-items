@@ -2,6 +2,39 @@
 Changelog
 =========
 
+0.25.0 (2024-11-DD)
+===================
+
+* Removed Python 3.8 support, added Python 3.13 support.
+
+* **Backward-incompatible change:**
+  :class:`~zyte_common_items.SearchRequestTemplatePage` now subclasses
+  :class:`~zyte_common_items.Page`, adding a dependency on
+  :class:`~web_poet.page_inputs.http.HttpResponse`. A new
+  :class:`~zyte_common_items.BaseSearchRequestTemplatePage` that subclasses
+  :class:`~zyte_common_items.BasePage` has been added as well.
+
+  .. tip:: Where a dependency on
+    :class:`~web_poet.page_inputs.http.HttpResponse` is not needed,
+    :class:`~zyte_common_items.BaseSearchRequestTemplatePage` is a better
+    replacement for the :class:`~zyte_common_items.SearchRequestTemplatePage`
+    class from zyte-common-items 0.24.0 and lower, as it only depends on
+    :class:`~web_poet.page_inputs.http.RequestUrl`.
+
+* The ``keyword`` parameter of :meth:`SearchRequestTemplate.request()
+  <zyte_common_items.SearchRequestTemplate.request>` has been deprecated in
+  favor of ``query``. As a result, Jinja templates in
+  :class:`~zyte_common_items.SearchRequestTemplate` field values should now use
+  the ``query`` variable (e.g. ``{{ query|quote_plus }}``) instead of the
+  ``keyword`` variable.
+
+* Unexpected variables in Jinja templates of
+  :class:`~zyte_common_items.SearchRequestTemplate` field values (e.g.
+  ``{{ foo }}``), which used to be silently removed, will now trigger an
+  :exc:`~jinja2.exceptions.UndefinedError` exception when calling
+  :meth:`SearchRequestTemplate.request()
+  <zyte_common_items.SearchRequestTemplate.request>`.
+
 0.24.0 (2024-10-02)
 ===================
 
@@ -241,12 +274,12 @@ Changelog
 
   * Added :ref:`item-specific metadata classes <components-metadata>`. The
     ``metadata`` item fields were changed to use them.
-  * **Backwards incompatible change**: the ``DateDownloadedMetadata`` class was
+  * **Backward-incompatible change**: the ``DateDownloadedMetadata`` class was
     removed. The item-specific ones are now used instead.
-  * **Backwards incompatible change**:
+  * **Backward-incompatible change**:
     :class:`~zyte_common_items.ArticleFromList` no longer has a ``probability``
     field and instead has a ``metadata`` field like all other similar classes.
-  * **Backwards incompatible change**: while in most items the old and the new
+  * **Backward-incompatible change**: while in most items the old and the new
     type of the ``metadata`` field have the same fields, the one in
     :class:`~zyte_common_items.Article` now has ``probability``, the one in
     :class:`~zyte_common_items.ProductList` no longer has ``probability``, and
