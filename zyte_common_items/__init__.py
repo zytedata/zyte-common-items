@@ -99,6 +99,7 @@ from .pages import (
     BaseProductNavigationPage,
     BaseProductPage,
     BaseRealEstatePage,
+    BaseSearchRequestTemplatePage,
     BaseSerpPage,
     BaseSocialMediaPostPage,
     BusinessPlacePage,

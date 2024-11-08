@@ -153,6 +153,9 @@ Social media post
 Request templates
 =================
 
+.. autoclass:: zyte_common_items.BaseSearchRequestTemplatePage(**kwargs)
+   :show-inheritance:
+
 .. autoclass:: zyte_common_items.SearchRequestTemplatePage(**kwargs)
    :show-inheritance:
 

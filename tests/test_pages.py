@@ -158,11 +158,7 @@ def test_page_pairs():
         obj_name
         for obj_name in zyte_common_items.__dict__
         if (
-            not (
-                obj_name.startswith("Base")
-                or obj_name.startswith("Auto")
-                or obj_name.endswith("RequestTemplatePage")
-            )
+            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )
@@ -185,7 +181,9 @@ def test_page_pairs():
         for obj_name in zyte_common_items.__dict__
         if (obj_name.startswith("Auto") and obj_name.endswith("Page"))
     }
-    expected_auto_pages = {f"Auto{page}" for page in pages}
+    expected_auto_pages = {
+        f"Auto{page}" for page in pages if not page.endswith("RequestTemplatePage")
+    }
     assert actual_auto_pages == expected_auto_pages
 
 
@@ -221,6 +219,11 @@ METADATA_FIELDS = {
     "RealEstate": {"dateDownloaded", "probability", "validationMessages"},
     "JobPosting": {"dateDownloaded", "probability", "searchText", "validationMessages"},
     "JobPostingNavigation": {"dateDownloaded", "validationMessages"},
+    "SearchRequestTemplate": {
+        "dateDownloaded",
+        "probability",
+        "validationMessages",
+    },
     "Serp": {
         "dateDownloaded",
         "displayedQuery",
@@ -292,11 +295,7 @@ def test_metadata():
         obj_name
         for obj_name in zyte_common_items.__dict__
         if (
-            not (
-                obj_name.startswith("Base")
-                or obj_name.startswith("Auto")
-                or obj_name.endswith("RequestTemplatePage")
-            )
+            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )

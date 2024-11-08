@@ -3,14 +3,13 @@ from base64 import b64encode
 from copy import copy
 from importlib.metadata import version
 
-import attrs
 import pytest
 from itemadapter import ItemAdapter
 from packaging.version import Version
 from w3lib.url import add_or_replace_parameters
 from web_poet import RequestUrl, field
 
-from zyte_common_items import Header, Request, SearchRequestTemplatePage
+from zyte_common_items import BaseSearchRequestTemplatePage, Header, Request
 
 
 @pytest.mark.skipif(
@@ -19,7 +18,7 @@ from zyte_common_items import Header, Request, SearchRequestTemplatePage
 )
 @pytest.mark.asyncio
 async def test_all():
-    class HolisticSearchRequestTemplatePage(SearchRequestTemplatePage):
+    class HolisticSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
         @field
         def url(self):
             return """
@@ -81,7 +80,10 @@ async def test_all():
                 ),
             ]
 
-    search_request_template = await HolisticSearchRequestTemplatePage().to_item()
+    page = HolisticSearchRequestTemplatePage(
+        request_url=RequestUrl("https://example.com")
+    )
+    search_request_template = await page.to_item()
 
     search_request = search_request_template.request(query="p250")
     expected_request = Request("https://example.com/p/P250")
@@ -99,33 +101,31 @@ async def test_all():
     assert search_request == expected_request
 
 
-class VerbatimSearchRequestTemplatePage(SearchRequestTemplatePage):
+class VerbatimSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
     @field
     def url(self):
         return "https://example.com/?search={{ query }}"
 
 
-class QuoteSearchRequestTemplatePage(SearchRequestTemplatePage):
+class QuoteSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
     @field
     def url(self):
         return "https://example.com/?search={{ query|urlencode }}"
 
 
-class QuotePlusSearchRequestTemplatePage(SearchRequestTemplatePage):
+class QuotePlusSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
     @field
     def url(self):
         return "https://example.com/?search={{ query|quote_plus }}"
 
 
-class ReplaceSearchRequestTemplatePage(SearchRequestTemplatePage):
+class ReplaceSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
     @field
     def url(self):
         return "https://example.com/search/{{ query|replace(' ', '/') }}"
 
 
-@attrs.define
-class UrlBasedSearchRequestTemplatePage(SearchRequestTemplatePage):
-    request_url: RequestUrl
+class UrlBasedSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
 
     @field
     def url(self):
@@ -169,9 +169,7 @@ def edit_request_url(expression, page):
     return url
 
 
-@attrs.define
-class DSLSearchRequestTemplatePage(SearchRequestTemplatePage):
-    request_url: RequestUrl
+class DSLSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
 
     class Processors:
         url = [edit_request_url]
@@ -182,7 +180,7 @@ class DSLSearchRequestTemplatePage(SearchRequestTemplatePage):
 
 
 @pytest.mark.parametrize(
-    ("page", "inputs", "query", "url"),
+    ("page_cls", "inputs", "query", "url"),
     (
         (
             VerbatimSearchRequestTemplatePage,
@@ -216,22 +214,23 @@ class DSLSearchRequestTemplatePage(SearchRequestTemplatePage):
         ),
         (
             DSLSearchRequestTemplatePage,
-            {"request_url": RequestUrl("https://example.com/")},
+            {},
             "foo bar",
             "https://example.com/?search=foo%20bar",
         ),
     ),
 )
 @pytest.mark.asyncio
-async def test_url(page, inputs, query, url):
-    search_request_template = await page(**inputs).to_item()
+async def test_url(page_cls, inputs, query, url):
+    inputs.setdefault("request_url", RequestUrl("https://example.com/"))
+    search_request_template = await page_cls(**inputs).to_item()
     search_request = search_request_template.request(query=query)
     assert search_request.url == url
 
 
 @pytest.mark.asyncio
 async def test_body_space():
-    class BodySpaceSearchRequestTemplatePage(SearchRequestTemplatePage):
+    class BodySpaceSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
         @field
         def url(self):
             return "https://example.com"
@@ -240,14 +239,15 @@ async def test_body_space():
         def body(self):
             return " "
 
-    search_request_template = await BodySpaceSearchRequestTemplatePage().to_item()
+    page = BodySpaceSearchRequestTemplatePage(RequestUrl("https://example.com"))
+    search_request_template = await page.to_item()
     search_request = search_request_template.request(query="foo bar")
     assert search_request.body == b64encode(b" ").decode()
 
 
 @pytest.mark.asyncio
 async def test_header_empty_value():
-    class BodySpaceSearchRequestTemplatePage(SearchRequestTemplatePage):
+    class BodySpaceSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
         @field
         def url(self):
             return "https://example.com"
@@ -256,12 +256,13 @@ async def test_header_empty_value():
         def headers(self):
             return [Header(name="Foo", value="")]
 
-    search_request_template = await BodySpaceSearchRequestTemplatePage().to_item()
+    page = BodySpaceSearchRequestTemplatePage(RequestUrl("https://example.com"))
+    search_request_template = await page.to_item()
     search_request = search_request_template.request(query="foo bar")
     assert search_request.headers == [Header(name="Foo", value="")]
 
 
-class KeywordSearchRequestTemplatePage(SearchRequestTemplatePage):
+class KeywordSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
     @field
     def url(self):
         return "https://example.com/?search={{ keyword }}"
@@ -269,14 +270,16 @@ class KeywordSearchRequestTemplatePage(SearchRequestTemplatePage):
 
 @pytest.mark.asyncio
 async def test_request_no_parameters():
-    search_request_template = await VerbatimSearchRequestTemplatePage().to_item()
+    page = VerbatimSearchRequestTemplatePage(RequestUrl("https://example.com"))
+    search_request_template = await page.to_item()
     with pytest.raises(TypeError):
         search_request_template.request()
 
 
 @pytest.mark.asyncio
 async def test_request_template_keyword_call_keyword():
-    search_request_template = await KeywordSearchRequestTemplatePage().to_item()
+    page = KeywordSearchRequestTemplatePage(RequestUrl("https://example.com"))
+    search_request_template = await page.to_item()
     with pytest.warns(
         DeprecationWarning, match=r"Replace the 'keyword' variable with 'query'"
     ), pytest.warns(
@@ -289,7 +292,8 @@ async def test_request_template_keyword_call_keyword():
 
 @pytest.mark.asyncio
 async def test_request_template_keyword_call_query():
-    search_request_template = await KeywordSearchRequestTemplatePage().to_item()
+    page = KeywordSearchRequestTemplatePage(RequestUrl("https://example.com"))
+    search_request_template = await page.to_item()
     with pytest.warns(
         DeprecationWarning, match=r"Replace the 'keyword' variable with 'query'"
     ):
@@ -299,7 +303,8 @@ async def test_request_template_keyword_call_query():
 
 @pytest.mark.asyncio
 async def test_request_template_query_call_keyword():
-    search_request_template = await VerbatimSearchRequestTemplatePage().to_item()
+    page = VerbatimSearchRequestTemplatePage(RequestUrl("https://example.com"))
+    search_request_template = await page.to_item()
     with pytest.warns(
         DeprecationWarning,
         match=r"The 'keyword' parameter of request\(\) is deprecated",
@@ -310,7 +315,8 @@ async def test_request_template_query_call_keyword():
 
 @pytest.mark.asyncio
 async def test_request_keyword_and_query_same():
-    search_request_template = await VerbatimSearchRequestTemplatePage().to_item()
+    page = VerbatimSearchRequestTemplatePage(RequestUrl("https://example.com"))
+    search_request_template = await page.to_item()
     with pytest.warns(
         DeprecationWarning,
         match=r"The 'keyword' parameter of request\(\) is deprecated",
@@ -321,7 +327,8 @@ async def test_request_keyword_and_query_same():
 
 @pytest.mark.asyncio
 async def test_request_keyword_and_query_different():
-    search_request_template = await VerbatimSearchRequestTemplatePage().to_item()
+    page = VerbatimSearchRequestTemplatePage(RequestUrl("https://example.com"))
+    search_request_template = await page.to_item()
     with pytest.warns(DeprecationWarning, match=r"overrides the value of"):
         search_request = search_request_template.request(query="foo", keyword="bar")
     assert search_request.url == "https://example.com/?search=foo"
