@@ -3,11 +3,7 @@ from typing import List, Optional
 import attrs
 from web_poet import Returns
 
-from zyte_common_items.components import (
-    SocialMediaPostAuthor,
-    SocialMediaReactions,
-    Url,
-)
+from zyte_common_items.components import Reactions, SocialMediaPostAuthor, Url
 from zyte_common_items.fields import auto_field
 from zyte_common_items.items import SocialMediaPost, SocialMediaPostMetadata
 
@@ -40,7 +36,7 @@ class AutoSocialMediaPostPage(BaseSocialMediaPostPage):
         return self.social_media_post.postId
 
     @auto_field
-    def reactions(self) -> Optional[SocialMediaReactions]:
+    def reactions(self) -> Optional[Reactions]:
         return self.social_media_post.reactions
 
     @auto_field

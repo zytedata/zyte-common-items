@@ -3,9 +3,9 @@ from typing import List, Optional
 import attrs
 from web_poet import Returns
 
-from zyte_common_items.components import Post, Topic
+from zyte_common_items.components import Topic
 from zyte_common_items.fields import auto_field
-from zyte_common_items.items import ForumThread, ForumThreadMetadata
+from zyte_common_items.items import ForumThread, ForumThreadMetadata, SocialMediaPost
 
 from .base import BasePage, Page
 from .mixins import HasMetadata
@@ -34,7 +34,7 @@ class AutoForumThreadPage(BaseForumThreadPage):
         return self.forum_thread.topic
 
     @auto_field
-    def posts(self) -> Optional[List[Post]]:
+    def posts(self) -> Optional[List[SocialMediaPost]]:
         return self.forum_thread.posts
 
     @auto_field

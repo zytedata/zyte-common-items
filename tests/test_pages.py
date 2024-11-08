@@ -215,6 +215,7 @@ METADATA_FIELDS = {
         "searchText",
         "validationMessages",
     },
+    "ForumThread": {"dateDownloaded", "validationMessages"},
     "Product": {"dateDownloaded", "probability", "validationMessages"},
     "ProductList": {"dateDownloaded", "validationMessages"},
     "ProductNavigation": {"dateDownloaded", "validationMessages"},

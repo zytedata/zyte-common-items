@@ -9,6 +9,7 @@ from .custom_attributes import (
     CustomAttributesMetadata,
     CustomAttributesValues,
 )
+from .forum_thread import ForumThread, ForumThreadMetadata
 from .job_posting import JobPosting, JobPostingMetadata
 from .job_posting_navigation import JobPostingNavigation, JobPostingNavigationMetadata
 from .product import Product, ProductMetadata, ProductVariant

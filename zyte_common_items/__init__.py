@@ -21,7 +21,6 @@ from .components import (
     NamedLink,
     OpeningHoursItem,
     ParentPlace,
-    Post,
     ProbabilityMetadata,
     ProbabilityRequest,
     Reactions,
