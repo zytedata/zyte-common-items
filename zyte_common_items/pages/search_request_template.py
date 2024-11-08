@@ -9,7 +9,7 @@ from .mixins import HasMetadata
 class BaseSearchRequestTemplatePage(
     BasePage, Returns[SearchRequestTemplate], HasMetadata[SearchRequestTemplateMetadata]
 ):
-    """:class:`Page` subclass for :class:`SearchRequestTemplate`."""
+    """:class:`BasePage` subclass for :class:`SearchRequestTemplate`."""
 
 
 class SearchRequestTemplatePage(
