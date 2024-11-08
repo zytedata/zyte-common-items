@@ -11,7 +11,7 @@ from zyte_common_items.base import Item
 
 @attrs.define(kw_only=True)
 class Reactions(Item):
-    """Details of reactions to a social media post."""
+    """Details of reactions to a post."""
 
     #: Number of times the post received a reply.
     replies: Optional[int] = None
