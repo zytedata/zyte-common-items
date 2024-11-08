@@ -498,6 +498,7 @@ def test_auto_fields():
 def test_auto_page_item_fields():
     """For every field in the item class of an Auto- page class, there should
     be a matching field method in the Auto- page class."""
+    auto_pages: set[type]
     auto_pages = {
         obj
         for obj_name, obj in zyte_common_items.__dict__.items()
@@ -505,7 +506,7 @@ def test_auto_page_item_fields():
     }
     for auto_page in auto_pages:
         auto_page_fields = set(get_fields_dict(auto_page))
-        item_cls = get_item_cls(auto_page)
+        item_cls = get_item_cls(auto_page)  # type: ignore[call-overload]
         item_fields = set(attrs.fields_dict(item_cls))
         assert (
             auto_page_fields == item_fields
