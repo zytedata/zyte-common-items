@@ -6,6 +6,7 @@ import attrs
 import pytest
 from web_poet import HttpResponse, RequestUrl, ResponseUrl, Returns, field
 from web_poet.fields import get_fields_dict
+from web_poet.pages import get_item_cls
 
 import zyte_common_items
 from zyte_common_items import (
@@ -492,3 +493,20 @@ def test_auto_fields():
         auto_page_cls = zyte_common_items.__dict__[auto_page_name]
         for field_name in get_fields_dict(auto_page_cls):
             assert is_auto_field(auto_page_cls, field_name)
+
+
+def test_auto_page_item_fields():
+    """For every field in the item class of an Auto- page class, there should
+    be a matching field method in the Auto- page class."""
+    auto_pages = {
+        obj
+        for obj_name, obj in zyte_common_items.__dict__.items()
+        if (obj_name.startswith("Auto") and obj_name.endswith("Page"))
+    }
+    for auto_page in auto_pages:
+        auto_page_fields = set(get_fields_dict(auto_page))
+        item_cls = get_item_cls(auto_page)
+        item_fields = set(attrs.fields_dict(item_cls))
+        assert (
+            auto_page_fields == item_fields
+        ), f"{auto_page} does not map all {item_cls} fields"

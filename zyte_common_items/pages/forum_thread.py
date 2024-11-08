@@ -30,6 +30,10 @@ class AutoForumThreadPage(BaseForumThreadPage):
         return self.forum_thread.url
 
     @auto_field
+    def threadId(self) -> Optional[str]:
+        return self.forum_thread.threadId
+
+    @auto_field
     def topic(self) -> Optional[Topic]:
         return self.forum_thread.topic
 

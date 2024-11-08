@@ -24,6 +24,9 @@ class ForumThread(Item):
     #: Topic discussed on the page.
     topic: Optional[Topic] = None
 
+    #: Thread ID.
+    threadId: Optional[str] = None
+
     #: List of posts available on the page, including the first or top post.
     posts: Optional[List[SocialMediaPost]] = None
 
