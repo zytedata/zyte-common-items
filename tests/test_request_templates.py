@@ -3,14 +3,13 @@ from base64 import b64encode
 from copy import copy
 from importlib.metadata import version
 
-import attrs
 import pytest
 from itemadapter import ItemAdapter
 from packaging.version import Version
 from w3lib.url import add_or_replace_parameters
 from web_poet import RequestUrl, field
 
-from zyte_common_items import Header, Request, SearchRequestTemplatePage
+from zyte_common_items import BaseSearchRequestTemplatePage, Header, Request
 
 
 @pytest.mark.skipif(
@@ -19,7 +18,7 @@ from zyte_common_items import Header, Request, SearchRequestTemplatePage
 )
 @pytest.mark.asyncio
 async def test_all():
-    class HolisticSearchRequestTemplatePage(SearchRequestTemplatePage):
+    class HolisticSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
         @field
         def url(self):
             return """
@@ -81,7 +80,10 @@ async def test_all():
                 ),
             ]
 
-    search_request_template = await HolisticSearchRequestTemplatePage().to_item()
+    page = HolisticSearchRequestTemplatePage(
+        request_url=RequestUrl("https://example.com")
+    )
+    search_request_template = await page.to_item()
 
     search_request = search_request_template.request(keyword="p250")
     expected_request = Request("https://example.com/p/P250")
@@ -99,33 +101,31 @@ async def test_all():
     assert search_request == expected_request
 
 
-class VerbatimSearchRequestTemplatePage(SearchRequestTemplatePage):
+class VerbatimSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
     @field
     def url(self):
         return "https://example.com/?search={{ keyword }}"
 
 
-class QuoteSearchRequestTemplatePage(SearchRequestTemplatePage):
+class QuoteSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
     @field
     def url(self):
         return "https://example.com/?search={{ keyword|urlencode }}"
 
 
-class QuotePlusSearchRequestTemplatePage(SearchRequestTemplatePage):
+class QuotePlusSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
     @field
     def url(self):
         return "https://example.com/?search={{ keyword|quote_plus }}"
 
 
-class ReplaceSearchRequestTemplatePage(SearchRequestTemplatePage):
+class ReplaceSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
     @field
     def url(self):
         return "https://example.com/search/{{ keyword|replace(' ', '/') }}"
 
 
-@attrs.define
-class UrlBasedSearchRequestTemplatePage(SearchRequestTemplatePage):
-    request_url: RequestUrl
+class UrlBasedSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
 
     @field
     def url(self):
@@ -169,9 +169,7 @@ def edit_request_url(expression, page):
     return url
 
 
-@attrs.define
-class DSLSearchRequestTemplatePage(SearchRequestTemplatePage):
-    request_url: RequestUrl
+class DSLSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
 
     class Processors:
         url = [edit_request_url]
@@ -182,7 +180,7 @@ class DSLSearchRequestTemplatePage(SearchRequestTemplatePage):
 
 
 @pytest.mark.parametrize(
-    ("page", "inputs", "keyword", "url"),
+    ("page_cls", "inputs", "keyword", "url"),
     (
         (
             VerbatimSearchRequestTemplatePage,
@@ -216,22 +214,23 @@ class DSLSearchRequestTemplatePage(SearchRequestTemplatePage):
         ),
         (
             DSLSearchRequestTemplatePage,
-            {"request_url": RequestUrl("https://example.com/")},
+            {},
             "foo bar",
             "https://example.com/?search=foo%20bar",
         ),
     ),
 )
 @pytest.mark.asyncio
-async def test_url(page, inputs, keyword, url):
-    search_request_template = await page(**inputs).to_item()
+async def test_url(page_cls, inputs, keyword, url):
+    inputs.setdefault("request_url", RequestUrl("https://example.com/"))
+    search_request_template = await page_cls(**inputs).to_item()
     search_request = search_request_template.request(keyword=keyword)
     assert search_request.url == url
 
 
 @pytest.mark.asyncio
 async def test_body_space():
-    class BodySpaceSearchRequestTemplatePage(SearchRequestTemplatePage):
+    class BodySpaceSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
         @field
         def url(self):
             return "https://example.com"
@@ -240,14 +239,15 @@ async def test_body_space():
         def body(self):
             return " "
 
-    search_request_template = await BodySpaceSearchRequestTemplatePage().to_item()
+    page = BodySpaceSearchRequestTemplatePage(RequestUrl("https://example.com"))
+    search_request_template = await page.to_item()
     search_request = search_request_template.request(keyword="foo bar")
     assert search_request.body == b64encode(b" ").decode()
 
 
 @pytest.mark.asyncio
 async def test_header_empty_value():
-    class BodySpaceSearchRequestTemplatePage(SearchRequestTemplatePage):
+    class BodySpaceSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
         @field
         def url(self):
             return "https://example.com"
@@ -256,6 +256,7 @@ async def test_header_empty_value():
         def headers(self):
             return [Header(name="Foo", value="")]
 
-    search_request_template = await BodySpaceSearchRequestTemplatePage().to_item()
+    page = BodySpaceSearchRequestTemplatePage(RequestUrl("https://example.com"))
+    search_request_template = await page.to_item()
     search_request = search_request_template.request(keyword="foo bar")
     assert search_request.headers == [Header(name="Foo", value="")]
