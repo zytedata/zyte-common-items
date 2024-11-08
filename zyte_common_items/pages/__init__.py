@@ -27,7 +27,10 @@ from .product_navigation import (
     ProductNavigationPage,
 )
 from .real_estate import AutoRealEstatePage, BaseRealEstatePage, RealEstatePage
-from .search_request_template import SearchRequestTemplatePage
+from .search_request_template import (
+    BaseSearchRequestTemplatePage,
+    SearchRequestTemplatePage,
+)
 from .serp import AutoSerpPage, BaseSerpPage, SerpPage
 from .social_media_post import (
     AutoSocialMediaPostPage,
