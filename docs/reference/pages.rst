@@ -150,6 +150,18 @@ Social media post
 .. autoclass:: zyte_common_items.AutoSocialMediaPostPage(**kwargs)
    :show-inheritance:
 
+Forum thread
+============
+
+.. autoclass:: zyte_common_items.BaseForumThreadPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.ForumThreadPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoForumThreadPage(**kwargs)
+   :show-inheritance:
+
 Request templates
 =================
 

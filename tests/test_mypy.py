@@ -188,7 +188,7 @@ def test_assignment_product_variant():
 def test_instantiation_image():
     with pytest.raises(ValueError):
         Image(
-            url=123  # E: Argument "url" to "Image" has incompatible type "int"; expected "str | _Url"  [arg-type]
+            url=123  # E: Argument "url" to "Image" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl"  [arg-type]
         )
 
 
@@ -196,7 +196,7 @@ def test_instantiation_image():
 def test_instantiation_breadcrumb():
     with pytest.raises(ValueError):
         Breadcrumb(
-            url=123  # E: Argument "url" to "Breadcrumb" has incompatible type "int"; expected "str | _Url | None"  [arg-type]
+            url=123  # E: Argument "url" to "Breadcrumb" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl | None"  [arg-type]
         )
 
 
@@ -204,7 +204,7 @@ def test_instantiation_breadcrumb():
 def test_instantiation_link():
     with pytest.raises(ValueError):
         Link(
-            url=123  # E: Argument "url" to "Link" has incompatible type "int"; expected "str | _Url | None"  [arg-type]
+            url=123  # E: Argument "url" to "Link" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl | None"  [arg-type]
         )
 
 
@@ -212,12 +212,12 @@ def test_instantiation_link():
 def test_instantiation_product_list():
     with pytest.raises(ValueError):
         ProductList(
-            url=123  # E: Argument "url" to "ProductList" has incompatible type "int"; expected "str | _Url"  [arg-type]
+            url=123  # E: Argument "url" to "ProductList" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl"  [arg-type]
         )
     with pytest.raises(ValueError):
         ProductList(
             url="https://www.example.com",
-            canonicalUrl=123,  # E: Argument "canonicalUrl" to "ProductList" has incompatible type "int"; expected "str | _Url | None"  [arg-type]
+            canonicalUrl=123,  # E: Argument "canonicalUrl" to "ProductList" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl | None"  [arg-type]
         )
 
 
@@ -225,7 +225,7 @@ def test_instantiation_product_list():
 def test_instantiation_product_from_list():
     with pytest.raises(ValueError):
         ProductFromList(
-            url=123  # E: Argument "url" to "ProductFromList" has incompatible type "int"; expected "str | _Url | None"  [arg-type]
+            url=123  # E: Argument "url" to "ProductFromList" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl | None"  [arg-type]
         )
 
 
@@ -233,10 +233,10 @@ def test_instantiation_product_from_list():
 def test_instantiation_product_variant():
     with pytest.raises(ValueError):
         ProductVariant(
-            url=123  # E: Argument "url" to "ProductVariant" has incompatible type "int"; expected "str | _Url | None"  [arg-type]
+            url=123  # E: Argument "url" to "ProductVariant" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl | None"  [arg-type]
         )
     with pytest.raises(ValueError):
         ProductVariant(
             url="https://www.example.com",
-            canonicalUrl=123,  # E: Argument "canonicalUrl" to "ProductVariant" has incompatible type "int"; expected "str | _Url | None"  [arg-type]
+            canonicalUrl=123,  # E: Argument "canonicalUrl" to "ProductVariant" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl | None"  [arg-type]
         )
