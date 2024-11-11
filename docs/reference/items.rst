@@ -116,6 +116,13 @@ Job posting navigation
 .. autoclass:: zyte_common_items.JobPostingNavigationMetadata(**kwargs)
    :members: dateDownloaded, validationMessages
 
+Search engine result
+====================
+
+.. autoclass:: zyte_common_items.SerpOrganicResult(**kwargs)
+   :members:
+   :inherited-members:
+
 Search engine results
 =====================
 
@@ -135,6 +142,16 @@ Social media post
 
 .. autoclass:: zyte_common_items.SocialMediaPostMetadata(**kwargs)
    :members: dateDownloaded, probability, searchText, validationMessages
+
+Forum thread
+============
+
+.. autoclass:: zyte_common_items.ForumThread(**kwargs)
+   :members:
+   :inherited-members:
+
+.. autoclass:: zyte_common_items.ForumThreadMetadata(**kwargs)
+   :members: dateDownloaded, validationMessages
 
 .. _request-template-api:
 

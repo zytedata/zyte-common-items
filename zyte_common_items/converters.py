@@ -5,23 +5,25 @@ A module with common attrs converters
 from typing import Optional, Union
 
 import attrs
-from web_poet.page_inputs.url import _Url
+from web_poet.page_inputs.url import RequestUrl, ResponseUrl
 
 
-def url_to_str(url: Union[str, _Url]) -> str:
-    """Return the input :class:`~web_poet.page_inputs.http.RequestUrl` or
-    :class:`~web_poet.page_inputs.http.ResponseUrl` object as a string."""
+def url_to_str(url: Union[str, RequestUrl, ResponseUrl]) -> str:
+    """Return the input :class:`~web_poet.page_inputs.url.RequestUrl` or
+    :class:`~web_poet.page_inputs.url.ResponseUrl` object as a string."""
 
-    if not isinstance(url, (str, _Url)):
+    if not isinstance(url, (str, RequestUrl, ResponseUrl)):
         raise ValueError(
             f"{url!r} is neither a string nor an instance of RequestUrl or ResponseUrl."
         )
     return str(url)
 
 
-def url_to_str_optional(url: Union[str, _Url, None]) -> Optional[str]:
-    """Return the input :class:`~web_poet.page_inputs.http.RequestUrl` or
-    :class:`~web_poet.page_inputs.http.ResponseUrl` object as a string, or
+def url_to_str_optional(
+    url: Union[str, RequestUrl, ResponseUrl, None]
+) -> Optional[str]:
+    """Return the input :class:`~web_poet.page_inputs.url.RequestUrl` or
+    :class:`~web_poet.page_inputs.url.ResponseUrl` object as a string, or
     None if url is None."""
     if url is None:
         return None

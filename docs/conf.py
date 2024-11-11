@@ -38,6 +38,9 @@ nitpick_ignore = [
     ("py:class", "itemadapter.ItemAdapter"),
     ("py:class", "web_poet.pages.ItemT"),
     ("py:class", "zyte_common_items.pages._BasePage"),
+    # https://github.com/scrapinghub/web-poet/issues/211
+    ("py:class", "web_poet.page_inputs.url.RequestUrl"),
+    ("py:class", "web_poet.page_inputs.url.ResponseUrl"),
 ]
 
 intersphinx_disabled_reftypes = []
