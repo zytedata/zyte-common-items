@@ -12,6 +12,7 @@ from .business_place import (
     BaseBusinessPlacePage,
     BusinessPlacePage,
 )
+from .forum_thread import AutoForumThreadPage, BaseForumThreadPage, ForumThreadPage
 from .job_posting import AutoJobPostingPage, BaseJobPostingPage, JobPostingPage
 from .job_posting_navigation import (
     AutoJobPostingNavigationPage,

@@ -13,6 +13,9 @@ from zyte_common_items.base import Item
 class Reactions(Item):
     """Details of reactions to a post."""
 
+    #: Number of times the post received a reply.
+    replies: Optional[int] = None
+
     #: Number of times the post has been shared.
     reposts: Optional[int] = None
 
