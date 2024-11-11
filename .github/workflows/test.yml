@@ -70,3 +70,7 @@ jobs:
         tox -e docs
         tox -e twinecheck
         tox -e linters
+    - name: coverage
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
