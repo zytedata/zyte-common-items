@@ -35,6 +35,8 @@ Changelog
   :meth:`SearchRequestTemplate.request()
   <zyte_common_items.SearchRequestTemplate.request>`.
 
+* Fixed coverage data generation during tests.
+
 0.24.0 (2024-10-02)
 ===================
 
