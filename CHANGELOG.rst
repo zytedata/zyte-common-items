@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.26.0 (2024-11-DD)
+0.26.0 (2024-11-11)
 ===================
 
 * Added :class:`~.ForumThread` and related classes.
