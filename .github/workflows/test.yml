@@ -44,11 +44,7 @@ jobs:
         tox -e ${{ matrix.toxenv || 'py' }}
     - name: coverage
       if: ${{ success() }}
-      uses: codecov/codecov-action@v4 
-      with: 
-        verbose: true
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: bash <(curl -s https://codecov.io/bash)
 
   check:
     runs-on: ubuntu-latest
