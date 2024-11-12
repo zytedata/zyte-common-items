@@ -65,3 +65,12 @@ exclude = ['test_mypy\.py$', 'test_conversion\.py$']
 filterwarnings = [
     'ignore:The zyte_common_items.ae module .*:DeprecationWarning',
 ]
+
+[tool.bumpversion]
+current_version = "0.27.0"
+commit = true
+tag = true
+tag_name = "{new_version}"
+
+[[tool.bumpversion.files]]
+filename = "zyte_common_items/VERSION"
