@@ -46,7 +46,7 @@ version = { file = "zyte_common_items/VERSION" }
 zyte_common_items = ["py.typed","VERSION"]
 
 [tool.setuptools.packages.find]
-exclude= ["tests", "docs*"]
+include = ["zyte_common_items"]
 
 [tool.black]
 exclude = 'test_mypy\.py' # https://github.com/davidfritzsche/pytest-mypy-testing/issues/29
