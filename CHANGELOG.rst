@@ -6,8 +6,8 @@ Changelog
 ===================
 
 * Fixed :meth:`Serp.from_dict <.Serp.from_dict>` returning an instance where
-  :attr:`~.Serp.organicResults` list items were :class:`dict` instead of instances of
-  :class:`~.SerpOrganicResult`.
+  :attr:`~.Serp.organicResults` list items were :class:`dict` instead of
+  instances of :class:`~.SerpOrganicResult`.
 
 0.26.0 (2024-11-11)
 ===================
