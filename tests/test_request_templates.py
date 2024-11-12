@@ -280,11 +280,14 @@ async def test_request_no_parameters():
 async def test_request_template_keyword_call_keyword():
     page = KeywordSearchRequestTemplatePage(RequestUrl("https://example.com"))
     search_request_template = await page.to_item()
-    with pytest.warns(
-        DeprecationWarning, match=r"Replace the 'keyword' variable with 'query'"
-    ), pytest.warns(
-        DeprecationWarning,
-        match=r"The 'keyword' parameter of request\(\) is deprecated",
+    with (
+        pytest.warns(
+            DeprecationWarning, match=r"Replace the 'keyword' variable with 'query'"
+        ),
+        pytest.warns(
+            DeprecationWarning,
+            match=r"The 'keyword' parameter of request\(\) is deprecated",
+        ),
     ):
         search_request = search_request_template.request(keyword="foo")
     assert search_request.url == "https://example.com/?search=foo"

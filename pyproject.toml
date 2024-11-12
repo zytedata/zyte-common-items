@@ -1,5 +1,55 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zyte-common-items"
+dynamic = ["version"]
+description = "Item definitions for Zyte API schema"
+readme = { file = "README.rst", content-type = "text/x-rst" }
+requires-python = ">=3.9"
+authors = [{ name = "Zyte Group Ltd", email = "info@zyte.com" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+dependencies = [
+    "attrs>=22.2.0",
+    "clear-html>=0.4.0",
+    "itemadapter>=0.8.0",
+    "Jinja2>=2.7",
+    "price-parser>=0.3.4",
+    "web-poet>=0.14.0",
+    "zyte-parsers>=0.5.0",
+]
+
+[project.urls]
+source = "https://github.com/zytedata/zyte-common-items"
+issues = "https://github.com/zytedata/zyte-common-items/issues"
+documentation = "https://zyte-common-items.readthedocs.io/en/stable/"
+changelog = "https://github.com/zytedata/zyte-common-items/blob/main/CHANGELOG.rst"
+
+[tool.setuptools.dynamic]
+version = { file = "zyte_common_items/VERSION" }
+
+[tool.setup_tools.package-data]
+zyte_common_items = ["py.typed","VERSION"]
+
+[tool.setuptools.packages.find]
+include = ["zyte_common_items"]
+
 [tool.black]
-exclude = 'test_mypy\.py'  # https://github.com/davidfritzsche/pytest-mypy-testing/issues/29
+exclude = 'test_mypy\.py' # https://github.com/davidfritzsche/pytest-mypy-testing/issues/29
 
 [tool.isort]
 profile = "black"
@@ -8,13 +58,19 @@ multi_line_output = 3
 [tool.mypy]
 check_untyped_defs = true
 ignore_missing_imports = true
-no_warn_no_return = true
-exclude = [
-    'test_mypy\.py$',
-    'test_conversion\.py$',
-]
+warn_no_return = false
+exclude = ['test_mypy\.py$', 'test_conversion\.py$']
 
 [tool.pytest.ini_options]
 filterwarnings = [
     'ignore:The zyte_common_items.ae module .*:DeprecationWarning',
 ]
+
+[tool.bumpversion]
+current_version = "0.26.0"
+commit = true
+tag = true
+tag_name = "{new_version}"
+
+[[tool.bumpversion.files]]
+filename = "zyte_common_items/VERSION"
