@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.26.1 (2024-11-DD)
+0.26.1 (2024-11-12)
 ===================
 
 * Migrated from ``setup.py`` to ``pyproject.toml``.
