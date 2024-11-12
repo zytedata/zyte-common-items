@@ -2,8 +2,20 @@
 Changelog
 =========
 
+.. _0.26.2:
+
+0.26.2 (2024-11-12)
+===================
+
+* | Fixed the package build missing all nested packages:
+  | ``zyte_common_items.components``
+  | ``zyte_common_items.items``
+  | ``zyte_common_items.pages``
+
 0.26.1 (2024-11-12)
 ===================
+
+.. note:: This version was yanked, see :ref:`0.26.2`.
 
 * Migrated from ``setup.py`` to ``pyproject.toml``.
 
