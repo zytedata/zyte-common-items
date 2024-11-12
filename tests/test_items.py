@@ -949,3 +949,27 @@ def test_get_probability_request(cls, has_proba):
 def test_deprecated_request_list_caster():
     with pytest.deprecated_call():
         RequestListCaster(ProbabilityRequest)
+
+
+def test_organic_result_from_dict():
+    serp_dict = {
+        "organicResults": [
+            {
+                "description": "…",
+                "name": "…",
+                "url": f"https://example.com/{rank}",
+                "rank": rank,
+            }
+            for rank in range(1, 11)
+        ],
+        "metadata": {
+            "dateDownloaded": "2024-10-25T08:59:45Z",
+            "displayedQuery": "foo bar",
+            "searchedQuery": "foo bar",
+            "totalOrganicResults": 99999,
+        },
+        "pageNumber": 1,
+        "url": "https://example.com",
+    }
+    serp = Serp.from_dict(serp_dict)
+    assert isinstance(serp.organicResults[0], SerpOrganicResult)
