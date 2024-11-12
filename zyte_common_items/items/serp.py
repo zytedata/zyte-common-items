@@ -12,7 +12,7 @@ from zyte_common_items.converters import (
 
 
 @attrs.define(kw_only=True)
-class SerpOrganicResult:
+class SerpOrganicResult(Item):
     """Data from a non-paid result of a search engine results page."""
 
     #: Result excerpt.
