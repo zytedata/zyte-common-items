@@ -1,4 +1,5 @@
 from copy import copy
+from importlib import import_module
 
 import pytest
 
@@ -26,6 +27,7 @@ from zyte_common_items import (
     Header,
     HiringOrganization,
     Image,
+    Item,
     JobLocation,
     JobPosting,
     JobPostingMetadata,
@@ -951,25 +953,18 @@ def test_deprecated_request_list_caster():
         RequestListCaster(ProbabilityRequest)
 
 
-def test_organic_result_from_dict():
-    serp_dict = {
-        "organicResults": [
-            {
-                "description": "…",
-                "name": "…",
-                "url": f"https://example.com/{rank}",
-                "rank": rank,
-            }
-            for rank in range(1, 11)
-        ],
-        "metadata": {
-            "dateDownloaded": "2024-10-25T08:59:45Z",
-            "displayedQuery": "foo bar",
-            "searchedQuery": "foo bar",
-            "totalOrganicResults": 99999,
-        },
-        "pageNumber": 1,
-        "url": "https://example.com",
-    }
-    serp = Serp.from_dict(serp_dict)
-    assert isinstance(serp.organicResults[0], SerpOrganicResult)
+def test_item_subclasses():
+    """Items and components need to inherit from Item so that from_dict and
+    from_list in containing items will create them as instances of the
+    corresponding class instead of as dicts."""
+    for submodule_name in ("components", "items"):
+        module = import_module(f"zyte_common_items.{submodule_name}")
+        for name, obj in module.__dict__.items():
+            if not isinstance(obj, type):
+                continue
+            if name in {
+                "CustomAttributesValues",  # Dict
+                "RequestListCaster",  # Deprecated
+            }:
+                continue
+            assert issubclass(obj, Item), f"{obj} is not an Item subclass"
