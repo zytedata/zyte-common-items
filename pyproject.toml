@@ -68,7 +68,7 @@ filterwarnings = [
 ]
 
 [tool.bumpversion]
-current_version = "0.26.1"
+current_version = "0.26.2"
 commit = true
 tag = true
 tag_name = "{new_version}"
