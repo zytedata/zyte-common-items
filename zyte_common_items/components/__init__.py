@@ -18,6 +18,7 @@ from .metadata import (
     Metadata,
     MetadataT,
     ProbabilityMetadata,
+    SearchMetadata,
 )
 from .ratings import AggregateRating, StarRating
 from .real_estate import RealEstateArea

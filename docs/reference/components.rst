@@ -95,7 +95,7 @@ Item metadata components
 
 .. autoclass:: zyte_common_items.Metadata(**kwargs)
    :show-inheritance:
-   :members: dateDownloaded, probability, searchText, validationMessages
+   :members: dateDownloaded, displayedQuery, probability, searchedQuery, searchText, totalOrganicResults, validationMessages, get_date_downloaded_parsed
 
 .. autoclass:: zyte_common_items.ProbabilityMetadata(**kwargs)
    :show-inheritance:
@@ -108,6 +108,10 @@ Item metadata components
 .. autoclass:: zyte_common_items.DetailsMetadata(**kwargs)
    :show-inheritance:
    :members: probability, dateDownloaded, validationMessages, get_date_downloaded_parsed
+
+.. autoclass:: zyte_common_items.SearchMetadata(**kwargs)
+   :show-inheritance:
+   :members: dateDownloaded, probability, searchText, validationMessages, get_date_downloaded_parsed
 
 .. autoclass:: zyte_common_items.BaseMetadata(**kwargs)
    :show-inheritance:

@@ -9,17 +9,17 @@ from zyte_common_items.components import (
     AggregateRating,
     Amenity,
     Image,
-    Metadata,
     NamedLink,
     OpeningHoursItem,
     ParentPlace,
+    SearchMetadata,
     StarRating,
 )
 from zyte_common_items.converters import to_metadata_optional, url_to_str_optional
 
 
 @attrs.define(kw_only=True)
-class BusinessPlaceMetadata(Metadata):
+class BusinessPlaceMetadata(SearchMetadata):
     """Metadata class for :data:`zyte_common_items.BusinessPlace.metadata`."""
 
 

@@ -3,12 +3,17 @@ from typing import List, Optional
 import attrs
 
 from zyte_common_items.base import Item
-from zyte_common_items.components import Metadata, Reactions, SocialMediaPostAuthor, Url
+from zyte_common_items.components import (
+    Reactions,
+    SearchMetadata,
+    SocialMediaPostAuthor,
+    Url,
+)
 from zyte_common_items.converters import to_metadata_optional, url_to_str
 
 
 @attrs.define(kw_only=True)
-class SocialMediaPostMetadata(Metadata):
+class SocialMediaPostMetadata(SearchMetadata):
     """Metadata class for :data:`zyte_common_items.SocialMediaPost.metadata`."""
 
 

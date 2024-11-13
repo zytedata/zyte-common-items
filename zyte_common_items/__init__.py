@@ -29,6 +29,7 @@ from .components import (
     Reactions,
     RealEstateArea,
     Request,
+    SearchMetadata,
     SocialMediaPostAuthor,
     StarRating,
     Topic,

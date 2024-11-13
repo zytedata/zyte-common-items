@@ -93,6 +93,12 @@ def test_metadata_fields():
         ), f"Metadata is missing some fields from {cls.__name__}: {subset - superset}"
 
 
+def test_metadata_subclasses():
+    """Metadata should not be subclassed, since its fields will grow as new
+    specific metadata classes are added."""
+    assert not get_all_subclasses(Metadata)
+
+
 def test_named_link_optional_fields():
     NamedLink(name="foo")
     NamedLink(url="https://example.com")
