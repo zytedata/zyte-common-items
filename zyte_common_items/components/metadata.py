@@ -82,5 +82,14 @@ class Metadata(DetailsMetadata):
     later converted to the corresponding, more specific metadata class.
     """
 
+    #: Search query as seen in the webpage.
+    displayedQuery: Optional[str] = None
+
+    #: Search query as specified in the input URL.
+    searchedQuery: Optional[str] = None
+
     #: The search text used to find the item.
     searchText: Optional[str] = None
+
+    #: Total number of organic results reported by the search engine.
+    totalOrganicResults: Optional[int] = None
