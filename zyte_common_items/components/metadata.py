@@ -74,7 +74,16 @@ class DetailsMetadata(ListMetadata):
 
 
 @attrs.define(kw_only=True)
-class Metadata(DetailsMetadata):
+class SearchMetadata(DetailsMetadata):
+    """Minimal metadata for classes of items that can declare search
+    metadata."""
+
+    #: The search text used to find the item.
+    searchText: Optional[str] = None
+
+
+@attrs.define(kw_only=True)
+class Metadata(SearchMetadata):
     """Generic metadata class.
 
     It defines all attributes of metadata classes for specific item types, so
@@ -82,5 +91,11 @@ class Metadata(DetailsMetadata):
     later converted to the corresponding, more specific metadata class.
     """
 
-    #: The search text used to find the item.
-    searchText: Optional[str] = None
+    #: Search query as seen in the webpage.
+    displayedQuery: Optional[str] = None
+
+    #: Search query as specified in the input URL.
+    searchedQuery: Optional[str] = None
+
+    #: Total number of organic results reported by the search engine.
+    totalOrganicResults: Optional[int] = None

@@ -1,11 +1,13 @@
 import datetime
 
+import attrs
 from web_poet import RequestUrl
 
 from zyte_common_items import (
     Address,
     AggregateRating,
     Amenity,
+    BaseMetadata,
     BaseSalary,
     Breadcrumb,
     BusinessPlaceMetadata,
@@ -70,6 +72,31 @@ def test_metadata_get_date_downloaded():
         microsecond=0,
         tzinfo=datetime.timezone.utc,
     )
+
+
+def get_all_subclasses(cls):
+    subclasses = set()
+    for subclass in cls.__subclasses__():
+        subclasses.add(subclass)
+        subclasses.update(get_all_subclasses(subclass))
+    return subclasses
+
+
+def test_metadata_fields():
+    """Metadata must contain a superset of the fields of all metadata
+    classes."""
+    superset = set(attrs.fields_dict(Metadata))
+    for cls in get_all_subclasses(BaseMetadata):
+        subset = set(attrs.fields_dict(cls))
+        assert subset.issubset(
+            superset
+        ), f"Metadata is missing some fields from {cls.__name__}: {subset - superset}"
+
+
+def test_metadata_subclasses():
+    """Metadata should not be subclassed, since its fields will grow as new
+    specific metadata classes are added."""
+    assert not get_all_subclasses(Metadata)
 
 
 def test_named_link_optional_fields():

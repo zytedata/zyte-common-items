@@ -7,13 +7,13 @@ from zyte_common_items.components import (
     BaseSalary,
     HiringOrganization,
     JobLocation,
-    Metadata,
+    SearchMetadata,
 )
 from zyte_common_items.converters import to_metadata_optional, url_to_str
 
 
 @attrs.define(kw_only=True)
-class JobPostingMetadata(Metadata):
+class JobPostingMetadata(SearchMetadata):
     """Metadata class for :data:`zyte_common_items.JobPosting.metadata`."""
 
 
