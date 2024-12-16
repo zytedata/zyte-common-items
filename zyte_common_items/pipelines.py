@@ -3,6 +3,11 @@ from warnings import warn
 
 from zyte_common_items import ae
 
+try:
+    from ._scrapy_poet import AutoFieldStatsItemPipeline
+except ImportError:
+    pass
+
 
 class AEPipeline:
     """Replace standard items with matching items with the old Zyte Automatic

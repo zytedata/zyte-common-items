@@ -11,12 +11,50 @@ Installation
 
 
 .. _configuration:
+.. _scrapy-config:
 
-Configuration
-=============
+Scrapy configuration
+====================
 
-To allow itemadapter_ users, like Scrapy_, to interact with :ref:`items
-<items>`, prepend :class:`~zyte_common_items.ZyteItemAdapter` or
+-   If using Scrapy_ 2.10 or higher, enable the add-on:
+
+    .. code-block:: python
+        :caption: settings.py
+
+        ADDONS = {
+            "zyte_common_items.Addon": 400,
+        }
+
+    The add-on:
+
+    -   Appends :class:`~zyte_common_items.ZyteItemAdapter` to
+        itemadapter.ItemAdapter.ADAPTER_CLASSES_ if neither
+        :class:`~zyte_common_items.ZyteItemAdapter` nor
+        :class:`~zyte_common_items.ZyteItemKeepEmptyAdapter` are already there.
+
+    -   Adds :class:`~zyte_common_items.pipelines.AutoFieldStatsItemPipeline`
+        (if :doc:`scrapy-poet <scrapy-poet:index>` is installed) and
+        :class:`~zyte_common_items.pipelines.DropLowProbabilityItemPipeline` to
+        :setting:`ITEM_PIPELINES <scrapy:ITEM_PIPELINES>`:
+
+        .. code-block:: python
+
+            ITEM_PIPELINES = {
+                "zyte_common_items.pipelines.DropLowProbabilityItemPipeline": 100,
+                "zyte_common_items.pipelines.AutoFieldStatsItemPipeline": 200,
+            }
+
+-   If using Scrapy_ 2.9 or lower, apply those configurations manually as
+    needed.
+
+
+.. _itemadapter-config:
+
+itemadapter configuration
+=========================
+
+To allow itemadapter_ to interact with :ref:`items <items>`, prepend
+:class:`~zyte_common_items.ZyteItemAdapter` or
 :class:`~zyte_common_items.ZyteItemKeepEmptyAdapter` to
 itemadapter.ItemAdapter.ADAPTER_CLASSES_ as early as possible in your code::
 
