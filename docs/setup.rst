@@ -16,6 +16,9 @@ Installation
 Scrapy configuration
 ====================
 
+If you use Scrapy, zyte-common-items provides some functionality that needs
+configuring:
+
 -   If using Scrapy_ 2.10 or higher, enable the add-on:
 
     .. code-block:: python
