@@ -36,14 +36,12 @@ configuring:
         :class:`~zyte_common_items.ZyteItemKeepEmptyAdapter` are already there.
 
     -   Adds :class:`~zyte_common_items.pipelines.AutoFieldStatsItemPipeline`
-        (if :doc:`scrapy-poet <scrapy-poet:index>` is installed) and
-        :class:`~zyte_common_items.pipelines.DropLowProbabilityItemPipeline` to
+        (if :doc:`scrapy-poet <scrapy-poet:index>` is installed) to
         :setting:`ITEM_PIPELINES <scrapy:ITEM_PIPELINES>`:
 
         .. code-block:: python
 
             ITEM_PIPELINES = {
-                "zyte_common_items.pipelines.DropLowProbabilityItemPipeline": 100,
                 "zyte_common_items.pipelines.AutoFieldStatsItemPipeline": 200,
             }
 

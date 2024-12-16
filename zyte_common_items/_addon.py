@@ -3,7 +3,6 @@ from scrapy.settings import BaseSettings
 from scrapy.utils.misc import load_object
 
 from zyte_common_items import ZyteItemAdapter, ZyteItemKeepEmptyAdapter
-from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
 
 
 def _setdefault(settings, setting, cls, pos):
@@ -30,12 +29,6 @@ class Addon:
             ItemAdapter.ADAPTER_CLASSES = (ZyteItemAdapter,) + tuple(
                 ItemAdapter.ADAPTER_CLASSES
             )
-        _setdefault(
-            settings,
-            "ITEM_PIPELINES",
-            DropLowProbabilityItemPipeline,
-            100,
-        )
         try:
             from zyte_common_items.pipelines import AutoFieldStatsItemPipeline
         except ImportError:  # scrapy-poet not installed
