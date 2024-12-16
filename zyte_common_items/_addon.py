@@ -27,7 +27,9 @@ class Addon:
             issubclass(cls, (ZyteItemAdapter, ZyteItemKeepEmptyAdapter))
             for cls in ItemAdapter.ADAPTER_CLASSES
         ):
-            ItemAdapter.ADAPTER_CLASSES.appendleft(ZyteItemAdapter)
+            ItemAdapter.ADAPTER_CLASSES = (ZyteItemAdapter,) + tuple(
+                ItemAdapter.ADAPTER_CLASSES
+            )
         _setdefault(
             settings,
             "ITEM_PIPELINES",

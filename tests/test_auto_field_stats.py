@@ -69,7 +69,7 @@ async def get_auto_field_stats(settings=_SETTINGS, spider_cls=TestSpider):
         default_registry.__init__()  # type: ignore[misc]
 
         # Reverse add-on effects.
-        ItemAdapter.ADAPTER_CLASSES.popleft()
+        ItemAdapter.ADAPTER_CLASSES = tuple(ItemAdapter.ADAPTER_CLASSES)[1:]
 
     return {
         k: v
@@ -322,7 +322,7 @@ async def test_item_page_override():
     handle_urls("a.example")(MyProductPage)
 
     class PageSpider(TestSpider):
-        async def parse(self, response: DummyResponse, page: MyProductPage):
+        async def parse(self, response: DummyResponse, page: MyProductPage):  # type: ignore[override]
             yield await page.to_item()
 
     auto_field_stats = await get_auto_field_stats(spider_cls=PageSpider)
@@ -367,7 +367,7 @@ async def test_alt_page_override():
     handle_urls("a.example", priority=0)(AltProductPage)
 
     class AltSpider(TestSpider):
-        async def parse(self, response: DummyResponse, page: AltProductPage):
+        async def parse(self, response: DummyResponse, page: AltProductPage):  # type: ignore[override]
             yield await page.to_item()
 
     auto_field_stats = await get_auto_field_stats(spider_cls=AltSpider)
@@ -465,7 +465,7 @@ async def test_custom_item():
     handle_urls("a.example")(MyProductPage)
 
     class CustomProductSpider(TestSpider):
-        def parse(self, response: DummyResponse, product: CustomProduct):
+        def parse(self, response: DummyResponse, product: CustomProduct):  # type: ignore[override]
             yield product
 
     auto_field_stats = await get_auto_field_stats(spider_cls=CustomProductSpider)
@@ -496,7 +496,7 @@ async def test_custom_item_missing_url(caplog):
     handle_urls("a.example")(MyProductPage)
 
     class CustomProductSpider(TestSpider):
-        def parse(self, response: DummyResponse, product: CustomProduct):
+        def parse(self, response: DummyResponse, product: CustomProduct):  # type: ignore[override]
             yield product
 
     caplog.clear()
@@ -529,7 +529,7 @@ async def test_custom_item_custom_url_field():
     handle_urls("a.example")(MyProductPage)
 
     class CustomProductSpider(TestSpider):
-        def parse(self, response: DummyResponse, product: CustomProduct):
+        def parse(self, response: DummyResponse, product: CustomProduct):  # type: ignore[override]
             yield product
 
     settings = {
@@ -547,6 +547,7 @@ async def test_custom_item_custom_url_field():
 @ensureDeferred
 async def test_missing_injection_middleware():
     settings = copy(_SETTINGS)
+    assert isinstance(settings["DOWNLOADER_MIDDLEWARES"], dict)
     del settings["DOWNLOADER_MIDDLEWARES"]["scrapy_poet.InjectionMiddleware"]
     with pytest.raises(RuntimeError):
         await get_auto_field_stats()
