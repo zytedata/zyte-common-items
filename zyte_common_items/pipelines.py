@@ -1,7 +1,7 @@
 from copy import deepcopy
 from warnings import warn
 
-from zyte_common_items import ae
+from zyte_common_items import CustomAttributes, ae
 
 
 class AEPipeline:
@@ -118,9 +118,20 @@ class DropLowProbabilityItemPipeline:
     def process_item(self, item, spider):
         from scrapy.exceptions import DropItem
 
-        item_name = self.get_item_name(item)
-        item_proba = item.get_probability()
-        threshold = self.get_threshold_for_item(item, spider)
+        if isinstance(item, dict):
+            # support for custom attrs
+            for item_type, item_instance in item.items():
+                if item_type is not CustomAttributes:
+                    real_item = item_instance
+                    break
+            else:
+                return item
+        else:
+            real_item = item
+
+        item_name = self.get_item_name(real_item)
+        item_proba = real_item.get_probability()
+        threshold = self.get_threshold_for_item(real_item, spider)
 
         self.stats.inc_value("drop_low_probability_item/processed")
         self.stats.inc_value(f"drop_low_probability_item/processed/{item_name}")
