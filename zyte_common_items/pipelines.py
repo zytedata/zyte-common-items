@@ -124,10 +124,9 @@ class DropLowProbabilityItemPipeline:
             self.stats.inc_value("drop_low_probability_item/kept")
             self.stats.inc_value(f"drop_low_probability_item/kept/{item_name}")
             return True
-        else:
-            self.stats.inc_value("drop_low_probability_item/dropped")
-            self.stats.inc_value(f"drop_low_probability_item/dropped/{item_name}")
-            return False
+        self.stats.inc_value("drop_low_probability_item/dropped")
+        self.stats.inc_value(f"drop_low_probability_item/dropped/{item_name}")
+        return False
 
     def process_item(self, item, spider):
         from scrapy.exceptions import DropItem
@@ -147,11 +146,11 @@ class DropLowProbabilityItemPipeline:
                 # everything has been removed
                 raise DropItem
             return new_item
-        else:
-            threshold = self.get_threshold_for_item(item, spider)
-            if self._process_probability(item, threshold):
-                return item
-            raise DropItem(
-                f"This item is dropped since the probability ({item.get_probability()}) "
-                f"is below the threshold ({threshold}):\n{item!r}"
-            )
+
+        threshold = self.get_threshold_for_item(item, spider)
+        if self._process_probability(item, threshold):
+            return item
+        raise DropItem(
+            f"This item is dropped since the probability ({item.get_probability()}) "
+            f"is below the threshold ({threshold}):\n{item!r}"
+        )
