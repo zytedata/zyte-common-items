@@ -188,6 +188,23 @@ def test_get_threshold_for_item(
                 ("drop_low_probability_item/dropped/Product", 1),
             ],
         ),
+        (
+            [
+                {
+                    "product": MagicMock(spec=Product(url="http://example.com")),
+                    "article": MagicMock(spec=Article(url="http://example.com")),
+                },
+            ],
+            0.01,
+            0.1,
+            [
+                ("drop_low_probability_item/processed", 2),
+                ("drop_low_probability_item/processed/Product", 1),
+                ("drop_low_probability_item/processed/Article", 1),
+                ("drop_low_probability_item/dropped", 1),
+                ("drop_low_probability_item/dropped/Product", 1),
+            ],
+        ),
     ],
 )
 def test_process_item(items, item_proba, threshold, expected_stats_calls):
@@ -201,10 +218,14 @@ def test_process_item(items, item_proba, threshold, expected_stats_calls):
 
         for item in items:
             if isinstance(item, dict):
-                real_item = item["product"]
+                # only set the specified probability on the product for simplicity
+                for item_type, sub_item in item.items():
+                    if item_type == "product":
+                        sub_item.get_probability.return_value = item_proba
+                    else:
+                        sub_item.get_probability.return_value = 1.0
             else:
-                real_item = item
-            real_item.get_probability.return_value = item_proba
+                item.get_probability.return_value = item_proba
             try:
                 returned_item = pipeline.process_item(item, mock_crawler.spider)
             except scrapy.exceptions.DropItem as e:
@@ -213,7 +234,12 @@ def test_process_item(items, item_proba, threshold, expected_stats_calls):
                     f"is below the threshold ({threshold}):\n{item!r}"
                 ) in str(e)
             else:
-                assert returned_item == item
+                if isinstance(item, dict):
+                    expected_item = item.copy()
+                    del expected_item["product"]
+                else:
+                    expected_item = item
+                assert returned_item == expected_item
 
         for call, count in expected_stats_calls:
             calls = [
