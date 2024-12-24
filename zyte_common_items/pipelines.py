@@ -1,7 +1,7 @@
 from copy import deepcopy
 from warnings import warn
 
-from zyte_common_items import CustomAttributes, ae
+from zyte_common_items import ae
 
 
 class AEPipeline:
@@ -137,7 +137,8 @@ class DropLowProbabilityItemPipeline:
             # instead of dropping the whole result
             new_item = {}
             for item_type, sub_item in item.items():
-                if item_type is CustomAttributes:
+                if item_type == "customAttributes":
+                    new_item[item_type] = sub_item
                     continue
                 threshold = self.get_threshold_for_item(sub_item, spider)
                 if self._process_probability(sub_item, threshold):
