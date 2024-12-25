@@ -182,8 +182,9 @@ def test_get_threshold_for_item(
             0.01,
             0.1,
             [
-                ("drop_low_probability_item/processed", 1),
+                ("drop_low_probability_item/processed", 2),
                 ("drop_low_probability_item/processed/Product", 1),
+                ("drop_low_probability_item/processed/CustomAttributes", 1),
                 ("drop_low_probability_item/dropped", 1),
                 ("drop_low_probability_item/dropped/Product", 1),
             ],
