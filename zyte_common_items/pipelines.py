@@ -126,7 +126,7 @@ class DropLowProbabilityItemPipeline:
         item_name = self.get_item_name(item)
         self.stats.inc_value("drop_low_probability_item/processed")
         self.stats.inc_value(f"drop_low_probability_item/processed/{item_name}")
-        if item_proba is None or item_proba >= threshold:
+        if item_proba >= threshold:
             self.stats.inc_value("drop_low_probability_item/kept")
             self.stats.inc_value(f"drop_low_probability_item/kept/{item_name}")
             return True

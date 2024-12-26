@@ -235,7 +235,7 @@ def test_process_item(items, item_proba, threshold, expected_stats_calls):
                     else:
                         sub_item.get_probability.return_value = 1.0
             elif isinstance(item, Item):
-                item.get_probability.return_value = item_proba
+                item.get_probability.return_value = item_proba  # type: ignore[attr-defined]
             try:
                 returned_item = pipeline.process_item(item, mock_crawler.spider)
             except scrapy.exceptions.DropItem as e:
