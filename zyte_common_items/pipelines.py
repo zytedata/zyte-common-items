@@ -2,6 +2,7 @@ from copy import deepcopy
 from warnings import warn
 
 from zyte_common_items import ae
+from zyte_common_items.base import ProbabilityMixin
 
 
 class AEPipeline:
@@ -116,8 +117,13 @@ class DropLowProbabilityItemPipeline:
         return item.__class__.__name__
 
     def _process_probability(self, item, threshold):
-        item_name = self.get_item_name(item)
+        if not isinstance(item, ProbabilityMixin):
+            return True
         item_proba = item.get_probability()
+        if item_proba is None:
+            # don't emit stats for types without probability
+            return True
+        item_name = self.get_item_name(item)
         self.stats.inc_value("drop_low_probability_item/processed")
         self.stats.inc_value(f"drop_low_probability_item/processed/{item_name}")
         if item_proba is None or item_proba >= threshold:

@@ -9,6 +9,7 @@ from zyte_common_items import (
     CustomAttributes,
     CustomAttributesMetadata,
     CustomAttributesValues,
+    Item,
     Product,
     ProductNavigation,
 )
@@ -127,12 +128,8 @@ def test_get_threshold_for_item(
             None,
             0.1,
             [
-                ("drop_low_probability_item/processed", 2),
-                ("drop_low_probability_item/processed/Product", 1),
-                ("drop_low_probability_item/processed/Article", 1),
-                ("drop_low_probability_item/kept", 2),
-                ("drop_low_probability_item/kept/Product", 1),
-                ("drop_low_probability_item/kept/Article", 1),
+                ("drop_low_probability_item/processed", 0),
+                ("drop_low_probability_item/kept", 0),
             ],
         ),
         (
@@ -182,9 +179,8 @@ def test_get_threshold_for_item(
             0.01,
             0.1,
             [
-                ("drop_low_probability_item/processed", 2),
+                ("drop_low_probability_item/processed", 1),
                 ("drop_low_probability_item/processed/Product", 1),
-                ("drop_low_probability_item/processed/CustomAttributes", 1),
                 ("drop_low_probability_item/dropped", 1),
                 ("drop_low_probability_item/dropped/Product", 1),
             ],
@@ -206,6 +202,17 @@ def test_get_threshold_for_item(
                 ("drop_low_probability_item/dropped/Product", 1),
             ],
         ),
+        (
+            [
+                scrapy.Item(),
+            ],
+            0.01,
+            0.1,
+            [
+                ("drop_low_probability_item/processed", 0),
+                ("drop_low_probability_item/kept", 0),
+            ],
+        ),
     ],
 )
 def test_process_item(items, item_proba, threshold, expected_stats_calls):
@@ -223,9 +230,11 @@ def test_process_item(items, item_proba, threshold, expected_stats_calls):
                 for item_type, sub_item in item.items():
                     if item_type == "product":
                         sub_item.get_probability.return_value = item_proba
+                    elif item_type == "customAttributes":
+                        sub_item.get_probability.return_value = None
                     else:
                         sub_item.get_probability.return_value = 1.0
-            else:
+            elif isinstance(item, Item):
                 item.get_probability.return_value = item_proba
             try:
                 returned_item = pipeline.process_item(item, mock_crawler.spider)
