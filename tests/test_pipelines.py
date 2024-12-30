@@ -13,6 +13,7 @@ from zyte_common_items import (
     Product,
     ProductNavigation,
 )
+from zyte_common_items.base import ProbabilityMixin
 from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
 
 scrapy = pytest.importorskip("scrapy")  # noqa
@@ -213,6 +214,17 @@ def test_get_threshold_for_item(
                 ("drop_low_probability_item/kept", 0),
             ],
         ),
+        (
+            [
+                {"foo": 42},
+            ],
+            0.01,
+            0.1,
+            [
+                ("drop_low_probability_item/processed", 0),
+                ("drop_low_probability_item/kept", 0),
+            ],
+        ),
     ],
 )
 def test_process_item(items, item_proba, threshold, expected_stats_calls):
@@ -232,7 +244,7 @@ def test_process_item(items, item_proba, threshold, expected_stats_calls):
                         sub_item.get_probability.return_value = item_proba
                     elif item_type == "customAttributes":
                         sub_item.get_probability.return_value = None
-                    else:
+                    elif isinstance(sub_item, ProbabilityMixin):
                         sub_item.get_probability.return_value = 1.0
             elif isinstance(item, Item):
                 item.get_probability.return_value = item_proba  # type: ignore[attr-defined]
@@ -246,7 +258,7 @@ def test_process_item(items, item_proba, threshold, expected_stats_calls):
             else:
                 if isinstance(item, dict):
                     expected_item = item.copy()
-                    del expected_item["product"]
+                    expected_item.pop("product", None)
                 else:
                     expected_item = item
                 assert returned_item == expected_item
