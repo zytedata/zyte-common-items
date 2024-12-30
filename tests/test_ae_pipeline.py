@@ -1,5 +1,3 @@
-# noqa: E402
-
 import pytest  # isort: skip
 
 scrapy = pytest.importorskip("scrapy")  # noqa
