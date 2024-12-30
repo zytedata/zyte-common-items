@@ -1,12 +1,12 @@
+import pytest  # isort: skip
+
+scrapy = pytest.importorskip("scrapy")  # noqa
+
 from copy import deepcopy
 from unittest.mock import MagicMock, patch
 
-import pytest
-
 from zyte_common_items import Article, ArticleListPage, Product, ProductNavigation
 from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
-
-scrapy = pytest.importorskip("scrapy")  # noqa
 
 
 @pytest.mark.parametrize(

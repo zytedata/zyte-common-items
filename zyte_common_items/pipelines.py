@@ -1,5 +1,10 @@
+# Raise ImportError if Scrapy is missing.
+import scrapy  # isort: skip  # noqa: F401
+
 from copy import deepcopy
 from warnings import warn
+
+from scrapy.exceptions import DropItem
 
 from zyte_common_items import ae
 
@@ -54,6 +59,11 @@ class AEPipeline:
 
     def process_item(self, item, spider):
         return ae.downgrade(item)
+
+
+class InfoDropItem(DropItem):
+    """DropItem subclass for items that should be dropped with an INFO message
+    (instead of the default WARNING message)."""
 
 
 class DropLowProbabilityItemPipeline:
@@ -116,8 +126,6 @@ class DropLowProbabilityItemPipeline:
         return item.__class__.__name__
 
     def process_item(self, item, spider):
-        from scrapy.exceptions import DropItem
-
         item_name = self.get_item_name(item)
         item_proba = item.get_probability()
         threshold = self.get_threshold_for_item(item, spider)
@@ -133,7 +141,7 @@ class DropLowProbabilityItemPipeline:
         self.stats.inc_value("drop_low_probability_item/dropped")
         self.stats.inc_value(f"drop_low_probability_item/dropped/{item_name}")
 
-        raise DropItem(
+        raise InfoDropItem(
             f"This item is dropped since the probability ({item_proba}) "
             f"is below the threshold ({threshold}):\n{item!r}"
         )
