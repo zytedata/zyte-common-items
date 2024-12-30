@@ -9,7 +9,6 @@ from zyte_common_items import (
     CustomAttributes,
     CustomAttributesMetadata,
     CustomAttributesValues,
-    Item,
     Product,
     ProductNavigation,
 )
@@ -245,8 +244,8 @@ def test_process_item(items, item_proba, threshold, expected_stats_calls):
                     elif item_type == "customAttributes":
                         sub_item.get_probability.return_value = None
                     elif isinstance(sub_item, ProbabilityMixin):
-                        sub_item.get_probability.return_value = 1.0
-            elif isinstance(item, Item):
+                        sub_item.get_probability.return_value = 1.0  # type: ignore[attr-defined]
+            elif isinstance(item, ProbabilityMixin):
                 item.get_probability.return_value = item_proba  # type: ignore[attr-defined]
             try:
                 returned_item = pipeline.process_item(item, mock_crawler.spider)
