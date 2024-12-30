@@ -224,6 +224,17 @@ def test_get_threshold_for_item(
                 ("drop_low_probability_item/kept", 0),
             ],
         ),
+        (
+            [
+                {},
+            ],
+            0.01,
+            0.1,
+            [
+                ("drop_low_probability_item/processed", 0),
+                ("drop_low_probability_item/kept", 0),
+            ],
+        ),
     ],
 )
 def test_process_item(items, item_proba, threshold, expected_stats_calls):

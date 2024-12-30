@@ -1,8 +1,11 @@
+import logging
 from copy import deepcopy
 from warnings import warn
 
 from zyte_common_items import ae
 from zyte_common_items.base import ProbabilityMixin
+
+logger = logging.getLogger(__name__)
 
 
 class AEPipeline:
@@ -138,6 +141,8 @@ class DropLowProbabilityItemPipeline:
         from scrapy.exceptions import DropItem
 
         if isinstance(item, dict):
+            if len(item) == 0:
+                return item
             # for nested items remove sub-items that have low probability
             # instead of dropping the whole result
             new_item = {}
@@ -145,9 +150,17 @@ class DropLowProbabilityItemPipeline:
                 threshold = self.get_threshold_for_item(sub_item, spider)
                 if self._process_probability(sub_item, threshold):
                     new_item[item_type] = sub_item
+                else:
+                    logger.info(
+                        f"This sub-item is dropped since the probability ({sub_item.get_probability()}) "
+                        f"is below the threshold ({threshold}):\n{sub_item!r}"
+                    )
             if not new_item:
                 # everything has been removed
-                raise DropItem
+                raise DropItem(
+                    "This item is dropped since the probability of all its sub-items "
+                    "is below the threshold:"
+                )
             return new_item
 
         threshold = self.get_threshold_for_item(item, spider)
