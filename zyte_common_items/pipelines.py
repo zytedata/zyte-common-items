@@ -4,9 +4,8 @@ import scrapy  # isort: skip  # noqa: F401
 from copy import deepcopy
 from warnings import warn
 
-from scrapy.exceptions import DropItem
-
-from zyte_common_items import ae
+from .ae import ae
+from .log_formatters import InfoDropItem
 
 
 class AEPipeline:
@@ -59,11 +58,6 @@ class AEPipeline:
 
     def process_item(self, item, spider):
         return ae.downgrade(item)
-
-
-class InfoDropItem(DropItem):
-    """DropItem subclass for items that should be dropped with an INFO message
-    (instead of the default WARNING message)."""
 
 
 class DropLowProbabilityItemPipeline:
