@@ -4,7 +4,7 @@ import scrapy  # isort: skip  # noqa: F401
 from copy import deepcopy
 from warnings import warn
 
-from .ae import ae
+from . import ae
 from .log_formatters import InfoDropItem
 
 
