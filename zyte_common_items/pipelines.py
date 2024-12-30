@@ -1,7 +1,11 @@
+import logging
 from copy import deepcopy
 from warnings import warn
 
 from zyte_common_items import ae
+from zyte_common_items.base import ProbabilityMixin
+
+logger = logging.getLogger(__name__)
 
 
 class AEPipeline:
@@ -115,25 +119,54 @@ class DropLowProbabilityItemPipeline:
     def get_item_name(self, item):
         return item.__class__.__name__
 
+    def _process_probability(self, item, threshold):
+        if not isinstance(item, ProbabilityMixin):
+            return True
+        item_proba = item.get_probability()
+        if item_proba is None:
+            # don't emit stats for types without probability
+            return True
+        item_name = self.get_item_name(item)
+        self.stats.inc_value("drop_low_probability_item/processed")
+        self.stats.inc_value(f"drop_low_probability_item/processed/{item_name}")
+        if item_proba >= threshold:
+            self.stats.inc_value("drop_low_probability_item/kept")
+            self.stats.inc_value(f"drop_low_probability_item/kept/{item_name}")
+            return True
+        self.stats.inc_value("drop_low_probability_item/dropped")
+        self.stats.inc_value(f"drop_low_probability_item/dropped/{item_name}")
+        return False
+
     def process_item(self, item, spider):
         from scrapy.exceptions import DropItem
 
-        item_name = self.get_item_name(item)
-        item_proba = item.get_probability()
+        if isinstance(item, dict):
+            if len(item) == 0:
+                return item
+            # for nested items remove sub-items that have low probability
+            # instead of dropping the whole result
+            new_item = {}
+            for item_type, sub_item in item.items():
+                threshold = self.get_threshold_for_item(sub_item, spider)
+                if self._process_probability(sub_item, threshold):
+                    new_item[item_type] = sub_item
+                else:
+                    logger.info(
+                        f"This sub-item is dropped since the probability ({sub_item.get_probability()}) "
+                        f"is below the threshold ({threshold}):\n{sub_item!r}"
+                    )
+            if not new_item:
+                # everything has been removed
+                raise DropItem(
+                    "This item is dropped since the probability of all its sub-items "
+                    "is below the threshold:"
+                )
+            return new_item
+
         threshold = self.get_threshold_for_item(item, spider)
-
-        self.stats.inc_value("drop_low_probability_item/processed")
-        self.stats.inc_value(f"drop_low_probability_item/processed/{item_name}")
-
-        if item_proba is None or item_proba >= threshold:
-            self.stats.inc_value("drop_low_probability_item/kept")
-            self.stats.inc_value(f"drop_low_probability_item/kept/{item_name}")
+        if self._process_probability(item, threshold):
             return item
-
-        self.stats.inc_value("drop_low_probability_item/dropped")
-        self.stats.inc_value(f"drop_low_probability_item/dropped/{item_name}")
-
         raise DropItem(
-            f"This item is dropped since the probability ({item_proba}) "
+            f"This item is dropped since the probability ({item.get_probability()}) "
             f"is below the threshold ({threshold}):\n{item!r}"
         )
