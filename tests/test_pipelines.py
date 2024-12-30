@@ -182,7 +182,7 @@ def test_process_item(
             except scrapy.exceptions.DropItem as e:
                 assert (
                     f"This item is dropped since the probability ({item_proba}) "
-                    f"is below the threshold ({threshold}):\n{item!r}"
+                    f"is below the threshold ({threshold}):"
                 ) in str(e)
             else:
                 assert returned_item == item
