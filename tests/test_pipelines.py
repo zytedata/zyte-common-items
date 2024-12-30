@@ -1,12 +1,12 @@
+import pytest  # isort: skip
+
+scrapy = pytest.importorskip("scrapy")  # noqa
+
 from copy import deepcopy
 from unittest.mock import MagicMock, patch
 
-import pytest
-
 from zyte_common_items import Article, ArticleListPage, Product, ProductNavigation
 from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
-
-scrapy = pytest.importorskip("scrapy")  # noqa
 
 
 @pytest.mark.parametrize(
@@ -182,7 +182,7 @@ def test_process_item(
             except scrapy.exceptions.DropItem as e:
                 assert (
                     f"This item is dropped since the probability ({item_proba}) "
-                    f"is below the threshold ({threshold}):\n{item!r}"
+                    f"is below the threshold ({threshold}):"
                 ) in str(e)
             else:
                 assert returned_item == item
