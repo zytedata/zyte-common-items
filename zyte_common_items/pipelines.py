@@ -143,5 +143,5 @@ class DropLowProbabilityItemPipeline:
 
         raise InfoDropItem(
             f"This item is dropped since the probability ({item_proba}) "
-            f"is below the threshold ({threshold}):\n{item!r}"
+            f"is below the threshold ({threshold}):"
         )
