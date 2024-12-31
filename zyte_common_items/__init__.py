@@ -126,3 +126,8 @@ from .pages import (
     SerpPage,
     SocialMediaPostPage,
 )
+
+try:
+    from ._addon import Addon
+except ImportError:  # Scrapy is not installed.
+    pass

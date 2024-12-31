@@ -1,5 +1,7 @@
 import pkgutil
+import sys
 from datetime import datetime
+from pathlib import Path
 
 
 def get_copyright(attribution, *, first_year):
@@ -26,7 +28,9 @@ project = "zyte-common-items"
 copyright = get_copyright("Zyte Group Ltd", first_year=2022)
 version, release = get_version_and_release()
 
+sys.path.insert(0, str(Path(__file__).parent.absolute()))  # _ext
 extensions = [
+    "_ext",
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
 ]
