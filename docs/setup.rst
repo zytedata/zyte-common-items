@@ -49,6 +49,9 @@ configuring:
 itemadapter configuration
 =========================
 
+.. tip:: You do not need to set this manually if you are :ref:`using the Scrapy
+    add-on <scrapy-config>`.
+
 To allow itemadapter_ to interact with :ref:`items <items>`, prepend
 :class:`~zyte_common_items.ZyteItemAdapter` or
 :class:`~zyte_common_items.ZyteItemKeepEmptyAdapter` to
