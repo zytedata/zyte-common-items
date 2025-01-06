@@ -1,4 +1,6 @@
-import pytest
+import pytest  # isort: skip
+
+scrapy = pytest.importorskip("scrapy")  # noqa
 
 from zyte_common_items import Article, ArticleList, JobPosting, Product, ProductList
 from zyte_common_items.ae import (

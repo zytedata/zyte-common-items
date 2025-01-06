@@ -1,9 +1,13 @@
+# Raise ImportError if Scrapy is missing.
+import scrapy  # isort: skip  # noqa: F401
+
 import logging
 from copy import deepcopy
 from warnings import warn
 
-from zyte_common_items import ae
-from zyte_common_items.base import ProbabilityMixin
+from . import ae
+from .base import ProbabilityMixin
+from .log_formatters import InfoDropItem
 
 logger = logging.getLogger(__name__)
 
@@ -138,8 +142,6 @@ class DropLowProbabilityItemPipeline:
         return False
 
     def process_item(self, item, spider):
-        from scrapy.exceptions import DropItem
-
         if isinstance(item, dict):
             if len(item) == 0:
                 return item
@@ -157,7 +159,7 @@ class DropLowProbabilityItemPipeline:
                     )
             if not new_item:
                 # everything has been removed
-                raise DropItem(
+                raise InfoDropItem(
                     "This item is dropped since the probability of all its sub-items "
                     "is below the threshold:"
                 )
@@ -166,7 +168,7 @@ class DropLowProbabilityItemPipeline:
         threshold = self.get_threshold_for_item(item, spider)
         if self._process_probability(item, threshold):
             return item
-        raise DropItem(
+        raise InfoDropItem(
             f"This item is dropped since the probability ({item.get_probability()}) "
-            f"is below the threshold ({threshold}):\n{item!r}"
+            f"is below the threshold ({threshold}):"
         )
