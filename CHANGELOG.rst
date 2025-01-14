@@ -2,6 +2,20 @@
 Changelog
 =========
 
+0.27.0 (2025-01-DD)
+===================
+
+* The :class:`~zyte_common_items.pipelines.DropLowProbabilityItemPipeline` now
+  supports nested items, i.e. :class:`dict` objects with items as values.
+
+* Added an add-on to make :ref:`Scrapy configuration <scrapy-config>` easier.
+
+* :class:`~zyte_common_items.Metadata` now also has all fields from
+  :class:`~zyte_common_items.SerpMetadata`.
+
+* Messages about dropped items, e.g. due to low probability, are now logged as
+  information and not as warnings.
+
 .. _0.26.2:
 
 0.26.2 (2024-11-12)
