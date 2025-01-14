@@ -1,3 +1,5 @@
+from collections import deque
+
 from itemadapter import ItemAdapter
 from scrapy.settings import BaseSettings
 from scrapy.utils.misc import load_object
@@ -27,8 +29,8 @@ class Addon:
             issubclass(cls, (ZyteItemAdapter, ZyteItemKeepEmptyAdapter))
             for cls in ItemAdapter.ADAPTER_CLASSES
         ):
-            ItemAdapter.ADAPTER_CLASSES = (ZyteItemAdapter,) + tuple(
-                ItemAdapter.ADAPTER_CLASSES
+            ItemAdapter.ADAPTER_CLASSES = deque(
+                (ZyteItemAdapter,) + tuple(ItemAdapter.ADAPTER_CLASSES)
             )
 
         settings.set("LOG_FORMATTER", ZyteLogFormatter, priority="addon")
