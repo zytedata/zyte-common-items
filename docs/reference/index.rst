@@ -11,4 +11,4 @@ Reference
    components
    converters
    adapter
-   pipelines
+   scrapy
