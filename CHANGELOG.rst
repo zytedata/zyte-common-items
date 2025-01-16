@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.27.0 (2025-01-DD)
+0.27.0 (2025-01-16)
 ===================
 
 * The :class:`~zyte_common_items.pipelines.DropLowProbabilityItemPipeline` now
