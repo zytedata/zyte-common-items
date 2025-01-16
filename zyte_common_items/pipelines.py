@@ -65,19 +65,32 @@ class AEPipeline:
 
 
 class DropLowProbabilityItemPipeline:
-    """This pipeline drops an item if its probability, defined in the settings,
-    is less than the specified threshold.
+    """:ref:`Item pipeline <topics-item-pipeline>` that drops items that have
+    a low probability.
 
-    By default, 0.1 threshold is used, i.e. items with probabillity < 0.1 are dropped.
+    The :setting:`ITEM_PROBABILITY_THRESHOLDS` setting determines the
+    probability thresholds. By default, items with probability < 0.1 are
+    dropped.
 
-    You can customize the thresholds by using the ITEM_PROBABILITY_THRESHOLDS setting that offers
-    greater flexibility, allowing you to define thresholds for each Item class separately or
-    set a default threshold for all other item classes.
+    :class:`dict` objects with items as values are supported. For those, the
+    probability of each item is evaluated, and items with a low probability are
+    removed from the :class:`dict`. If the :class:`dict` ends up empty, it is
+    dropped entirely.
 
-    Thresholds for Item classes can be defined using either the path to the Item class or
-    directly using the Item classes themselves.
+    .. setting:: ITEM_PROBABILITY_THRESHOLDS
 
-    The example of using ITEM_PROBABILITY_THRESHOLDS:
+    ITEM_PROBABILITY_THRESHOLDS
+    ---------------------------
+
+    Default: ``{"default": 0.1}``
+
+    Allows defining a threshold for each item class and a default threshold
+    for any other item class.
+
+    Thresholds for item classes can be defined using either an import path of
+    the item class or directly using the item class itself.
+
+    For example:
 
     .. code-block:: python
 
