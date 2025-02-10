@@ -11,10 +11,11 @@ Assertions in mypy are done via these line comments:
     # E: <msg> - assert a mypy error message
     # R: <msg> - assert a mypy note message Revealed type is '<msg>'.
 
-NOTE:
+Note:
     Pytest's parametrization doesn't work here due to the dynamic nature of
     variables in each line. For-loops also doesn't work well since the type
     checker needs to narrow down on the type within the test function's scope.
+
 """
 
 import pytest
@@ -186,7 +187,7 @@ def test_assignment_product_variant():
 
 @pytest.mark.mypy_testing
 def test_instantiation_image():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="is neither a string nor an instance of"):
         Image(
             url=123  # E: Argument "url" to "Image" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl"  [arg-type]
         )
@@ -194,7 +195,7 @@ def test_instantiation_image():
 
 @pytest.mark.mypy_testing
 def test_instantiation_breadcrumb():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="is neither a string nor an instance of"):
         Breadcrumb(
             url=123  # E: Argument "url" to "Breadcrumb" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl | None"  [arg-type]
         )
@@ -202,7 +203,7 @@ def test_instantiation_breadcrumb():
 
 @pytest.mark.mypy_testing
 def test_instantiation_link():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="is neither a string nor an instance of"):
         Link(
             url=123  # E: Argument "url" to "Link" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl | None"  [arg-type]
         )
@@ -210,11 +211,11 @@ def test_instantiation_link():
 
 @pytest.mark.mypy_testing
 def test_instantiation_product_list():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="is neither a string nor an instance of"):
         ProductList(
             url=123  # E: Argument "url" to "ProductList" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl"  [arg-type]
         )
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="is neither a string nor an instance of"):
         ProductList(
             url="https://www.example.com",
             canonicalUrl=123,  # E: Argument "canonicalUrl" to "ProductList" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl | None"  [arg-type]
@@ -223,7 +224,7 @@ def test_instantiation_product_list():
 
 @pytest.mark.mypy_testing
 def test_instantiation_product_from_list():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="is neither a string nor an instance of"):
         ProductFromList(
             url=123  # E: Argument "url" to "ProductFromList" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl | None"  [arg-type]
         )
@@ -231,11 +232,11 @@ def test_instantiation_product_from_list():
 
 @pytest.mark.mypy_testing
 def test_instantiation_product_variant():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="is neither a string nor an instance of"):
         ProductVariant(
             url=123  # E: Argument "url" to "ProductVariant" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl | None"  [arg-type]
         )
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="is neither a string nor an instance of"):
         ProductVariant(
             url="https://www.example.com",
             canonicalUrl=123,  # E: Argument "canonicalUrl" to "ProductVariant" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl | None"  [arg-type]

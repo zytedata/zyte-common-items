@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -43,7 +43,7 @@ class Product(Item):
     #: extracted.
     #:
     #: See also ``features``.
-    additionalProperties: Optional[List[AdditionalProperty]] = None
+    additionalProperties: Optional[list[AdditionalProperty]] = None
 
     #: Aggregate data about reviews and ratings.
     aggregateRating: Optional[AggregateRating] = None
@@ -59,7 +59,7 @@ class Product(Item):
     #: Webpage `breadcrumb trail`_.
     #:
     #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
-    breadcrumbs: Optional[List[Breadcrumb]] = None
+    breadcrumbs: Optional[list[Breadcrumb]] = None
 
     #: Canonical form of the URL, as indicated by the website.
     #:
@@ -124,7 +124,7 @@ class Product(Item):
     #: They are usually listed as bullet points in product webpages.
     #:
     #: See also ``additionalProperties``.
-    features: Optional[List[str]] = None
+    features: Optional[list[str]] = None
 
     #: List of standardized GTIN_ product identifiers associated with the
     #: product, which are unique for the product across different sellers.
@@ -132,21 +132,23 @@ class Product(Item):
     #: See also: ``mpn``, ``productId``, ``sku``.
     #:
     #: .. _GTIN: https://en.wikipedia.org/wiki/Global_Trade_Item_Number
-    gtin: Optional[List[Gtin]] = None
+    gtin: Optional[list[Gtin]] = None
 
     #: All product images.
     #:
     #: The main image (see ``mainImage``) should be first in the list.
     #:
     #: Images only displayed as part of the product description are excluded.
-    images: Optional[List[Image]] = None
+    images: Optional[list[Image]] = None
 
     #: Main product image.
     mainImage: Optional[Image] = None
 
     #: Data extraction process metadata.
     metadata: Optional[ProductMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ProductMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(ProductMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
 
     #: `Manufacturer part number (MPN)`_.
@@ -248,7 +250,7 @@ class Product(Item):
     #:
     #: Product variant details may not include those that require multiple
     #: additional requests (e.g. 1 or more requests per variant).
-    variants: Optional[List[ProductVariant]] = None
+    variants: Optional[list[ProductVariant]] = None
 
 
 @attrs.define(kw_only=True)
@@ -269,7 +271,7 @@ class ProductVariant(Item):
     #: extracted.
     #:
     #: See also ``features``.
-    additionalProperties: Optional[List[AdditionalProperty]] = None
+    additionalProperties: Optional[list[AdditionalProperty]] = None
 
     #: Availability status.
     #:
@@ -309,14 +311,14 @@ class ProductVariant(Item):
     #: See also: ``mpn``, ``productId``, ``sku``.
     #:
     #: .. _GTIN: https://en.wikipedia.org/wiki/Global_Trade_Item_Number
-    gtin: Optional[List[Gtin]] = None
+    gtin: Optional[list[Gtin]] = None
 
     #: All product images.
     #:
     #: The main image (see ``mainImage``) should be first in the list.
     #:
     #: Images only displayed as part of the product description are excluded.
-    images: Optional[List[Image]] = None
+    images: Optional[list[Image]] = None
 
     #: Main product image.
     mainImage: Optional[Image] = None

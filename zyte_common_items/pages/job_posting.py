@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 from web_poet import Returns
@@ -100,7 +100,7 @@ class AutoJobPostingPage(BaseJobPostingPage):
         return self.job_posting.baseSalary
 
     @auto_field
-    def requirements(self) -> Optional[List[str]]:
+    def requirements(self) -> Optional[list[str]]:
         return self.job_posting.requirements
 
     @auto_field

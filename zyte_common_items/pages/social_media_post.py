@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 from web_poet import Returns
@@ -48,11 +48,11 @@ class AutoSocialMediaPostPage(BaseSocialMediaPostPage):
         return self.social_media_post.datePublished
 
     @auto_field
-    def hashtags(self) -> Optional[List[str]]:
+    def hashtags(self) -> Optional[list[str]]:
         return self.social_media_post.hashtags
 
     @auto_field
-    def mediaUrls(self) -> Optional[List[Url]]:
+    def mediaUrls(self) -> Optional[list[Url]]:
         return self.social_media_post.mediaUrls
 
     @auto_field

@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -55,7 +55,7 @@ class Serp(Item):
     <https://en.wikipedia.org/wiki/Search_engine_results_page>`_."""
 
     #: List of search results excluding paid results.
-    organicResults: Optional[List[SerpOrganicResult]] = None
+    organicResults: Optional[list[SerpOrganicResult]] = None
 
     #: Search URL.
     url: str = attrs.field(converter=url_to_str)
@@ -65,5 +65,7 @@ class Serp(Item):
 
     #: Contains metadata about the data extraction process.
     metadata: Optional[SerpMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(SerpMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(SerpMetadata),  # type: ignore[misc]
+        kw_only=True,
     )

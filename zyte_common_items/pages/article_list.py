@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 from web_poet import Returns
@@ -33,11 +33,11 @@ class AutoArticleListPage(BaseArticleListPage):
     article_list: ArticleList
 
     @auto_field
-    def articles(self) -> Optional[List[ArticleFromList]]:
+    def articles(self) -> Optional[list[ArticleFromList]]:
         return self.article_list.articles
 
     @auto_field
-    def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+    def breadcrumbs(self) -> Optional[list[Breadcrumb]]:
         return self.article_list.breadcrumbs
 
     @auto_field

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -53,16 +53,18 @@ class ArticleList(Item):
     #: List of article details found on the page.
     #:
     #: The order of the articles reflects their position on the page.
-    articles: Optional[List[ArticleFromList]] = None
+    articles: Optional[list[ArticleFromList]] = None
 
     #: Webpage `breadcrumb trail`_.
     #:
     #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
-    breadcrumbs: Optional[List[Breadcrumb]] = None
+    breadcrumbs: Optional[list[Breadcrumb]] = None
 
     #: Data extraction process metadata.
     metadata: Optional[ArticleListMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ArticleListMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(ArticleListMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
 
 
@@ -86,7 +88,7 @@ class ArticleFromList(Item):
     articleBody: Optional[str] = None
 
     #: All authors of the article.
-    authors: Optional[List[Author]] = None
+    authors: Optional[list[Author]] = None
 
     #: Publication date of the article.
     #:
@@ -117,7 +119,7 @@ class ArticleFromList(Item):
     mainImage: Optional[Image] = None
 
     #: All images.
-    images: Optional[List[Image]] = None
+    images: Optional[list[Image]] = None
 
     #: Data extraction process metadata.
     metadata: Optional[ProbabilityMetadata] = attrs.field(

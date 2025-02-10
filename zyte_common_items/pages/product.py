@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 from web_poet import Returns
@@ -72,7 +72,7 @@ class AutoProductPage(BaseProductPage):
     product: Product
 
     @auto_field
-    def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
+    def additionalProperties(self) -> Optional[list[AdditionalProperty]]:
         return self.product.additionalProperties
 
     @auto_field
@@ -88,7 +88,7 @@ class AutoProductPage(BaseProductPage):
         return self.product.brand
 
     @auto_field
-    def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+    def breadcrumbs(self) -> Optional[list[Breadcrumb]]:
         return self.product.breadcrumbs
 
     @auto_field
@@ -116,15 +116,15 @@ class AutoProductPage(BaseProductPage):
         return self.product.descriptionHtml
 
     @auto_field
-    def features(self) -> Optional[List[str]]:
+    def features(self) -> Optional[list[str]]:
         return self.product.features
 
     @auto_field
-    def gtin(self) -> Optional[List[Gtin]]:
+    def gtin(self) -> Optional[list[Gtin]]:
         return self.product.gtin
 
     @auto_field
-    def images(self) -> Optional[List[Image]]:
+    def images(self) -> Optional[list[Image]]:
         return self.product.images
 
     @auto_field
@@ -172,5 +172,5 @@ class AutoProductPage(BaseProductPage):
         return self.product.url
 
     @auto_field
-    def variants(self) -> Optional[List[ProductVariant]]:
+    def variants(self) -> Optional[list[ProductVariant]]:
         return self.product.variants

@@ -1,6 +1,4 @@
-"""
-A module with common attrs converters
-"""
+"""A module with common attrs converters"""
 
 from typing import Optional, Union
 
@@ -20,7 +18,7 @@ def url_to_str(url: Union[str, RequestUrl, ResponseUrl]) -> str:
 
 
 def url_to_str_optional(
-    url: Union[str, RequestUrl, ResponseUrl, None]
+    url: Union[str, RequestUrl, ResponseUrl, None],
 ) -> Optional[str]:
     """Return the input :class:`~web_poet.page_inputs.url.RequestUrl` or
     :class:`~web_poet.page_inputs.url.ResponseUrl` object as a string, or
@@ -42,7 +40,7 @@ class MetadataCaster:
 
 
 def to_probability_request_list(request_list):
-    """attrs converter to turn lists of :class:`~scrapy.http.Request` instances into
+    """Attrs converter to turn lists of :class:`~scrapy.http.Request` instances into
     lists of :class:`~.ProbabilityRequest` instances."""
     from zyte_common_items.components import ProbabilityRequest
 
@@ -50,7 +48,7 @@ def to_probability_request_list(request_list):
 
 
 def to_probability_request_list_optional(request_list):
-    """attrs converter to turn lists of :class:`~scrapy.http.Request` instances into
+    """Attrs converter to turn lists of :class:`~scrapy.http.Request` instances into
     lists of :class:`~.ProbabilityRequest` instances. If None is passed, None is
     returned."""
     if request_list is None:

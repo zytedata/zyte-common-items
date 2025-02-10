@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 from web_poet import Returns
@@ -53,11 +53,11 @@ class AutoArticlePage(BaseArticlePage):
         return self.article.dateModifiedRaw
 
     @auto_field
-    def authors(self) -> Optional[List[Author]]:
+    def authors(self) -> Optional[list[Author]]:
         return self.article.authors
 
     @auto_field
-    def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+    def breadcrumbs(self) -> Optional[list[Breadcrumb]]:
         return self.article.breadcrumbs
 
     @auto_field
@@ -69,7 +69,7 @@ class AutoArticlePage(BaseArticlePage):
         return self.article.mainImage
 
     @auto_field
-    def images(self) -> Optional[List[Image]]:
+    def images(self) -> Optional[list[Image]]:
         return self.article.images
 
     @auto_field
@@ -85,11 +85,11 @@ class AutoArticlePage(BaseArticlePage):
         return self.article.articleBodyHtml
 
     @auto_field
-    def videos(self) -> Optional[List[Video]]:
+    def videos(self) -> Optional[list[Video]]:
         return self.article.videos
 
     @auto_field
-    def audios(self) -> Optional[List[Audio]]:
+    def audios(self) -> Optional[list[Audio]]:
         return self.article.audios
 
     @auto_field
