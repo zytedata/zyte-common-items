@@ -29,17 +29,13 @@ def test_asdict_all_fields():
         adapter = ItemAdapter(product)
         actual_dict = adapter.asdict()
     expected_dict = {
-        "additionalProperties": [dict(name="foo", value="bar")],
-        "aggregateRating": dict(
-            bestRating=5.0,
-            ratingValue=2.5,
-            reviewCount=123,
-        ),
+        "additionalProperties": [{"name": "foo", "value": "bar"}],
+        "aggregateRating": {"bestRating": 5.0, "ratingValue": 2.5, "reviewCount": 123},
         "availability": "InStock",
-        "brand": dict(name="Ka-pow"),
+        "brand": {"name": "Ka-pow"},
         "breadcrumbs": [
-            dict(name="Level 1", url="http://example.com/level1"),
-            dict(name="Level 2", url="http://example.com/level1/level2"),
+            {"name": "Level 1", "url": "http://example.com/level1"},
+            {"name": "Level 2", "url": "http://example.com/level1/level2"},
         ],
         "canonicalUrl": "https://example.com/product22",
         "color": "white",
@@ -52,15 +48,12 @@ def test_asdict_all_fields():
             "<p>Super Cooling Plus&trade;</p></article>"
         ),
         "features": ["Easily store fragile products.", "Bluetooth connectivity."],
-        "gtin": [dict(type="foo", value="bar")],
+        "gtin": [{"type": "foo", "value": "bar"}],
         "images": [
-            dict(url="http://example.com/image1.png"),
+            {"url": "http://example.com/image1.png"},
         ],
-        "mainImage": dict(url="http://example.com/image1.png"),
-        "metadata": dict(
-            dateDownloaded="2022-12-31T13:01:54Z",
-            probability=1.0,
-        ),
+        "mainImage": {"url": "http://example.com/image1.png"},
+        "metadata": {"dateDownloaded": "2022-12-31T13:01:54Z", "probability": 1.0},
         "mpn": "HSC0424PP",
         "name": "White two-door refrigerator",
         "price": "9999.99",
@@ -112,11 +105,11 @@ class EmptyCollection(Collection):
 
 @pytest.mark.parametrize(
     "value",
-    (
+    [
         [],
-        tuple(),
+        (),
         EmptyCollection(),
-    ),
+    ],
 )
 def test_asdict_empty_collection(value):
     @attrs.define
@@ -131,12 +124,12 @@ def test_asdict_empty_collection(value):
 
 
 def test_asdict_unknown_fields():
-    input_dict = dict(
-        a="b",
-        additionalProperties=[{"name": "a", "value": "b", "max": 10}],
-        aggregateRating={"worstRating": 0},
-        url="https://example.com/",
-    )
+    input_dict = {
+        "a": "b",
+        "additionalProperties": [{"name": "a", "value": "b", "max": 10}],
+        "aggregateRating": {"worstRating": 0},
+        "url": "https://example.com/",
+    }
     product = Product.from_dict(input_dict)
     with configured_adapter():
         adapter = ItemAdapter(product)
@@ -254,12 +247,12 @@ def test_known_field_remove_missing_twice():
 
 def test_unknown_field_get():
     product = Product.from_dict(
-        dict(
-            a="b",
-            additionalProperties=[{"name": "a", "value": "b", "max": 10}],
-            aggregateRating={"worstRating": 0},
-            url="https://example.com/",
-        )
+        {
+            "a": "b",
+            "additionalProperties": [{"name": "a", "value": "b", "max": 10}],
+            "aggregateRating": {"worstRating": 0},
+            "url": "https://example.com/",
+        }
     )
 
     with configured_adapter():
@@ -283,11 +276,11 @@ def test_unknown_field_get_missing():
 
 def test_unknown_field_set():
     product = Product.from_dict(
-        dict(
-            additionalProperties=[{"name": "a", "value": "b"}],
-            aggregateRating={"bestRating": 5.0},
-            url="https://example.com/",
-        )
+        {
+            "additionalProperties": [{"name": "a", "value": "b"}],
+            "aggregateRating": {"bestRating": 5.0},
+            "url": "https://example.com/",
+        }
     )
 
     with configured_adapter():
@@ -309,12 +302,12 @@ def test_unknown_field_set():
 
 def test_unknown_field_update():
     product = Product.from_dict(
-        dict(
-            a="b",
-            additionalProperties=[{"name": "a", "value": "b", "max": 10}],
-            aggregateRating={"worstRating": 0},
-            url="https://example.com/",
-        )
+        {
+            "a": "b",
+            "additionalProperties": [{"name": "a", "value": "b", "max": 10}],
+            "aggregateRating": {"worstRating": 0},
+            "url": "https://example.com/",
+        }
     )
 
     with configured_adapter():
@@ -336,12 +329,12 @@ def test_unknown_field_update():
 
 def test_unknown_field_remove():
     product = Product.from_dict(
-        dict(
-            a="b",
-            additionalProperties=[{"name": "a", "value": "b", "max": 10}],
-            aggregateRating={"worstRating": 0},
-            url="https://example.com/",
-        )
+        {
+            "a": "b",
+            "additionalProperties": [{"name": "a", "value": "b", "max": 10}],
+            "aggregateRating": {"worstRating": 0},
+            "url": "https://example.com/",
+        }
     )
 
     with configured_adapter():
@@ -387,7 +380,7 @@ def test_keep_empty_adapter_local():
         children: Collection[Item]
 
     class TestAdapter(ItemAdapter):
-        ADAPTER_CLASSES = [ZyteItemKeepEmptyAdapter] + list(ItemAdapter.ADAPTER_CLASSES)
+        ADAPTER_CLASSES = [ZyteItemKeepEmptyAdapter, *ItemAdapter.ADAPTER_CLASSES]
 
     item = _Item([])
     adapter = TestAdapter(item)

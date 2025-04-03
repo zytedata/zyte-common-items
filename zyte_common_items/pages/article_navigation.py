@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 from web_poet import Returns
@@ -32,7 +32,7 @@ class AutoArticleNavigationPage(BaseArticleNavigationPage):
         return self.article_navigation.categoryName
 
     @auto_field
-    def items(self) -> Optional[List[ProbabilityRequest]]:
+    def items(self) -> Optional[list[ProbabilityRequest]]:
         return self.article_navigation.items
 
     @auto_field
@@ -48,7 +48,7 @@ class AutoArticleNavigationPage(BaseArticleNavigationPage):
         return self.article_navigation.pageNumber
 
     @auto_field
-    def subCategories(self) -> Optional[List[ProbabilityRequest]]:
+    def subCategories(self) -> Optional[list[ProbabilityRequest]]:
         return self.article_navigation.subCategories
 
     @auto_field

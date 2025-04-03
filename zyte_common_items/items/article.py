@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -64,12 +64,12 @@ class Article(Item):
     dateModifiedRaw: Optional[str] = None
 
     #: All authors of the article.
-    authors: Optional[List[Author]] = None
+    authors: Optional[list[Author]] = None
 
     #: Webpage `breadcrumb trail`_.
     #:
     #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
-    breadcrumbs: Optional[List[Breadcrumb]] = None
+    breadcrumbs: Optional[list[Breadcrumb]] = None
 
     #: Language of the article, as an ISO 639-1 language code.
     #:
@@ -81,7 +81,7 @@ class Article(Item):
     mainImage: Optional[Image] = None
 
     #: All images.
-    images: Optional[List[Image]] = None
+    images: Optional[list[Image]] = None
 
     #: A short summary of the article.
     #:
@@ -107,10 +107,10 @@ class Article(Item):
     articleBodyHtml: Optional[str] = None
 
     #: All videos.
-    videos: Optional[List[Video]] = None
+    videos: Optional[list[Video]] = None
 
     #: All audios.
-    audios: Optional[List[Audio]] = None
+    audios: Optional[list[Audio]] = None
 
     #: Canonical form of the URL, as indicated by the website.
     #:

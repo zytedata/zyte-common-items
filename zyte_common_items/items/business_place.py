@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -48,10 +48,10 @@ class BusinessPlace(Item):
     name: Optional[str] = None
 
     #: List of actions that can be performed directly from the URLs on the place page, including URLs.
-    actions: Optional[List[NamedLink]] = None
+    actions: Optional[list[NamedLink]] = None
 
     #: List of name-value pais of any unmapped additional properties specific to the place.
-    additionalProperties: Optional[List[AdditionalProperty]] = None
+    additionalProperties: Optional[list[AdditionalProperty]] = None
 
     #: The address details of the place.
     address: Optional[Address] = None
@@ -62,7 +62,7 @@ class BusinessPlace(Item):
     reservationAction: Optional[NamedLink] = None
 
     #: List of categories the place belongs to.
-    categories: Optional[List[str]] = None
+    categories: Optional[list[str]] = None
 
     #: The description of the place.
     #:
@@ -70,7 +70,7 @@ class BusinessPlace(Item):
     description: Optional[str] = None
 
     #: List of frequently mentioned features of this place.
-    features: Optional[List[str]] = None
+    features: Optional[list[str]] = None
 
     #: URL to a map of the place.
     map: Optional[str] = attrs.field(
@@ -78,10 +78,10 @@ class BusinessPlace(Item):
     )
 
     #: A list of URL values of all images of the place.
-    images: Optional[List[Image]] = None
+    images: Optional[list[Image]] = None
 
     #: List of amenities of the place.
-    amenityFeatures: Optional[List[Amenity]] = None
+    amenityFeatures: Optional[list[Amenity]] = None
 
     #: The overall rating, based on a collection of reviews or ratings.
     aggregateRating: Optional[AggregateRating] = None
@@ -93,10 +93,10 @@ class BusinessPlace(Item):
     containedInPlace: Optional[ParentPlace] = None
 
     #: Ordered specification of opening hours, including data for opening and closing time for each day of the week.
-    openingHours: Optional[List[OpeningHoursItem]] = None
+    openingHours: Optional[list[OpeningHoursItem]] = None
 
     #: List of partner review sites.
-    reviewSites: Optional[List[NamedLink]] = None
+    reviewSites: Optional[list[NamedLink]] = None
 
     #: The phone number associated with the place, as it appears on the page.
     telephone: Optional[str] = None
@@ -118,9 +118,11 @@ class BusinessPlace(Item):
     )
 
     #:  List of the tags associated with the place.
-    tags: Optional[List[str]] = None
+    tags: Optional[list[str]] = None
 
     #: Data extraction process metadata.
     metadata: Optional[BusinessPlaceMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(BusinessPlaceMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(BusinessPlaceMetadata),  # type: ignore[misc]
+        kw_only=True,
     )

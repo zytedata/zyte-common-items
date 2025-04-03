@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -93,7 +93,7 @@ class JobPosting(Item):
     baseSalary: Optional[BaseSalary] = None
 
     #: Candidate requirements for the job.
-    requirements: Optional[List[str]] = None
+    requirements: Optional[list[str]] = None
 
     #: Information about the organization offering the job position.
     hiringOrganization: Optional[HiringOrganization] = None
@@ -113,5 +113,7 @@ class JobPosting(Item):
 
     #: Contains metadata about the data extraction process.
     metadata: Optional[JobPostingMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(JobPostingMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(JobPostingMetadata),  # type: ignore[misc]
+        kw_only=True,
     )

@@ -32,10 +32,10 @@ from zyte_common_items.fields import is_auto_field
 
 @pytest.mark.parametrize(
     "page_class",
-    (
+    [
         BaseProductPage,
         BaseProductListPage,
-    ),
+    ],
 )
 def test_base_pages_default(page_class):
     page = page_class(request_url=RequestUrl("https://example.com"))
@@ -46,10 +46,10 @@ def test_base_pages_default(page_class):
 
 @pytest.mark.parametrize(
     "page_class",
-    (
+    [
         ProductPage,
         ProductListPage,
-    ),
+    ],
 )
 def test_pages_default(page_class):
     url = ResponseUrl("https://example.com")
@@ -159,7 +159,7 @@ def test_page_pairs():
         obj_name
         for obj_name in zyte_common_items.__dict__
         if (
-            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
+            not obj_name.startswith(("Base", "Auto"))
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )
@@ -194,7 +194,7 @@ def test_matching_items():
         obj_name
         for obj_name in zyte_common_items.__dict__
         if (
-            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
+            not obj_name.startswith(("Base", "Auto"))
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )
@@ -256,9 +256,7 @@ def check_default_metadata(cls, kwargs, item_name):
         for prefix in ["_", "from_", "get_"]:
             if field_name.startswith(prefix):
                 return False
-        if field_name == "cast":
-            return False
-        return True
+        return field_name != "cast"
 
     actual_fields = {field for field in dir(obj.metadata) if allow_field(field)}
     error_message = (
@@ -268,9 +266,9 @@ def check_default_metadata(cls, kwargs, item_name):
     assert actual_fields == expected_fields, error_message
 
     if "dateDownloaded" in actual_fields:
-        assert isinstance(
-            obj.metadata.dateDownloaded, str
-        ), f"{cls} does not get dateDownloaded set by default"
+        assert isinstance(obj.metadata.dateDownloaded, str), (
+            f"{cls} does not get dateDownloaded set by default"
+        )
         assert obj.metadata.dateDownloaded.endswith("Z")
         actual = obj.metadata.get_date_downloaded_parsed()
         end = utcnow().replace(microsecond=0)
@@ -297,7 +295,7 @@ def test_metadata():
         obj_name
         for obj_name in zyte_common_items.__dict__
         if (
-            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
+            not obj_name.startswith(("Base", "Auto"))
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )
@@ -451,7 +449,7 @@ def test_metadata_cls_none():
     </html>
     """
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="doesn't have a metadata class configured"):
         page.metadata
 
 
@@ -507,6 +505,6 @@ def test_auto_page_item_fields():
         auto_page_fields = set(get_fields_dict(auto_page))
         item_cls = get_item_cls(auto_page)  # type: ignore[call-overload]
         item_fields = set(attrs.fields_dict(item_cls))
-        assert (
-            auto_page_fields == item_fields
-        ), f"{auto_page} does not map all {item_cls} fields"
+        assert auto_page_fields == item_fields, (
+            f"{auto_page} does not map all {item_cls} fields"
+        )
