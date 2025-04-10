@@ -155,7 +155,7 @@ def test_headers():
 
 
 def test_probability_request():
-    ProbabilityRequest(url="https://example.com")
+    ProbabilityRequest(url="https://example.com", metadata=ProbabilityMetadata(probability=1.0))
     headers = [
         Header(name="Content-Type", value="application/x-www-form-urlencoded"),
         Header(name="Host", value="foo.example"),
@@ -173,10 +173,11 @@ def test_probability_request():
     request = ProbabilityRequest(
         name="Get with RequestURL object",
         url=RequestUrl("https://example.com/test"),
+        metadata=ProbabilityMetadata(probability=0.5)
     )
 
     assert request.url == "https://example.com/test"
-    assert request.get_probability() is None
+    assert request.get_probability() == 0.5
 
 
 def test_request():
