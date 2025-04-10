@@ -461,15 +461,15 @@ def test_request():
     class CustomNavPage(BaseProductNavigationPage):
         @field
         def subCategories(self):
-            return [Request(url="https://example.com")]
+            return [ProbabilityRequest(url="https://example.com", metadata=ProbabilityMetadata(probability=1.0))]
 
         @field
         def items(self):
-            return [Request(url="https://example.com")]
+            return [ProbabilityRequest(url="https://example.com", metadata=ProbabilityMetadata(probability=1.0))]
 
         @field
         def nextPage(self):
-            return Request(url="https://example.com")
+            return ProbabilityRequest(url="https://example.com", metadata=ProbabilityMetadata(probability=1.0))
 
     url = RequestUrl("https://example.com")
     page = CustomNavPage(url)
@@ -477,7 +477,7 @@ def test_request():
         assert type(request) is ProbabilityRequest
         assert request.metadata is not None
         assert request.metadata.probability == 1.0
-    assert type(page.nextPage) is Request
+    assert type(page.nextPage) is ProbabilityRequest
 
 
 def test_auto_fields():

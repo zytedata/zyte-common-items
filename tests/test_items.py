@@ -832,9 +832,10 @@ def test_request():
 
     product_navigation = ProductNavigation(**_PRODUCT_NAVIGATION_MIN_KWARGS)
     product_navigation.subCategories = [
-        Request(  # type: ignore[list-item]
+        ProbabilityRequest(  # type: ignore[list-item]
             url="http://books.toscrape.com/catalogue/category/books/mystery_3/index.html",
             name="Mystery",
+            metadata=ProbabilityMetadata(probability=1.0)
         ),
     ]
     assert product_navigation.subCategories[0] == ProbabilityRequest(

@@ -2,7 +2,7 @@ import base64
 
 import pytest
 
-from zyte_common_items import Header, Request
+from zyte_common_items import Header, Request, ProbabilityRequest, ProbabilityMetadata
 from zyte_common_items.components import request_list_processor
 from zyte_common_items.processors import probability_request_list_processor
 
@@ -79,7 +79,7 @@ def test_request_to_scrapy_headers_with_the_same_name():
 
 
 def test_deprecated_request_list_processor():
-    request_list = [Request("http://example.com")]
+    request_list = [ProbabilityRequest(url="http://example.com", metadata=ProbabilityMetadata(probability=1.0))]
     with pytest.deprecated_call():
         old_result = request_list_processor(request_list)
 
