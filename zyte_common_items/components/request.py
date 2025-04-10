@@ -86,4 +86,4 @@ class ProbabilityRequest(Request, ProbabilityMixin):
     """A :class:`Request` that includes a probability value."""
 
     #: Data extraction process metadata.
-    metadata: Optional[ProbabilityMetadata] = None
+    metadata: ProbabilityMetadata
