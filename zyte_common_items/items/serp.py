@@ -34,6 +34,9 @@ class SerpOrganicResult(Item):
     #: a search, must be 1.
     rank: Optional[int] = None
 
+    #: Result additional information such as number of instagram followers.
+    displayedUrlText: Optional[str] = None
+
 
 @attrs.define(kw_only=True)
 class SerpMetadata(ListMetadata):

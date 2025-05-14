@@ -236,6 +236,7 @@ def test_serp_organic_result():
         name="Foobar",
         url="https://en.wikipedia.org/wiki/Foobar",
         rank=1,
+        displayedUrlText="https://en.wikipedia.org › wiki › F...",
     )
 
 
