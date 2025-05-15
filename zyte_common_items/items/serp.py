@@ -34,7 +34,12 @@ class SerpOrganicResult(Item):
     #: a search, must be 1.
     rank: Optional[int] = None
 
-    #: Result additional information such as number of instagram followers.
+    #: Text displayed to represent :attr:`url`.
+    #:
+    #: It may not be an actual URL, but some stylized or simplified 
+    #: representation of it. For example, if :attr:`url` is
+    #: https://en.wikipedia.org/wiki/Foobar, :attr:`displayedUrlText` could be 
+    #: something like ``"https://en.wikipedia.org  › wiki › Foobar"``.
     displayedUrlText: Optional[str] = None
 
 
