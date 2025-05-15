@@ -515,6 +515,7 @@ _SERP_ALL_KWARGS: dict = {
             name="Foobar",
             url="https://en.wikipedia.org/wiki/Foobar",
             rank=1,
+            displayedUrlText="https://en.wikipedia.org › wiki › F...",
         ),
     ],
     "url": "https://example.com/search?q=foo+bar",
