@@ -805,7 +805,7 @@ def test_metadata():
         obj_name[:-4]
         for obj_name in zyte_common_items.__dict__
         if (
-            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
+            not obj_name.startswith(("Base", "Auto"))
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )
@@ -912,8 +912,8 @@ def test_social_media_post_missing_fields():
 
 
 @pytest.mark.parametrize(
-    "cls,has_proba",
-    (
+    ("cls", "has_proba"),
+    [
         (Article, True),
         (ArticleFromList, True),
         (ArticleList, False),
@@ -928,7 +928,7 @@ def test_social_media_post_missing_fields():
         (RealEstate, True),
         (Serp, False),
         (SocialMediaPost, True),
-    ),
+    ],
 )
 def test_get_probability_request(cls, has_proba):
     data = {"url": "https://example.com"}

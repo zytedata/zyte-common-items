@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -25,8 +25,10 @@ class JobPostingNavigation(Item):
     url: str = attrs.field(converter=url_to_str)
 
     #: List of job postings available on this page.
-    items: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
+    items: Optional[list[ProbabilityRequest]] = attrs.field(
+        default=None,
+        converter=to_probability_request_list_optional,
+        kw_only=True,
     )
 
     #: A link to the next page, if available.
@@ -42,5 +44,7 @@ class JobPostingNavigation(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[JobPostingNavigationMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(JobPostingNavigationMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(JobPostingNavigationMetadata),  # type: ignore[misc]
+        kw_only=True,
     )

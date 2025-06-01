@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -33,7 +33,7 @@ class RealEstate(Item):
     #: Webpage `breadcrumb trail`_.
     #:
     #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
-    breadcrumbs: Optional[List[Breadcrumb]] = None
+    breadcrumbs: Optional[list[Breadcrumb]] = None
 
     #: The identifier of the real estate, usually assigned by the seller and unique within a website, similar to product SKU.
     realEstateId: Optional[str] = None
@@ -70,7 +70,7 @@ class RealEstate(Item):
     mainImage: Optional[Image] = None
 
     #: A list of URL values of all images of the real estate.
-    images: Optional[List[Image]] = None
+    images: Optional[list[Image]] = None
 
     #: The details of the address of the real estate.
     address: Optional[Address] = None
@@ -109,7 +109,7 @@ class RealEstate(Item):
     currency: Optional[str] = None
 
     #: A name-value pair field holding information pertaining to specific features. Usually in a form of a specification table or freeform specification list.
-    additionalProperties: Optional[List[AdditionalProperty]] = None
+    additionalProperties: Optional[list[AdditionalProperty]] = None
 
     #: Type of the property, e.g. flat, house, land.
     propertyType: Optional[str] = None
@@ -122,5 +122,7 @@ class RealEstate(Item):
 
     #: Contains metadata about the data extraction process.
     metadata: Optional[RealEstateMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(RealEstateMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(RealEstateMetadata),  # type: ignore[misc]
+        kw_only=True,
     )

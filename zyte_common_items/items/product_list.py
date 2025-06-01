@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -36,7 +36,7 @@ class ProductList(Item):
     #: Webpage `breadcrumb trail`_.
     #:
     #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
-    breadcrumbs: Optional[List[Breadcrumb]] = None
+    breadcrumbs: Optional[list[Breadcrumb]] = None
 
     #: Canonical form of the URL, as indicated by the website.
     #:
@@ -54,7 +54,9 @@ class ProductList(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[ProductListMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ProductListMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(ProductListMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
 
     #: Current page number, if displayed explicitly on the list page.
@@ -74,7 +76,7 @@ class ProductList(Item):
     #: The order of the products reflects their position on the rendered page.
     #: Product order is top-to-bottom, and left-to-right or right-to-left
     #: depending on the webpage locale.
-    products: Optional[List[ProductFromList]] = None
+    products: Optional[list[ProductFromList]] = None
 
     #: Main URL from which the data has been extracted.
     #:
@@ -109,7 +111,9 @@ class ProductFromList(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[ProbabilityMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ProbabilityMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(ProbabilityMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
 
     #: Name as it appears on the webpage (no post-processing).

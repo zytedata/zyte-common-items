@@ -18,7 +18,7 @@ from zyte_common_items import (
 
 
 @pytest.mark.parametrize(
-    "cls,fields",
+    ("cls", "fields"),
     [
         (Image, ["url"]),
         (Breadcrumb, ["url"]),
@@ -44,7 +44,7 @@ def test_webpoet_URL_classes(cls, fields):
 
     # Ensure that both types of URL classes are covered
     for url_obj in [response_url_obj, request_url_obj]:
-        data = {field: url_obj for field in fields}
+        data = dict.fromkeys(fields, url_obj)
         obj = cls(**data)
 
         for field in fields:
@@ -61,7 +61,9 @@ def test_webpoet_URL_classes(cls, fields):
 
             # Setting other values that are not strings or URL classes would
             # raise a ValueError
-            with pytest.raises(ValueError):
+            with pytest.raises(
+                ValueError, match="is neither a string nor an instance of"
+            ):
                 setattr(obj, field, 123)
 
 
@@ -90,12 +92,12 @@ def test_webpoet_URL_mainImage(cls):
 
     # Setting other values that are not strings or URL classes would
     # raise a ValueError
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="is neither a string nor an instance of"):
         obj.mainImage.url = False
 
     data = {"mainImage": {"url": 123}, "url": 123}
-    with pytest.raises(ValueError):
-        obj = cls.from_dict(data)
+    with pytest.raises(ValueError, match="is neither a string nor an instance of"):
+        cls.from_dict(data)
 
 
 @pytest.mark.parametrize("cls", [ProductVariant, Product])
@@ -127,7 +129,7 @@ def test_webpoet_URL_images(cls):
 
     # Setting other values that are not strings or URL classes would
     # raise a ValueError
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="is neither a string nor an instance of"):
         obj.images[1].url = False
 
     data = {
@@ -137,5 +139,5 @@ def test_webpoet_URL_images(cls):
         ],
         "url": 789,
     }
-    with pytest.raises(ValueError):
-        obj = cls.from_dict(data)
+    with pytest.raises(ValueError, match="is neither a string nor an instance of"):
+        cls.from_dict(data)

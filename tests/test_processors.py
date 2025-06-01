@@ -1,5 +1,3 @@
-from typing import Type
-
 import pytest
 from lxml.html import fromstring
 from parsel import Selector, SelectorList
@@ -49,7 +47,7 @@ breadcrumbs_expected = [
 
 
 @pytest.mark.parametrize(
-    "input_value,expected_value",
+    ("input_value", "expected_value"),
     [
         (None, None),
         ([], []),
@@ -137,7 +135,7 @@ def test_breadcrumbs_base_url():
 
 
 @pytest.mark.parametrize(
-    "input_value,expected_value",
+    ("input_value", "expected_value"),
     [
         (None, None),
         ("", None),
@@ -172,14 +170,14 @@ def test_brand_page():
 
     response = HttpResponse(
         url="http://www.example.com/",
-        body="<html><body><img alt='foo'></body></html>".encode(),
+        body=b"<html><body><img alt='foo'></body></html>",
     )
     page = MyProductPage(response=response)
     assert page.brand == Brand(name="foo")
 
 
 @pytest.mark.parametrize(
-    "input_value,expected_value",
+    ("input_value", "expected_value"),
     [
         ("", None),
         ("NaN", None),
@@ -202,7 +200,7 @@ gtin_expected = [Gtin("isbn13", "9781933624341")]
 
 
 @pytest.mark.parametrize(
-    "input_value,expected_value",
+    ("input_value", "expected_value"),
     [
         (None, None),
         ([], None),
@@ -246,7 +244,7 @@ def test_gtin(input_value, expected_value):
 
 
 @pytest.mark.parametrize(
-    "input_value,expected_value",
+    ("input_value", "expected_value"),
     [
         (None, None),
         ([], []),
@@ -341,7 +339,7 @@ def test_rating_3_values():
 
 
 @pytest.mark.parametrize(
-    "input_value,expected_value",
+    ("input_value", "expected_value"),
     [
         (None, None),
         ([], []),
@@ -393,14 +391,14 @@ def test_images_page():
 
     response = HttpResponse(
         url="http://www.example.com/",
-        body="<html><body><img href='https://www.url.com/img.jpg'></body></html>".encode(),
+        body=b"<html><body><img href='https://www.url.com/img.jpg'></body></html>",
     )
     page = MyProductPage(response=response)
     assert page.images == [Image(url="https://www.url.com/img.jpg")]
 
 
 @pytest.mark.parametrize(
-    "input_value,expected_value",
+    ("input_value", "expected_value"),
     [
         (100, "100.00"),
         (None, None),
@@ -423,13 +421,13 @@ def test_prices(input_value, expected_value):
 
 
 @pytest.mark.parametrize(
-    "input_value,BasePage,expected_value",
+    ("input_value", "BasePage", "expected_value"),
     [
         (None, ProductPage, None),
         (Metadata(), ProductPage, ProductMetadata()),
     ],
 )
-def test_metadata(input_value, BasePage: Type, expected_value):
+def test_metadata(input_value, BasePage: type, expected_value):
     class CustomPage(BasePage):
         @field(out=[metadata_processor])
         def metadata(self):
