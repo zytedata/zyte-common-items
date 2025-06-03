@@ -5,7 +5,6 @@ import logging
 from copy import deepcopy
 from warnings import warn
 
-from . import ae
 from .base import ProbabilityMixin
 from .log_formatters import InfoDropItem
 
@@ -61,6 +60,11 @@ class AEPipeline:
         )
 
     def process_item(self, item, spider):
+        # As global level import can raise Deprecation warning for other classes
+        # of this same module which can be mis-leading. Hence moving this import here
+        # as the module is anyway going to deprecate and less likely used.
+        from . import ae
+
         return ae.downgrade(item)
 
 
