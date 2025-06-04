@@ -22,9 +22,6 @@ def test_warning():
     """
     warnings.filterwarnings("default")
 
-    # sys.modules.pop("zyte_common_items.ae", None)
-    # sys.modules.pop("zyte_common_items.pipelines", None)
-
     with warnings.catch_warnings(record=True) as record:
         from zyte_common_items.pipelines import AEPipeline
 
