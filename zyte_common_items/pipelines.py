@@ -3,7 +3,6 @@ import scrapy  # isort: skip  # noqa: F401
 
 import logging
 from copy import deepcopy
-from warnings import warn
 
 from .base import ProbabilityMixin
 from .log_formatters import InfoDropItem
@@ -45,27 +44,15 @@ class AEPipeline:
     """
 
     def __init__(self):
-        warn(
-            (
-                "The zyte_common_items.pipelines.AEPipeline item pipeline has "
-                "been implemented temporarily to help speed up migrating from "
-                "Zyte Automatic Extraction to Zyte API automatic extraction "
-                "(https://docs.zyte.com/zyte-api/migration/zyte/autoextract.html). "
-                "However, this item pipeline will eventually be removed. "
-                "Please, update your code not to depend on this item pipeline "
-                "anymore."
-            ),
-            DeprecationWarning,
-            stacklevel=2,
-        )
-
-    def process_item(self, item, spider):
         # As global level import can raise Deprecation warning for other classes
         # of this same module which can be mis-leading. Hence moving this import here
         # as the module is anyway going to deprecate and less likely used.
         from . import ae
 
-        return ae.downgrade(item)
+        self._downgrade = ae.downgrade
+
+    def process_item(self, item, spider):
+        return self._downgrade(item)
 
 
 class DropLowProbabilityItemPipeline:
