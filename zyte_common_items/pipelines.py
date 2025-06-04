@@ -44,9 +44,6 @@ class AEPipeline:
     """
 
     def __init__(self):
-        # As global level import can raise Deprecation warning for other classes
-        # of this same module which can be mis-leading. Hence moving this import here
-        # as the module is anyway going to deprecate and less likely used.
         from . import ae
 
         self._downgrade = ae.downgrade

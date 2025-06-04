@@ -346,6 +346,7 @@ def test_no_warning():
     message.
     """
     warnings.filterwarnings("default")
+
     with warnings.catch_warnings(record=True) as record:
         from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
 
