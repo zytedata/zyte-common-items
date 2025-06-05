@@ -1,9 +1,3 @@
-"""
-Test pipeline component functionality. Also checks if warning is generated or not.
-For DropLowProbabilityItemPipeline, warning should not be generated.
-For AEPipeline, warning should be generated.
-"""
-
 import warnings
 from copy import deepcopy
 from unittest.mock import MagicMock, patch
@@ -321,10 +315,6 @@ def test_get_item_name(item, expected_name):
 
 
 def test_warning():
-    """
-    Asserts if Deprication warning gets generated or not while
-    importing AEPipeline. It should generate a warning message.
-    """
     warnings.filterwarnings("default")
 
     with warnings.catch_warnings(record=True) as record:
@@ -340,11 +330,6 @@ def test_warning():
 
 
 def test_no_warning():
-    """
-    Asserts if Deprication warning gets generated or not while
-    importing DropLowProbabilityItemPipeline. It should not generate a warning
-    message.
-    """
     warnings.filterwarnings("default")
 
     with warnings.catch_warnings(record=True) as record:
