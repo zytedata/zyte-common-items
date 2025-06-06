@@ -1,3 +1,8 @@
+import pytest  # isort: skip
+
+scrapy = pytest.importorskip("scrapy")  # noqa
+
+import sys
 import warnings
 from copy import deepcopy
 from unittest.mock import MagicMock, patch
@@ -13,14 +18,6 @@ from zyte_common_items import (
 )
 from zyte_common_items.base import ProbabilityMixin
 from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
-
-import pytest  # isort: skip
-
-
-scrapy = pytest.importorskip("scrapy")  # noqa
-
-
-WARNING_MSG = r"The zyte_common_items.ae module is a temporary module"
 
 
 @pytest.mark.parametrize(
@@ -315,22 +312,29 @@ def test_get_item_name(item, expected_name):
 
 
 def test_warning():
+    warning_msg = r"The zyte_common_items.ae module is a temporary module"
     warnings.filterwarnings("default")
+    sys.modules.pop("zyte_common_items.ae", None)
+    sys.modules.pop("zyte_common_items.pipelines", None)
+    sys.modules.pop("zyte_common_items", None)
 
     with warnings.catch_warnings(record=True) as record:
         from zyte_common_items.pipelines import AEPipeline
 
         ae_pipeline = AEPipeline()
-    from zyte_common_items.ae import downgrade
-
     warn_msg = str(record[0].message)
     assert len(record) == 1
-    assert WARNING_MSG in warn_msg
+    assert warning_msg in warn_msg
+    from zyte_common_items.ae import downgrade
+
     assert ae_pipeline._downgrade == downgrade
 
 
 def test_no_warning():
     warnings.filterwarnings("default")
+    sys.modules.pop("zyte_common_items.ae", None)
+    sys.modules.pop("zyte_common_items.pipelines", None)
+    sys.modules.pop("zyte_common_items", None)
 
     with warnings.catch_warnings(record=True) as record:
         from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
