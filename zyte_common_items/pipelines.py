@@ -3,9 +3,7 @@ import scrapy  # isort: skip  # noqa: F401
 
 import logging
 from copy import deepcopy
-from warnings import warn
 
-from . import ae
 from .base import ProbabilityMixin
 from .log_formatters import InfoDropItem
 
@@ -46,22 +44,12 @@ class AEPipeline:
     """
 
     def __init__(self):
-        warn(
-            (
-                "The zyte_common_items.pipelines.AEPipeline item pipeline has "
-                "been implemented temporarily to help speed up migrating from "
-                "Zyte Automatic Extraction to Zyte API automatic extraction "
-                "(https://docs.zyte.com/zyte-api/migration/zyte/autoextract.html). "
-                "However, this item pipeline will eventually be removed. "
-                "Please, update your code not to depend on this item pipeline "
-                "anymore."
-            ),
-            DeprecationWarning,
-            stacklevel=2,
-        )
+        from . import ae
+
+        self._downgrade = ae.downgrade
 
     def process_item(self, item, spider):
-        return ae.downgrade(item)
+        return self._downgrade(item)
 
 
 class DropLowProbabilityItemPipeline:
