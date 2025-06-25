@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -39,10 +39,10 @@ class SocialMediaPost(Item):
     datePublished: Optional[str] = None
 
     #: The list of hashtags contained in the post.
-    hashtags: Optional[List[str]] = None
+    hashtags: Optional[list[str]] = None
 
     #: The list of URLs of media files (images, videos, etc.) linked from the post.
-    mediaUrls: Optional[List[Url]] = None
+    mediaUrls: Optional[list[Url]] = None
 
     #: Details of the author of the post.
     #:
@@ -51,5 +51,7 @@ class SocialMediaPost(Item):
 
     #: Contains metadata about the data extraction process.
     metadata: Optional[SocialMediaPostMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(SocialMediaPostMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(SocialMediaPostMetadata),  # type: ignore[misc]
+        kw_only=True,
     )

@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -32,13 +32,17 @@ class ProductNavigation(Item):
     categoryName: Optional[str] = None
 
     #: List of sub-category links ordered by their position in the page.
-    subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
+    subCategories: Optional[list[ProbabilityRequest]] = attrs.field(
+        default=None,
+        converter=to_probability_request_list_optional,
+        kw_only=True,
     )
 
     #: List of product links found on the page category ordered by their position in the page.
-    items: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
+    items: Optional[list[ProbabilityRequest]] = attrs.field(
+        default=None,
+        converter=to_probability_request_list_optional,
+        kw_only=True,
     )
 
     #: A link to the next page, if available.
@@ -54,5 +58,7 @@ class ProductNavigation(Item):
 
     #: Data extraction process metadata.
     metadata: Optional[ProductNavigationMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ProductNavigationMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(ProductNavigationMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
