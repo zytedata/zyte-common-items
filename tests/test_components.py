@@ -169,14 +169,17 @@ def test_probability_request():
         metadata=ProbabilityMetadata(probability=0.5),
     )
     assert request.get_probability() == 0.5
+    assert request.notes is None
 
     request = ProbabilityRequest(
         name="Get with RequestURL object",
         url=RequestUrl("https://example.com/test"),
+        notes={"type": "test request", "id": 782},
     )
 
     assert request.url == "https://example.com/test"
     assert request.get_probability() is None
+    assert request.notes == {"type": "test request", "id": 782}
 
 
 def test_request():
@@ -185,20 +188,22 @@ def test_request():
         Header(name="Content-Type", value="application/x-www-form-urlencoded"),
         Header(name="Host", value="foo.example"),
     ]
-    Request(
+    request = Request(
         name="Post Test",
         url="https://example.com/test",
         method="POST",
         body="ZmllbGQxPXZhbHVlMSZmaWVsZDI9dmFsdWUy",
         headers=headers,
     )
+    assert request.notes is None
 
     request = Request(
         name="Get with RequestURL object",
         url=RequestUrl("https://example.com/test"),
+        notes={"type": "test request", "id": 782},
     )
-
     assert request.url == "https://example.com/test"
+    assert request.notes == {"type": "test request", "id": 782}
 
 
 def test_job_location():
