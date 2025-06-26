@@ -2,6 +2,17 @@
 Changelog
 =========
 
+0.27.1 (unreleased)
+===================
+
+* Added :attr:`~zyte_common_items.SerpOrganicResult.displayedUrlText` to
+  :class:`~zyte_common_items.SerpOrganicResult`.
+
+* Importing
+  :class:`~zyte_common_items.pipelines.DropLowProbabilityItemPipeline` no
+  longer triggers a warning about the deprecation of the
+  ``zyte_common_items.ae`` module.
+
 0.27.0 (2025-01-16)
 ===================
 
@@ -59,7 +70,7 @@ Changelog
     :class:`~zyte_common_items.BaseSearchRequestTemplatePage` is a better
     replacement for the :class:`~zyte_common_items.SearchRequestTemplatePage`
     class from zyte-common-items 0.24.0 and lower, as it only depends on
-    :class:`~web_poet.page_inputs.http.RequestUrl`.
+    ``web_poet.page_inputs.http.RequestUrl``.
 
 * The ``keyword`` parameter of :meth:`SearchRequestTemplate.request()
   <zyte_common_items.SearchRequestTemplate.request>` has been deprecated in
@@ -300,7 +311,7 @@ Changelog
   it for the ``brand`` fields.
 
 * Added :meth:`zyte_common_items.Request.to_scrapy` to convert
-  :class:`zyte_common_items.Request` instances to :class:`scrapy.http.Request`
+  :class:`zyte_common_items.Request` instances to :class:`scrapy.Request`
   instances.
 
 0.7.0 (2023-07-11)

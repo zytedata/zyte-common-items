@@ -46,7 +46,7 @@ class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
 @attrs.define
 class BasePage(_BasePage):
     """Base class for page object classes that has
-    :class:`~web_poet.page_inputs.http.RequestUrl` as a dependency."""
+    ``web_poet.page_inputs.http.RequestUrl`` as a dependency."""
 
     class Processors(_BasePage.Processors):
         pass
