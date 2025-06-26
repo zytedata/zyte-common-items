@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.27.1 (unreleased)
+0.27.1 (2025-06-26)
 ===================
 
 * Added :attr:`~zyte_common_items.SerpOrganicResult.displayedUrlText` to
