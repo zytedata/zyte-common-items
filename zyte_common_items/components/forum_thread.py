@@ -9,5 +9,5 @@ from zyte_common_items.base import Item
 class Topic(Item):
     """Topic that is discussed on the page."""
 
-    #: Name of the topic.
     name: str
+    """Name of the topic."""

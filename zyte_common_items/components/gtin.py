@@ -12,13 +12,15 @@ class Gtin(Item):
     .. _GTIN: https://en.wikipedia.org/wiki/Global_Trade_Item_Number
     """
 
-    #: Identifier of the GTIN format of ``value``.
-    #:
-    #: One of: ``"gtin13"``, ``"gtin8"``, ``"gtin14"``, ``"isbn10"``,
-    #: ``"isbn13"``, ``"ismn"``, ``"issn"``, ``"upc"``.
     type: str
+    """Identifier of the GTIN format of ``value``.
 
-    #: Value.
-    #:
-    #: It should only contain digits.
+    One of: ``"gtin13"``, ``"gtin8"``, ``"gtin14"``, ``"isbn10"``,
+    ``"isbn13"``, ``"ismn"``, ``"issn"``, ``"upc"``.
+    """
+
     value: str
+    """Value.
+
+    It should only contain digits.
+    """

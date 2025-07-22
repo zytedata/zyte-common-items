@@ -16,10 +16,10 @@ class Breadcrumb(Item):
     .. _breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
     """
 
-    #: Displayed name.
     name: Optional[str] = None
+    """Displayed name."""
 
-    #: Target URL.
     url: Optional[str] = attrs.field(
         default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
+    """Target URL."""

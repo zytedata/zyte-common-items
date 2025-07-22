@@ -42,37 +42,39 @@ class SearchRequestTemplate(Item):
     """:ref:`Request template <request-templates>` to build a search
     :class:`~zyte_common_items.Request`."""
 
-    #: :doc:`Jinja template <jinja:templates>` for :class:`Request.url
-    #: <zyte_common_items.Request.url>`.
     url: str
+    """:doc:`Jinja template <jinja:templates>` for :class:`Request.url
+    <zyte_common_items.Request.url>`."""
 
-    #: :doc:`Jinja template <jinja:templates>` for :class:`Request.method
-    #: <zyte_common_items.Request.method>`.
     method: str = "GET"
+    """:doc:`Jinja template <jinja:templates>` for :class:`Request.method
+    <zyte_common_items.Request.method>`."""
 
-    #: :doc:`Jinja template <jinja:templates>` for :class:`Request.body
-    #: <zyte_common_items.Request.body>`.
-    #:
-    #: It must be a plain :class:`str`, not :class:`bytes` or a Base64-encoded
-    #: :class:`str`. Base64-encoding is done by :meth:`request` after rendering
-    #: this value as a Jinja template.
-    #:
-    #: Defining a non-UTF-8 body is not supported.
     body: Optional[str] = None
+    """:doc:`Jinja template <jinja:templates>` for :class:`Request.body
+    <zyte_common_items.Request.body>`.
 
-    #: List of :class:`Header`, for :class:`Request.headers
-    #: <zyte_common_items.Request.headers>`, where every :attr:`~Header.name`
-    #: and :attr:`~Header.value` is a :doc:`Jinja template <jinja:templates>`.
-    #:
-    #: When a header name template renders into an empty string (after
-    #: stripping spacing), that header is removed from the resulting list of
-    #: headers.
+    It must be a plain :class:`str`, not :class:`bytes` or a Base64-encoded
+    :class:`str`. Base64-encoding is done by :meth:`request` after rendering
+    this value as a Jinja template.
+
+    Defining a non-UTF-8 body is not supported.
+    """
+
     headers: Optional[List[Header]] = None
+    """List of :class:`Header`, for :class:`Request.headers
+    <zyte_common_items.Request.headers>`, where every :attr:`~Header.name`
+    and :attr:`~Header.value` is a :doc:`Jinja template <jinja:templates>`.
 
-    #: Data extraction process metadata.
+    When a header name template renders into an empty string (after
+    stripping spacing), that header is removed from the resulting list of
+    headers.
+    """
+
     metadata: Optional[SearchRequestTemplateMetadata] = attrs.field(
         default=None, converter=to_metadata_optional(SearchRequestTemplateMetadata), kw_only=True  # type: ignore[misc]
     )
+    """Data extraction process metadata."""
 
     def request(
         self, *, query: str | Any = _UNSET, keyword: str | Any = _UNSET

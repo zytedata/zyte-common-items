@@ -21,26 +21,27 @@ class JobPostingNavigation(Item):
     """Represents the navigational aspects of a job posting listing page on a
     job website."""
 
-    #: Main URL from which the data is extracted.
     url: str = attrs.field(converter=url_to_str)
+    """Main URL from which the data is extracted."""
 
-    #: List of job postings available on this page.
     items: Optional[List[ProbabilityRequest]] = attrs.field(
         default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
     )
+    """List of job postings available on this page."""
 
-    #: A link to the next page, if available.
     nextPage: Optional[Request] = None
+    """A link to the next page, if available."""
 
-    #: Number of the current page.
-    #:
-    #: It should only be extracted if the webpage shows a page number.
-    #:
-    #: It must be 1-based. For example, if the first page of a listing is
-    #: numbered as 0 on the website, it should be extracted as `1` nonetheless.
     pageNumber: Optional[int] = None
+    """Number of the current page.
 
-    #: Data extraction process metadata.
+    It should only be extracted if the webpage shows a page number.
+
+    It must be 1-based. For example, if the first page of a listing is
+    numbered as 0 on the website, it should be extracted as `1` nonetheless.
+    """
+
     metadata: Optional[JobPostingNavigationMetadata] = attrs.field(
         default=None, converter=to_metadata_optional(JobPostingNavigationMetadata), kw_only=True  # type: ignore[misc]
     )
+    """Data extraction process metadata."""
