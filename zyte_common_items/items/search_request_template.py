@@ -73,8 +73,8 @@ class SearchRequestTemplate(Item):
 
     metadata: Optional[SearchRequestTemplateMetadata] = attrs.field(
         default=None,
-        converter=to_metadata_optional(SearchRequestTemplateMetadata),
-        kw_only=True,  # type: ignore[misc]
+        converter=to_metadata_optional(SearchRequestTemplateMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
     """Data extraction process metadata."""
 

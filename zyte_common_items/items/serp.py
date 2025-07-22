@@ -75,7 +75,7 @@ class Serp(Item):
 
     metadata: Optional[SerpMetadata] = attrs.field(
         default=None,
-        converter=to_metadata_optional(SerpMetadata),
-        kw_only=True,  # type: ignore[misc]
+        converter=to_metadata_optional(SerpMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
     """Contains metadata about the data extraction process."""

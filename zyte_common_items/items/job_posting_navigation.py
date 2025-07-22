@@ -45,7 +45,7 @@ class JobPostingNavigation(Item):
 
     metadata: Optional[JobPostingNavigationMetadata] = attrs.field(
         default=None,
-        converter=to_metadata_optional(JobPostingNavigationMetadata),
-        kw_only=True,  # type: ignore[misc]
+        converter=to_metadata_optional(JobPostingNavigationMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
     """Data extraction process metadata."""

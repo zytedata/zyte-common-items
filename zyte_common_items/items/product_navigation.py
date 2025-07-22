@@ -62,7 +62,7 @@ class ProductNavigation(Item):
 
     metadata: Optional[ProductNavigationMetadata] = attrs.field(
         default=None,
-        converter=to_metadata_optional(ProductNavigationMetadata),
-        kw_only=True,  # type: ignore[misc]
+        converter=to_metadata_optional(ProductNavigationMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
     """Data extraction process metadata."""

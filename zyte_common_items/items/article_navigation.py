@@ -63,7 +63,7 @@ class ArticleNavigation(Item):
 
     metadata: Optional[ArticleNavigationMetadata] = attrs.field(
         default=None,
-        converter=to_metadata_optional(ArticleNavigationMetadata),
-        kw_only=True,  # type: ignore[misc]
+        converter=to_metadata_optional(ArticleNavigationMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
     """Data extraction process metadata."""

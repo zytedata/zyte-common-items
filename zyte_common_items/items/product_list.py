@@ -57,8 +57,8 @@ class ProductList(Item):
 
     metadata: Optional[ProductListMetadata] = attrs.field(
         default=None,
-        converter=to_metadata_optional(ProductListMetadata),
-        kw_only=True,  # type: ignore[misc]
+        converter=to_metadata_optional(ProductListMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
     """Data extraction process metadata."""
 
@@ -119,8 +119,8 @@ class ProductFromList(Item):
 
     metadata: Optional[ProbabilityMetadata] = attrs.field(
         default=None,
-        converter=to_metadata_optional(ProbabilityMetadata),
-        kw_only=True,  # type: ignore[misc]
+        converter=to_metadata_optional(ProbabilityMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
     """Data extraction process metadata."""
 
