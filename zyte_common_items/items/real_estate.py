@@ -60,7 +60,7 @@ class RealEstate(Item):
 
     Format:
 
-    - trimmed (no whitespace at the beginning or the end of the description 
+    - trimmed (no whitespace at the beginning or the end of the description
       string),
     - line breaks included,
     - no length limit,
@@ -93,7 +93,7 @@ class RealEstate(Item):
     """The number of bedrooms in the real estate."""
 
     numberOfRooms: Optional[int] = None
-    """The number of rooms (excluding bathrooms and closets) of the real 
+    """The number of rooms (excluding bathrooms and closets) of the real
     estate."""
 
     tradeType: Optional[str] = None
@@ -128,6 +128,8 @@ class RealEstate(Item):
     """The URL of the virtual tour of the real estate."""
 
     metadata: Optional[RealEstateMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(RealEstateMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(RealEstateMetadata),
+        kw_only=True,  # type: ignore[misc]
     )
     """Contains metadata about the data extraction process."""

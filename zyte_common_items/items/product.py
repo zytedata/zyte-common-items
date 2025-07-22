@@ -155,7 +155,9 @@ class Product(Item):
     """Main product image."""
 
     metadata: Optional[ProductMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ProductMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(ProductMetadata),
+        kw_only=True,  # type: ignore[misc]
     )
     """Data extraction process metadata."""
 

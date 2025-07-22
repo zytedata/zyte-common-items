@@ -48,7 +48,7 @@ class ProductList(Item):
     """
 
     categoryName: Optional[str] = None
-    """Name of the product listing as it appears on the webpage (no 
+    """Name of the product listing as it appears on the webpage (no
     post-processing).
 
     For example, if the webpage is one of the pages of the Robots category,
@@ -56,7 +56,9 @@ class ProductList(Item):
     """
 
     metadata: Optional[ProductListMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ProductListMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(ProductListMetadata),
+        kw_only=True,  # type: ignore[misc]
     )
     """Data extraction process metadata."""
 
@@ -72,12 +74,12 @@ class ProductList(Item):
     products: Optional[List[ProductFromList]] = None
     """List of products.
 
-    It only includes product information found in the product listing page 
-    itself. Product information that requires visiting each product URL is not 
+    It only includes product information found in the product listing page
+    itself. Product information that requires visiting each product URL is not
     meant to be covered.
 
     The order of the products reflects their position on the rendered page.
-    Product order is top-to-bottom, and left-to-right or right-to-left 
+    Product order is top-to-bottom, and left-to-right or right-to-left
     depending on the webpage locale.
     """
 
@@ -116,7 +118,9 @@ class ProductFromList(Item):
     """Main product image."""
 
     metadata: Optional[ProbabilityMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ProbabilityMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(ProbabilityMetadata),
+        kw_only=True,  # type: ignore[misc]
     )
     """Data extraction process metadata."""
 

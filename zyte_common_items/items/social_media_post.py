@@ -43,7 +43,7 @@ class SocialMediaPost(Item):
     """The list of hashtags contained in the post."""
 
     mediaUrls: Optional[List[Url]] = None
-    """The list of URLs of media files (images, videos, etc.) linked from the 
+    """The list of URLs of media files (images, videos, etc.) linked from the
     post."""
 
     author: Optional[SocialMediaPostAuthor] = None
@@ -54,6 +54,8 @@ class SocialMediaPost(Item):
     """
 
     metadata: Optional[SocialMediaPostMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(SocialMediaPostMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(SocialMediaPostMetadata),
+        kw_only=True,  # type: ignore[misc]
     )
     """Contains metadata about the data extraction process."""

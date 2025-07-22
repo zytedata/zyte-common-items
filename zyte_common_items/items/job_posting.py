@@ -84,7 +84,7 @@ class JobPosting(Item):
 
     Format:
 
-    - trimmed (no whitespace at the beginning or the end of the description 
+    - trimmed (no whitespace at the beginning or the end of the description
       string),
     - line breaks included,
     - no length limit,
@@ -124,6 +124,8 @@ class JobPosting(Item):
     """Specifies the remote status of the position."""
 
     metadata: Optional[JobPostingMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(JobPostingMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(JobPostingMetadata),
+        kw_only=True,  # type: ignore[misc]
     )
     """Contains metadata about the data extraction process."""

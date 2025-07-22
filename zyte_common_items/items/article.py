@@ -47,7 +47,7 @@ class Article(Item):
     """
 
     datePublishedRaw: Optional[str] = None
-    """Same date as :attr:`~zyte_common_items.Article.datePublished`, but 
+    """Same date as :attr:`~zyte_common_items.Article.datePublished`, but
     before parsing/normalization, i.e. as it appears on the website."""
 
     dateModified: Optional[str] = None

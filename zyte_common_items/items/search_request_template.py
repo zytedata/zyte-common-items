@@ -72,7 +72,9 @@ class SearchRequestTemplate(Item):
     """
 
     metadata: Optional[SearchRequestTemplateMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(SearchRequestTemplateMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(SearchRequestTemplateMetadata),
+        kw_only=True,  # type: ignore[misc]
     )
     """Data extraction process metadata."""
 
@@ -84,7 +86,7 @@ class SearchRequestTemplate(Item):
         if query is _UNSET:
             if keyword is _UNSET:
                 raise TypeError(
-                    "request() missing 1 required keyword-only argument: " "'query'"
+                    "request() missing 1 required keyword-only argument: 'query'"
                 )
             else:
                 query = keyword

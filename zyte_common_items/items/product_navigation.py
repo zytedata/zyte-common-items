@@ -29,19 +29,23 @@ class ProductNavigation(Item):
 
     Format:
 
-    - trimmed (no whitespace at the beginning or the end of the description 
+    - trimmed (no whitespace at the beginning or the end of the description
       string)
     """
 
     subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_probability_request_list_optional,
+        kw_only=True,  # type: ignore[misc]
     )
     """List of sub-category links ordered by their position in the page."""
 
     items: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_probability_request_list_optional,
+        kw_only=True,  # type: ignore[misc]
     )
-    """List of product links found on the page category ordered by their 
+    """List of product links found on the page category ordered by their
     position in the page."""
 
     nextPage: Optional[Request] = None

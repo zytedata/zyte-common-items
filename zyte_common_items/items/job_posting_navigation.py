@@ -25,7 +25,9 @@ class JobPostingNavigation(Item):
     """Main URL from which the data is extracted."""
 
     items: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_probability_request_list_optional,
+        kw_only=True,  # type: ignore[misc]
     )
     """List of job postings available on this page."""
 
@@ -42,6 +44,8 @@ class JobPostingNavigation(Item):
     """
 
     metadata: Optional[JobPostingNavigationMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(JobPostingNavigationMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(JobPostingNavigationMetadata),
+        kw_only=True,  # type: ignore[misc]
     )
     """Data extraction process metadata."""

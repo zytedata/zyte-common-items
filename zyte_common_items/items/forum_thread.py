@@ -31,6 +31,8 @@ class ForumThread(Item):
     """List of posts available on the page, including the first or top post."""
 
     metadata: Optional[ForumThreadMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ForumThreadMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(ForumThreadMetadata),
+        kw_only=True,  # type: ignore[misc]
     )
     """Contains metadata about the data extraction process."""

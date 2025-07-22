@@ -65,7 +65,9 @@ class ArticleList(Item):
     """
 
     metadata: Optional[ArticleListMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ArticleListMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(ArticleListMetadata),
+        kw_only=True,  # type: ignore[misc]
     )
     """Data extraction process metadata."""
 
@@ -105,7 +107,7 @@ class ArticleFromList(Item):
     """
 
     datePublishedRaw: Optional[str] = None
-    """Same date as :attr:`~zyte_common_items.ArticleFromList.datePublished`, 
+    """Same date as :attr:`~zyte_common_items.ArticleFromList.datePublished`,
     but before parsing/normalization, i.e. as it appears on the website."""
 
     headline: Optional[str] = None

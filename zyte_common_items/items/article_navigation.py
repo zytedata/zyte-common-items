@@ -36,12 +36,16 @@ class ArticleNavigation(Item):
     """
 
     subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_probability_request_list_optional,
+        kw_only=True,  # type: ignore[misc]
     )
     """List of sub-category links ordered by their position in the page."""
 
     items: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_probability_request_list_optional,
+        kw_only=True,  # type: ignore[misc]
     )
     """Links to listed items in order of appearance."""
 
@@ -58,6 +62,8 @@ class ArticleNavigation(Item):
     """
 
     metadata: Optional[ArticleNavigationMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ArticleNavigationMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(ArticleNavigationMetadata),
+        kw_only=True,  # type: ignore[misc]
     )
     """Data extraction process metadata."""

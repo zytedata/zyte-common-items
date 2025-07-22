@@ -59,7 +59,7 @@ def _format_price(price: Price) -> Optional[str]:
 
 
 def only_handle_nodes(
-    f: Callable[[Union[Selector, HtmlElement], Any], Any]
+    f: Callable[[Union[Selector, HtmlElement], Any], Any],
 ) -> Callable[[Any, Any], Any]:
     """Decorator for processors that only runs a decorated processor if the
     input is of type :class:`Selector` or :class:`HtmlElement`."""
@@ -234,8 +234,7 @@ def description_processor(value: Any, page: Any) -> Any:
         return None
     if not isinstance(value, HtmlElement):
         raise ValueError(
-            f"description_processor expects an HtmlElement node, got "
-            f"{value.__class__}"
+            f"description_processor expects an HtmlElement node, got {value.__class__}"
         )
     cleaned_node = clean_node(value, _get_base_url(page))
     cleaned_text = cleaned_node_to_text(cleaned_node)

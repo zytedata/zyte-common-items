@@ -50,11 +50,11 @@ class BusinessPlace(Item):
     """The name of the place."""
 
     actions: Optional[List[NamedLink]] = None
-    """List of actions that can be performed directly from the URLs on the 
+    """List of actions that can be performed directly from the URLs on the
     place page, including URLs."""
 
     additionalProperties: Optional[List[AdditionalProperty]] = None
-    """List of name-value pais of any unmapped additional properties specific 
+    """List of name-value pais of any unmapped additional properties specific
     to the place."""
 
     address: Optional[Address] = None
@@ -130,6 +130,8 @@ class BusinessPlace(Item):
     """List of the tags associated with the place."""
 
     metadata: Optional[BusinessPlaceMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(BusinessPlaceMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(BusinessPlaceMetadata),
+        kw_only=True,  # type: ignore[misc]
     )
     """Data extraction process metadata."""
