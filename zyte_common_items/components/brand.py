@@ -10,5 +10,5 @@ class Brand(Item):
     See :attr:`Product.brand <zyte_common_items.Product.brand>`.
     """
 
-    #: Name as it appears on the source webpage (no post-processing).
     name: str
+    """Name as it appears on the source webpage (no post-processing)."""

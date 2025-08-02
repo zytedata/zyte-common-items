@@ -26,3 +26,11 @@ repos:
       - id: blacken-docs
         additional_dependencies:
           - black==24.10.0
+  - repo: local
+    hooks:
+      - id: no-colon-comments
+        name: "No Sphinx-style #: comments"
+        entry: python pre-commit-scripts/no_colon_comments.py
+        language: system
+        types: [python]
+        files: ^zyte_common_items/.*\.py$

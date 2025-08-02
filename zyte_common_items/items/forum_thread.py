@@ -18,19 +18,21 @@ class ForumThreadMetadata(ListMetadata):
 class ForumThread(Item):
     """Represents a forum thread page."""
 
-    #: The URL of the final response, after any redirects.
     url: str = attrs.field(converter=url_to_str)
+    """The URL of the final response, after any redirects."""
 
-    #: Topic discussed on the page.
     topic: Optional[Topic] = None
+    """Topic discussed on the page."""
 
-    #: Thread ID.
     threadId: Optional[str] = None
+    """Thread ID."""
 
-    #: List of posts available on the page, including the first or top post.
     posts: Optional[List[SocialMediaPost]] = None
+    """List of posts available on the page, including the first or top post."""
 
-    #: Contains metadata about the data extraction process.
     metadata: Optional[ForumThreadMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ForumThreadMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(ForumThreadMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
+    """Contains metadata about the data extraction process."""

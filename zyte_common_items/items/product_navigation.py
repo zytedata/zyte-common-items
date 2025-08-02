@@ -21,38 +21,48 @@ class ProductNavigation(Item):
     """Represents the navigational aspects of a product listing page on an
     e-commerce website."""
 
-    #: Main URL from which the data is extracted.
     url: str = attrs.field(converter=url_to_str)
+    """Main URL from which the data is extracted."""
 
-    #: Name of the category/page with the product list.
-    #:
-    #: Format:
-    #:
-    #: - trimmed (no whitespace at the beginning or the end of the description string)
     categoryName: Optional[str] = None
+    """Name of the category/page with the product list.
 
-    #: List of sub-category links ordered by their position in the page.
+    Format:
+
+    - trimmed (no whitespace at the beginning or the end of the description
+      string)
+    """
+
     subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_probability_request_list_optional,
+        kw_only=True,  # type: ignore[misc]
     )
+    """List of sub-category links ordered by their position in the page."""
 
-    #: List of product links found on the page category ordered by their position in the page.
     items: Optional[List[ProbabilityRequest]] = attrs.field(
-        default=None, converter=to_probability_request_list_optional, kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_probability_request_list_optional,
+        kw_only=True,  # type: ignore[misc]
     )
+    """List of product links found on the page category ordered by their
+    position in the page."""
 
-    #: A link to the next page, if available.
     nextPage: Optional[Request] = None
+    """A link to the next page, if available."""
 
-    #: Number of the current page.
-    #:
-    #: It should only be extracted if the webpage shows a page number.
-    #:
-    #: It must be 1-based. For example, if the first page of a listing is
-    #: numbered as 0 on the website, it should be extracted as `1` nonetheless.
     pageNumber: Optional[int] = None
+    """Number of the current page.
 
-    #: Data extraction process metadata.
+    It should only be extracted if the webpage shows a page number.
+
+    It must be 1-based. For example, if the first page of a listing is
+    numbered as 0 on the website, it should be extracted as `1` nonetheless.
+    """
+
     metadata: Optional[ProductNavigationMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(ProductNavigationMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(ProductNavigationMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
+    """Data extraction process metadata."""

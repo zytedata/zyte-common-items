@@ -15,22 +15,23 @@ class AggregateRating(Item):
     <zyte_common_items.Product.aggregateRating>`.
     """
 
-    #: Maximum value of the rating system.
     bestRating: Optional[float] = None
+    """Maximum value of the rating system."""
 
-    #: Average value of all ratings.
     ratingValue: Optional[float] = None
+    """Average value of all ratings."""
 
-    #: Review count.
     reviewCount: Optional[int] = None
+    """Review count."""
 
 
 @attrs.define(kw_only=True)
 class StarRating(Item):
     """Official star rating of a place."""
 
-    #: Star rating of the place, as it appears on the page, without processing.
     raw: Optional[str] = None
+    """Star rating of the place, as it appears on the page, without processing.
+    """
 
-    #: Star rating value of the place.
     ratingValue: Optional[float] = None
+    """Star rating value of the place."""

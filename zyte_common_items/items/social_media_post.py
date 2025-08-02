@@ -21,35 +21,41 @@ class SocialMediaPostMetadata(SearchMetadata):
 class SocialMediaPost(Item):
     """Represents a single social media post."""
 
-    #: The URL of the final response, after any redirects.
     url: str = attrs.field(converter=url_to_str)
+    """The URL of the final response, after any redirects."""
 
-    #: The identifier of the post.
     postId: Optional[str] = None
+    """The identifier of the post."""
 
-    #: Details of reactions to the post.
     reactions: Optional[Reactions] = None
+    """Details of reactions to the post."""
 
-    #: The text content of the post.
     text: Optional[str] = None
+    """The text content of the post."""
 
-    #: The timestamp at which the post was created.
-    #:
-    #: Format: Timezone: UTC. ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
     datePublished: Optional[str] = None
+    """The timestamp at which the post was created.
 
-    #: The list of hashtags contained in the post.
+    Format: Timezone: UTC. ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
+    """
+
     hashtags: Optional[List[str]] = None
+    """The list of hashtags contained in the post."""
 
-    #: The list of URLs of media files (images, videos, etc.) linked from the post.
     mediaUrls: Optional[List[Url]] = None
+    """The list of URLs of media files (images, videos, etc.) linked from the
+    post."""
 
-    #: Details of the author of the post.
-    #:
-    #: No easily identifiable information can be contained in here, such as usernames.
     author: Optional[SocialMediaPostAuthor] = None
+    """Details of the author of the post.
 
-    #: Contains metadata about the data extraction process.
+    No easily identifiable information can be contained in here, such as
+    usernames.
+    """
+
     metadata: Optional[SocialMediaPostMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(SocialMediaPostMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(SocialMediaPostMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
+    """Contains metadata about the data extraction process."""

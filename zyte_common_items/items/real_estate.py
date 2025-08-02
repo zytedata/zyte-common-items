@@ -27,100 +27,109 @@ class RealEstate(Item):
     :attr:`url` is the only required attribute.
     """
 
-    #: The url of the final response, after any redirects.
     url: str = attrs.field(converter=url_to_str)
+    """The url of the final response, after any redirects."""
 
-    #: Webpage `breadcrumb trail`_.
-    #:
-    #: .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
     breadcrumbs: Optional[List[Breadcrumb]] = None
+    """Webpage `breadcrumb trail`_.
 
-    #: The identifier of the real estate, usually assigned by the seller and unique within a website, similar to product SKU.
+    .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
+    """
+
     realEstateId: Optional[str] = None
+    """The identifier of the real estate, usually assigned by the seller and
+    unique within a website, similar to product SKU."""
 
-    #: The name of the real estate.
     name: Optional[str] = None
+    """The name of the real estate."""
 
-    #: Publication date of the real estate offer.
-    #:
-    #: Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
-    #:
-    #: With timezone, if available.
     datePublished: Optional[str] = None
+    """Publication date of the real estate offer.
 
-    #: Same date as datePublished, but before parsing/normalization, i.e. as it appears on the website.
+    Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
+
+    With timezone, if available.
+    """
+
     datePublishedRaw: Optional[str] = None
+    """Same date as datePublished, but before parsing/normalization, i.e. as it
+    appears on the website."""
 
-    #: The description of the real estate.
-    #:
-    #: Format:
-    #:
-    #: - trimmed (no whitespace at the beginning or the end of the description string),
-    #:
-    #: - line breaks included,
-    #:
-    #: - no length limit,
-    #:
-    #: - no normalization of Unicode characters,
-    #:
-    #: - no concatenation of description from different parts of the page.
     description: Optional[str] = None
+    """The description of the real estate.
 
-    #: The details of the main image of the real estate.
+    Format:
+
+    - trimmed (no whitespace at the beginning or the end of the description
+      string),
+    - line breaks included,
+    - no length limit,
+    - no normalization of Unicode characters,
+    - no concatenation of description from different parts of the page.
+    """
+
     mainImage: Optional[Image] = None
+    """The details of the main image of the real estate."""
 
-    #: A list of URL values of all images of the real estate.
     images: Optional[List[Image]] = None
+    """A list of URL values of all images of the real estate."""
 
-    #: The details of the address of the real estate.
     address: Optional[Address] = None
+    """The details of the address of the real estate."""
 
-    #: Real estate area details.
     area: Optional[RealEstateArea] = None
+    """Real estate area details."""
 
-    #: The total number of bathrooms in the real estate.
     numberOfBathroomsTotal: Optional[int] = None
+    """The total number of bathrooms in the real estate."""
 
-    #: The number of full bathrooms in the real estate.
     numberOfFullBathrooms: Optional[int] = None
+    """The number of full bathrooms in the real estate."""
 
-    #: The number of partial bathrooms in the real estate.
     numberOfPartialBathrooms: Optional[int] = None
+    """The number of partial bathrooms in the real estate."""
 
-    #: The number of bedrooms in the real estate.
     numberOfBedrooms: Optional[int] = None
+    """The number of bedrooms in the real estate."""
 
-    #: The number of rooms (excluding bathrooms and closets) of the real estate.
     numberOfRooms: Optional[int] = None
+    """The number of rooms (excluding bathrooms and closets) of the real
+    estate."""
 
-    #: Type of a trade action: buying or renting.
     tradeType: Optional[str] = None
+    """Type of a trade action: buying or renting."""
 
-    #: The offer price of the real estate.
     price: Optional[str] = None
+    """The offer price of the real estate."""
 
-    #: The rental period to which the rental price applies, only available in case of rental. Usually weekly, monthly, quarterly, yearly.
     rentalPeriod: Optional[str] = None
+    """The rental period to which the rental price applies, only available in
+    case of rental. Usually weekly, monthly, quarterly, yearly."""
 
-    #: Currency associated with the price, as appears on the page (no post-processing).
     currencyRaw: Optional[str] = None
+    """Currency associated with the price, as appears on the page (no
+    post-processing)."""
 
-    #: The currency of the price, in 3-letter ISO 4217 format.
     currency: Optional[str] = None
+    """The currency of the price, in 3-letter ISO 4217 format."""
 
-    #: A name-value pair field holding information pertaining to specific features. Usually in a form of a specification table or freeform specification list.
     additionalProperties: Optional[List[AdditionalProperty]] = None
+    """A name-value pair field holding information pertaining to specific
+    features. Usually in a form of a specification table or freeform
+    specification list."""
 
-    #: Type of the property, e.g. flat, house, land.
     propertyType: Optional[str] = None
+    """Type of the property, e.g. flat, house, land."""
 
-    #: The year the real estate was built.
     yearBuilt: Optional[int] = None
+    """The year the real estate was built."""
 
-    #: The URL of the virtual tour of the real estate.
     virtualTourUrl: Optional[str] = None
+    """The URL of the virtual tour of the real estate."""
 
-    #: Contains metadata about the data extraction process.
     metadata: Optional[RealEstateMetadata] = attrs.field(
-        default=None, converter=to_metadata_optional(RealEstateMetadata), kw_only=True  # type: ignore[misc]
+        default=None,
+        converter=to_metadata_optional(RealEstateMetadata),  # type: ignore[misc]
+        kw_only=True,
     )
+    """Contains metadata about the data extraction process."""

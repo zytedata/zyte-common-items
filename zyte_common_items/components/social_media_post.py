@@ -13,34 +13,37 @@ from zyte_common_items.base import Item
 class Reactions(Item):
     """Details of reactions to a post."""
 
-    #: Number of times the post received a reply.
     replies: Optional[int] = None
+    """Number of times the post received a reply."""
 
-    #: Number of times the post has been shared.
     reposts: Optional[int] = None
+    """Number of times the post has been shared."""
 
-    #: Number of likes or other positive reactions to the post.
     likes: Optional[int] = None
+    """Number of likes or other positive reactions to the post."""
 
-    #: Number of dislikes or other negative reactions to the post.
     dislikes: Optional[int] = None
+    """Number of dislikes or other negative reactions to the post."""
 
 
 @attrs.define(kw_only=True)
 class SocialMediaPostAuthor(Item):
     """Details of the author of a social media post."""
 
-    #: The number of the followers that observe the author.
     numberOfFollowers: Optional[int] = None
+    """The number of the followers that observe the author."""
 
-    #: The number of the users that the author follows.
     numberOfFollowing: Optional[int] = None
+    """The number of the users that the author follows."""
 
-    #: The date of the creation of the author's account.
     dateAccountCreated: Optional[str] = None
+    """The date of the creation of the author's account."""
 
-    #: The location of the author, if it's available in the author profile. Country or city location only.
     location: Optional[str] = None
+    """The location of the author, if it's available in the author profile.
 
-    #: Indication if the author's account is verified.
+    Country or city location only.
+    """
+
     isVerified: Optional[bool] = None
+    """Indication if the author's account is verified."""
