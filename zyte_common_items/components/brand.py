@@ -10,5 +10,7 @@ class Brand(Item):
     See :attr:`Product.brand <zyte_common_items.Product.brand>`.
     """
 
-    name: str
+    name: str = attrs.field(
+        metadata={"json_schema_extra": {"llmDescription": "Name of the brand."}}
+    )
     """Name as it appears on the source webpage (no post-processing)."""

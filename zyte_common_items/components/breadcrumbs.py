@@ -17,9 +17,9 @@ class Breadcrumb(Item):
     """
 
     name: Optional[str] = None
-    """Displayed name."""
+    """Text of the breadcrumb, as it appears on the website."""
 
     url: Optional[str] = attrs.field(
         default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
-    """Target URL."""
+    """Absolute URL of the breadcrumb."""
