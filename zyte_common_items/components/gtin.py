@@ -12,14 +12,36 @@ class Gtin(Item):
     .. _GTIN: https://en.wikipedia.org/wiki/Global_Trade_Item_Number
     """
 
-    type: str
+    type: str = attrs.field(
+        metadata={
+            "json_schema_extra": {
+                "enum": [
+                    "gtin13",
+                    "gtin8",
+                    "gtin14",
+                    "isbn10",
+                    "isbn13",
+                    "ismn",
+                    "issn",
+                    "upc",
+                ],
+                "llmDescription": "The type of GTIN",
+            }
+        }
+    )
     """Identifier of the GTIN format of ``value``.
 
     One of: ``"gtin13"``, ``"gtin8"``, ``"gtin14"``, ``"isbn10"``,
     ``"isbn13"``, ``"ismn"``, ``"issn"``, ``"upc"``.
     """
 
-    value: str
+    value: str = attrs.field(
+        metadata={
+            "json_schema_extra": {
+                "llmDescription": "The value of product identifier. Normalized format required: only numerical characters allowed.",
+            }
+        }
+    )
     """Value.
 
     It should only contain digits.
