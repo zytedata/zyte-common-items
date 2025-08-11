@@ -31,15 +31,8 @@ class AggregateRating(Item):
     )
     """Average value of all ratings."""
 
-    reviewCount: Optional[int] = attrs.field(
-        default=None,
-        metadata={
-            "json_schema_extra": {
-                "llmDescription": "The total number of reviews or ratings for the product."
-            }
-        },
-    )
-    """Review count."""
+    reviewCount: Optional[int] = None
+    """The total number of reviews or ratings for the product."""
 
 
 @attrs.define(kw_only=True)
