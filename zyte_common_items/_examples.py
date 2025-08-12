@@ -1,6 +1,7 @@
 from collections.abc import Sequence
 from dataclasses import dataclass
 from textwrap import indent
+from typing import Any
 
 
 @dataclass
@@ -9,7 +10,7 @@ class PageObjectMethodExample:
     html: str
     imports: Sequence[str]
     source_code: str
-    expected: str
+    expected: Any
 
     def __str__(self):
         return (
@@ -86,4 +87,80 @@ _DESCRIPTION_HTML_EXAMPLE = PageObjectMethodExample(
         "\n"
         "</article>"
     ),
+)
+
+_GTIN_EXAMPLE_1 = PageObjectMethodExample(
+    description=(
+        "Extract GTIN (ISBN13) from a text containing an ISBN.\n"
+        "\n"
+        'The input contains a prefix ("ISBN13") and a valid 13-digit ISBN. The function removes the prefix, validates the ISBN, and classifies it as "isbn13".\n'
+    ),
+    html=(
+        "<html>\n"
+        "  <body>\n"
+        '    <div id="product-info">ISBN13: 9783161484100</div>\n'
+        "  </body>\n"
+        "</html>\n"
+    ),
+    imports=["from zyte_parsers.gtin import extract_gtin"],
+    source_code=(
+        "def extract(self):\n"
+        "    candidate = self.selector.xpath(\"//div[@id='product-info']/text()\").get()\n"
+        "    gtin_obj = extract_gtin(candidate)\n"
+        '    return [{"type": gtin_obj.type, "value": gtin_obj.value}]'
+    ),
+    expected=[
+        {"type": "isbn13", "value": "9783161484100"},
+    ],
+)
+
+_GTIN_EXAMPLE_2 = PageObjectMethodExample(
+    description=(
+        "Extract GTIN (UPC) from a text containing a product code\n\n"
+        'This example uses a plain numeric string representing a 12-digit UPC. The function extracts and validates the code, classifying it as "upc".\n'
+    ),
+    html=(
+        "<html>\n"
+        "  <body>\n"
+        '    <div id="product-info">Product code: 036000291452</div>\n'
+        "  </body>\n"
+        "</html>\n"
+    ),
+    imports=["from zyte_parsers.gtin import extract_gtin, Gtin"],
+    source_code=(
+        "def extract(self):\n"
+        "    candidate = self.selector.xpath(\"//div[@id='product-info']/text()\").get()\n"
+        "    gtin_obj = extract_gtin(candidate)\n"
+        '    return [{"type": gtin_obj.type, "value": gtin_obj.value}]'
+    ),
+    expected=[
+        {"type": "upc", "value": "036000291452"},
+    ],
+)
+
+_GTIN_EXAMPLE_3 = PageObjectMethodExample(
+    description=(
+        "Generic Automatic Classification: Extract GTIN from embedded text\n\n"
+        'Here, a GTIN is embedded within additional descriptive text. The extractor automatically identifies and validates the code (in this case, as "gtin8"), without needing an explicit prefix.\n'
+    ),
+    html=(
+        "<html>\n"
+        "  <body>\n"
+        '    <div id="product-info">\n'
+        "      Introducing our latest gadget! Look for the code 96385074 on the packaging.\n"
+        "      It’s our special GTIN identifier for limited edition items.\n"
+        "    </div>\n"
+        "  </body>\n"
+        "</html>\n"
+    ),
+    imports=["from zyte_parsers.gtin import extract_gtin, Gtin"],
+    source_code=(
+        "def extract(self):\n"
+        "    candidate = self.selector.xpath(\"//div[@id='product-info']/text()\").get()\n"
+        "    gtin_obj = extract_gtin(candidate)\n"
+        '    return [{"type": gtin_obj.type, "value": gtin_obj.value}]'
+    ),
+    expected=[
+        {"type": "gtin8", "value": "96385074"},
+    ],
 )
