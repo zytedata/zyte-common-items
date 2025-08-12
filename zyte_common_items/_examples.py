@@ -13,6 +13,7 @@ class PageObjectMethodExample:
     expected: Any
 
     def __str__(self):
+        import_lines = "\n".join(self.imports)
         return (
             f"{self.description}\n"
             f"\n"
@@ -25,7 +26,7 @@ class PageObjectMethodExample:
             f"### Imports for the example\n"
             f"\n"
             f"```python\n"
-            f"{'\n'.join(self.imports)}\n"
+            f"{import_lines}\n"
             f"```\n"
             f"\n"
             f"### Example of use in a page object field (to extract data from the example html)\n"
@@ -37,7 +38,7 @@ class PageObjectMethodExample:
             f"class Extractor:\n"
             f"    # ... other stuff ...\n"
             f"\n"
-            f"{indent(self.source_code, " " * 4)}\n"
+            f"{indent(self.source_code, ' ' * 4)}\n"
             f"```\n"
             f"\n"
             f"### Expected output (when applied to the example html)\n"
