@@ -4,7 +4,7 @@ from textwrap import indent
 
 
 @dataclass
-class Example:
+class PageObjectMethodExample:
     description: str
     html: str
     imports: Sequence[str]
@@ -47,7 +47,7 @@ class Example:
         )
 
 
-_DESCRIPTION_HTML_EXAMPLE = Example(
+_DESCRIPTION_HTML_EXAMPLE = PageObjectMethodExample(
     description="Extract the cleaned html of a particular node",
     html=(
         "<html>\n"

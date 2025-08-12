@@ -1,0 +1,26 @@
+import pytest
+from web_poet import HttpResponse, WebPage
+
+from zyte_common_items._examples import (
+    _DESCRIPTION_HTML_EXAMPLE,
+    PageObjectMethodExample,
+)
+
+
+@pytest.mark.parametrize(
+    "example",
+    (_DESCRIPTION_HTML_EXAMPLE,),
+)
+def test(example: PageObjectMethodExample):
+    response = HttpResponse(url="http://example.com", body=example.html.encode())
+    page = WebPage(response=response)
+
+    global_ns = {}
+    for imp in example.imports:
+        exec(imp, global_ns)
+    exec(example.source_code, global_ns)
+
+    method = global_ns["extract"]
+    output = method(page)
+
+    assert output == example.expected
