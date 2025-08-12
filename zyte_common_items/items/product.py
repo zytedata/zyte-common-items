@@ -4,6 +4,7 @@ from typing import List, Optional
 
 import attrs
 
+from zyte_common_items._examples import _DESCRIPTION_HTML_EXAMPLE
 from zyte_common_items.base import Item
 from zyte_common_items.components import (
     AdditionalProperty,
@@ -194,7 +195,25 @@ class Product(Item):
         metadata={
             "json_schema_extra": {
                 "llmDescription": "Html containing the complete product description. The output of this field should be HTML, so the HTML of the description, not just the description. The html should always be the outer html of the node, and I expect the output of this field to start with some html tags, and end with the same tags. The HTML should be valid, so it should not contain any unclosed tags, etc.",
-                "llmHint": '# Recommendations on How to Extract HTML\n\nIt is strongly recommended to use `clear_html` to extract the HTML. This library provides a standardized way to clean and normalize HTML documents. It removes unwanted elements while preserving essential content and embeddings, making it easier to extract meaningful text or clean HTML markup for further processing.\n\n## What It\'s Used For\n\n- **HTML Cleaning**: Normalize and clean HTML trees by removing inline styles, unnecessary tags (e.g., `<figcaption>`), and extraneous attributes.\n- **Embeddings Preservation**: Preserve specific HTML embeddings through a whitelist.\n- **Output Conversion**: Generate clean HTML or plain text from processed HTML nodes.\n\nImportant note: `clear_html` already wraps the HTML in `<article>` tags, so you shouldn\'t really add this with code.\n\n---\n\n## Example\n\nExtract the cleaned html of a particular node\n\n### Example html\n\n```html\n<html>\n  <body>\n    <header>\n      <h1>Page Header</h1>\n    </header>\n    <div id="description" style="color:blue">\n      <div>Paragraph 1</div>\n      <div>Paragraph 2</div>\n      <figcaption>Image description</figcaption>\n    </div>\n    <footer>\n      <p>Page Footer</p>\n    </footer>\n  </body>\n</html>\n\n```\n\n### Imports for the example\n\n```python\nfrom clear_html.clean import clean_node, cleaned_node_to_html\n```\n\n### Example of use in a page object field (to extract data from the example html)\n\n\n```python\n# ... imports ...\n\nclass Extractor:\n    # ... other stuff ...\n\n    def extract(self):\n        candidates = self.selector.css("#description")\n        if not candidates:\n            return None\n        node = candidates[0].root\n        cleaned_node = clean_node(node)\n        cleaned_html = cleaned_node_to_html(cleaned_node)\n        return cleaned_html\n```\n\n### Expected output (when applied to the example html)\n\n```\n<article>\n\n<p>Paragraph 1</p>\n\n<p>Paragraph 2</p>\n\n</article>\n```\n',
+                "llmHint": (
+                    f"# Recommendations on How to Extract HTML\n"
+                    f"\n"
+                    f"It is strongly recommended to use `clear_html` to extract the HTML. This library provides a standardized way to clean and normalize HTML documents. It removes unwanted elements while preserving essential content and embeddings, making it easier to extract meaningful text or clean HTML markup for further processing.\n"
+                    f"\n"
+                    f"## What It's Used For\n"
+                    f"\n"
+                    f"- **HTML Cleaning**: Normalize and clean HTML trees by removing inline styles, unnecessary tags (e.g., `<figcaption>`), and extraneous attributes.\n"
+                    f"- **Embeddings Preservation**: Preserve specific HTML embeddings through a whitelist.\n"
+                    f"- **Output Conversion**: Generate clean HTML or plain text from processed HTML nodes.\n"
+                    f"\n"
+                    f"Important note: `clear_html` already wraps the HTML in `<article>` tags, so you shouldn't really add this with code.\n"
+                    f"\n"
+                    f"---\n"
+                    f"\n"
+                    f"## Example\n"
+                    f"\n"
+                    f"{_DESCRIPTION_HTML_EXAMPLE}\n"
+                ),
             }
         },
     )
