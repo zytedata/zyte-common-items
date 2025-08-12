@@ -48,6 +48,67 @@ class PageObjectMethodExample:
         )
 
 
+_BREADCRUMBS_EXAMPLE_1 = PageObjectMethodExample(
+    description=(
+        "Extract Breadcrumbs from a Simple HTML Snippet\n\n"
+        "In this example, the breadcrumb structure is straightforward with links and separator elements.\n"
+    ),
+    html=(
+        "<html>\n"
+        "  <body>\n"
+        '    <div id="breadcrumbs">\n'
+        '      <a href="/">Home</a>\n'
+        "      <span> / </span>\n"
+        '      <a href="/category">Category</a>\n'
+        "      <span> / </span>\n"
+        "      <span>Product</span>\n"
+        "    </div>\n"
+        "  </body>\n"
+        "</html>\n"
+    ),
+    imports=["from zyte_parsers.breadcrumbs import extract_breadcrumbs"],
+    source_code=(
+        "def extract(self):\n"
+        "    tree = self.selector.root\n"
+        "    breadcrumbs = extract_breadcrumbs(tree, base_url=self.url)\n"
+        '    return [{"name": bc.name, "url": bc.url} for bc in breadcrumbs]'
+    ),
+    expected=[
+        {"name": "Home", "url": "http://example.com/"},
+        {"name": "Category", "url": "http://example.com/category"},
+        {"name": "Product", "url": None},
+    ],
+)
+
+_BREADCRUMBS_EXAMPLE_2 = PageObjectMethodExample(
+    description=(
+        "Extract Breadcrumbs from a Single Text Node with Separators\n\n"
+        "Some pages may provide breadcrumbs as a single text string with separators rather than distinct elements.\n"
+    ),
+    html=(
+        "<html>\n"
+        "  <body>\n"
+        '    <div id="breadcrumbs">\n'
+        "      Home / Category / Product\n"
+        "    </div>\n"
+        "  </body>\n"
+        "</html>\n"
+    ),
+    imports=["from zyte_parsers.breadcrumbs import extract_breadcrumbs"],
+    source_code=(
+        "def extract(self):\n"
+        "    tree = self.selector.root\n"
+        "    breadcrumbs = extract_breadcrumbs(tree, base_url=self.url)\n"
+        '    return [{"name": bc.name, "url": bc.url} for bc in breadcrumbs]'
+    ),
+    expected=[
+        {"name": "Home", "url": None},
+        {"name": "Category", "url": None},
+        {"name": "Product", "url": None},
+    ],
+)
+
+
 _DESCRIPTION_HTML_EXAMPLE = PageObjectMethodExample(
     description="Extract the cleaned html of a particular node",
     html=(
