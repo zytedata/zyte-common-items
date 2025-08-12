@@ -1,3 +1,5 @@
+from typing import Any
+
 import pytest
 from web_poet import HttpResponse, WebPage
 
@@ -25,9 +27,9 @@ from zyte_common_items._examples import (
 )
 def test(example: PageObjectMethodExample):
     response = HttpResponse(url="http://example.com", body=example.html.encode())
-    page = WebPage(response=response)
+    page: WebPage = WebPage(response=response)
 
-    global_ns = {}
+    global_ns: dict[str, Any] = {}
     for imp in example.imports:
         exec(imp, global_ns)
     exec(example.source_code, global_ns)
