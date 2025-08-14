@@ -15,20 +15,10 @@ class AggregateRating(Item):
     <zyte_common_items.Product.aggregateRating>`.
     """
 
-    bestRating: Optional[float] = attrs.field(
-        default=None,
-        metadata={
-            "json_schema_extra": {
-                "llmDescription": "The highest value allowed in this rating system, e.g. 5"
-            }
-        },
-    )
-    """Maximum value of the rating system."""
+    bestRating: Optional[float] = None
+    """Highest value allowed in this rating system, e.g. 5."""
 
-    ratingValue: Optional[float] = attrs.field(
-        default=None,
-        metadata={"json_schema_extra": {"llmDescription": "The average rating value"}},
-    )
+    ratingValue: Optional[float] = None
     """Average value of all ratings."""
 
     reviewCount: Optional[int] = None

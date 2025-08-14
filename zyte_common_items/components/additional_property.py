@@ -11,12 +11,8 @@ class AdditionalProperty(Item):
     <zyte_common_items.Product.additionalProperties>`.
     """
 
-    name: str = attrs.field(
-        metadata={"json_schema_extra": {"llmDescription": "Name of the property"}}
-    )
+    name: str
     """Name."""
 
-    value: str = attrs.field(
-        metadata={"json_schema_extra": {"llmDescription": "Value of the property"}}
-    )
+    value: str
     """Value."""
