@@ -56,7 +56,7 @@ def test_from_dict_bad_annotation():
         a: Union[int, str]
 
     pattern = (
-        r"^tests\.\S+\.A\.a is annotated with typing\.Union\[int, str\]\. "
+        r"^tests\.\S+\.A\.a is annotated with (typing\.Union\[int, str\]|int \| str)\. "
         r"Fields should only be annotated with one type \(or optional\)\.$"
     )
     with pytest.raises(ValueError, match=pattern):
