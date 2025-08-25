@@ -11,4 +11,5 @@ class Brand(Item):
     """
 
     name: str
-    """Name as it appears on the source webpage (no post-processing)."""
+    """Name of the brand, as it appears on the source webpage (no
+    post-processing)."""

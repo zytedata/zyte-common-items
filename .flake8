@@ -16,7 +16,7 @@ per-file-ignores =
     # to expose submodule functions so they can be imported directly from that module
     zyte_common_items/__init__.py:F401,
 
-    # Ignore: * imports in these files 
+    # Ignore: * imports in these files
     zyte_common_items/__init__.py:F403,
     zyte_common_items/zyte_data_api.py:F403,
 
