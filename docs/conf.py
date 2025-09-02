@@ -1,7 +1,5 @@
 import pkgutil
-import sys
 from datetime import datetime
-from pathlib import Path
 
 
 def get_copyright(attribution, *, first_year):
@@ -28,11 +26,10 @@ project = "zyte-common-items"
 copyright = get_copyright("Zyte Group Ltd", first_year=2022)
 version, release = get_version_and_release()
 
-sys.path.insert(0, str(Path(__file__).parent.absolute()))  # _ext
 extensions = [
-    "_ext",
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
+    "sphinx_scrapy",
 ]
 
 html_theme = "sphinx_rtd_theme"
@@ -48,13 +45,12 @@ nitpick_ignore = [
 ]
 
 intersphinx_disabled_reftypes = []
-intersphinx_mapping = {
-    "jinja": ("https://jinja.palletsprojects.com/en/latest/", None),
-    "lxml": ("https://lxml.de/apidoc/", None),
-    "parsel": ("https://parsel.readthedocs.io/en/stable", None),
-    "python": ("https://docs.python.org/3", None),
-    "scrapy": ("https://docs.scrapy.org/en/stable", None),
-    "scrapy-poet": ("https://scrapy-poet.readthedocs.io/en/stable", None),
-    "web-poet": ("https://web-poet.readthedocs.io/en/stable", None),
-    "zyte-parsers": ("https://zyte-parsers.readthedocs.io/en/stable", None),
-}
+
+scrapy_intersphinx_enable = [
+    "jinja",
+    "lxml",
+    "parsel",
+    "scrapy-poet",
+    "web-poet",
+    "zyte-parsers",
+]

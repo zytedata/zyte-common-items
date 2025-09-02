@@ -2,6 +2,30 @@
 Changelog
 =========
 
+0.28.0 (unreleased)
+===================
+
+* Added official Python 3.14 support.
+
+* Switched attribute documentation from Sphinx comments (``#:``) to docstrings.
+
+  This allows IDEs to show them when hovering attributes, and allows
+  `ItemAdapter.get_json_schema()`_ to include them as descriptions.
+
+  .. _ItemAdapter.get_json_schema(): https://github.com/scrapy/itemadapter?tab=readme-ov-file#class-method-get_json_schemaitem_class-type---dictstr-any
+
+* Added an ``"llmHint"`` JSON Schema metadata field to some item types and 
+  fields.
+
+  LLMs should have an easier time writing extraction code when given the
+  corresponding JSON schema (generated with `ItemAdapter.get_json_schema()`_).
+
+* We now guarantee that all types importable from ``zyte_common_items`` have
+  type hints retrievable at run time with :func:`~typing.get_type_hints`, i.e.
+  not hidden with :data:`~typing.TYPE_CHECKING`.
+
+  This ensures they can be used with :doc:`scrapy-poet <scrapy-poet:index>`.
+
 0.27.1 (2025-06-26)
 ===================
 
