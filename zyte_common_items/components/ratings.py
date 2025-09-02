@@ -16,13 +16,13 @@ class AggregateRating(Item):
     """
 
     bestRating: Optional[float] = None
-    """Maximum value of the rating system."""
+    """Highest value allowed in this rating system, e.g. 5."""
 
     ratingValue: Optional[float] = None
     """Average value of all ratings."""
 
     reviewCount: Optional[int] = None
-    """Review count."""
+    """The total number of reviews or ratings for the product."""
 
 
 @attrs.define(kw_only=True)
