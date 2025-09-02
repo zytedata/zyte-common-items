@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.28.0 (unreleased)
+0.28.0 (2025-09-02)
 ===================
 
 * Added official Python 3.14 support.
