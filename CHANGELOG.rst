@@ -14,7 +14,7 @@ Changelog
 
   .. _ItemAdapter.get_json_schema(): https://github.com/scrapy/itemadapter?tab=readme-ov-file#class-method-get_json_schemaitem_class-type---dictstr-any
 
-* Added an ``"llmHint"`` JSON Schema metadata field to some item types and 
+* Added an ``"llmHint"`` JSON Schema metadata field to some item types and
   fields.
 
   LLMs should have an easier time writing extraction code when given the
