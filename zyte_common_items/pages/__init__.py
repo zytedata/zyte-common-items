@@ -19,7 +19,7 @@ from .job_posting_navigation import (
     BaseJobPostingNavigationPage,
     JobPostingNavigationPage,
 )
-from .mixins import DescriptionMixin, HasMetadata, MetadataT, PriceMixin
+from .mixins import DescriptionMixin, HasMetadata, PriceMixin
 from .product import AutoProductPage, BaseProductPage, ProductPage
 from .product_list import AutoProductListPage, BaseProductListPage, ProductListPage
 from .product_navigation import (
@@ -38,3 +38,53 @@ from .social_media_post import (
     BaseSocialMediaPostPage,
     SocialMediaPostPage,
 )
+
+__all__ = [
+    "ArticleListPage",
+    "ArticleNavigationPage",
+    "ArticlePage",
+    "AutoArticleListPage",
+    "AutoArticleNavigationPage",
+    "AutoArticlePage",
+    "AutoBusinessPlacePage",
+    "AutoForumThreadPage",
+    "AutoJobPostingNavigationPage",
+    "AutoJobPostingPage",
+    "AutoProductListPage",
+    "AutoProductNavigationPage",
+    "AutoProductPage",
+    "AutoRealEstatePage",
+    "AutoSerpPage",
+    "AutoSocialMediaPostPage",
+    "BaseArticleListPage",
+    "BaseArticleNavigationPage",
+    "BaseArticlePage",
+    "BaseBusinessPlacePage",
+    "BaseForumThreadPage",
+    "BaseJobPostingNavigationPage",
+    "BaseJobPostingPage",
+    "BasePage",
+    "BaseProductListPage",
+    "BaseProductNavigationPage",
+    "BaseProductPage",
+    "BaseRealEstatePage",
+    "BaseSearchRequestTemplatePage",
+    "BaseSerpPage",
+    "BaseSocialMediaPostPage",
+    "BusinessPlacePage",
+    "DescriptionMixin",
+    "ForumThreadPage",
+    "HasMetadata",
+    "JobPostingNavigationPage",
+    "JobPostingPage",
+    # "MetadataT",
+    "Page",
+    "PriceMixin",
+    "ProductListPage",
+    "ProductNavigationPage",
+    "ProductPage",
+    "RealEstatePage",
+    "SearchRequestTemplatePage",
+    "SerpPage",
+    "SocialMediaPostPage",
+]
