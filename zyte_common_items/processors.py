@@ -124,7 +124,7 @@ def brand_processor(value: Any, page: Any) -> Any:
         value = value.strip()
         return Brand(name=value) if value else None
 
-    if isinstance(value, (Selector, SelectorList, HtmlElement)):
+    if isinstance(value, (Selector, HtmlElement)):
         if brand_name := extract_brand_name(value, search_depth=2):
             return Brand(name=brand_name)
         else:
