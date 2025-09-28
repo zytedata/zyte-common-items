@@ -220,8 +220,8 @@ split-on-trailing-comma = false
 "zyte_common_items/items/__init__.py" = ["F401"]
 "zyte_common_items/pages/__init__.py" = ["F401"]
 # Skip PEP 604 suggestions for files with attr classes
-"zyte_common_items/components/*.py" = ["UP007"]
-"zyte_common_items/items/*.py" = ["UP007"]
+"zyte_common_items/components/*.py" = ["UP007", "UP045"]
+"zyte_common_items/items/*.py" = ["UP007", "UP045"]
 # ”module level import not at the top of file“ caused by pytest.importorskip
 "tests/test_ae_pipeline.py" = ["E402"]
 "tests/test_pipelines.py" = ["E402"]

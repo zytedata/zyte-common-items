@@ -12,6 +12,8 @@ def request_list_processor(request_list: list[Request]) -> list[ProbabilityReque
         category=DeprecationWarning,
         stacklevel=2,
     )
-    from zyte_common_items.processors import probability_request_list_processor
+    from zyte_common_items.processors import (  # noqa: PLC0415
+        probability_request_list_processor,
+    )
 
     return probability_request_list_processor(request_list)

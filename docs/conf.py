@@ -12,7 +12,7 @@ def get_copyright(attribution, *, first_year):
 
 def get_version_and_release():
     try:
-        import zyte_common_items  # noqa: F401
+        import zyte_common_items  # noqa: F401, PLC0415
     except ImportError:
         return "", ""
     version_bytes = pkgutil.get_data("zyte_common_items", "VERSION") or b""

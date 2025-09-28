@@ -1,4 +1,4 @@
-import pytest  # isort: skip
+import pytest
 
 scrapy = pytest.importorskip("scrapy")
 

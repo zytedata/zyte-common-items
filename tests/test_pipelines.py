@@ -1,4 +1,4 @@
-import pytest  # isort: skip
+import pytest
 
 scrapy = pytest.importorskip("scrapy")
 
@@ -324,13 +324,13 @@ def test_warning():
     sys.modules.pop("zyte_common_items", None)
 
     with warnings.catch_warnings(record=True) as record:
-        from zyte_common_items.pipelines import AEPipeline
+        from zyte_common_items.pipelines import AEPipeline  # noqa: PLC0415
 
         ae_pipeline = AEPipeline()
     warn_msg = str(record[0].message)
     assert len(record) == 1
     assert warning_msg in warn_msg
-    from zyte_common_items.ae import downgrade
+    from zyte_common_items.ae import downgrade  # noqa: PLC0415
 
     assert ae_pipeline._downgrade == downgrade
 
@@ -342,7 +342,9 @@ def test_no_warning():
     sys.modules.pop("zyte_common_items", None)
 
     with warnings.catch_warnings(record=True) as record:
-        from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
+        from zyte_common_items.pipelines import (  # noqa: PLC0415
+            DropLowProbabilityItemPipeline,
+        )
 
         mock_crawler = MagicMock(spec=["spider", "stats"])
         DropLowProbabilityItemPipeline(mock_crawler)

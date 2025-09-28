@@ -56,7 +56,7 @@ class Request(Item):
         """Convert a request to scrapy.Request.
         All kwargs are passed to scrapy.Request as-is.
         """
-        import scrapy
+        import scrapy  # noqa: PLC0415
 
         header_list = [(header.name, header.value) for header in self.headers or []]
 

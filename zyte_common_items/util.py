@@ -83,7 +83,7 @@ def convert_to_class(value: Any, new_cls: type[NewClassT]) -> NewClassT:
 
 
 def metadata_processor(metadata, page):
-    from zyte_common_items.processors import metadata_processor
+    from zyte_common_items.processors import metadata_processor  # noqa: PLC0415
 
     warnings.warn(
         "zyte_common_items.util.metadata_processor is moved to"
