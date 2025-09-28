@@ -30,7 +30,7 @@ class Addon:
             for cls in ItemAdapter.ADAPTER_CLASSES
         ):
             ItemAdapter.ADAPTER_CLASSES = deque(
-                (ZyteItemAdapter,) + tuple(ItemAdapter.ADAPTER_CLASSES)
+                (ZyteItemAdapter, *ItemAdapter.ADAPTER_CLASSES)
             )
 
         settings.set("LOG_FORMATTER", ZyteLogFormatter, priority="addon")

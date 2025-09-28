@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 from web_poet import Returns
@@ -33,7 +33,7 @@ class AutoJobPostingNavigationPage(BaseJobPostingNavigationPage):
     job_posting_navigation: JobPostingNavigation
 
     @auto_field
-    def items(self) -> Optional[List[ProbabilityRequest]]:
+    def items(self) -> Optional[list[ProbabilityRequest]]:
         return self.job_posting_navigation.items
 
     @auto_field

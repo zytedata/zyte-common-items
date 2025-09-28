@@ -1,5 +1,5 @@
 from copy import copy
-from typing import Any, Dict, Type
+from typing import Any
 
 import attrs
 import pytest
@@ -90,7 +90,7 @@ async def assert_expected_item(page, item):
 @pytest.mark.parametrize(*PARAMS)
 @pytest.mark.asyncio
 async def test_unmodified(
-    item_cls: Type, item_kwargs: Dict[str, Any], cls: Type, param: str
+    item_cls: type, item_kwargs: dict[str, Any], cls: type, param: str
 ) -> None:
     item = item_cls(**item_kwargs)
     kwargs = {
@@ -104,7 +104,7 @@ async def test_unmodified(
 @pytest.mark.parametrize(*PARAMS)
 @pytest.mark.asyncio
 async def test_modified(
-    item_cls: Type, item_kwargs: Dict[str, Any], cls: Type, param: str
+    item_cls: type, item_kwargs: dict[str, Any], cls: type, param: str
 ) -> None:
     modified_url = "https://custom.example"
 
@@ -127,7 +127,7 @@ async def test_modified(
 @pytest.mark.parametrize(*PARAMS)
 @pytest.mark.asyncio
 async def test_extended(
-    item_cls: Type, item_kwargs: Dict[str, Any], cls: Type, param: str
+    item_cls: type, item_kwargs: dict[str, Any], cls: type, param: str
 ) -> None:
     @attrs.define
     class ExtendedItem(item_cls):

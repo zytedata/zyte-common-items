@@ -42,7 +42,7 @@ class MetadataCaster:
 
 
 def to_probability_request_list(request_list):
-    """attrs converter to turn lists of :class:`~scrapy.Request` instances into
+    """Attrs converter to turn lists of :class:`~scrapy.Request` instances into
     lists of :class:`~.ProbabilityRequest` instances."""
     from zyte_common_items.components import ProbabilityRequest
 
@@ -50,7 +50,7 @@ def to_probability_request_list(request_list):
 
 
 def to_probability_request_list_optional(request_list):
-    """attrs converter to turn lists of :class:`~scrapy.Request` instances into
+    """Attrs converter to turn lists of :class:`~scrapy.Request` instances into
     lists of :class:`~.ProbabilityRequest` instances. If None is passed, None is
     returned."""
     if request_list is None:

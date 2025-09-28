@@ -126,7 +126,6 @@ class ReplaceSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
 
 
 class UrlBasedSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
-
     @field
     def url(self):
         return f"{self.request_url}?search={{{{ query|urlencode }}}}"
@@ -139,7 +138,7 @@ def edit_request_url(expression, page):
         return expression
     if not isinstance(expression, dict):
         raise ValueError(
-            f"The edit_request_url processor expected a dict, got " f"{expression!r}"
+            f"The edit_request_url processor expected a dict, got {expression!r}"
         )
     if "url" in expression:
         url = expression["url"]
@@ -161,16 +160,14 @@ def edit_request_url(expression, page):
         params = copy(expression["add_query_params"])
         for k in list(params):
             v = params.pop(k)
-            k = k.format(query=url_safe_query_placeholder)
+            k = k.format(query=url_safe_query_placeholder)  # noqa: PLW2901
             v = v.format(query=url_safe_query_placeholder)
             params[k] = v
         url = add_or_replace_parameters(url, params)
-    url = url.replace(url_safe_query_placeholder, "{{ query|urlencode }}")
-    return url
+    return url.replace(url_safe_query_placeholder, "{{ query|urlencode }}")
 
 
 class DSLSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
-
     class Processors:
         url = [edit_request_url]
 
@@ -181,7 +178,7 @@ class DSLSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
 
 @pytest.mark.parametrize(
     ("page_cls", "inputs", "query", "url"),
-    (
+    [
         (
             VerbatimSearchRequestTemplatePage,
             {},
@@ -218,7 +215,7 @@ class DSLSearchRequestTemplatePage(BaseSearchRequestTemplatePage):
             "foo bar",
             "https://example.com/?search=foo%20bar",
         ),
-    ),
+    ],
 )
 @pytest.mark.asyncio
 async def test_url(page_cls, inputs, query, url):

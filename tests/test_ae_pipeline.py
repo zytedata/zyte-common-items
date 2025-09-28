@@ -1,6 +1,6 @@
 import pytest  # isort: skip
 
-scrapy = pytest.importorskip("scrapy")  # noqa
+scrapy = pytest.importorskip("scrapy")
 
 from zyte_common_items import Article, ArticleList, JobPosting, Product, ProductList
 from zyte_common_items.ae import (
@@ -38,8 +38,8 @@ from .test_items import (
 
 
 @pytest.mark.parametrize(
-    ["item", "expected"],
-    (
+    ("item", "expected"),
+    [
         (
             Article(**_ARTICLE_MIN_KWARGS),
             AEArticle(
@@ -222,7 +222,7 @@ from .test_items import (
                 ),
             ),
         ),
-    ),
+    ],
 )
 def test_main(item, expected):
     pipeline = AEPipeline()

@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -39,10 +39,10 @@ class SocialMediaPost(Item):
     Format: Timezone: UTC. ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
     """
 
-    hashtags: Optional[List[str]] = None
+    hashtags: Optional[list[str]] = None
     """The list of hashtags contained in the post."""
 
-    mediaUrls: Optional[List[Url]] = None
+    mediaUrls: Optional[list[Url]] = None
     """The list of URLs of media files (images, videos, etc.) linked from the
     post."""
 

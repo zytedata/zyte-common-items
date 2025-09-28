@@ -1,5 +1,5 @@
 from collections import deque
-from typing import List, Optional
+from typing import Optional
 from warnings import warn
 
 import attrs
@@ -43,10 +43,9 @@ def _set_if_truthy(data, field, value):
 
 def _to_url_list(data, old_k, new_k):
     if _is_truthy_else_remove(data, old_k):
-        entries = []
-        for entry in data.pop(old_k):
-            if _is_truthy(entry, "url"):
-                entries.append(entry["url"])
+        entries = [
+            entry["url"] for entry in data.pop(old_k) if _is_truthy(entry, "url")
+        ]
         if entries:
             data[new_k] = entries
 
@@ -79,17 +78,17 @@ class AEArticle(Item):
     dateModified: Optional[str] = None
     dateModifiedRaw: Optional[str] = None
     author: Optional[str] = None
-    authorsList: List[str] = attrs.Factory(list)
+    authorsList: list[str] = attrs.Factory(list)
     inLanguage: Optional[str] = None
-    breadcrumbs: List[AEBreadcrumb] = attrs.Factory(list)
+    breadcrumbs: list[AEBreadcrumb] = attrs.Factory(list)
     mainImage: Optional[str] = None
-    images: List[str] = attrs.Factory(list)
+    images: list[str] = attrs.Factory(list)
     description: Optional[str] = None
     articleBody: Optional[str] = None
     articleBodyHtml: Optional[str] = None
     articleBodyRaw: Optional[str] = None
-    videoUrls: List[str] = attrs.Factory(list)
-    audioUrls: List[str] = attrs.Factory(list)
+    videoUrls: list[str] = attrs.Factory(list)
+    audioUrls: list[str] = attrs.Factory(list)
     probability: float
     canonicalUrl: Optional[str] = None
     url: str
@@ -114,10 +113,10 @@ class AEArticleFromList(Item):
     datePublished: Optional[str] = None
     datePublishedRaw: Optional[str] = None
     author: Optional[str] = None
-    authorsList: List[str] = attrs.Factory(list)
+    authorsList: list[str] = attrs.Factory(list)
     inLanguage: Optional[str] = None
     mainImage: Optional[str] = None
-    images: List[str] = attrs.Factory(list)
+    images: list[str] = attrs.Factory(list)
     articleBody: Optional[str] = None
     url: Optional[str] = None
     probability: float
@@ -141,7 +140,7 @@ def _convert_list_item_metadata(item):
 @attrs.define(kw_only=True)
 class AEArticleList(Item):
     url: str
-    articles: List[AEArticleFromList] = attrs.Factory(list)
+    articles: list[AEArticleFromList] = attrs.Factory(list)
     paginationNext: Optional[AEPaginationLink] = None
     paginationPrevious: Optional[AEPaginationLink] = None
 
@@ -255,9 +254,8 @@ def _is_truthy_else_remove(data, field):
         return False
     if data[field]:
         return True
-    else:
-        del data[field]
-        return False
+    del data[field]
+    return False
 
 
 def _is_not_none(data, field):
@@ -299,22 +297,22 @@ def _convert_breadcrumbs(data):
 @attrs.define(kw_only=True)
 class AEProduct(Item):
     name: Optional[str] = None
-    offers: List[AEOffer] = attrs.Factory(list)
+    offers: list[AEOffer] = attrs.Factory(list)
     sku: Optional[str] = None
     mpn: Optional[str] = None
-    gtin: List[AEGTIN] = attrs.Factory(list)
+    gtin: list[AEGTIN] = attrs.Factory(list)
     brand: Optional[str] = None
-    breadcrumbs: List[AEBreadcrumb] = attrs.Factory(list)
+    breadcrumbs: list[AEBreadcrumb] = attrs.Factory(list)
     mainImage: Optional[str] = None
-    images: List[str] = attrs.Factory(list)
+    images: list[str] = attrs.Factory(list)
     description: Optional[str] = None
     descriptionHtml: Optional[str] = None
     aggregateRating: Optional[AERating] = None
     color: Optional[str] = None
     size: Optional[str] = None
     style: Optional[str] = None
-    additionalProperty: List[AEAdditionalProperty] = attrs.Factory(list)
-    hasVariants: List["AEProduct"] = attrs.Factory(list)
+    additionalProperty: list[AEAdditionalProperty] = attrs.Factory(list)
+    hasVariants: list["AEProduct"] = attrs.Factory(list)
     probability: float
     canonicalUrl: Optional[str] = None
     url: str
@@ -351,11 +349,11 @@ class AEProduct(Item):
 @attrs.define(kw_only=True)
 class AEProductFromList(Item):
     name: Optional[str] = None
-    offers: List[AEOffer] = attrs.Factory(list)
+    offers: list[AEOffer] = attrs.Factory(list)
     sku: Optional[str] = None
     brand: Optional[str] = None
     mainImage: Optional[str] = None
-    images: List[str] = attrs.Factory(list)
+    images: list[str] = attrs.Factory(list)
     description: Optional[str] = None
     descriptionHtml: Optional[str] = None
     aggregateRating: Optional[AERating] = None
@@ -367,8 +365,8 @@ class AEProductFromList(Item):
 @attrs.define(kw_only=True)
 class AEProductList(Item):
     url: str
-    products: List[AEProductFromList] = attrs.Factory(list)
-    breadcrumbs: List[AEBreadcrumb] = attrs.Factory(list)
+    products: list[AEProductFromList] = attrs.Factory(list)
+    breadcrumbs: list[AEBreadcrumb] = attrs.Factory(list)
     paginationNext: Optional[AEPaginationLink] = None
     paginationPrevious: Optional[AEPaginationLink] = None
 

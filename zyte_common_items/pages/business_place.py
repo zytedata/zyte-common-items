@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 from web_poet import Returns
@@ -53,11 +53,11 @@ class AutoBusinessPlacePage(BaseBusinessPlacePage):
     business_place: BusinessPlace
 
     @auto_field
-    def actions(self) -> Optional[List[NamedLink]]:
+    def actions(self) -> Optional[list[NamedLink]]:
         return self.business_place.actions
 
     @auto_field
-    def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
+    def additionalProperties(self) -> Optional[list[AdditionalProperty]]:
         return self.business_place.additionalProperties
 
     @auto_field
@@ -69,11 +69,11 @@ class AutoBusinessPlacePage(BaseBusinessPlacePage):
         return self.business_place.aggregateRating
 
     @auto_field
-    def amenityFeatures(self) -> Optional[List[Amenity]]:
+    def amenityFeatures(self) -> Optional[list[Amenity]]:
         return self.business_place.amenityFeatures
 
     @auto_field
-    def categories(self) -> Optional[List[str]]:
+    def categories(self) -> Optional[list[str]]:
         return self.business_place.categories
 
     @auto_field
@@ -85,11 +85,11 @@ class AutoBusinessPlacePage(BaseBusinessPlacePage):
         return self.business_place.description
 
     @auto_field
-    def features(self) -> Optional[List[str]]:
+    def features(self) -> Optional[list[str]]:
         return self.business_place.features
 
     @auto_field
-    def images(self) -> Optional[List[Image]]:
+    def images(self) -> Optional[list[Image]]:
         return self.business_place.images
 
     @auto_field
@@ -109,7 +109,7 @@ class AutoBusinessPlacePage(BaseBusinessPlacePage):
         return self.business_place.name
 
     @auto_field
-    def openingHours(self) -> Optional[List[OpeningHoursItem]]:
+    def openingHours(self) -> Optional[list[OpeningHoursItem]]:
         return self.business_place.openingHours
 
     @auto_field
@@ -125,7 +125,7 @@ class AutoBusinessPlacePage(BaseBusinessPlacePage):
         return self.business_place.reservationAction
 
     @auto_field
-    def reviewSites(self) -> Optional[List[NamedLink]]:
+    def reviewSites(self) -> Optional[list[NamedLink]]:
         return self.business_place.reviewSites
 
     @auto_field
@@ -133,7 +133,7 @@ class AutoBusinessPlacePage(BaseBusinessPlacePage):
         return self.business_place.starRating
 
     @auto_field
-    def tags(self) -> Optional[List[str]]:
+    def tags(self) -> Optional[list[str]]:
         return self.business_place.tags
 
     @auto_field

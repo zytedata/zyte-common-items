@@ -1,6 +1,4 @@
-"""
-Components specific to :class:`~SocialMediaPost` item.
-"""
+"""Components specific to :class:`~SocialMediaPost` item."""
 
 from typing import Optional
 

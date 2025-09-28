@@ -16,14 +16,14 @@ from zyte_common_items._examples import (
 
 @pytest.mark.parametrize(
     "example",
-    (
+    [
         _BREADCRUMBS_EXAMPLE_1,
         _BREADCRUMBS_EXAMPLE_2,
         _DESCRIPTION_HTML_EXAMPLE,
         _GTIN_EXAMPLE_1,
         _GTIN_EXAMPLE_2,
         _GTIN_EXAMPLE_3,
-    ),
+    ],
 )
 def test(example: PageObjectMethodExample):
     response = HttpResponse(url="http://example.com", body=example.html.encode())

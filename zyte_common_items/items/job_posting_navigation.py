@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -24,7 +24,7 @@ class JobPostingNavigation(Item):
     url: str = attrs.field(converter=url_to_str)
     """Main URL from which the data is extracted."""
 
-    items: Optional[List[ProbabilityRequest]] = attrs.field(
+    items: Optional[list[ProbabilityRequest]] = attrs.field(
         default=None,
         converter=to_probability_request_list_optional,
         kw_only=True,  # type: ignore[misc]

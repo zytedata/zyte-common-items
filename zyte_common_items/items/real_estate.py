@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -30,7 +30,7 @@ class RealEstate(Item):
     url: str = attrs.field(converter=url_to_str)
     """The url of the final response, after any redirects."""
 
-    breadcrumbs: Optional[List[Breadcrumb]] = None
+    breadcrumbs: Optional[list[Breadcrumb]] = None
     """Webpage `breadcrumb trail`_.
 
     .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
@@ -71,7 +71,7 @@ class RealEstate(Item):
     mainImage: Optional[Image] = None
     """The details of the main image of the real estate."""
 
-    images: Optional[List[Image]] = None
+    images: Optional[list[Image]] = None
     """A list of URL values of all images of the real estate."""
 
     address: Optional[Address] = None
@@ -113,7 +113,7 @@ class RealEstate(Item):
     currency: Optional[str] = None
     """The currency of the price, in 3-letter ISO 4217 format."""
 
-    additionalProperties: Optional[List[AdditionalProperty]] = None
+    additionalProperties: Optional[list[AdditionalProperty]] = None
     """A name-value pair field holding information pertaining to specific
     features. Usually in a form of a specification table or freeform
     specification list."""

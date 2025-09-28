@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Dict, List, Optional, Type, TypeVar
+from typing import Optional, TypeVar
 
 import attrs
 
@@ -14,7 +14,7 @@ MetadataT = TypeVar("MetadataT", bound="BaseMetadata")
 class BaseMetadata(Item):
     """Base metadata class"""
 
-    def cast(self, cls: Type[MetadataT]) -> MetadataT:
+    def cast(self, cls: type[MetadataT]) -> MetadataT:
         """Convert *value*, a metadata instance, into a different metadata *cls*."""
         return convert_to_class(self, cls)
 
@@ -47,7 +47,7 @@ class ListMetadata(BaseMetadata):
     """Date and time when the product data was downloaded, in UTC timezone and
     the following format: ``YYYY-MM-DDThh:mm:ssZ``."""
 
-    validationMessages: Optional[Dict[str, List[str]]] = None
+    validationMessages: Optional[dict[str, list[str]]] = None
     """Contains paths to fields with the description of issues found with their
     values."""
 

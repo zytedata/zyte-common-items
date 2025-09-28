@@ -14,13 +14,13 @@ class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
     @field
     def metadata(self) -> MetadataT:
         if self.metadata_cls is None:
-            raise ValueError(f"{type(self)} doesn'have a metadata class configured.")
+            raise ValueError(f"{type(self)} doesn't have a metadata class configured.")
         value = self.metadata_cls()
         attributes = dir(value)
         if "dateDownloaded" in attributes:
-            value.dateDownloaded = utcnow_formatted()  # type: ignore
+            value.dateDownloaded = utcnow_formatted()  # type: ignore[attr-defined]
         if "probability" in attributes:
-            value.probability = 1.0  # type: ignore
+            value.probability = 1.0  # type: ignore[attr-defined]
         return value
 
     def no_item_found(self) -> ItemT:
@@ -30,14 +30,14 @@ class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
         Use it in your .validate_input implementation.
         """
         if self.metadata_cls is None:
-            raise ValueError(f"{type(self)} doesn'have a metadata class configured.")
+            raise ValueError(f"{type(self)} doesn't have a metadata class configured.")
         metadata = self.metadata_cls()
         metadata_attributes = dir(metadata)
         if "dateDownloaded" in metadata_attributes:
-            metadata.dateDownloaded = utcnow_formatted()  # type: ignore
+            metadata.dateDownloaded = utcnow_formatted()  # type: ignore[attr-defined]
         if "probability" in metadata_attributes:
-            metadata.probability = 0.0  # type: ignore
-        return self.item_cls(  # type: ignore
+            metadata.probability = 0.0  # type: ignore[attr-defined]
+        return self.item_cls(
             url=self.url,  # type: ignore[attr-defined]
             metadata=metadata,
         )

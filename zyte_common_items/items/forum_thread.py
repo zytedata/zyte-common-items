@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -27,7 +27,7 @@ class ForumThread(Item):
     threadId: Optional[str] = None
     """Thread ID."""
 
-    posts: Optional[List[SocialMediaPost]] = None
+    posts: Optional[list[SocialMediaPost]] = None
     """List of posts available on the page, including the first or top post."""
 
     metadata: Optional[ForumThreadMetadata] = attrs.field(

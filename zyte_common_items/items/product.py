@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -41,7 +41,7 @@ class Product(Item):
     :attr:`url` is the only required attribute.
     """
 
-    additionalProperties: Optional[List[AdditionalProperty]] = attrs.field(
+    additionalProperties: Optional[list[AdditionalProperty]] = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -97,7 +97,7 @@ class Product(Item):
     brand: Optional[Brand] = None
     """Brand or manufacturer of the product."""
 
-    breadcrumbs: Optional[List[Breadcrumb]] = attrs.field(
+    breadcrumbs: Optional[list[Breadcrumb]] = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -311,7 +311,7 @@ class Product(Item):
     .. _HTML normalization specification: https://docs.zyte.com/automatic-extraction/article.html#format-of-articlebodyhtml-field
     """
 
-    features: Optional[List[str]] = attrs.field(
+    features: Optional[list[str]] = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -345,7 +345,7 @@ class Product(Item):
     See also ``additionalProperties``.
     """
 
-    gtin: Optional[List[Gtin]] = attrs.field(
+    gtin: Optional[list[Gtin]] = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -423,7 +423,7 @@ class Product(Item):
     .. _GTIN: https://en.wikipedia.org/wiki/Global_Trade_Item_Number
     """
 
-    images: Optional[List[Image]] = None
+    images: Optional[list[Image]] = None
     """All product images.
 
     The main image (see ``mainImage``) should be first in the list.
@@ -573,7 +573,7 @@ class Product(Item):
     See also ``canonicalUrl``.
     """
 
-    variants: Optional[List[ProductVariant]] = attrs.field(
+    variants: Optional[list[ProductVariant]] = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -648,7 +648,7 @@ class ProductVariant(Item):
     :class:`ProductVariantSelectorExtractor`.
     """
 
-    additionalProperties: Optional[List[AdditionalProperty]] = None
+    additionalProperties: Optional[list[AdditionalProperty]] = None
     """List of name-value pais of data about a specific, otherwise unmapped
     feature.
 
@@ -698,7 +698,7 @@ class ProductVariant(Item):
     See also ``currency``.
     """
 
-    gtin: Optional[List[Gtin]] = None
+    gtin: Optional[list[Gtin]] = None
     """List of standardized GTIN_ product identifiers associated with the
     product, which are unique for the product across different sellers.
 
@@ -707,7 +707,7 @@ class ProductVariant(Item):
     .. _GTIN: https://en.wikipedia.org/wiki/Global_Trade_Item_Number
     """
 
-    images: Optional[List[Image]] = None
+    images: Optional[list[Image]] = None
     """All product images.
 
     The main image (see ``mainImage``) should be first in the list.

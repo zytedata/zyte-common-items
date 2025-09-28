@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -52,13 +52,13 @@ class ArticleList(Item):
     See also ``url``.
     """
 
-    articles: Optional[List[ArticleFromList]] = None
+    articles: Optional[list[ArticleFromList]] = None
     """List of article details found on the page.
 
     The order of the articles reflects their position on the page.
     """
 
-    breadcrumbs: Optional[List[Breadcrumb]] = None
+    breadcrumbs: Optional[list[Breadcrumb]] = None
     """Webpage `breadcrumb trail`_.
 
     .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
@@ -91,7 +91,7 @@ class ArticleFromList(Item):
     - no normalization of Unicode characters.
     """
 
-    authors: Optional[List[Author]] = None
+    authors: Optional[list[Author]] = None
     """All authors of the article."""
 
     datePublished: Optional[str] = None
@@ -123,7 +123,7 @@ class ArticleFromList(Item):
     mainImage: Optional[Image] = None
     """Main image."""
 
-    images: Optional[List[Image]] = None
+    images: Optional[list[Image]] = None
     """All images."""
 
     metadata: Optional[ProbabilityMetadata] = attrs.field(

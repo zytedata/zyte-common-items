@@ -1,6 +1,6 @@
 import pytest  # isort: skip
 
-scrapy = pytest.importorskip("scrapy")  # noqa
+scrapy = pytest.importorskip("scrapy")
 
 import sys
 import warnings
@@ -21,7 +21,12 @@ from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
 
 
 @pytest.mark.parametrize(
-    "thresholds_settings, default_threshold, expected_thresholds, expected_default_thresholds",
+    (
+        "thresholds_settings",
+        "default_threshold",
+        "expected_thresholds",
+        "expected_default_thresholds",
+    ),
     [
         ({}, 0.09, {}, 0.09),
         (
@@ -88,7 +93,7 @@ def test_init_thresholds(
 
 
 @pytest.mark.parametrize(
-    "item, thresholds_settings, default_threshold, expected_threshold",
+    ("item", "thresholds_settings", "default_threshold", "expected_threshold"),
     [
         (
             Article(url="http://example.com"),
@@ -120,7 +125,7 @@ def test_get_threshold_for_item(
 
 
 @pytest.mark.parametrize(
-    "items, item_proba, threshold, expected_stats_calls",
+    ("items", "item_proba", "threshold", "expected_stats_calls"),
     [
         (
             [
@@ -263,7 +268,7 @@ def test_process_item(items, item_proba, threshold, expected_stats_calls):
             try:
                 returned_item = pipeline.process_item(item, mock_crawler.spider)
             except scrapy.exceptions.DropItem as e:
-                assert (
+                assert (  # noqa: PT017
                     f"This item is dropped since the probability ({item_proba}) "
                     f"is below the threshold ({threshold}):"
                 ) in str(e)
@@ -285,7 +290,7 @@ def test_process_item(items, item_proba, threshold, expected_stats_calls):
 
 
 @pytest.mark.parametrize(
-    "item, expected_name",
+    ("item", "expected_name"),
     [
         (
             Article(url="http://example.com"),

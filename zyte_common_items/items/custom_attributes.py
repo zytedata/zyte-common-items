@@ -1,14 +1,12 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 import attrs
 
 from zyte_common_items.base import Item
 
 
-class CustomAttributesValues(Dict[str, Any]):
+class CustomAttributesValues(dict[str, Any]):
     """Container for custom attribute values."""
-
-    pass
 
 
 @attrs.define
@@ -37,7 +35,7 @@ class CustomAttributesMetadata(Item):
     limits, either set via ``maxInputTokens`` or due to the model limitation
     returned in ``maxInputTokens``, when using the "generate" method."""
 
-    excludedPIIAttributes: Optional[List[str]] = None
+    excludedPIIAttributes: Optional[list[str]] = None
     """A list of all attributes dropped from the output due to a risk of PII
     (Personally Identifiable Information) extraction."""
 

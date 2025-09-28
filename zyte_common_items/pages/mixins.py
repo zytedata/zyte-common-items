@@ -1,5 +1,5 @@
 import html
-from typing import Any, Generic, Optional, Type, Union
+from typing import Any, Generic, Optional, Union
 
 import html_text
 from clear_html import cleaned_node_to_text
@@ -16,12 +16,12 @@ class HasMetadata(Generic[MetadataT]):
     class."""
 
     @property
-    def metadata_cls(self) -> Optional[Type[MetadataT]]:
+    def metadata_cls(self) -> Optional[type[MetadataT]]:
         """Metadata class."""
         return _get_metadata_class(type(self))
 
 
-def _get_metadata_class(cls: type) -> Optional[Type[MetadataT]]:
+def _get_metadata_class(cls: type) -> Optional[type[MetadataT]]:
     return get_generic_param(cls, HasMetadata)
 
 

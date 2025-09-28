@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -102,7 +102,7 @@ class JobPosting(Item):
     baseSalary: Optional[BaseSalary] = None
     """The base salary of the job or of an employee in the proposed role."""
 
-    requirements: Optional[List[str]] = None
+    requirements: Optional[list[str]] = None
     """Candidate requirements for the job."""
 
     hiringOrganization: Optional[HiringOrganization] = None
