@@ -23,7 +23,7 @@ def get_version_and_release():
 
 
 project = "zyte-common-items"
-copyright = get_copyright("Zyte Group Ltd", first_year=2022)
+project_copyright = get_copyright("Zyte Group Ltd", first_year=2022)
 version, release = get_version_and_release()
 
 extensions = [

@@ -11,8 +11,8 @@ class _TestItem:
 
 
 def test_split_in_unknown_and_known_fields():
-    input = {"k1": 1, "k2": 2, "extra": 3}
-    unknown, known = split_in_unknown_and_known_fields(input, _TestItem)
+    input_ = {"k1": 1, "k2": 2, "extra": 3}
+    unknown, known = split_in_unknown_and_known_fields(input_, _TestItem)
     item = _TestItem(**known)
     assert attrs.asdict(item) == {"k1": 1, "k2": 2}
     assert unknown == {"extra": 3}
@@ -25,4 +25,4 @@ def test_split_in_unknown_and_known_fields():
         assert ret == ({}, {})
 
     with pytest.raises(ValueError, match="The cls <class 'str'> is not attrs class"):
-        split_in_unknown_and_known_fields(input, str)
+        split_in_unknown_and_known_fields(input_, str)

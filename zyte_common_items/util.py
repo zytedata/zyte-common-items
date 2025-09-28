@@ -29,7 +29,7 @@ def split_in_unknown_and_known_fields(
     return unknown, known
 
 
-def split_dict(dict: dict, key_pred: Callable[[Any], Any]) -> tuple[dict, dict]:
+def split_dict(dict: dict, key_pred: Callable[[Any], Any]) -> tuple[dict, dict]:  # noqa: A002
     """Splits the dictionary in two.
 
     The first dict contains the records for which the key predicate is False

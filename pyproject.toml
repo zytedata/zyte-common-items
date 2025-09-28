@@ -83,10 +83,16 @@ exclude = [
 
 [tool.ruff.lint]
 extend-select = [
+    # flake8-builtins
+    "A",
+    # flake8-async
+    "ASYNC",
     # flake8-bugbear
     "B",
     # flake8-comprehensions
     "C4",
+    # flake8-commas
+    "COM",
     # pydocstyle
     "D",
     # flake8-future-annotations
@@ -133,6 +139,8 @@ extend-select = [
     "T10",
     # flake8-type-checking
     "TC",
+    # flake8-tidy-imports
+    "TID",
     # pyupgrade
     "UP",
     # pycodestyle warnings
@@ -141,6 +149,8 @@ extend-select = [
     "YTT",
 ]
 ignore = [
+    # Trailing comma missing
+    "COM812",
     # Missing docstring in public module
     "D100",
     # Missing docstring in public class
@@ -191,6 +201,8 @@ ignore = [
     "RUF012",
     # Use of `assert` detected
     "S101",
+    # Prefer absolute imports over relative imports from parent modules
+    "TID252",
     # Add `from __future__ import annotations` to simplify
     # (The fix can break andi.)
     "FA100",
@@ -198,6 +210,9 @@ ignore = [
 
 [tool.ruff.lint.flake8-type-checking]
 runtime-evaluated-decorators = ["attrs.define"]
+
+[tool.ruff.lint.isort]
+split-on-trailing-comma = false
 
 [tool.ruff.lint.per-file-ignores]
 "zyte_common_items/__init__.py" = ["F401"]
