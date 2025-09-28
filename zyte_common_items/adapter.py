@@ -1,7 +1,8 @@
 """This module offers better integration with the itemadapter package."""
 
+from collections.abc import Collection, Iterator, KeysView
 from types import MappingProxyType
-from typing import Any, Collection, Iterator, KeysView
+from typing import Any
 
 from itemadapter.adapter import AttrsAdapter
 
@@ -54,8 +55,8 @@ class ZyteItemAdapter(AttrsAdapter):
 
     def get_field_meta(self, field_name: str) -> MappingProxyType:
         if field_name in self._fields_dict:
-            return self._fields_dict[field_name].metadata  # type: ignore
-        elif field_name in self.item._unknown_fields_dict:
+            return self._fields_dict[field_name].metadata
+        if field_name in self.item._unknown_fields_dict:
             return MappingProxyType({})
         raise KeyError(field_name)
 
@@ -65,7 +66,7 @@ class ZyteItemAdapter(AttrsAdapter):
     def __getitem__(self, field_name: str) -> Any:
         if field_name in self._fields_dict:
             return getattr(self.item, field_name)
-        elif field_name in self.item._unknown_fields_dict:
+        if field_name in self.item._unknown_fields_dict:
             return self.item._unknown_fields_dict[field_name]
         raise KeyError(field_name)
 

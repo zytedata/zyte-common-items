@@ -1,5 +1,5 @@
 import base64
-from typing import List, Optional, Type, TypeVar
+from typing import Optional, TypeVar
 
 import attrs
 
@@ -36,7 +36,7 @@ class Request(Item):
     body: Optional[str] = None
     """HTTP request body, Base64-encoded."""
 
-    headers: Optional[List[Header]] = None
+    headers: Optional[list[Header]] = None
     """HTTP headers."""
 
     name: Optional[str] = None
@@ -48,17 +48,15 @@ class Request(Item):
     def body_bytes(self) -> Optional[bytes]:
         """Request.body as bytes"""
         # todo: allow to set body bytes in __init__, to avoid encoding/decoding.
-        if self._body_bytes is None:
-            if self.body is not None:
-                self._body_bytes = base64.b64decode(self.body)
+        if self._body_bytes is None and self.body is not None:
+            self._body_bytes = base64.b64decode(self.body)
         return self._body_bytes
 
     def to_scrapy(self, callback, **kwargs):
-        """
-        Convert a request to scrapy.Request.
+        """Convert a request to scrapy.Request.
         All kwargs are passed to scrapy.Request as-is.
         """
-        import scrapy
+        import scrapy  # noqa: PLC0415
 
         header_list = [(header.name, header.value) for header in self.headers or []]
 
@@ -71,7 +69,7 @@ class Request(Item):
             **kwargs,
         )
 
-    def cast(self, cls: Type[RequestT]) -> RequestT:
+    def cast(self, cls: type[RequestT]) -> RequestT:
         """Convert *value*, an instance of :class:`~.Request` or a subclass, into
         *cls*, a different class that is also either :class:`~.Request` or a
         subclass."""

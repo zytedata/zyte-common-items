@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 from web_poet import Returns
@@ -33,7 +33,7 @@ class AutoProductListPage(BaseProductListPage):
     product_list: ProductList
 
     @auto_field
-    def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+    def breadcrumbs(self) -> Optional[list[Breadcrumb]]:
         return self.product_list.breadcrumbs
 
     @auto_field
@@ -57,7 +57,7 @@ class AutoProductListPage(BaseProductListPage):
         return self.product_list.paginationNext
 
     @auto_field
-    def products(self) -> Optional[List[ProductFromList]]:
+    def products(self) -> Optional[list[ProductFromList]]:
         return self.product_list.products
 
     @auto_field

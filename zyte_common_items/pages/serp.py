@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 from web_poet import Returns
@@ -23,7 +23,7 @@ class AutoSerpPage(BaseSerpPage):
     serp: Serp
 
     @auto_field
-    def organicResults(self) -> Optional[List[SerpOrganicResult]]:
+    def organicResults(self) -> Optional[list[SerpOrganicResult]]:
         return self.serp.organicResults
 
     @auto_field

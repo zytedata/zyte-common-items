@@ -1,5 +1,5 @@
 import warnings
-from typing import Any, Callable, Dict, Optional, Tuple, Type, TypeVar
+from typing import Any, Callable, Optional, TypeVar
 from warnings import warn
 from weakref import WeakKeyDictionary
 
@@ -14,10 +14,9 @@ _CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
 
 
 def split_in_unknown_and_known_fields(
-    data: Optional[dict], item_cls: Type
-) -> Tuple[Dict, Dict]:
-    """
-    Return a pair of dicts. The first one contains those elements not belonging to the
+    data: Optional[dict], item_cls: type
+) -> tuple[dict, dict]:
+    """Return a pair of dicts. The first one contains those elements not belonging to the
     attr class ``item_cls``. The second one contains the rest. That is, those
     attributes not belonging to ``item_cls`` class
     """
@@ -30,7 +29,7 @@ def split_in_unknown_and_known_fields(
     return unknown, known
 
 
-def split_dict(dict: Dict, key_pred: Callable[[Any], Any]) -> Tuple[Dict, Dict]:
+def split_dict(dict: dict, key_pred: Callable[[Any], Any]) -> tuple[dict, dict]:  # noqa: A002
     """Splits the dictionary in two.
 
     The first dict contains the records for which the key predicate is False
@@ -40,7 +39,7 @@ def split_dict(dict: Dict, key_pred: Callable[[Any], Any]) -> Tuple[Dict, Dict]:
     ({}, {})
     >>> split_dict(dict(a=1, b=2, c=3), lambda k: k != 'a')
     ({'a': 1}, {'b': 2, 'c': 3})
-    """  # noqa
+    """
     yes, no = {}, {}
     for k, v in dict.items():
         if key_pred(k):
@@ -53,7 +52,7 @@ def split_dict(dict: Dict, key_pred: Callable[[Any], Any]) -> Tuple[Dict, Dict]:
 NewClassT = TypeVar("NewClassT", bound=attrs.AttrsInstance)
 
 
-def convert_to_class(value: Any, new_cls: Type[NewClassT]) -> NewClassT:
+def convert_to_class(value: Any, new_cls: type[NewClassT]) -> NewClassT:
     """Convert *value* into *type* keeping all shared attributes, and
     triggering a run-time warning if any attribute is removed."""
     if type(value) is new_cls:
@@ -78,12 +77,13 @@ def convert_to_class(value: Any, new_cls: Type[NewClassT]) -> NewClassT:
                 f"{removed_nonempty_attributes}."
             ),
             RuntimeWarning,
+            stacklevel=2,
         )
     return new_value
 
 
 def metadata_processor(metadata, page):
-    from zyte_common_items.processors import metadata_processor
+    from zyte_common_items.processors import metadata_processor  # noqa: PLC0415
 
     warnings.warn(
         "zyte_common_items.util.metadata_processor is moved to"

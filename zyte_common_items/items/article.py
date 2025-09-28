@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -63,10 +63,10 @@ class Article(Item):
     """Same date as :attr:`~zyte_common_items.Article.dateModified`, but before
     parsing/normalization, i.e. as it appears on the website."""
 
-    authors: Optional[List[Author]] = None
+    authors: Optional[list[Author]] = None
     """All authors of the article."""
 
-    breadcrumbs: Optional[List[Breadcrumb]] = None
+    breadcrumbs: Optional[list[Breadcrumb]] = None
     """Webpage `breadcrumb trail`_.
 
     .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
@@ -82,7 +82,7 @@ class Article(Item):
     mainImage: Optional[Image] = None
     """Main image."""
 
-    images: Optional[List[Image]] = None
+    images: Optional[list[Image]] = None
     """All images."""
 
     description: Optional[str] = None
@@ -110,10 +110,10 @@ class Article(Item):
     Format: HTML string normalized in a consistent way.
     """
 
-    videos: Optional[List[Video]] = None
+    videos: Optional[list[Video]] = None
     """All videos."""
 
-    audios: Optional[List[Audio]] = None
+    audios: Optional[list[Audio]] = None
     """All audios."""
 
     canonicalUrl: Optional[str] = attrs.field(

@@ -1,4 +1,5 @@
-# flake8: noqa
+import contextlib
+
 from .adapter import ZyteItemAdapter, ZyteItemKeepEmptyAdapter
 from .base import Item, is_data_container
 from .components import (
@@ -127,7 +128,6 @@ from .pages import (
     SocialMediaPostPage,
 )
 
-try:
+# If Scrapy is not installed
+with contextlib.suppress(ImportError):
     from ._addon import Addon
-except ImportError:  # Scrapy is not installed.
-    pass

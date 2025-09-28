@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -33,7 +33,7 @@ class ProductList(Item):
     :attr:`url` is the only required attribute.
     """
 
-    breadcrumbs: Optional[List[Breadcrumb]] = None
+    breadcrumbs: Optional[list[Breadcrumb]] = None
     """Webpage `breadcrumb trail`_.
 
     .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
@@ -71,7 +71,7 @@ class ProductList(Item):
     paginationNext: Optional[Link] = None
     """Link to the next page."""
 
-    products: Optional[List[ProductFromList]] = None
+    products: Optional[list[ProductFromList]] = None
     """List of products.
 
     It only includes product information found in the product listing page

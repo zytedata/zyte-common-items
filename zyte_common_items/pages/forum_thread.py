@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 from web_poet import Returns
@@ -38,7 +38,7 @@ class AutoForumThreadPage(BaseForumThreadPage):
         return self.forum_thread.topic
 
     @auto_field
-    def posts(self) -> Optional[List[SocialMediaPost]]:
+    def posts(self) -> Optional[list[SocialMediaPost]]:
         return self.forum_thread.posts
 
     @auto_field

@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 
@@ -33,14 +33,14 @@ class ProductNavigation(Item):
       string)
     """
 
-    subCategories: Optional[List[ProbabilityRequest]] = attrs.field(
+    subCategories: Optional[list[ProbabilityRequest]] = attrs.field(
         default=None,
         converter=to_probability_request_list_optional,
         kw_only=True,  # type: ignore[misc]
     )
     """List of sub-category links ordered by their position in the page."""
 
-    items: Optional[List[ProbabilityRequest]] = attrs.field(
+    items: Optional[list[ProbabilityRequest]] = attrs.field(
         default=None,
         converter=to_probability_request_list_optional,
         kw_only=True,  # type: ignore[misc]

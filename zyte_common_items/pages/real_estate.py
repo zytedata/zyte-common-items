@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import attrs
 from web_poet import Returns
@@ -43,7 +43,7 @@ class AutoRealEstatePage(BaseRealEstatePage):
     real_estate: RealEstate
 
     @auto_field
-    def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
+    def additionalProperties(self) -> Optional[list[AdditionalProperty]]:
         return self.real_estate.additionalProperties
 
     @auto_field
@@ -55,7 +55,7 @@ class AutoRealEstatePage(BaseRealEstatePage):
         return self.real_estate.area
 
     @auto_field
-    def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+    def breadcrumbs(self) -> Optional[list[Breadcrumb]]:
         return self.real_estate.breadcrumbs
 
     @auto_field
@@ -79,7 +79,7 @@ class AutoRealEstatePage(BaseRealEstatePage):
         return self.real_estate.description
 
     @auto_field
-    def images(self) -> Optional[List[Image]]:
+    def images(self) -> Optional[list[Image]]:
         return self.real_estate.images
 
     @auto_field
