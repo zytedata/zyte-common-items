@@ -11,7 +11,7 @@ from zyte_common_items.components import (
     Image,
     RealEstateArea,
 )
-from zyte_common_items.converters import to_metadata_optional, url_to_str
+from zyte_common_items.converters import to_metadata_optional, url_to_str_optional
 
 
 @attrs.define(kw_only=True)
@@ -27,7 +27,7 @@ class RealEstate(Item):
     :attr:`url` is the only required attribute.
     """
 
-    url: str = attrs.field(converter=url_to_str)
+    url: str = attrs.field(converter=url_to_str_optional)
     """The url of the final response, after any redirects."""
 
     breadcrumbs: Optional[List[Breadcrumb]] = None

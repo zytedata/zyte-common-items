@@ -4,11 +4,7 @@ import attrs
 
 from zyte_common_items.base import Item
 from zyte_common_items.components import ListMetadata
-from zyte_common_items.converters import (
-    to_metadata_optional,
-    url_to_str,
-    url_to_str_optional,
-)
+from zyte_common_items.converters import to_metadata_optional, url_to_str_optional
 
 
 @attrs.define(kw_only=True)
@@ -67,7 +63,7 @@ class Serp(Item):
     organicResults: Optional[List[SerpOrganicResult]] = None
     """List of search results excluding paid results."""
 
-    url: str = attrs.field(converter=url_to_str)
+    url: str = attrs.field(converter=url_to_str_optional)
     """Search URL."""
 
     pageNumber: Optional[int] = None

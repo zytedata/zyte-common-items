@@ -212,7 +212,7 @@ def test_instantiation_link():
 def test_instantiation_product_list():
     with pytest.raises(ValueError):
         ProductList(
-            url=123  # E: Argument "url" to "ProductList" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl"  [arg-type]
+            url=123  # E: Argument "url" to "ProductList" has incompatible type "int"; expected "str | RequestUrl | ResponseUrl | None"  [arg-type]
         )
     with pytest.raises(ValueError):
         ProductList(
