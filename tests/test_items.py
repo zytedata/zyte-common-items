@@ -992,5 +992,5 @@ def test_item_subclasses():
 )
 def test_url_none(cls: type) -> None:
     """Items can take url=None."""
-    item = cls(url=None)  # type: ignore[arg-type]
+    item = cls(url=None)
     assert item.url is None
