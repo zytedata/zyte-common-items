@@ -9,7 +9,7 @@ from zyte_common_items.components import (
     SocialMediaPostAuthor,
     Url,
 )
-from zyte_common_items.converters import to_metadata_optional, url_to_str
+from zyte_common_items.converters import to_metadata_optional, url_to_str_optional
 
 
 @attrs.define(kw_only=True)
@@ -21,7 +21,7 @@ class SocialMediaPostMetadata(SearchMetadata):
 class SocialMediaPost(Item):
     """Represents a single social media post."""
 
-    url: str = attrs.field(converter=url_to_str)
+    url: str = attrs.field(converter=url_to_str_optional)
     """The URL of the final response, after any redirects."""
 
     postId: Optional[str] = None

@@ -6,7 +6,7 @@ import attrs
 import pytest
 from web_poet import HttpResponse, RequestUrl, ResponseUrl, Returns, field
 from web_poet.fields import get_fields_dict
-from web_poet.pages import get_item_cls
+from web_poet.pages import WebPage, get_item_cls
 
 import zyte_common_items
 from zyte_common_items import (
@@ -510,3 +510,18 @@ def test_auto_page_item_fields():
         assert (
             auto_page_fields == item_fields
         ), f"{auto_page} does not map all {item_cls} fields"
+
+
+@pytest.mark.asyncio
+async def test_url_method_none() -> None:
+    """Test that a page for Product can return None from url()."""
+
+    class MyPage(WebPage, Returns[Product]):
+        @field
+        def url(self):
+            return None
+
+    url = ResponseUrl("https://example.com")
+    page = MyPage(response=HttpResponse(url=url, body=b""))
+    item = await page.to_item()
+    assert item.url is None
