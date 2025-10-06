@@ -68,10 +68,6 @@ module = "clear_html"
 implicit_reexport = true  # to be fixed
 
 [[tool.mypy.overrides]]
-module = "price_parser"
-implicit_reexport = true  # to be fixed
-
-[[tool.mypy.overrides]]
 module = "zyte_parsers"
 implicit_reexport = true  # to be fixed
 
