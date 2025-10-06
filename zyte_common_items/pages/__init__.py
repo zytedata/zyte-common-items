@@ -77,7 +77,6 @@ __all__ = [
     "HasMetadata",
     "JobPostingNavigationPage",
     "JobPostingPage",
-    # "MetadataT",
     "Page",
     "PriceMixin",
     "ProductListPage",
