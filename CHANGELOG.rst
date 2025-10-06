@@ -2,6 +2,14 @@
 Changelog
 =========
 
+0.29.0 (unreleased)
+===================
+
+* Allowed passing ``None`` as the ``url`` field value to the :ref:`item classes
+  <item-api>`.
+
+* Explicitly re-export public names.
+
 0.28.0 (2025-09-02)
 ===================
 
