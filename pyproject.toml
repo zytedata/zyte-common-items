@@ -59,9 +59,17 @@ multi_line_output = 3
 
 [tool.mypy]
 check_untyped_defs = true
-ignore_missing_imports = true
+implicit_reexport = false
 warn_no_return = false
 exclude = ['test_mypy\.py$', 'test_conversion\.py$']
+
+[[tool.mypy.overrides]]
+module = "clear_html"
+implicit_reexport = true  # to be fixed
+
+[[tool.mypy.overrides]]
+module = "zyte_parsers"
+implicit_reexport = true  # to be fixed
 
 [tool.pytest.ini_options]
 filterwarnings = [
