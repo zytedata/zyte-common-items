@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.29.0 (unreleased)
+0.29.0 (2025-10-16)
 ===================
 
 * Allowed passing ``None`` as the ``url`` field value to the :ref:`item classes
