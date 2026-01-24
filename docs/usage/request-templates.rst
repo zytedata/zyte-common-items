@@ -133,8 +133,7 @@ very complex scenarios:
         def headers(self):
             return [
                 Header(
-                    name=(
-                        """
+                    name=("""
                             {%-
                                 if query|length > 1
                                 and query[0]|lower == 'p'
@@ -143,8 +142,7 @@ very complex scenarios:
                             {%- else -%}
                                 Query
                             {%- endif -%}
-                        """
-                    ),
+                        """),
                     value="{{ query }}",
                 ),
             ]

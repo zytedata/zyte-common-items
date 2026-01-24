@@ -64,8 +64,7 @@ async def test_all():
         def headers(self):
             return [
                 Header(
-                    name=(
-                        """
+                    name=("""
                             {%-
                                 if query|length > 1
                                 and query[0]|lower == 'p'
@@ -74,8 +73,7 @@ async def test_all():
                             {%- else -%}
                                 Query
                             {%- endif -%}
-                        """
-                    ),
+                        """),
                     value="{{ query }}",
                 ),
             ]
