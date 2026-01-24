@@ -6,9 +6,9 @@ from weakref import WeakKeyDictionary
 import attrs
 
 # backwards compatibility imports
-from ._dateutils import format_datetime as format_datetime
+from ._dateutils import format_datetime as format_datetime  # noqa: PLC0414
 from .converters import MetadataCaster  # noqa: F401
-from .converters import url_to_str as url_to_str
+from .converters import url_to_str as url_to_str  # noqa: PLC0414
 
 # Caches the attribute names for attr.s classes.
 _CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()

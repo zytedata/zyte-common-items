@@ -253,7 +253,7 @@ __all__ = [
 try:
     from ._addon import Addon
 
-    __all__.append("Addon")
+    __all__ += ("Addon",)
 except ImportError:  # Scrapy is not installed.
     pass
 

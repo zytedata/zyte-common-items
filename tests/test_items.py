@@ -975,7 +975,7 @@ def test_item_subclasses():
 
 @pytest.mark.parametrize(
     "cls",
-    (
+    [
         Article,
         ArticleList,
         ArticleNavigation,
@@ -988,7 +988,7 @@ def test_item_subclasses():
         RealEstate,
         Serp,
         SocialMediaPost,
-    ),
+    ],
 )
 def test_url_none(cls: type) -> None:
     """Items can take url=None."""
