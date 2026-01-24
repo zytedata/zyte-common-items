@@ -4,7 +4,7 @@ import attrs
 
 from zyte_common_items.base import Item
 from zyte_common_items.components import ListMetadata, Topic
-from zyte_common_items.converters import to_metadata_optional, url_to_str
+from zyte_common_items.converters import to_metadata_optional, url_to_str_optional
 
 from .social_media_post import SocialMediaPost
 
@@ -18,7 +18,7 @@ class ForumThreadMetadata(ListMetadata):
 class ForumThread(Item):
     """Represents a forum thread page."""
 
-    url: str = attrs.field(converter=url_to_str)
+    url: str = attrs.field(converter=url_to_str_optional)
     """The URL of the final response, after any redirects."""
 
     topic: Optional[Topic] = None

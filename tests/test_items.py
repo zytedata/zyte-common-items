@@ -23,6 +23,7 @@ from zyte_common_items import (
     Breadcrumb,
     BusinessPlace,
     BusinessPlaceMetadata,
+    ForumThread,
     Gtin,
     Header,
     HiringOrganization,
@@ -31,6 +32,7 @@ from zyte_common_items import (
     JobLocation,
     JobPosting,
     JobPostingMetadata,
+    JobPostingNavigation,
     Link,
     Metadata,
     NamedLink,
@@ -969,3 +971,26 @@ def test_item_subclasses():
             }:
                 continue
             assert issubclass(obj, Item), f"{obj} is not an Item subclass"
+
+
+@pytest.mark.parametrize(
+    "cls",
+    (
+        Article,
+        ArticleList,
+        ArticleNavigation,
+        ForumThread,
+        JobPosting,
+        JobPostingNavigation,
+        Product,
+        ProductList,
+        ProductNavigation,
+        RealEstate,
+        Serp,
+        SocialMediaPost,
+    ),
+)
+def test_url_none(cls: type) -> None:
+    """Items can take url=None."""
+    item = cls(url=None)
+    assert item.url is None

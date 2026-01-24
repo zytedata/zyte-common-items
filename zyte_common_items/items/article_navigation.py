@@ -7,7 +7,7 @@ from zyte_common_items.components import ListMetadata, ProbabilityRequest, Reque
 from zyte_common_items.converters import (
     to_metadata_optional,
     to_probability_request_list_optional,
-    url_to_str,
+    url_to_str_optional,
 )
 
 
@@ -23,7 +23,7 @@ class ArticleNavigation(Item):
     See :class:`ArticleList`.
     """
 
-    url: str = attrs.field(converter=url_to_str)
+    url: str = attrs.field(converter=url_to_str_optional)
     """Main URL from which the data is extracted."""
 
     categoryName: Optional[str] = None

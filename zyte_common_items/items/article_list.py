@@ -12,11 +12,7 @@ from zyte_common_items.components import (
     ListMetadata,
     ProbabilityMetadata,
 )
-from zyte_common_items.converters import (
-    to_metadata_optional,
-    url_to_str,
-    url_to_str_optional,
-)
+from zyte_common_items.converters import to_metadata_optional, url_to_str_optional
 
 
 @attrs.define(kw_only=True)
@@ -32,7 +28,7 @@ class ArticleList(Item):
     are optional.
     """
 
-    url: str = attrs.field(converter=url_to_str)
+    url: str = attrs.field(converter=url_to_str_optional)
     """The main URL of the article list.
 
     The URL of the final response, after any redirects.

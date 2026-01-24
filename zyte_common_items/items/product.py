@@ -22,11 +22,7 @@ from zyte_common_items.components import (
     Gtin,
     Image,
 )
-from zyte_common_items.converters import (
-    to_metadata_optional,
-    url_to_str,
-    url_to_str_optional,
-)
+from zyte_common_items.converters import to_metadata_optional, url_to_str_optional
 
 
 @attrs.define(kw_only=True)
@@ -567,7 +563,7 @@ class Product(Item):
     See also: ``color``, ``size``.
     """
 
-    url: str = attrs.field(converter=url_to_str)
+    url: str = attrs.field(converter=url_to_str_optional)
     """Main URL from which the data has been extracted.
 
     See also ``canonicalUrl``.

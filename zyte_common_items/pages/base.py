@@ -3,8 +3,9 @@ from web_poet import ItemPage, RequestUrl, WebPage, field
 from web_poet.pages import ItemT
 
 from .._dateutils import utcnow_formatted
+from ..components import MetadataT
 from ..processors import metadata_processor
-from .mixins import HasMetadata, MetadataT
+from .mixins import HasMetadata
 
 
 class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
