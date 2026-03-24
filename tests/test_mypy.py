@@ -19,7 +19,9 @@ Note:
 """
 
 import pytest
-from web_poet import HttpResponse
+
+# older web-poet doesn't explicitly export it, so "min" tests fail
+from web_poet import HttpResponse  # type: ignore[attr-defined]
 
 from zyte_common_items import (
     Breadcrumb,
