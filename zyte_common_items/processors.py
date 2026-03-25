@@ -1,6 +1,6 @@
 from collections.abc import Iterable, Mapping
 from functools import wraps
-from numbers import Real
+from numbers import Integral, Real
 from typing import Any, Callable, List, Optional, Union
 
 from clear_html import clean_node, cleaned_node_to_html, cleaned_node_to_text
@@ -29,6 +29,26 @@ from .components import (
     ProbabilityRequest,
     Request,
 )
+
+
+def _to_int(value: Any) -> Any:
+    if isinstance(value, Integral):
+        return int(value)
+    elif isinstance(value, str):
+        if "," in value:
+            value = value.replace(",", "")
+        return int(value)
+    return value
+
+
+def _to_float(value: Any) -> Any:
+    if isinstance(value, Real):
+        return float(value)
+    elif isinstance(value, str):
+        if "," in value:
+            value = value.replace(",", ".")
+        return float(value)
+    return value
 
 
 def _get_base_url(page: Any) -> Optional[str]:
@@ -291,7 +311,7 @@ def rating_processor(value: Any, page: Any) -> Any:
     The input can also be a dictionary with one or more of the
     :class:`~zyte_common_items.AggregateRating` fields as keys. The values for
     those keys can be either final values, to be assigned to the corresponding
-    fields, or selector-like objects.
+    fields, strings to be parsed, or selector-like objects.
 
     If a returning dictionary is missing the ``bestRating`` field and
     ``ratingValue`` is a selector-like object, ``bestRating`` may be extracted.
@@ -342,7 +362,7 @@ def rating_processor(value: Any, page: Any) -> Any:
         if isinstance(review_count, (Selector, HtmlElement)):
             result.reviewCount = extract_review_count(review_count)
         elif review_count is not None:
-            result.reviewCount = int(review_count)
+            result.reviewCount = _to_int(review_count)
 
         rating_value = _handle_selectorlist(value.get("ratingValue"))
         if isinstance(rating_value, (Selector, HtmlElement)):
@@ -350,10 +370,10 @@ def rating_processor(value: Any, page: Any) -> Any:
             result.ratingValue = zp_rating.ratingValue
             result.bestRating = zp_rating.bestRating
         elif rating_value is not None:
-            result.ratingValue = float(rating_value)
+            result.ratingValue = _to_float(rating_value)
 
         if (best_rating := value.get("bestRating")) is not None:
-            result.bestRating = float(best_rating)
+            result.bestRating = _to_float(best_rating)
 
         if result.reviewCount or result.bestRating or result.ratingValue:
             return result
