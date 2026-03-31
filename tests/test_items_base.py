@@ -44,14 +44,35 @@ def test_from_dict():
     type(item.sub_item) is SubItem  # noqa: B015
 
 
-def test_from_dict_bad_annotation():
+def test_from_dict_bad_annotation_union():
     """Items with fields annotated with a Union of multiple different types should
     error out.
+
+    Checks Union[X, Y].
     """
 
     @attrs.define
     class A(Item):
         a: Union[int, str]  # noqa: UP007
+
+    pattern = (
+        r"^tests\.\S+\.A\.a is annotated with (typing\.Union\[int, str\]|int \| str)\. "
+        r"Fields should only be annotated with one type \(or optional\)\.$"
+    )
+    with pytest.raises(ValueError, match=pattern):
+        A.from_dict({"a": 1})
+
+
+def test_from_dict_bad_annotation_pipe():
+    """Items with fields annotated with a Union of multiple different types should
+    error out.
+
+    Checks X | Y.
+    """
+
+    @attrs.define
+    class A(Item):
+        a: int | str
 
     pattern = (
         r"^tests\.\S+\.A\.a is annotated with (typing\.Union\[int, str\]|int \| str)\. "
