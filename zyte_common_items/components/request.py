@@ -1,5 +1,5 @@
 import base64
-from typing import Optional, TypeVar
+from typing import TypeVar
 
 import attrs
 
@@ -33,19 +33,19 @@ class Request(Item):
     method: str = "GET"
     """HTTP method."""
 
-    body: Optional[str] = None
+    body: str | None = None
     """HTTP request body, Base64-encoded."""
 
-    headers: Optional[list[Header]] = None
+    headers: list[Header] | None = None
     """HTTP headers."""
 
-    name: Optional[str] = None
+    name: str | None = None
     """Name of the page being requested."""
 
     _body_bytes = None
 
     @property
-    def body_bytes(self) -> Optional[bytes]:
+    def body_bytes(self) -> bytes | None:
         """Request.body as bytes"""
         # todo: allow to set body bytes in __init__, to avoid encoding/decoding.
         if self._body_bytes is None and self.body is not None:
@@ -83,5 +83,5 @@ class Request(Item):
 class ProbabilityRequest(Request, ProbabilityMixin):
     """A :class:`Request` that includes a probability value."""
 
-    metadata: Optional[ProbabilityMetadata] = None
+    metadata: ProbabilityMetadata | None = None
     """Data extraction process metadata."""

@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -15,13 +13,13 @@ class AggregateRating(Item):
     <zyte_common_items.Product.aggregateRating>`.
     """
 
-    bestRating: Optional[float] = None
+    bestRating: float | None = None
     """Highest value allowed in this rating system, e.g. 5."""
 
-    ratingValue: Optional[float] = None
+    ratingValue: float | None = None
     """Average value of all ratings."""
 
-    reviewCount: Optional[int] = None
+    reviewCount: int | None = None
     """The total number of reviews or ratings for the product."""
 
 
@@ -29,9 +27,9 @@ class AggregateRating(Item):
 class StarRating(Item):
     """Official star rating of a place."""
 
-    raw: Optional[str] = None
+    raw: str | None = None
     """Star rating of the place, as it appears on the page, without processing.
     """
 
-    ratingValue: Optional[float] = None
+    ratingValue: float | None = None
     """Star rating value of the place."""

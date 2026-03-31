@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -13,16 +11,16 @@ class Author(Item):
     See :attr:`Article.authors <zyte_common_items.Article.authors>`.
     """
 
-    email: Optional[str] = None
+    email: str | None = None
     """Email."""
 
-    url: Optional[str] = attrs.field(
+    url: str | None = attrs.field(
         default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
     """URL of the details page of the author."""
 
-    name: Optional[str] = None
+    name: str | None = None
     """Full name."""
 
-    nameRaw: Optional[str] = None
+    nameRaw: str | None = None
     """Text from which :attr:`~zyte_common_items.Author.name` was extracted."""

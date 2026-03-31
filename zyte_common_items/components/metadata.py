@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, TypeVar
+from typing import TypeVar
 
 import attrs
 
@@ -23,7 +23,7 @@ class BaseMetadata(Item):
 class ProbabilityMetadata(BaseMetadata):
     """Data extraction process metadata."""
 
-    probability: Optional[float] = 1.0
+    probability: float | None = 1.0
     """The probability (0 for 0%, 1 for 100%) that the resource features the
     expected data type.
 
@@ -43,15 +43,15 @@ class ListMetadata(BaseMetadata):
     :class:`ArticleList.metadata <zyte_common_items.ArticleList.metadata>`.
     """
 
-    dateDownloaded: Optional[str] = None
+    dateDownloaded: str | None = None
     """Date and time when the product data was downloaded, in UTC timezone and
     the following format: ``YYYY-MM-DDThh:mm:ssZ``."""
 
-    validationMessages: Optional[dict[str, list[str]]] = None
+    validationMessages: dict[str, list[str]] | None = None
     """Contains paths to fields with the description of issues found with their
     values."""
 
-    def get_date_downloaded_parsed(self) -> Optional[datetime]:
+    def get_date_downloaded_parsed(self) -> datetime | None:
         """Return dateDownloaded as a TZ-aware datetime object"""
         if self.dateDownloaded is None:
             return None
@@ -62,7 +62,7 @@ class ListMetadata(BaseMetadata):
 class DetailsMetadata(ListMetadata):
     """Minimal metadata for details item classes, such as Product or Article."""
 
-    probability: Optional[float] = 1.0
+    probability: float | None = 1.0
     """The probability (0 for 0%, 1 for 100%) that the resource features the
     expected data type.
 
@@ -79,7 +79,7 @@ class SearchMetadata(DetailsMetadata):
     """Minimal metadata for classes of items that can declare search
     metadata."""
 
-    searchText: Optional[str] = None
+    searchText: str | None = None
     """The search text used to find the item."""
 
 
@@ -92,11 +92,11 @@ class Metadata(SearchMetadata):
     later converted to the corresponding, more specific metadata class.
     """
 
-    displayedQuery: Optional[str] = None
+    displayedQuery: str | None = None
     """Search query as seen in the webpage."""
 
-    searchedQuery: Optional[str] = None
+    searchedQuery: str | None = None
     """Search query as specified in the input URL."""
 
-    totalOrganicResults: Optional[int] = None
+    totalOrganicResults: int | None = None
     """Total number of organic results reported by the search engine."""
