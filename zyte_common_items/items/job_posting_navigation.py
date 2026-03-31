@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -24,17 +22,17 @@ class JobPostingNavigation(Item):
     url: str = attrs.field(converter=url_to_str_optional)
     """Main URL from which the data is extracted."""
 
-    items: Optional[list[ProbabilityRequest]] = attrs.field(
+    items: list[ProbabilityRequest] | None = attrs.field(
         default=None,
         converter=to_probability_request_list_optional,
         kw_only=True,  # type: ignore[misc]
     )
     """List of job postings available on this page."""
 
-    nextPage: Optional[Request] = None
+    nextPage: Request | None = None
     """A link to the next page, if available."""
 
-    pageNumber: Optional[int] = None
+    pageNumber: int | None = None
     """Number of the current page.
 
     It should only be extracted if the webpage shows a page number.
@@ -43,7 +41,7 @@ class JobPostingNavigation(Item):
     numbered as 0 on the website, it should be extracted as `1` nonetheless.
     """
 
-    metadata: Optional[JobPostingNavigationMetadata] = attrs.field(
+    metadata: JobPostingNavigationMetadata | None = attrs.field(
         default=None,
         converter=to_metadata_optional(JobPostingNavigationMetadata),  # type: ignore[misc]
         kw_only=True,

@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -40,7 +38,7 @@ class ArticleList(Item):
     available datapoints.
     """
 
-    canonicalUrl: Optional[str] = attrs.field(
+    canonicalUrl: str | None = attrs.field(
         default=None, converter=url_to_str_optional, kw_only=True
     )
     """Canonical form of the URL, as indicated by the website.
@@ -48,19 +46,19 @@ class ArticleList(Item):
     See also ``url``.
     """
 
-    articles: Optional[list[ArticleFromList]] = None
+    articles: list[ArticleFromList] | None = None
     """List of article details found on the page.
 
     The order of the articles reflects their position on the page.
     """
 
-    breadcrumbs: Optional[list[Breadcrumb]] = None
+    breadcrumbs: list[Breadcrumb] | None = None
     """Webpage `breadcrumb trail`_.
 
     .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
     """
 
-    metadata: Optional[ArticleListMetadata] = attrs.field(
+    metadata: ArticleListMetadata | None = attrs.field(
         default=None,
         converter=to_metadata_optional(ArticleListMetadata),  # type: ignore[misc]
         kw_only=True,
@@ -75,7 +73,7 @@ class ArticleFromList(Item):
     See :class:`ArticleList`.
     """
 
-    articleBody: Optional[str] = None
+    articleBody: str | None = None
     """Clean text of the article, including sub-headings, with newline
     separators.
 
@@ -87,10 +85,10 @@ class ArticleFromList(Item):
     - no normalization of Unicode characters.
     """
 
-    authors: Optional[list[Author]] = None
+    authors: list[Author] | None = None
     """All authors of the article."""
 
-    datePublished: Optional[str] = None
+    datePublished: str | None = None
     """Publication date of the article.
 
     Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ" or
@@ -102,34 +100,34 @@ class ArticleFromList(Item):
     modification is used instead.
     """
 
-    datePublishedRaw: Optional[str] = None
+    datePublishedRaw: str | None = None
     """Same date as :attr:`~zyte_common_items.ArticleFromList.datePublished`,
     but before parsing/normalization, i.e. as it appears on the website."""
 
-    headline: Optional[str] = None
+    headline: str | None = None
     """Headline or title."""
 
-    inLanguage: Optional[str] = None
+    inLanguage: str | None = None
     """Language of the article, as an ISO 639-1 language code.
 
     Sometimes the article language is not the same as the web page overall
     language.
     """
 
-    mainImage: Optional[Image] = None
+    mainImage: Image | None = None
     """Main image."""
 
-    images: Optional[list[Image]] = None
+    images: list[Image] | None = None
     """All images."""
 
-    metadata: Optional[ProbabilityMetadata] = attrs.field(
+    metadata: ProbabilityMetadata | None = attrs.field(
         default=None,
         converter=to_metadata_optional(ProbabilityMetadata),  # type: ignore[misc]
         kw_only=True,
     )
     """Data extraction process metadata."""
 
-    url: Optional[str] = attrs.field(
+    url: str | None = attrs.field(
         default=None, converter=url_to_str_optional, kw_only=True
     )
     """Main URL."""

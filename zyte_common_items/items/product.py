@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
-
 import attrs
 
 from zyte_common_items._examples import (
@@ -37,7 +35,7 @@ class Product(Item):
     :attr:`url` is the only required attribute.
     """
 
-    additionalProperties: Optional[list[AdditionalProperty]] = attrs.field(
+    additionalProperties: list[AdditionalProperty] | None = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -74,10 +72,10 @@ class Product(Item):
     See also ``features``.
     """
 
-    aggregateRating: Optional[AggregateRating] = None
+    aggregateRating: AggregateRating | None = None
     """Aggregate data about reviews and ratings."""
 
-    availability: Optional[str] = attrs.field(
+    availability: str | None = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -90,10 +88,10 @@ class Product(Item):
     The value is expected to be one of: ``"InStock"``, ``"OutOfStock"``.
     """
 
-    brand: Optional[Brand] = None
+    brand: Brand | None = None
     """Brand or manufacturer of the product."""
 
-    breadcrumbs: Optional[list[Breadcrumb]] = attrs.field(
+    breadcrumbs: list[Breadcrumb] | None = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -184,7 +182,7 @@ class Product(Item):
     .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
     """
 
-    canonicalUrl: Optional[str] = attrs.field(
+    canonicalUrl: str | None = attrs.field(
         default=None, converter=url_to_str_optional, kw_only=True
     )
     """Canonical form of the URL, as indicated by the website.
@@ -192,7 +190,7 @@ class Product(Item):
     See also ``url``.
     """
 
-    color: Optional[str] = None
+    color: str | None = None
     """Color of the product.
 
     It is extracted as displayed (e.g. ``"white"``).
@@ -200,7 +198,7 @@ class Product(Item):
     See also: ``size``, ``style``.
     """
 
-    currency: Optional[str] = None
+    currency: str | None = None
     """Price currency `ISO 4217`_ alphabetic code (e.g. ``"USD"``).
 
     See also ``currencyRaw``.
@@ -208,7 +206,7 @@ class Product(Item):
     .. _ISO 4217: https://en.wikipedia.org/wiki/ISO_4217
     """
 
-    currencyRaw: Optional[str] = None
+    currencyRaw: str | None = None
     """Price currency as it appears on the webpage (no post-processing).
 
     This is usually the currency that appears next to the price visually on the
@@ -220,7 +218,7 @@ class Product(Item):
     See also ``currency``.
     """
 
-    description: Optional[str] = attrs.field(
+    description: str | None = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -250,7 +248,7 @@ class Product(Item):
     See also ``descriptionHtml``.
     """
 
-    descriptionHtml: Optional[str] = attrs.field(
+    descriptionHtml: str | None = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -307,7 +305,7 @@ class Product(Item):
     .. _HTML normalization specification: https://docs.zyte.com/automatic-extraction/article.html#format-of-articlebodyhtml-field
     """
 
-    features: Optional[list[str]] = attrs.field(
+    features: list[str] | None = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -341,7 +339,7 @@ class Product(Item):
     See also ``additionalProperties``.
     """
 
-    gtin: Optional[list[Gtin]] = attrs.field(
+    gtin: list[Gtin] | None = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -419,7 +417,7 @@ class Product(Item):
     .. _GTIN: https://en.wikipedia.org/wiki/Global_Trade_Item_Number
     """
 
-    images: Optional[list[Image]] = None
+    images: list[Image] | None = None
     """All product images.
 
     The main image (see ``mainImage``) should be first in the list.
@@ -427,17 +425,17 @@ class Product(Item):
     Images only displayed as part of the product description are excluded.
     """
 
-    mainImage: Optional[Image] = None
+    mainImage: Image | None = None
     """Main image of the product."""
 
-    metadata: Optional[ProductMetadata] = attrs.field(
+    metadata: ProductMetadata | None = attrs.field(
         default=None,
         converter=to_metadata_optional(ProductMetadata),  # type: ignore[misc]
         kw_only=True,
     )
     """Data extraction process metadata."""
 
-    mpn: Optional[str] = None
+    mpn: str | None = None
     """`Manufacturer part number (MPN)`_ of the product.
 
     The MPN is issued by the manufacturer, so a product should have the same
@@ -448,10 +446,10 @@ class Product(Item):
     .. _Manufacturer part number (MPN): https://en.wikipedia.org/wiki/Part_number
     """
 
-    name: Optional[str] = None
+    name: str | None = None
     """Product name as it appears on the webpage (no post-processing)."""
 
-    price: Optional[str] = None
+    price: str | None = None
     """Price at which the product is being offered at the moment.
 
     It must be formatted with a full stop as decimal separator and no thousands
@@ -465,7 +463,7 @@ class Product(Item):
     See also: ``regularPrice``, ``currency``, ``currencyRaw``.
     """
 
-    productId: Optional[str] = None
+    productId: str | None = None
     """Product identifier, unique within an e-commerce website.
 
     It may come in the form of an SKU or any other identifier, a hash, or even
@@ -474,7 +472,7 @@ class Product(Item):
     See also: ``gtin``, ``mpn``, ``sku``.
     """
 
-    regularPrice: Optional[str] = attrs.field(
+    regularPrice: str | None = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -508,7 +506,7 @@ class Product(Item):
     See also: ``price``, ``currency``, ``currencyRaw``.
     """
 
-    size: Optional[str] = attrs.field(
+    size: str | None = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -545,7 +543,7 @@ class Product(Item):
     See also: ``color``, ``style``.
     """
 
-    sku: Optional[str] = None
+    sku: str | None = None
     """`Stock keeping unit (SKU)`_ identifier, i.e. a merchant-specific product
     identifier.
 
@@ -554,7 +552,7 @@ class Product(Item):
     .. _Stock keeping unit (SKU): https://en.wikipedia.org/wiki/Stock_keeping_unit
     """
 
-    style: Optional[str] = None
+    style: str | None = None
     """Style, pattern or finish of the product.
 
     It is extracted as displayed (e.g. ``"polka dots"``, ``"Striped"``,
@@ -569,7 +567,7 @@ class Product(Item):
     See also ``canonicalUrl``.
     """
 
-    variants: Optional[list[ProductVariant]] = attrs.field(
+    variants: list[ProductVariant] | None = attrs.field(
         default=None,
         metadata={
             "json_schema_extra": {
@@ -644,7 +642,7 @@ class ProductVariant(Item):
     :class:`ProductVariantSelectorExtractor`.
     """
 
-    additionalProperties: Optional[list[AdditionalProperty]] = None
+    additionalProperties: list[AdditionalProperty] | None = None
     """List of name-value pais of data about a specific, otherwise unmapped
     feature.
 
@@ -657,13 +655,13 @@ class ProductVariant(Item):
     See also ``features``.
     """
 
-    availability: Optional[str] = None
+    availability: str | None = None
     """Availability status.
 
     The value is expected to be one of: ``"InStock"``, ``"OutOfStock"``.
     """
 
-    canonicalUrl: Optional[str] = attrs.field(
+    canonicalUrl: str | None = attrs.field(
         default=None, converter=url_to_str_optional, kw_only=True
     )
     """Canonical form of the URL, as indicated by the website.
@@ -671,7 +669,7 @@ class ProductVariant(Item):
     See also ``url``.
     """
 
-    color: Optional[str] = None
+    color: str | None = None
     """Color.
 
     It is extracted as displayed (e.g. ``"white"``).
@@ -679,7 +677,7 @@ class ProductVariant(Item):
     See also: ``size``, ``style``.
     """
 
-    currency: Optional[str] = None
+    currency: str | None = None
     """Price currency `ISO 4217`_ alphabetic code (e.g. ``"USD"``).
 
     See also ``currencyRaw``.
@@ -687,14 +685,14 @@ class ProductVariant(Item):
     .. _ISO 4217: https://en.wikipedia.org/wiki/ISO_4217
     """
 
-    currencyRaw: Optional[str] = None
+    currencyRaw: str | None = None
     """Price currency as it appears on the webpage (no post-processing), e.g.
     ``"$"``.
 
     See also ``currency``.
     """
 
-    gtin: Optional[list[Gtin]] = None
+    gtin: list[Gtin] | None = None
     """List of standardized GTIN_ product identifiers associated with the
     product, which are unique for the product across different sellers.
 
@@ -703,7 +701,7 @@ class ProductVariant(Item):
     .. _GTIN: https://en.wikipedia.org/wiki/Global_Trade_Item_Number
     """
 
-    images: Optional[list[Image]] = None
+    images: list[Image] | None = None
     """All product images.
 
     The main image (see ``mainImage``) should be first in the list.
@@ -711,10 +709,10 @@ class ProductVariant(Item):
     Images only displayed as part of the product description are excluded.
     """
 
-    mainImage: Optional[Image] = None
+    mainImage: Image | None = None
     """Main product image."""
 
-    mpn: Optional[str] = None
+    mpn: str | None = None
     """`Manufacturer part number (MPN)`_.
 
     A product should have the same MPN across different e-commerce websites.
@@ -724,10 +722,10 @@ class ProductVariant(Item):
     .. _Manufacturer part number (MPN): https://en.wikipedia.org/wiki/Part_number
     """
 
-    name: Optional[str] = None
+    name: str | None = None
     """Name as it appears on the webpage (no post-processing)."""
 
-    price: Optional[str] = None
+    price: str | None = None
     """Price at which the product is being offered.
 
     It is a string with the price amount, with a full stop as decimal
@@ -738,7 +736,7 @@ class ProductVariant(Item):
     ``regularPrice``.
     """
 
-    productId: Optional[str] = None
+    productId: str | None = None
     """Product identifier, unique within an e-commerce website.
 
     It may come in the form of an SKU or any other identifier, a hash, or even
@@ -747,7 +745,7 @@ class ProductVariant(Item):
     See also: ``gtin``, ``mpn``, ``sku``.
     """
 
-    regularPrice: Optional[str] = None
+    regularPrice: str | None = None
     """Price at which the product was being offered in the past, and which is
     presented as a reference next to the current price.
 
@@ -760,7 +758,7 @@ class ProductVariant(Item):
     ``price``.
     """
 
-    size: Optional[str] = None
+    size: str | None = None
     """Size or dimensions.
 
     Pertinent to products such as garments, shoes, accessories, etc.
@@ -770,7 +768,7 @@ class ProductVariant(Item):
     See also: ``color``, ``style``.
     """
 
-    sku: Optional[str] = None
+    sku: str | None = None
     """`Stock keeping unit (SKU)`_ identifier, i.e. a merchant-specific product
     identifier.
 
@@ -779,7 +777,7 @@ class ProductVariant(Item):
     .. _Stock keeping unit (SKU): https://en.wikipedia.org/wiki/Stock_keeping_unit
     """
 
-    style: Optional[str] = None
+    style: str | None = None
     """Style.
 
     Pertinent to products such as garments, shoes, accessories, etc.
@@ -789,7 +787,7 @@ class ProductVariant(Item):
     See also: ``color``, ``size``.
     """
 
-    url: Optional[str] = attrs.field(
+    url: str | None = attrs.field(
         default=None, converter=url_to_str_optional, kw_only=True
     )
     """Main URL from which the product variant data could be extracted."""

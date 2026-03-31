@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -31,10 +29,10 @@ class BusinessPlace(Item):
     :attr:`url` is the only required attribute.
     """
 
-    placeId: Optional[str] = None
+    placeId: str | None = None
     """Unique identifier of the place on the website."""
 
-    url: Optional[str] = attrs.field(
+    url: str | None = attrs.field(
         default=None, converter=url_to_str_optional, kw_only=True
     )
     """The main URL that the place data was extracted from.
@@ -46,90 +44,90 @@ class BusinessPlace(Item):
     with dateDownloaded.
     """
 
-    name: Optional[str] = None
+    name: str | None = None
     """The name of the place."""
 
-    actions: Optional[list[NamedLink]] = None
+    actions: list[NamedLink] | None = None
     """List of actions that can be performed directly from the URLs on the
     place page, including URLs."""
 
-    additionalProperties: Optional[list[AdditionalProperty]] = None
+    additionalProperties: list[AdditionalProperty] | None = None
     """List of name-value pais of any unmapped additional properties specific
     to the place."""
 
-    address: Optional[Address] = None
+    address: Address | None = None
     """The address details of the place."""
 
-    reservationAction: Optional[NamedLink] = None
+    reservationAction: NamedLink | None = None
     """The details of the reservation action, e.g. table reservation in case of
     restaurants or room reservation in case of hotels."""
 
-    categories: Optional[list[str]] = None
+    categories: list[str] | None = None
     """List of categories the place belongs to."""
 
-    description: Optional[str] = None
+    description: str | None = None
     """The description of the place.
 
     Stripped of white spaces.
     """
 
-    features: Optional[list[str]] = None
+    features: list[str] | None = None
     """List of frequently mentioned features of this place."""
 
-    map: Optional[str] = attrs.field(
+    map: str | None = attrs.field(
         default=None, converter=url_to_str_optional, kw_only=True
     )
     """URL to a map of the place."""
 
-    images: Optional[list[Image]] = None
+    images: list[Image] | None = None
     """A list of URL values of all images of the place."""
 
-    amenityFeatures: Optional[list[Amenity]] = None
+    amenityFeatures: list[Amenity] | None = None
     """List of amenities of the place."""
 
-    aggregateRating: Optional[AggregateRating] = None
+    aggregateRating: AggregateRating | None = None
     """The overall rating, based on a collection of reviews or ratings."""
 
-    starRating: Optional[StarRating] = None
+    starRating: StarRating | None = None
     """Official star rating of the place."""
 
-    containedInPlace: Optional[ParentPlace] = None
+    containedInPlace: ParentPlace | None = None
     """If the place is located inside another place, these are the details of
     the parent place."""
 
-    openingHours: Optional[list[OpeningHoursItem]] = None
+    openingHours: list[OpeningHoursItem] | None = None
     """Ordered specification of opening hours, including data for opening and
     closing time for each day of the week."""
 
-    reviewSites: Optional[list[NamedLink]] = None
+    reviewSites: list[NamedLink] | None = None
     """List of partner review sites."""
 
-    telephone: Optional[str] = None
+    telephone: str | None = None
     """The phone number associated with the place, as it appears on the page.
     """
 
-    priceRange: Optional[str] = None
+    priceRange: str | None = None
     """How is the price range of the place viewed by its customers (from z to
     zzzz)."""
 
-    timezone: Optional[str] = None
+    timezone: str | None = None
     """Which timezone is the place situated in.
 
     Standard: Name compliant with IANA tz database (tzdata).
     """
 
-    isVerified: Optional[bool] = None
+    isVerified: bool | None = None
     """If the information is verified by the owner of this place."""
 
-    website: Optional[str] = attrs.field(
+    website: str | None = attrs.field(
         default=None, converter=url_to_str_optional, kw_only=True
     )
     """The URL pointing to the official website of the place."""
 
-    tags: Optional[list[str]] = None
+    tags: list[str] | None = None
     """List of the tags associated with the place."""
 
-    metadata: Optional[BusinessPlaceMetadata] = attrs.field(
+    metadata: BusinessPlaceMetadata | None = attrs.field(
         default=None,
         converter=to_metadata_optional(BusinessPlaceMetadata),  # type: ignore[misc]
         kw_only=True,

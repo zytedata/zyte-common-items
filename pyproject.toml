@@ -218,8 +218,6 @@ split-on-trailing-comma = false
 "zyte_common_items/components/__init__.py" = ["F401"]
 "zyte_common_items/items/__init__.py" = ["F401"]
 "zyte_common_items/pages/__init__.py" = ["F401"]
-# Broken for now due to https://github.com/zytedata/zyte-common-items/issues/147
-"zyte_common_items/items/*.py" = ["UP007", "UP045"]
 # ”module level import not at the top of file“ caused by pytest.importorskip
 "tests/test_ae_pipeline.py" = ["E402"]
 "tests/test_pipelines.py" = ["E402"]

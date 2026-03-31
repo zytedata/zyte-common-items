@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -11,18 +9,18 @@ from zyte_common_items.converters import to_metadata_optional, url_to_str_option
 class SerpOrganicResult(Item):
     """Data from a non-paid result of a search engine results page."""
 
-    description: Optional[str] = None
+    description: str | None = None
     """Result excerpt."""
 
-    name: Optional[str] = None
+    name: str | None = None
     """Result title."""
 
-    url: Optional[str] = attrs.field(
+    url: str | None = attrs.field(
         default=None, converter=url_to_str_optional, kw_only=True
     )
     """Result URL."""
 
-    rank: Optional[int] = None
+    rank: int | None = None
     """Result position among other organic results from the same search engine
     results page.
 
@@ -31,7 +29,7 @@ class SerpOrganicResult(Item):
     search, must be 1.
     """
 
-    displayedUrlText: Optional[str] = None
+    displayedUrlText: str | None = None
     """Text displayed to represent :attr:`url`.
 
     It may not be an actual URL, but some stylized or simplified
@@ -45,13 +43,13 @@ class SerpOrganicResult(Item):
 class SerpMetadata(ListMetadata):
     """Metadata class for :data:`zyte_common_items.Serp.metadata`."""
 
-    displayedQuery: Optional[str] = None
+    displayedQuery: str | None = None
     """Search query as seen in the webpage."""
 
-    searchedQuery: Optional[str] = None
+    searchedQuery: str | None = None
     """Search query as specified in the input URL."""
 
-    totalOrganicResults: Optional[int] = None
+    totalOrganicResults: int | None = None
     """Total number of organic results reported by the search engine."""
 
 
@@ -60,16 +58,16 @@ class Serp(Item):
     """Data from a `search engine results page
     <https://en.wikipedia.org/wiki/Search_engine_results_page>`_."""
 
-    organicResults: Optional[list[SerpOrganicResult]] = None
+    organicResults: list[SerpOrganicResult] | None = None
     """List of search results excluding paid results."""
 
     url: str = attrs.field(converter=url_to_str_optional)
     """Search URL."""
 
-    pageNumber: Optional[int] = None
+    pageNumber: int | None = None
     """Page number."""
 
-    metadata: Optional[SerpMetadata] = attrs.field(
+    metadata: SerpMetadata | None = attrs.field(
         default=None,
         converter=to_metadata_optional(SerpMetadata),  # type: ignore[misc]
         kw_only=True,
