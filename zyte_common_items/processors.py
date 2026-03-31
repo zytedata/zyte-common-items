@@ -1,7 +1,7 @@
-from collections.abc import Iterable, Mapping
+from collections.abc import Callable, Iterable, Mapping
 from functools import wraps
 from numbers import Real
-from typing import Any, Callable, Optional, Union
+from typing import Any, Optional
 
 from clear_html import clean_node, cleaned_node_to_html, cleaned_node_to_text
 from lxml.html import HtmlElement
@@ -59,7 +59,7 @@ def _format_price(price: Price) -> Optional[str]:
 
 
 def only_handle_nodes(
-    f: Callable[[Union[Selector, HtmlElement], Any], Any],
+    f: Callable[[Selector | HtmlElement, Any], Any],
 ) -> Callable[[Any, Any], Any]:
     """Decorator for processors that only runs a decorated processor if the
     input is of type :class:`Selector` or :class:`HtmlElement`."""
@@ -179,7 +179,7 @@ def simple_price_processor(value: Any, page: Any) -> Any:
 
 
 @only_handle_nodes
-def description_html_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
+def description_html_processor(value: Selector | HtmlElement, page: Any) -> Any:
     """Convert the data into a cleaned up HTML if possible.
 
     Uses the clear-html_ library.
@@ -240,7 +240,7 @@ def description_processor(value: Any, page: Any) -> Any:
 
 
 def gtin_processor(
-    value: Union[SelectorList, Selector, HtmlElement, str], page: Any
+    value: SelectorList | Selector | HtmlElement | str, page: Any
 ) -> Any:
     """Convert the data into a list of :class:`~zyte_common_items.Gtin` objects if possible.
 

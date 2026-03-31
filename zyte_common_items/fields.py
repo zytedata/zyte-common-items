@@ -1,4 +1,5 @@
-from typing import Callable, Optional
+from collections.abc import Callable
+from typing import Optional
 
 from web_poet import ItemPage, field
 from web_poet.fields import get_fields_dict

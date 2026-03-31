@@ -2,13 +2,13 @@
 A module with common attrs converters
 """
 
-from typing import Optional, Union
+from typing import Optional
 
 import attrs
 from web_poet.page_inputs.url import RequestUrl, ResponseUrl
 
 
-def url_to_str(url: Union[str, RequestUrl, ResponseUrl]) -> str:
+def url_to_str(url: str | RequestUrl | ResponseUrl) -> str:
     """Return the input :class:`~web_poet.page_inputs.url.RequestUrl` or
     :class:`~web_poet.page_inputs.url.ResponseUrl` object as a string."""
 
@@ -20,7 +20,7 @@ def url_to_str(url: Union[str, RequestUrl, ResponseUrl]) -> str:
 
 
 def url_to_str_optional(
-    url: Union[str, RequestUrl, ResponseUrl, None],
+    url: str | RequestUrl | ResponseUrl | None,
 ) -> Optional[str]:
     """Return the input :class:`~web_poet.page_inputs.url.RequestUrl` or
     :class:`~web_poet.page_inputs.url.ResponseUrl` object as a string, or

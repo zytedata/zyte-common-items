@@ -1,5 +1,5 @@
 import html
-from typing import Any, Generic, Optional, Union
+from typing import Any, Generic, Optional
 
 import html_text
 from clear_html import cleaned_node_to_text
@@ -129,7 +129,7 @@ class DescriptionMixin(FieldsMixin):
         return None
 
     @field
-    async def descriptionHtml(self) -> Union[HtmlElement, str, None]:
+    async def descriptionHtml(self) -> HtmlElement | str | None:
         self._descriptionHtml_default = True
         description = await self._get_description()
         if self._description_node not in {self.UNSET, None}:

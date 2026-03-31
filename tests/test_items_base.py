@@ -51,7 +51,7 @@ def test_from_dict_bad_annotation():
 
     @attrs.define
     class A(Item):
-        a: Union[int, str]
+        a: Union[int, str]  # noqa: UP007
 
     pattern = (
         r"^tests\.\S+\.A\.a is annotated with (typing\.Union\[int, str\]|int \| str)\. "
