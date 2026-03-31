@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 from web_poet import Returns
 
@@ -33,21 +31,21 @@ class AutoJobPostingNavigationPage(BaseJobPostingNavigationPage):
     job_posting_navigation: JobPostingNavigation
 
     @auto_field
-    def items(self) -> Optional[list[ProbabilityRequest]]:
+    def items(self) -> list[ProbabilityRequest] | None:
         return self.job_posting_navigation.items
 
     @auto_field
-    def metadata(self) -> Optional[JobPostingNavigationMetadata]:
+    def metadata(self) -> JobPostingNavigationMetadata | None:
         return self.job_posting_navigation.metadata
 
     @auto_field
-    def nextPage(self) -> Optional[Request]:
+    def nextPage(self) -> Request | None:
         return self.job_posting_navigation.nextPage
 
     @auto_field
-    def pageNumber(self) -> Optional[int]:
+    def pageNumber(self) -> int | None:
         return self.job_posting_navigation.pageNumber
 
     @auto_field
-    def url(self) -> Optional[str]:
+    def url(self) -> str | None:
         return self.job_posting_navigation.url

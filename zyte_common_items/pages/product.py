@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 from web_poet import Returns
 
@@ -72,99 +70,99 @@ class AutoProductPage(BaseProductPage):
     product: Product
 
     @auto_field
-    def additionalProperties(self) -> Optional[list[AdditionalProperty]]:
+    def additionalProperties(self) -> list[AdditionalProperty] | None:
         return self.product.additionalProperties
 
     @auto_field
-    def aggregateRating(self) -> Optional[AggregateRating]:
+    def aggregateRating(self) -> AggregateRating | None:
         return self.product.aggregateRating
 
     @auto_field
-    def availability(self) -> Optional[str]:
+    def availability(self) -> str | None:
         return self.product.availability
 
     @auto_field
-    def brand(self) -> Optional[Brand]:
+    def brand(self) -> Brand | None:
         return self.product.brand
 
     @auto_field
-    def breadcrumbs(self) -> Optional[list[Breadcrumb]]:
+    def breadcrumbs(self) -> list[Breadcrumb] | None:
         return self.product.breadcrumbs
 
     @auto_field
-    def canonicalUrl(self) -> Optional[str]:
+    def canonicalUrl(self) -> str | None:
         return self.product.canonicalUrl
 
     @auto_field
-    def color(self) -> Optional[str]:
+    def color(self) -> str | None:
         return self.product.color
 
     @auto_field
-    def currency(self) -> Optional[str]:
+    def currency(self) -> str | None:
         return self.product.currency
 
     @auto_field
-    def currencyRaw(self) -> Optional[str]:
+    def currencyRaw(self) -> str | None:
         return self.product.currencyRaw
 
     @auto_field
-    def description(self) -> Optional[str]:
+    def description(self) -> str | None:
         return self.product.description
 
     @auto_field
-    def descriptionHtml(self) -> Optional[str]:
+    def descriptionHtml(self) -> str | None:
         return self.product.descriptionHtml
 
     @auto_field
-    def features(self) -> Optional[list[str]]:
+    def features(self) -> list[str] | None:
         return self.product.features
 
     @auto_field
-    def gtin(self) -> Optional[list[Gtin]]:
+    def gtin(self) -> list[Gtin] | None:
         return self.product.gtin
 
     @auto_field
-    def images(self) -> Optional[list[Image]]:
+    def images(self) -> list[Image] | None:
         return self.product.images
 
     @auto_field
-    def mainImage(self) -> Optional[Image]:
+    def mainImage(self) -> Image | None:
         return self.product.mainImage
 
     @auto_field
-    def metadata(self) -> Optional[ProductMetadata]:
+    def metadata(self) -> ProductMetadata | None:
         return self.product.metadata
 
     @auto_field
-    def mpn(self) -> Optional[str]:
+    def mpn(self) -> str | None:
         return self.product.mpn
 
     @auto_field
-    def name(self) -> Optional[str]:
+    def name(self) -> str | None:
         return self.product.name
 
     @auto_field
-    def price(self) -> Optional[str]:
+    def price(self) -> str | None:
         return self.product.price
 
     @auto_field
-    def productId(self) -> Optional[str]:
+    def productId(self) -> str | None:
         return self.product.productId
 
     @auto_field
-    def regularPrice(self) -> Optional[str]:
+    def regularPrice(self) -> str | None:
         return self.product.regularPrice
 
     @auto_field
-    def size(self) -> Optional[str]:
+    def size(self) -> str | None:
         return self.product.size
 
     @auto_field
-    def sku(self) -> Optional[str]:
+    def sku(self) -> str | None:
         return self.product.sku
 
     @auto_field
-    def style(self) -> Optional[str]:
+    def style(self) -> str | None:
         return self.product.style
 
     @auto_field
@@ -172,5 +170,5 @@ class AutoProductPage(BaseProductPage):
         return self.product.url
 
     @auto_field
-    def variants(self) -> Optional[list[ProductVariant]]:
+    def variants(self) -> list[ProductVariant] | None:
         return self.product.variants

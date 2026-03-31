@@ -1,7 +1,7 @@
 from collections.abc import Callable, Iterable, Mapping
 from functools import wraps
 from numbers import Real
-from typing import Any, Optional
+from typing import Any
 
 from clear_html import clean_node, cleaned_node_to_html, cleaned_node_to_text
 from lxml.html import HtmlElement
@@ -31,7 +31,7 @@ from .components import (
 )
 
 
-def _get_base_url(page: Any) -> Optional[str]:
+def _get_base_url(page: Any) -> str | None:
     if isinstance(page, ResponseShortcutsMixin):
         return page.base_url
     return getattr(page, "url", None)
@@ -45,7 +45,7 @@ def _handle_selectorlist(value: Any) -> Any:
     return value[0]
 
 
-def _format_price(price: Price) -> Optional[str]:
+def _format_price(price: Price) -> str | None:
     """Return the price amount as a string, with a minimum of 2 decimal
     places."""
     if price.amount is None:
@@ -397,7 +397,7 @@ def probability_request_list_processor(
     return [request.cast(ProbabilityRequest) for request in request_list]
 
 
-def metadata_processor(metadata: Optional[BaseMetadata], page):
+def metadata_processor(metadata: BaseMetadata | None, page):
     """Processor for a metadata field that ensures that the output metadata
     object uses the metadata class declared by *page*."""
     if metadata is None or page.metadata_cls is None:

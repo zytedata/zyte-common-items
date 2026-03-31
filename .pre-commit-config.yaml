@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.4
+    rev: v0.15.8
     hooks:
       - id: ruff-check
         args: [ --fix ]
@@ -29,6 +29,6 @@ repos:
     hooks:
       - id: sphinx-lint
   - repo: https://github.com/rhysd/actionlint
-    rev: v1.7.11
+    rev: v1.7.12
     hooks:
       - id: actionlint

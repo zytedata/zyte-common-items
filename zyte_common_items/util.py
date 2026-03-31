@@ -1,6 +1,6 @@
 import warnings
 from collections.abc import Callable
-from typing import Any, Optional, TypeVar
+from typing import Any, TypeVar
 from warnings import warn
 from weakref import WeakKeyDictionary
 
@@ -16,7 +16,7 @@ _CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
 
 
 def split_in_unknown_and_known_fields(
-    data: Optional[dict], item_cls: type
+    data: dict | None, item_cls: type
 ) -> tuple[dict, dict]:
     """Return a pair of dicts. The first one contains those elements not belonging to the
     attr class ``item_cls``. The second one contains the rest. That is, those

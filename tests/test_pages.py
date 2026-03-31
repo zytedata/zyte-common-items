@@ -1,5 +1,4 @@
 import warnings
-from typing import Optional
 from warnings import catch_warnings
 
 import attrs
@@ -388,7 +387,7 @@ def test_metadata_override():
 
     @attrs.define(kw_only=True)
     class CustomProductMetadata(ProductMetadata):
-        new_field: Optional[str] = None
+        new_field: str | None = None
 
     class CustomProductPage(ProductPage, HasMetadata[CustomProductMetadata]):
         @field

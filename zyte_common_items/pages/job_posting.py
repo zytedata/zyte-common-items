@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 from web_poet import Returns
 
@@ -40,85 +38,85 @@ class AutoJobPostingPage(BaseJobPostingPage):
     job_posting: JobPosting
 
     @auto_field
-    def url(self) -> Optional[str]:
+    def url(self) -> str | None:
         return self.job_posting.url
 
     @auto_field
-    def jobPostingId(self) -> Optional[str]:
+    def jobPostingId(self) -> str | None:
         return self.job_posting.jobPostingId
 
     @auto_field
-    def datePublished(self) -> Optional[str]:
+    def datePublished(self) -> str | None:
         return self.job_posting.datePublished
 
     @auto_field
-    def datePublishedRaw(self) -> Optional[str]:
+    def datePublishedRaw(self) -> str | None:
         return self.job_posting.datePublishedRaw
 
     @auto_field
-    def dateModified(self) -> Optional[str]:
+    def dateModified(self) -> str | None:
         return self.job_posting.dateModified
 
     @auto_field
-    def dateModifiedRaw(self) -> Optional[str]:
+    def dateModifiedRaw(self) -> str | None:
         return self.job_posting.dateModifiedRaw
 
     @auto_field
-    def validThrough(self) -> Optional[str]:
+    def validThrough(self) -> str | None:
         return self.job_posting.validThrough
 
     @auto_field
-    def validThroughRaw(self) -> Optional[str]:
+    def validThroughRaw(self) -> str | None:
         return self.job_posting.validThroughRaw
 
     @auto_field
-    def jobTitle(self) -> Optional[str]:
+    def jobTitle(self) -> str | None:
         return self.job_posting.jobTitle
 
     @auto_field
-    def headline(self) -> Optional[str]:
+    def headline(self) -> str | None:
         return self.job_posting.headline
 
     @auto_field
-    def jobLocation(self) -> Optional[JobLocation]:
+    def jobLocation(self) -> JobLocation | None:
         return self.job_posting.jobLocation
 
     @auto_field
-    def description(self) -> Optional[str]:
+    def description(self) -> str | None:
         return self.job_posting.description
 
     @auto_field
-    def descriptionHtml(self) -> Optional[str]:
+    def descriptionHtml(self) -> str | None:
         return self.job_posting.descriptionHtml
 
     @auto_field
-    def employmentType(self) -> Optional[str]:
+    def employmentType(self) -> str | None:
         return self.job_posting.employmentType
 
     @auto_field
-    def baseSalary(self) -> Optional[BaseSalary]:
+    def baseSalary(self) -> BaseSalary | None:
         return self.job_posting.baseSalary
 
     @auto_field
-    def requirements(self) -> Optional[list[str]]:
+    def requirements(self) -> list[str] | None:
         return self.job_posting.requirements
 
     @auto_field
-    def hiringOrganization(self) -> Optional[HiringOrganization]:
+    def hiringOrganization(self) -> HiringOrganization | None:
         return self.job_posting.hiringOrganization
 
     @auto_field
-    def jobStartDate(self) -> Optional[str]:
+    def jobStartDate(self) -> str | None:
         return self.job_posting.jobStartDate
 
     @auto_field
-    def jobStartDateRaw(self) -> Optional[str]:
+    def jobStartDateRaw(self) -> str | None:
         return self.job_posting.jobStartDateRaw
 
     @auto_field
-    def remoteStatus(self) -> Optional[str]:
+    def remoteStatus(self) -> str | None:
         return self.job_posting.remoteStatus
 
     @auto_field
-    def metadata(self) -> Optional[JobPostingMetadata]:
+    def metadata(self) -> JobPostingMetadata | None:
         return self.job_posting.metadata

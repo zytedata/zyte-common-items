@@ -1,5 +1,5 @@
 import html
-from typing import Any, Generic, Optional
+from typing import Any, Generic
 
 import html_text
 from clear_html import cleaned_node_to_text
@@ -16,21 +16,21 @@ class HasMetadata(Generic[MetadataT]):
     class."""
 
     @property
-    def metadata_cls(self) -> Optional[type[MetadataT]]:
+    def metadata_cls(self) -> type[MetadataT] | None:
         """Metadata class."""
         return _get_metadata_class(type(self))
 
 
-def _get_metadata_class(cls: type) -> Optional[type[MetadataT]]:
+def _get_metadata_class(cls: type) -> type[MetadataT] | None:
     return get_generic_param(cls, HasMetadata)
 
 
 class PriceMixin(FieldsMixin):
     """Provides price-related field implementations."""
 
-    _parsed_price: Optional[Price] = None
+    _parsed_price: Price | None = None
 
-    async def _get_parsed_price(self) -> Optional[Price]:
+    async def _get_parsed_price(self) -> Price | None:
         if self._parsed_price is None:
             # the price field wasn't executed or doesn't write _parsed_price
             price = getattr(self, "price", None)
@@ -43,11 +43,11 @@ class PriceMixin(FieldsMixin):
         return self._parsed_price
 
     @field
-    def currency(self) -> Optional[str]:
+    def currency(self) -> str | None:
         return getattr(self, "CURRENCY", None)
 
     @field
-    async def currencyRaw(self) -> Optional[str]:
+    async def currencyRaw(self) -> str | None:
         parsed_price = await self._get_parsed_price()
         if parsed_price:
             return parsed_price.currency
@@ -98,7 +98,7 @@ class DescriptionMixin(FieldsMixin):
         ]
         return f"<article>\n{''.join(paras_wrapped)}\n</article>"
 
-    async def _get_description(self) -> Optional[str]:
+    async def _get_description(self) -> str | None:
         if self._description_default:
             return None
         if self._description_str == self.UNSET:
@@ -108,7 +108,7 @@ class DescriptionMixin(FieldsMixin):
                 self._description_str = description
         return self._description_str
 
-    async def _get_description_html(self) -> Optional[HtmlElement]:
+    async def _get_description_html(self) -> HtmlElement | None:
         if self._descriptionHtml_default:
             return None
         if self._descriptionHtml_node == self.UNSET:
@@ -119,7 +119,7 @@ class DescriptionMixin(FieldsMixin):
         return self._descriptionHtml_node
 
     @field
-    async def description(self) -> Optional[str]:
+    async def description(self) -> str | None:
         self._description_default = True
         description_html = await self._get_description_html()
         if isinstance(description_html, HtmlElement):

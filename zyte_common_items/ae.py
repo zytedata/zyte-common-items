@@ -1,5 +1,4 @@
 from collections import deque
-from typing import Optional
 from warnings import warn
 
 import attrs
@@ -52,8 +51,8 @@ def _to_url_list(data, old_k, new_k):
 
 @attrs.define(kw_only=True)
 class AEBreadcrumb(Item):
-    name: Optional[str] = None
-    link: Optional[str] = None
+    name: str | None = None
+    link: str | None = None
 
 
 def _convert_authors(data):
@@ -72,25 +71,25 @@ def _convert_authors(data):
 # https://docs.zyte.com/automatic-extraction/article.html#available-fields
 @attrs.define(kw_only=True)
 class AEArticle(Item):
-    headline: Optional[str] = None
-    datePublished: Optional[str] = None
-    datePublishedRaw: Optional[str] = None
-    dateModified: Optional[str] = None
-    dateModifiedRaw: Optional[str] = None
-    author: Optional[str] = None
+    headline: str | None = None
+    datePublished: str | None = None
+    datePublishedRaw: str | None = None
+    dateModified: str | None = None
+    dateModifiedRaw: str | None = None
+    author: str | None = None
     authorsList: list[str] = attrs.Factory(list)
-    inLanguage: Optional[str] = None
+    inLanguage: str | None = None
     breadcrumbs: list[AEBreadcrumb] = attrs.Factory(list)
-    mainImage: Optional[str] = None
+    mainImage: str | None = None
     images: list[str] = attrs.Factory(list)
-    description: Optional[str] = None
-    articleBody: Optional[str] = None
-    articleBodyHtml: Optional[str] = None
-    articleBodyRaw: Optional[str] = None
+    description: str | None = None
+    articleBody: str | None = None
+    articleBodyHtml: str | None = None
+    articleBodyRaw: str | None = None
     videoUrls: list[str] = attrs.Factory(list)
     audioUrls: list[str] = attrs.Factory(list)
     probability: float
-    canonicalUrl: Optional[str] = None
+    canonicalUrl: str | None = None
     url: str
 
     @classmethod
@@ -109,23 +108,23 @@ class AEArticle(Item):
 # https://docs.zyte.com/automatic-extraction/article-list.html#individual-articles
 @attrs.define(kw_only=True)
 class AEArticleFromList(Item):
-    headline: Optional[str] = None
-    datePublished: Optional[str] = None
-    datePublishedRaw: Optional[str] = None
-    author: Optional[str] = None
+    headline: str | None = None
+    datePublished: str | None = None
+    datePublishedRaw: str | None = None
+    author: str | None = None
     authorsList: list[str] = attrs.Factory(list)
-    inLanguage: Optional[str] = None
-    mainImage: Optional[str] = None
+    inLanguage: str | None = None
+    mainImage: str | None = None
     images: list[str] = attrs.Factory(list)
-    articleBody: Optional[str] = None
-    url: Optional[str] = None
+    articleBody: str | None = None
+    url: str | None = None
     probability: float
 
 
 @attrs.define(kw_only=True)
 class AEPaginationLink(Item):
-    url: Optional[str] = None
-    text: Optional[str] = None
+    url: str | None = None
+    text: str | None = None
 
 
 def _convert_list_item_metadata(item):
@@ -141,8 +140,8 @@ def _convert_list_item_metadata(item):
 class AEArticleList(Item):
     url: str
     articles: list[AEArticleFromList] = attrs.Factory(list)
-    paginationNext: Optional[AEPaginationLink] = None
-    paginationPrevious: Optional[AEPaginationLink] = None
+    paginationNext: AEPaginationLink | None = None
+    paginationPrevious: AEPaginationLink | None = None
 
     @classmethod
     def from_item(cls, item: Item):
@@ -159,19 +158,19 @@ class AEArticleList(Item):
 
 @attrs.define(kw_only=True)
 class AELocation(Item):
-    raw: Optional[str] = None
+    raw: str | None = None
 
 
 @attrs.define(kw_only=True)
 class AEOrganization(Item):
-    raw: Optional[str] = None
+    raw: str | None = None
 
 
 @attrs.define(kw_only=True)
 class AESalary(Item):
-    raw: Optional[str] = None
-    value: Optional[float] = None
-    currency: Optional[str] = None
+    raw: str | None = None
+    value: float | None = None
+    currency: str | None = None
 
 
 def _rename(data, old_k, new_k):
@@ -182,15 +181,15 @@ def _rename(data, old_k, new_k):
 # https://docs.zyte.com/automatic-extraction/job-posting.html#available-fields
 @attrs.define(kw_only=True)
 class AEJobPosting(Item):
-    title: Optional[str] = None
-    datePosted: Optional[str] = None
-    validThrough: Optional[str] = None
-    description: Optional[str] = None
-    descriptionHtml: Optional[str] = None
-    employmentType: Optional[str] = None
-    hiringOrganization: Optional[AEOrganization] = None
-    baseSalary: Optional[AESalary] = None
-    jobLocation: Optional[AELocation] = None
+    title: str | None = None
+    datePosted: str | None = None
+    validThrough: str | None = None
+    description: str | None = None
+    descriptionHtml: str | None = None
+    employmentType: str | None = None
+    hiringOrganization: AEOrganization | None = None
+    baseSalary: AESalary | None = None
+    jobLocation: AELocation | None = None
     probability: float
     url: str
 
@@ -215,7 +214,7 @@ class AEJobPosting(Item):
 @attrs.define(kw_only=True)
 class AEAdditionalProperty(Item):
     name: str
-    value: Optional[str] = None
+    value: str | None = None
 
 
 @attrs.define(kw_only=True)
@@ -226,17 +225,17 @@ class AEGTIN(Item):
 
 @attrs.define(kw_only=True)
 class AEOffer(Item):
-    price: Optional[str] = None
-    currency: Optional[str] = None
-    availability: Optional[str] = None
-    regularPrice: Optional[str] = None
+    price: str | None = None
+    currency: str | None = None
+    availability: str | None = None
+    regularPrice: str | None = None
 
 
 @attrs.define(kw_only=True)
 class AERating(Item):
-    ratingValue: Optional[float] = None
-    bestRating: Optional[float] = None
-    reviewCount: Optional[int] = None
+    ratingValue: float | None = None
+    bestRating: float | None = None
+    reviewCount: int | None = None
 
 
 def _remove(data, fields):
@@ -296,25 +295,25 @@ def _convert_breadcrumbs(data):
 # https://docs.zyte.com/automatic-extraction/product.html#available-fields
 @attrs.define(kw_only=True)
 class AEProduct(Item):
-    name: Optional[str] = None
+    name: str | None = None
     offers: list[AEOffer] = attrs.Factory(list)
-    sku: Optional[str] = None
-    mpn: Optional[str] = None
+    sku: str | None = None
+    mpn: str | None = None
     gtin: list[AEGTIN] = attrs.Factory(list)
-    brand: Optional[str] = None
+    brand: str | None = None
     breadcrumbs: list[AEBreadcrumb] = attrs.Factory(list)
-    mainImage: Optional[str] = None
+    mainImage: str | None = None
     images: list[str] = attrs.Factory(list)
-    description: Optional[str] = None
-    descriptionHtml: Optional[str] = None
-    aggregateRating: Optional[AERating] = None
-    color: Optional[str] = None
-    size: Optional[str] = None
-    style: Optional[str] = None
+    description: str | None = None
+    descriptionHtml: str | None = None
+    aggregateRating: AERating | None = None
+    color: str | None = None
+    size: str | None = None
+    style: str | None = None
     additionalProperty: list[AEAdditionalProperty] = attrs.Factory(list)
     hasVariants: list["AEProduct"] = attrs.Factory(list)
     probability: float
-    canonicalUrl: Optional[str] = None
+    canonicalUrl: str | None = None
     url: str
 
     @classmethod
@@ -348,17 +347,17 @@ class AEProduct(Item):
 # https://docs.zyte.com/automatic-extraction/product-list.html#individual-products
 @attrs.define(kw_only=True)
 class AEProductFromList(Item):
-    name: Optional[str] = None
+    name: str | None = None
     offers: list[AEOffer] = attrs.Factory(list)
-    sku: Optional[str] = None
-    brand: Optional[str] = None
-    mainImage: Optional[str] = None
+    sku: str | None = None
+    brand: str | None = None
+    mainImage: str | None = None
     images: list[str] = attrs.Factory(list)
-    description: Optional[str] = None
-    descriptionHtml: Optional[str] = None
-    aggregateRating: Optional[AERating] = None
+    description: str | None = None
+    descriptionHtml: str | None = None
+    aggregateRating: AERating | None = None
     probability: float
-    url: Optional[str] = None
+    url: str | None = None
 
 
 # https://docs.zyte.com/automatic-extraction/product-list.html#available-fields
@@ -367,8 +366,8 @@ class AEProductList(Item):
     url: str
     products: list[AEProductFromList] = attrs.Factory(list)
     breadcrumbs: list[AEBreadcrumb] = attrs.Factory(list)
-    paginationNext: Optional[AEPaginationLink] = None
-    paginationPrevious: Optional[AEPaginationLink] = None
+    paginationNext: AEPaginationLink | None = None
+    paginationPrevious: AEPaginationLink | None = None
 
     @classmethod
     def from_item(cls, item: Item):

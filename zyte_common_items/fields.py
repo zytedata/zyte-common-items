@@ -1,5 +1,4 @@
 from collections.abc import Callable
-from typing import Optional
 
 from web_poet import ItemPage, field
 from web_poet.fields import get_fields_dict
@@ -9,8 +8,8 @@ def auto_field(
     method=None,
     *,
     cached: bool = False,
-    meta: Optional[dict] = None,
-    out: Optional[list[Callable]] = None,
+    meta: dict | None = None,
+    out: list[Callable] | None = None,
 ):
     """Decorator that works like :func:`web_poet.fields.field` but sets
     ``auto_field`` to ``True`` by default in *meta*.

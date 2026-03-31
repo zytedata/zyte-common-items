@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Union
 
 import attrs
 import pytest
@@ -17,7 +17,7 @@ class SubItem(Item):
 
 @attrs.define
 class BigItem(Item):
-    sub_item: Optional[SubItem] = None
+    sub_item: SubItem | None = None
 
 
 def test_is_data_container():

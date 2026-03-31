@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 from web_poet import Returns
 
@@ -23,7 +21,7 @@ class AutoSerpPage(BaseSerpPage):
     serp: Serp
 
     @auto_field
-    def organicResults(self) -> Optional[list[SerpOrganicResult]]:
+    def organicResults(self) -> list[SerpOrganicResult] | None:
         return self.serp.organicResults
 
     @auto_field
@@ -31,9 +29,9 @@ class AutoSerpPage(BaseSerpPage):
         return self.serp.url
 
     @auto_field
-    def pageNumber(self) -> Optional[int]:
+    def pageNumber(self) -> int | None:
         return self.serp.pageNumber
 
     @auto_field
-    def metadata(self) -> Optional[SerpMetadata]:
+    def metadata(self) -> SerpMetadata | None:
         return self.serp.metadata

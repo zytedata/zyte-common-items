@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 from web_poet import Returns
 
@@ -28,29 +26,29 @@ class AutoArticleNavigationPage(BaseArticleNavigationPage):
     article_navigation: ArticleNavigation
 
     @auto_field
-    def categoryName(self) -> Optional[str]:
+    def categoryName(self) -> str | None:
         return self.article_navigation.categoryName
 
     @auto_field
-    def items(self) -> Optional[list[ProbabilityRequest]]:
+    def items(self) -> list[ProbabilityRequest] | None:
         return self.article_navigation.items
 
     @auto_field
-    def metadata(self) -> Optional[ArticleNavigationMetadata]:
+    def metadata(self) -> ArticleNavigationMetadata | None:
         return self.article_navigation.metadata
 
     @auto_field
-    def nextPage(self) -> Optional[Request]:
+    def nextPage(self) -> Request | None:
         return self.article_navigation.nextPage
 
     @auto_field
-    def pageNumber(self) -> Optional[int]:
+    def pageNumber(self) -> int | None:
         return self.article_navigation.pageNumber
 
     @auto_field
-    def subCategories(self) -> Optional[list[ProbabilityRequest]]:
+    def subCategories(self) -> list[ProbabilityRequest] | None:
         return self.article_navigation.subCategories
 
     @auto_field
-    def url(self) -> Optional[str]:
+    def url(self) -> str | None:
         return self.article_navigation.url

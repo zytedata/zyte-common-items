@@ -2,8 +2,6 @@
 A module with common attrs converters
 """
 
-from typing import Optional
-
 import attrs
 from web_poet.page_inputs.url import RequestUrl, ResponseUrl
 
@@ -21,7 +19,7 @@ def url_to_str(url: str | RequestUrl | ResponseUrl) -> str:
 
 def url_to_str_optional(
     url: str | RequestUrl | ResponseUrl | None,
-) -> Optional[str]:
+) -> str | None:
     """Return the input :class:`~web_poet.page_inputs.url.RequestUrl` or
     :class:`~web_poet.page_inputs.url.ResponseUrl` object as a string, or
     None if url is None."""

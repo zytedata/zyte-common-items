@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 from web_poet import Returns
 
@@ -33,73 +31,73 @@ class AutoArticlePage(BaseArticlePage):
     article: Article
 
     @auto_field
-    def headline(self) -> Optional[str]:
+    def headline(self) -> str | None:
         return self.article.headline
 
     @auto_field
-    def datePublished(self) -> Optional[str]:
+    def datePublished(self) -> str | None:
         return self.article.datePublished
 
     @auto_field
-    def datePublishedRaw(self) -> Optional[str]:
+    def datePublishedRaw(self) -> str | None:
         return self.article.datePublishedRaw
 
     @auto_field
-    def dateModified(self) -> Optional[str]:
+    def dateModified(self) -> str | None:
         return self.article.dateModified
 
     @auto_field
-    def dateModifiedRaw(self) -> Optional[str]:
+    def dateModifiedRaw(self) -> str | None:
         return self.article.dateModifiedRaw
 
     @auto_field
-    def authors(self) -> Optional[list[Author]]:
+    def authors(self) -> list[Author] | None:
         return self.article.authors
 
     @auto_field
-    def breadcrumbs(self) -> Optional[list[Breadcrumb]]:
+    def breadcrumbs(self) -> list[Breadcrumb] | None:
         return self.article.breadcrumbs
 
     @auto_field
-    def inLanguage(self) -> Optional[str]:
+    def inLanguage(self) -> str | None:
         return self.article.inLanguage
 
     @auto_field
-    def mainImage(self) -> Optional[Image]:
+    def mainImage(self) -> Image | None:
         return self.article.mainImage
 
     @auto_field
-    def images(self) -> Optional[list[Image]]:
+    def images(self) -> list[Image] | None:
         return self.article.images
 
     @auto_field
-    def description(self) -> Optional[str]:
+    def description(self) -> str | None:
         return self.article.description
 
     @auto_field
-    def articleBody(self) -> Optional[str]:
+    def articleBody(self) -> str | None:
         return self.article.articleBody
 
     @auto_field
-    def articleBodyHtml(self) -> Optional[str]:
+    def articleBodyHtml(self) -> str | None:
         return self.article.articleBodyHtml
 
     @auto_field
-    def videos(self) -> Optional[list[Video]]:
+    def videos(self) -> list[Video] | None:
         return self.article.videos
 
     @auto_field
-    def audios(self) -> Optional[list[Audio]]:
+    def audios(self) -> list[Audio] | None:
         return self.article.audios
 
     @auto_field
-    def canonicalUrl(self) -> Optional[str]:
+    def canonicalUrl(self) -> str | None:
         return self.article.canonicalUrl
 
     @auto_field
-    def url(self) -> Optional[str]:
+    def url(self) -> str | None:
         return self.article.url
 
     @auto_field
-    def metadata(self) -> Optional[ArticleMetadata]:
+    def metadata(self) -> ArticleMetadata | None:
         return self.article.metadata

@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 from web_poet import Returns
 
@@ -33,21 +31,21 @@ class AutoArticleListPage(BaseArticleListPage):
     article_list: ArticleList
 
     @auto_field
-    def articles(self) -> Optional[list[ArticleFromList]]:
+    def articles(self) -> list[ArticleFromList] | None:
         return self.article_list.articles
 
     @auto_field
-    def breadcrumbs(self) -> Optional[list[Breadcrumb]]:
+    def breadcrumbs(self) -> list[Breadcrumb] | None:
         return self.article_list.breadcrumbs
 
     @auto_field
-    def canonicalUrl(self) -> Optional[str]:
+    def canonicalUrl(self) -> str | None:
         return self.article_list.canonicalUrl
 
     @auto_field
-    def metadata(self) -> Optional[ArticleListMetadata]:
+    def metadata(self) -> ArticleListMetadata | None:
         return self.article_list.metadata
 
     @auto_field
-    def url(self) -> Optional[str]:
+    def url(self) -> str | None:
         return self.article_list.url

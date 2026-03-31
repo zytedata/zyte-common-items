@@ -205,10 +205,6 @@ ignore = [
     # Add `from __future__ import annotations` to simplify
     # (The fix can break andi.)
     "FA100",
-
-    # TODO
-    # Use `X | None` for type annotations
-    "UP045",
 ]
 
 [tool.ruff.lint.flake8-type-checking]

@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 from web_poet import Returns
 
@@ -53,101 +51,101 @@ class AutoBusinessPlacePage(BaseBusinessPlacePage):
     business_place: BusinessPlace
 
     @auto_field
-    def actions(self) -> Optional[list[NamedLink]]:
+    def actions(self) -> list[NamedLink] | None:
         return self.business_place.actions
 
     @auto_field
-    def additionalProperties(self) -> Optional[list[AdditionalProperty]]:
+    def additionalProperties(self) -> list[AdditionalProperty] | None:
         return self.business_place.additionalProperties
 
     @auto_field
-    def address(self) -> Optional[Address]:
+    def address(self) -> Address | None:
         return self.business_place.address
 
     @auto_field
-    def aggregateRating(self) -> Optional[AggregateRating]:
+    def aggregateRating(self) -> AggregateRating | None:
         return self.business_place.aggregateRating
 
     @auto_field
-    def amenityFeatures(self) -> Optional[list[Amenity]]:
+    def amenityFeatures(self) -> list[Amenity] | None:
         return self.business_place.amenityFeatures
 
     @auto_field
-    def categories(self) -> Optional[list[str]]:
+    def categories(self) -> list[str] | None:
         return self.business_place.categories
 
     @auto_field
-    def containedInPlace(self) -> Optional[ParentPlace]:
+    def containedInPlace(self) -> ParentPlace | None:
         return self.business_place.containedInPlace
 
     @auto_field
-    def description(self) -> Optional[str]:
+    def description(self) -> str | None:
         return self.business_place.description
 
     @auto_field
-    def features(self) -> Optional[list[str]]:
+    def features(self) -> list[str] | None:
         return self.business_place.features
 
     @auto_field
-    def images(self) -> Optional[list[Image]]:
+    def images(self) -> list[Image] | None:
         return self.business_place.images
 
     @auto_field
-    def isVerified(self) -> Optional[bool]:
+    def isVerified(self) -> bool | None:
         return self.business_place.isVerified
 
     @auto_field
-    def map(self) -> Optional[str]:
+    def map(self) -> str | None:
         return self.business_place.map
 
     @auto_field
-    def metadata(self) -> Optional[BusinessPlaceMetadata]:
+    def metadata(self) -> BusinessPlaceMetadata | None:
         return self.business_place.metadata
 
     @auto_field
-    def name(self) -> Optional[str]:
+    def name(self) -> str | None:
         return self.business_place.name
 
     @auto_field
-    def openingHours(self) -> Optional[list[OpeningHoursItem]]:
+    def openingHours(self) -> list[OpeningHoursItem] | None:
         return self.business_place.openingHours
 
     @auto_field
-    def placeId(self) -> Optional[str]:
+    def placeId(self) -> str | None:
         return self.business_place.placeId
 
     @auto_field
-    def priceRange(self) -> Optional[str]:
+    def priceRange(self) -> str | None:
         return self.business_place.priceRange
 
     @auto_field
-    def reservationAction(self) -> Optional[NamedLink]:
+    def reservationAction(self) -> NamedLink | None:
         return self.business_place.reservationAction
 
     @auto_field
-    def reviewSites(self) -> Optional[list[NamedLink]]:
+    def reviewSites(self) -> list[NamedLink] | None:
         return self.business_place.reviewSites
 
     @auto_field
-    def starRating(self) -> Optional[StarRating]:
+    def starRating(self) -> StarRating | None:
         return self.business_place.starRating
 
     @auto_field
-    def tags(self) -> Optional[list[str]]:
+    def tags(self) -> list[str] | None:
         return self.business_place.tags
 
     @auto_field
-    def telephone(self) -> Optional[str]:
+    def telephone(self) -> str | None:
         return self.business_place.telephone
 
     @auto_field
-    def timezone(self) -> Optional[str]:
+    def timezone(self) -> str | None:
         return self.business_place.timezone
 
     @auto_field
-    def url(self) -> Optional[str]:
+    def url(self) -> str | None:
         return self.business_place.url
 
     @auto_field
-    def website(self) -> Optional[str]:
+    def website(self) -> str | None:
         return self.business_place.website

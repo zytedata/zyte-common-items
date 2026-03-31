@@ -1,13 +1,13 @@
 """The ``Item`` class should be used as the parent class for data containers."""
 
 from collections import ChainMap
-from typing import Optional, Union, get_args, get_origin, get_type_hints
+from typing import TypeAlias, Union, get_args, get_origin, get_type_hints
 
 import attrs
 
 from .util import split_in_unknown_and_known_fields
 
-_Trail = Optional[str]
+_Trail: TypeAlias = str | None
 _UNDEFINED = object()
 
 
@@ -54,7 +54,7 @@ class ProbabilityMixin:
     probability of an item or item component that is nested under its metadata
     attribute."""
 
-    def get_probability(self) -> Optional[float]:
+    def get_probability(self) -> float | None:
         """Returns the item probability if available, otherwise ``None``."""
         if metadata := getattr(self, "metadata", None):
             return getattr(metadata, "probability", None)
@@ -69,12 +69,12 @@ class Item(ProbabilityMixin, _ItemBase):
         self._unknown_fields_dict = {}  # type: ignore[misc]
 
     @classmethod
-    def from_dict(cls, item: Optional[dict]):
+    def from_dict(cls, item: dict | None):
         """Read an item from a dictionary."""
         return cls._from_dict(item)
 
     @classmethod
-    def _from_dict(cls, item: Optional[dict], *, trail: _Trail = None):
+    def _from_dict(cls, item: dict | None, *, trail: _Trail = None):
         """Read an item from a dictionary."""
         if item is None:
             return None
@@ -91,12 +91,12 @@ class Item(ProbabilityMixin, _ItemBase):
         return obj
 
     @classmethod
-    def from_list(cls, items: Optional[list[dict]], *, trail: _Trail = None) -> list:
+    def from_list(cls, items: list[dict] | None, *, trail: _Trail = None) -> list:
         """Read items from a list."""
         return cls._from_list(items)
 
     @classmethod
-    def _from_list(cls, items: Optional[list[dict]], *, trail: _Trail = None) -> list:
+    def _from_list(cls, items: list[dict] | None, *, trail: _Trail = None) -> list:
         """Read items from a list."""
         result = []
         for index, item in enumerate(items or []):

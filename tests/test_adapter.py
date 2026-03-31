@@ -1,7 +1,6 @@
 from collections.abc import Collection
 from contextlib import contextmanager
 from copy import copy
-from typing import Optional
 
 import attrs
 import pytest
@@ -172,7 +171,7 @@ def test_field_names():
     @attrs.define
     class _Item(Item):
         a: int
-        b: Optional[int] = None
+        b: int | None = None
 
     item = _Item.from_dict({"a": 1, "c": 2, "d": None})
     with configured_adapter():
