@@ -14,9 +14,8 @@ default for the :ref:`corresponding fields <field-processor-map>`.
 
 By design, the processors enabled by default are "transparent": they
 don't change the output of the field if the result is of the expected
-final type. For example, if there is a :class:`str` attribute in the item,
-and the field returns :class:`str` value, the default processor returns
-the value as-is.
+final type, beyond removing leading and trailing whitespace from string
+values.
 
 Usually, to engage a :ref:`built-in field processor <processor-api>`, a
 field must return a :class:`~parsel.selector.Selector`,
@@ -32,6 +31,10 @@ The following table indicates which fields use which processors by default in
 :ref:`built-in page object classes <page-objects>` and
 :ref:`extractor classes <extractor-api>`:
 
+.. versionchanged:: VERSION
+   :func:`~.string_processor` and :func:`~.string_list_processor` became
+   default processors.
+
 ==================================== ====================================
 Field                                Default processor
 ==================================== ====================================
@@ -45,6 +48,8 @@ Field                                Default processor
 ``metadata``                         :func:`~.metadata_processor`
 ``price``                            :func:`~.price_processor`
 ``regularPrice``                     :func:`~.simple_price_processor`
+Any other :class:`str` attribute     :func:`~.string_processor`
+Any other ``List[str]`` attribute    :func:`~.string_list_processor`
 ==================================== ====================================
 
 .. _field-processor-examples:

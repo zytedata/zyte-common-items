@@ -28,3 +28,7 @@ Built-in field processors
 .. autofunction:: zyte_common_items.processors.rating_processor
 
 .. autofunction:: zyte_common_items.processors.simple_price_processor
+
+.. autofunction:: zyte_common_items.processors.string_list_processor
+
+.. autofunction:: zyte_common_items.processors.string_processor

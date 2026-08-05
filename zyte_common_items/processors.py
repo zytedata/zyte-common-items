@@ -1,13 +1,24 @@
 from collections.abc import Iterable, Mapping
 from functools import wraps
 from numbers import Real
-from typing import Any, Callable, List, Optional, Union
+from typing import (
+    Any,
+    Callable,
+    List,
+    Optional,
+    Union,
+    get_args,
+    get_origin,
+    get_type_hints,
+)
 
+import attrs
 from clear_html import clean_node, cleaned_node_to_html, cleaned_node_to_text
 from lxml.html import HtmlElement
 from parsel import Selector, SelectorList
 from price_parser import Price
 from web_poet.mixins import ResponseShortcutsMixin
+from web_poet.pages import get_item_cls
 from zyte_parsers import Breadcrumb as zp_Breadcrumb
 from zyte_parsers import Gtin as zp_Gtin
 from zyte_parsers import (
@@ -409,19 +420,70 @@ def metadata_processor(metadata: Optional[BaseMetadata], page):
     return metadata.cast(page.metadata_cls)
 
 
-def string_processor(value: str) -> Union[str, None]:
-    """Processor for string values"""
+def string_processor(value: Any) -> Any:
+    """Remove leading and trailing whitespace from *value*.
+
+    .. versionadded:: VERSION
+
+    Values that are not a :class:`str` are returned unchanged.
+    """
     if isinstance(value, str):
         return value.strip()
     return value
 
 
-def list_processor(processor: Callable) -> Any:
-    """Apply processor to a list of items"""
+def string_list_processor(value: Any) -> Any:
+    """Apply :func:`string_processor` to every item of *value*.
 
-    def loop(values):
-        if not isinstance(values, Iterable):
-            return values
-        return [processor(value) for value in values]
+    .. versionadded:: VERSION
 
-    return loop
+    Values that are not a list or a tuple of :class:`str` objects are returned
+    unchanged.
+    """
+    if not isinstance(value, (list, tuple)) or not all(
+        isinstance(item, str) for item in value
+    ):
+        return value
+    return [string_processor(item) for item in value]
+
+
+def _string_processors(annotation: Any) -> Optional[List[Callable]]:
+    """Return the default processors for an item attribute with the given type
+    annotation, or ``None`` if it is not a string attribute."""
+    if get_origin(annotation) is Union:
+        args = [arg for arg in get_args(annotation) if arg is not type(None)]
+        if len(args) != 1:
+            return None
+        annotation = args[0]
+    if annotation is str:
+        return [string_processor]
+    if get_origin(annotation) is list and get_args(annotation) == (str,):
+        return [string_list_processor]
+    return None
+
+
+class _StringProcessors:
+    """Sets :func:`string_processor` and :func:`string_list_processor` as the
+    default processors of the string attributes of the returned item class.
+
+    Attributes that already have processors, whether defined in the class
+    itself or inherited, are left alone.
+    """
+
+    Processors: type = type("Processors", (), {})
+
+    def __init_subclass__(cls, **kwargs: Any) -> None:
+        super().__init_subclass__(**kwargs)
+        item_cls = get_item_cls(cls, default=None)
+        if item_cls is None or not attrs.has(item_cls):
+            return
+        annotations = get_type_hints(item_cls)
+        for item_field in attrs.fields(item_cls):  # type: ignore[misc]
+            processors = _string_processors(annotations.get(item_field.name))
+            if processors is None or hasattr(cls.Processors, item_field.name):
+                continue
+            if "Processors" not in cls.__dict__:
+                # The Processors class of a parent class is shared with sibling
+                # classes, so it must not be modified.
+                cls.Processors = type("Processors", (cls.Processors,), {})
+            setattr(cls.Processors, item_field.name, processors)

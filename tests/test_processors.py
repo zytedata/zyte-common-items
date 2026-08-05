@@ -12,6 +12,7 @@ from zyte_parsers import extract_breadcrumbs
 from zyte_common_items import (
     AggregateRating,
     BasePage,
+    BaseProductPage,
     Brand,
     Breadcrumb,
     Gtin,
@@ -29,6 +30,8 @@ from zyte_common_items.processors import (
     metadata_processor,
     price_processor,
     rating_processor,
+    string_list_processor,
+    string_processor,
 )
 
 base_url = "http://www.example.com/blog/"
@@ -437,3 +440,66 @@ def test_metadata(input_value, BasePage: Type, expected_value):
 
     page = CustomPage(base_url)  # type: ignore[arg-type]
     assert page.metadata == expected_value
+
+
+@pytest.mark.parametrize(
+    "input_value,expected_value",
+    [
+        (None, None),
+        ("", ""),
+        ("foo bar", "foo bar"),
+        (" foo bar ", "foo bar"),
+        ("\n\tfoo\t\n", "foo"),
+        (1, 1),
+    ],
+)
+def test_string_processor(input_value, expected_value):
+    assert string_processor(input_value) == expected_value
+
+
+@pytest.mark.parametrize(
+    "input_value,expected_value",
+    [
+        (None, None),
+        ([], []),
+        ([" foo bar ", "baz"], ["foo bar", "baz"]),
+        ((" foo ",), ["foo"]),
+        (" foo ", " foo "),
+        ([1, " foo "], [1, " foo "]),
+    ],
+)
+def test_string_list_processor(input_value, expected_value):
+    assert string_list_processor(input_value) == expected_value
+
+
+def test_string_list_processor_selectorlist():
+    value = SelectorList([Selector(text="<p> foo </p>")])
+    assert string_list_processor(value) is value
+
+
+def test_string_processor_defaults():
+    class CustomPage(BaseProductPage):
+        @field
+        def name(self):
+            return " Some name "
+
+        @field
+        def features(self):
+            return [" foo ", "bar "]
+
+    page = CustomPage(base_url)  # type: ignore[arg-type]
+    assert page.name == "Some name"
+    assert page.features == ["foo", "bar"]
+
+
+def test_string_processor_defaults_override():
+    class CustomPage(BaseProductPage):
+        class Processors(BaseProductPage.Processors):
+            name = []
+
+        @field
+        def name(self):
+            return " Some name "
+
+    page = CustomPage(base_url)  # type: ignore[arg-type]
+    assert page.name == " Some name "
