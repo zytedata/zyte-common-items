@@ -1,12 +1,23 @@
+import pytest  # isort: skip
+
+scrapy = pytest.importorskip("scrapy")  # noqa
+
+import sys
+import warnings
 from copy import deepcopy
 from unittest.mock import MagicMock, patch
 
-import pytest
-
-from zyte_common_items import Article, ArticleListPage, Product, ProductNavigation
+from zyte_common_items import (
+    Article,
+    ArticleListPage,
+    CustomAttributes,
+    CustomAttributesMetadata,
+    CustomAttributesValues,
+    Product,
+    ProductNavigation,
+)
+from zyte_common_items.base import ProbabilityMixin
 from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
-
-scrapy = pytest.importorskip("scrapy")  # noqa
 
 
 @pytest.mark.parametrize(
@@ -109,7 +120,7 @@ def test_get_threshold_for_item(
 
 
 @pytest.mark.parametrize(
-    "items, item_proba, threshold, expected_stats_calls, expected_return",
+    "items, item_proba, threshold, expected_stats_calls",
     [
         (
             [
@@ -119,14 +130,9 @@ def test_get_threshold_for_item(
             None,
             0.1,
             [
-                ("drop_low_probability_item/processed", 2),
-                ("drop_low_probability_item/processed/Product", 1),
-                ("drop_low_probability_item/processed/Article", 1),
-                ("drop_low_probability_item/kept", 2),
-                ("drop_low_probability_item/kept/Product", 1),
-                ("drop_low_probability_item/kept/Article", 1),
+                ("drop_low_probability_item/processed", 0),
+                ("drop_low_probability_item/kept", 0),
             ],
-            True,
         ),
         (
             [
@@ -143,7 +149,6 @@ def test_get_threshold_for_item(
                 ("drop_low_probability_item/kept/Product", 1),
                 ("drop_low_probability_item/kept/Article", 1),
             ],
-            True,
         ),
         (
             [
@@ -160,13 +165,81 @@ def test_get_threshold_for_item(
                 ("drop_low_probability_item/dropped/Product", 1),
                 ("drop_low_probability_item/dropped/Article", 1),
             ],
-            None,
+        ),
+        (
+            [
+                {
+                    "product": MagicMock(spec=Product(url="http://example.com")),
+                    "customAttributes": MagicMock(
+                        spec=CustomAttributes(
+                            values=CustomAttributesValues({"foo": "bar"}),
+                            metadata=CustomAttributesMetadata(),
+                        )
+                    ),
+                },
+            ],
+            0.01,
+            0.1,
+            [
+                ("drop_low_probability_item/processed", 1),
+                ("drop_low_probability_item/processed/Product", 1),
+                ("drop_low_probability_item/dropped", 1),
+                ("drop_low_probability_item/dropped/Product", 1),
+            ],
+        ),
+        (
+            [
+                {
+                    "product": MagicMock(spec=Product(url="http://example.com")),
+                    "article": MagicMock(spec=Article(url="http://example.com")),
+                },
+            ],
+            0.01,
+            0.1,
+            [
+                ("drop_low_probability_item/processed", 2),
+                ("drop_low_probability_item/processed/Product", 1),
+                ("drop_low_probability_item/processed/Article", 1),
+                ("drop_low_probability_item/dropped", 1),
+                ("drop_low_probability_item/dropped/Product", 1),
+            ],
+        ),
+        (
+            [
+                scrapy.Item(),
+            ],
+            0.01,
+            0.1,
+            [
+                ("drop_low_probability_item/processed", 0),
+                ("drop_low_probability_item/kept", 0),
+            ],
+        ),
+        (
+            [
+                {"foo": 42},
+            ],
+            0.01,
+            0.1,
+            [
+                ("drop_low_probability_item/processed", 0),
+                ("drop_low_probability_item/kept", 0),
+            ],
+        ),
+        (
+            [
+                {},
+            ],
+            0.01,
+            0.1,
+            [
+                ("drop_low_probability_item/processed", 0),
+                ("drop_low_probability_item/kept", 0),
+            ],
         ),
     ],
 )
-def test_process_item(
-    items, item_proba, threshold, expected_stats_calls, expected_return
-):
+def test_process_item(items, item_proba, threshold, expected_stats_calls):
     mock_crawler = MagicMock(spec=["spider", "stats"])
 
     pipeline = DropLowProbabilityItemPipeline(mock_crawler)
@@ -176,16 +249,31 @@ def test_process_item(
         mock_get_threshold_for_item.return_value = threshold
 
         for item in items:
-            item.get_probability.return_value = item_proba
+            if isinstance(item, dict):
+                # only set the specified probability on the product for simplicity
+                for item_type, sub_item in item.items():
+                    if item_type == "product":
+                        sub_item.get_probability.return_value = item_proba
+                    elif item_type == "customAttributes":
+                        sub_item.get_probability.return_value = None
+                    elif isinstance(sub_item, ProbabilityMixin):
+                        sub_item.get_probability.return_value = 1.0  # type: ignore[attr-defined]
+            elif isinstance(item, ProbabilityMixin):
+                item.get_probability.return_value = item_proba  # type: ignore[attr-defined]
             try:
                 returned_item = pipeline.process_item(item, mock_crawler.spider)
             except scrapy.exceptions.DropItem as e:
                 assert (
                     f"This item is dropped since the probability ({item_proba}) "
-                    f"is below the threshold ({threshold}):\n{item!r}"
+                    f"is below the threshold ({threshold}):"
                 ) in str(e)
             else:
-                assert returned_item == item
+                if isinstance(item, dict):
+                    expected_item = item.copy()
+                    expected_item.pop("product", None)
+                else:
+                    expected_item = item
+                assert returned_item == expected_item
 
         for call, count in expected_stats_calls:
             calls = [
@@ -221,3 +309,36 @@ def test_get_item_name(item, expected_name):
     assert (
         DropLowProbabilityItemPipeline.get_item_name(MagicMock(), item) == expected_name
     )
+
+
+def test_warning():
+    warning_msg = r"The zyte_common_items.ae module is a temporary module"
+    warnings.filterwarnings("default")
+    sys.modules.pop("zyte_common_items.ae", None)
+    sys.modules.pop("zyte_common_items.pipelines", None)
+    sys.modules.pop("zyte_common_items", None)
+
+    with warnings.catch_warnings(record=True) as record:
+        from zyte_common_items.pipelines import AEPipeline
+
+        ae_pipeline = AEPipeline()
+    warn_msg = str(record[0].message)
+    assert len(record) == 1
+    assert warning_msg in warn_msg
+    from zyte_common_items.ae import downgrade
+
+    assert ae_pipeline._downgrade == downgrade
+
+
+def test_no_warning():
+    warnings.filterwarnings("default")
+    sys.modules.pop("zyte_common_items.ae", None)
+    sys.modules.pop("zyte_common_items.pipelines", None)
+    sys.modules.pop("zyte_common_items", None)
+
+    with warnings.catch_warnings(record=True) as record:
+        from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
+
+        mock_crawler = MagicMock(spec=["spider", "stats"])
+        DropLowProbabilityItemPipeline(mock_crawler)
+    assert len(record) == 0

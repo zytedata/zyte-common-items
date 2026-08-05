@@ -52,7 +52,6 @@ Article
 .. autoclass:: zyte_common_items.ArticleMetadata(**kwargs)
    :members: dateDownloaded, probability, validationMessages
 
-
 Article list
 ============
 
@@ -87,7 +86,6 @@ Business place
 .. autoclass:: zyte_common_items.BusinessPlaceMetadata(**kwargs)
    :members: dateDownloaded, probability, searchText, validationMessages
 
-
 Real estate
 ===========
 
@@ -108,6 +106,32 @@ Job posting
 .. autoclass:: zyte_common_items.JobPostingMetadata(**kwargs)
    :members: dateDownloaded, probability, validationMessages
 
+Job posting navigation
+======================
+
+.. autoclass:: zyte_common_items.JobPostingNavigation(**kwargs)
+   :members:
+   :inherited-members:
+
+.. autoclass:: zyte_common_items.JobPostingNavigationMetadata(**kwargs)
+   :members: dateDownloaded, validationMessages
+
+Search engine result
+====================
+
+.. autoclass:: zyte_common_items.SerpOrganicResult(**kwargs)
+   :members:
+   :inherited-members:
+
+Search engine results
+=====================
+
+.. autoclass:: zyte_common_items.Serp(**kwargs)
+   :members:
+   :inherited-members:
+
+.. autoclass:: zyte_common_items.SerpMetadata(**kwargs)
+   :members: dateDownloaded, displayedQuery, searchedQuery, totalOrganicResults, validationMessages
 
 Social media post
 =================
@@ -118,6 +142,16 @@ Social media post
 
 .. autoclass:: zyte_common_items.SocialMediaPostMetadata(**kwargs)
    :members: dateDownloaded, probability, searchText, validationMessages
+
+Forum thread
+============
+
+.. autoclass:: zyte_common_items.ForumThread(**kwargs)
+   :members:
+   :inherited-members:
+
+.. autoclass:: zyte_common_items.ForumThreadMetadata(**kwargs)
+   :members: dateDownloaded, validationMessages
 
 .. _request-template-api:
 
@@ -130,6 +164,20 @@ Search Request templates
 
 .. autoclass:: zyte_common_items.SearchRequestTemplateMetadata(**kwargs)
    :members: dateDownloaded, probability, validationMessages
+
+Custom attributes
+=================
+
+.. autoclass:: zyte_common_items.CustomAttributes(**kwargs)
+   :members:
+   :inherited-members:
+
+.. autoclass:: zyte_common_items.CustomAttributesValues(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.CustomAttributesMetadata(**kwargs)
+   :members:
+   :inherited-members:
 
 Custom items
 ============

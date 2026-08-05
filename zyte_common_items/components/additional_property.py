@@ -11,8 +11,8 @@ class AdditionalProperty(Item):
     <zyte_common_items.Product.additionalProperties>`.
     """
 
-    #: Name.
     name: str
+    """Name."""
 
-    #: Value.
     value: str
+    """Value."""

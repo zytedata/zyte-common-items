@@ -12,35 +12,35 @@ from zyte_common_items.util import convert_to_class, url_to_str
 class Header(Item):
     """An HTTP header"""
 
-    #: Name of the header
     name: str
+    """Name of the header."""
 
-    #: Value of the header
     value: str
+    """Value of the header."""
 
 
-#: :class:`~typing.TypeVar` for :class:`Request`.
 RequestT = TypeVar("RequestT", bound="Request")
+""":class:`~typing.TypeVar` for :class:`Request`."""
 
 
 @attrs.define(slots=False)
 class Request(Item):
     """Describe a web request to load a page"""
 
-    #: HTTP URL
     url: str = attrs.field(converter=url_to_str)
+    """HTTP URL."""
 
-    #: HTTP method
     method: str = "GET"
+    """HTTP method."""
 
-    #: HTTP request body, Base64-encoded
     body: Optional[str] = None
+    """HTTP request body, Base64-encoded."""
 
-    #: HTTP headers
     headers: Optional[List[Header]] = None
+    """HTTP headers."""
 
-    #: Name of the page being requested.
     name: Optional[str] = None
+    """Name of the page being requested."""
 
     _body_bytes = None
 
@@ -85,5 +85,5 @@ class Request(Item):
 class ProbabilityRequest(Request, ProbabilityMixin):
     """A :class:`Request` that includes a probability value."""
 
-    #: Data extraction process metadata.
     metadata: Optional[ProbabilityMetadata] = None
+    """Data extraction process metadata."""

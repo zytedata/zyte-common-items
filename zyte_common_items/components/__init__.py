@@ -6,6 +6,7 @@ from .author import Author
 from .brand import Brand
 from .breadcrumbs import Breadcrumb
 from .business_place import Amenity, OpeningHoursItem, ParentPlace
+from .forum_thread import Topic
 from .gtin import Gtin
 from .job_posting import BaseSalary, HiringOrganization, JobLocation
 from .links import Link, NamedLink, Url
@@ -17,8 +18,47 @@ from .metadata import (
     Metadata,
     MetadataT,
     ProbabilityMetadata,
+    SearchMetadata,
 )
 from .ratings import AggregateRating, StarRating
 from .real_estate import RealEstateArea
 from .request import Header, ProbabilityRequest, Request
 from .social_media_post import Reactions, SocialMediaPostAuthor
+
+__all__ = [
+    "AdditionalProperty",
+    "Address",
+    "AggregateRating",
+    "Amenity",
+    "Audio",
+    "Author",
+    "BaseMetadata",
+    "BaseSalary",
+    "Brand",
+    "Breadcrumb",
+    "DetailsMetadata",
+    "Gtin",
+    "Header",
+    "HiringOrganization",
+    "Image",
+    "JobLocation",
+    "Link",
+    "ListMetadata",
+    "Metadata",
+    "MetadataT",
+    "NamedLink",
+    "OpeningHoursItem",
+    "ParentPlace",
+    "ProbabilityMetadata",
+    "ProbabilityRequest",
+    "Reactions",
+    "RealEstateArea",
+    "Request",
+    "SearchMetadata",
+    "SocialMediaPostAuthor",
+    "StarRating",
+    "Topic",
+    "Url",
+    "Video",
+    "request_list_processor",
+]

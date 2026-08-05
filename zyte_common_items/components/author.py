@@ -13,17 +13,16 @@ class Author(Item):
     See :attr:`Article.authors <zyte_common_items.Article.authors>`.
     """
 
-    #: Email.
     email: Optional[str] = None
+    """Email."""
 
-    #: URL of the details page of the author.
     url: Optional[str] = attrs.field(
         default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
+    """URL of the details page of the author."""
 
-    #: Full name.
     name: Optional[str] = None
+    """Full name."""
 
-    #: Text from which :attr:`~zyte_common_items.Author.name` was
-    #: extracted.
     nameRaw: Optional[str] = None
+    """Text from which :attr:`~zyte_common_items.Author.name` was extracted."""

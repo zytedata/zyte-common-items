@@ -1,4 +1,6 @@
-import pytest
+import pytest  # isort: skip
+
+scrapy = pytest.importorskip("scrapy")  # noqa
 
 from zyte_common_items import Article, ArticleList, JobPosting, Product, ProductList
 from zyte_common_items.ae import (
@@ -223,7 +225,6 @@ from .test_items import (
     ),
 )
 def test_main(item, expected):
-    with pytest.deprecated_call():
-        pipeline = AEPipeline()
+    pipeline = AEPipeline()
     actual = pipeline.process_item(item, spider=None)
     assert expected == actual

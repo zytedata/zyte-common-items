@@ -11,42 +11,43 @@ from zyte_common_items.base import Item
 class Amenity(Item):
     """An amenity that a business place has"""
 
-    #: Name of amenity.
     name: str
+    """Name of amenity."""
 
-    #: Availability of the amenity.
     value: bool
+    """Availability of the amenity."""
 
 
 @attrs.define(kw_only=True)
 class ParentPlace(Item):
-    """If the place is located inside another place, these are the details of the parent place."""
+    """If the place is located inside another place, these are the details of
+    the parent place."""
 
-    #: Name of the parent place.
     name: str
+    """Name of the parent place."""
 
-    #: Identifier of the parent place.
     placeId: str
+    """Identifier of the parent place."""
 
 
 @attrs.define(kw_only=True)
 class OpeningHoursItem(Item):
     """Specification of opening hours of a business place."""
 
-    #: English weekday name.
     dayOfWeek: Optional[str] = None
+    """English weekday name."""
 
-    #: Opening time in ISO 8601 format, local time.
     opens: Optional[str] = None
+    """Opening time in ISO 8601 format, local time."""
 
-    #: Closing time in ISO 8601 format, local time.
     closes: Optional[str] = None
+    """Closing time in ISO 8601 format, local time."""
 
-    #: Day of the week, as it appears on the page, without processing.
     rawDayOfWeek: Optional[str] = None
+    """Day of the week, as it appears on the page, without processing."""
 
-    #: Opening time, as it appears on the page, without processing.
     rawOpens: Optional[str] = None
+    """Opening time, as it appears on the page, without processing."""
 
-    #: Closing time, as it appears on the page, without processing.
     rawCloses: Optional[str] = None
+    """Closing time, as it appears on the page, without processing."""

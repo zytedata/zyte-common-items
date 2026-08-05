@@ -16,10 +16,15 @@ per-file-ignores =
     # to expose submodule functions so they can be imported directly from that module
     zyte_common_items/__init__.py:F401,
 
-    # Ignore: * imports in these files 
+    # Ignore: * imports in these files
     zyte_common_items/__init__.py:F403,
     zyte_common_items/zyte_data_api.py:F403,
 
     # Ignore: may be undefined, or defined from star imports
     zyte_common_items/zyte_data_api.py:F405,
     tests/test_page_inputs.py:F405,
+
+    # ”module level import not at the top of file“ caused by
+    # pytest.importorskip
+    tests/test_ae_pipeline.py:E402,
+    tests/test_pipelines.py:E402,

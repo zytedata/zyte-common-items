@@ -61,9 +61,6 @@ tied to any specific item type.
 .. autoclass:: zyte_common_items.ParentPlace(**kwargs)
    :members:
 
-.. autoclass:: zyte_common_items.ProbabilityMetadata(**kwargs)
-   :members:
-
 .. autoclass:: zyte_common_items.ProbabilityRequest(**kwargs)
    :members:
 
@@ -82,8 +79,12 @@ tied to any specific item type.
 .. autoclass:: zyte_common_items.StarRating(**kwargs)
    :members:
 
+.. autoclass:: zyte_common_items.Topic(**kwargs)
+   :members:
+
 .. autoclass:: zyte_common_items.Url(**kwargs)
    :members: url
+
 .. autoclass:: zyte_common_items.Video(**kwargs)
    :members: url
 
@@ -94,21 +95,25 @@ Item metadata components
 
 .. autoclass:: zyte_common_items.Metadata(**kwargs)
    :show-inheritance:
-   :members: dateDownloaded, probability, searchText, validationMessages
+   :members: dateDownloaded, displayedQuery, probability, searchedQuery, searchText, totalOrganicResults, validationMessages, get_date_downloaded_parsed
 
-.. autoclass:: zyte_common_items.components.metadata.ProbabilityMetadata(**kwargs)
+.. autoclass:: zyte_common_items.ProbabilityMetadata(**kwargs)
    :show-inheritance:
    :members: probability
 
-.. autoclass:: zyte_common_items.components.metadata.ListMetadata(**kwargs)
+.. autoclass:: zyte_common_items.ListMetadata(**kwargs)
    :show-inheritance:
    :members: dateDownloaded, validationMessages, get_date_downloaded_parsed
 
-.. autoclass:: zyte_common_items.components.metadata.DetailsMetadata(**kwargs)
+.. autoclass:: zyte_common_items.DetailsMetadata(**kwargs)
    :show-inheritance:
    :members: probability, dateDownloaded, validationMessages, get_date_downloaded_parsed
 
-.. autoclass:: zyte_common_items.components.metadata.BaseMetadata(**kwargs)
+.. autoclass:: zyte_common_items.SearchMetadata(**kwargs)
+   :show-inheritance:
+   :members: dateDownloaded, probability, searchText, validationMessages, get_date_downloaded_parsed
+
+.. autoclass:: zyte_common_items.BaseMetadata(**kwargs)
    :show-inheritance:
    :members: cast
 

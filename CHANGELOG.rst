@@ -2,6 +2,159 @@
 Changelog
 =========
 
+0.29.0 (2025-10-16)
+===================
+
+* Allowed passing ``None`` as the ``url`` field value to the :ref:`item classes
+  <item-api>`.
+
+* Explicitly re-export public names.
+
+0.28.0 (2025-09-02)
+===================
+
+* Added official Python 3.14 support.
+
+* Switched attribute documentation from Sphinx comments (``#:``) to docstrings.
+
+  This allows IDEs to show them when hovering attributes, and allows
+  `ItemAdapter.get_json_schema()`_ to include them as descriptions.
+
+  .. _ItemAdapter.get_json_schema(): https://github.com/scrapy/itemadapter?tab=readme-ov-file#class-method-get_json_schemaitem_class-type---dictstr-any
+
+* Added an ``"llmHint"`` JSON Schema metadata field to some item types and
+  fields.
+
+  LLMs should have an easier time writing extraction code when given the
+  corresponding JSON schema (generated with `ItemAdapter.get_json_schema()`_).
+
+* We now guarantee that all types importable from ``zyte_common_items`` have
+  type hints retrievable at run time with :func:`~typing.get_type_hints`, i.e.
+  not hidden with :data:`~typing.TYPE_CHECKING`.
+
+  This ensures they can be used with :doc:`scrapy-poet <scrapy-poet:index>`.
+
+0.27.1 (2025-06-26)
+===================
+
+* Added :attr:`~zyte_common_items.SerpOrganicResult.displayedUrlText` to
+  :class:`~zyte_common_items.SerpOrganicResult`.
+
+* Importing
+  :class:`~zyte_common_items.pipelines.DropLowProbabilityItemPipeline` no
+  longer triggers a warning about the deprecation of the
+  ``zyte_common_items.ae`` module.
+
+0.27.0 (2025-01-16)
+===================
+
+* The :class:`~zyte_common_items.pipelines.DropLowProbabilityItemPipeline` now
+  supports nested items, i.e. :class:`dict` objects with items as values.
+
+* Added an add-on to make :ref:`Scrapy configuration <scrapy-config>` easier.
+
+* :class:`~zyte_common_items.Metadata` now also has all fields from
+  :class:`~zyte_common_items.SerpMetadata`.
+
+* Messages about dropped items, e.g. due to low probability, are now logged as
+  information and not as warnings.
+
+.. _0.26.2:
+
+0.26.2 (2024-11-12)
+===================
+
+* | Fixed the package build missing all nested packages:
+  | ``zyte_common_items.components``
+  | ``zyte_common_items.items``
+  | ``zyte_common_items.pages``
+
+0.26.1 (2024-11-12)
+===================
+
+.. note:: This version was yanked, see :ref:`0.26.2`.
+
+* Migrated from ``setup.py`` to ``pyproject.toml``.
+
+* Fixed :meth:`Serp.from_dict <.Serp.from_dict>` returning an instance where
+  :attr:`~.Serp.organicResults` list items were :class:`dict` instead of
+  instances of :class:`~.SerpOrganicResult`.
+
+0.26.0 (2024-11-11)
+===================
+
+* Added :class:`~.ForumThread` and related classes.
+
+0.25.0 (2024-11-11)
+===================
+
+* Removed Python 3.8 support, added Python 3.13 support.
+
+* **Backward-incompatible change:**
+  :class:`~zyte_common_items.SearchRequestTemplatePage` now subclasses
+  :class:`~zyte_common_items.Page`, adding a dependency on
+  :class:`~web_poet.page_inputs.http.HttpResponse`. A new
+  :class:`~zyte_common_items.BaseSearchRequestTemplatePage` that subclasses
+  :class:`~zyte_common_items.BasePage` has been added as well.
+
+  .. tip:: Where a dependency on
+    :class:`~web_poet.page_inputs.http.HttpResponse` is not needed,
+    :class:`~zyte_common_items.BaseSearchRequestTemplatePage` is a better
+    replacement for the :class:`~zyte_common_items.SearchRequestTemplatePage`
+    class from zyte-common-items 0.24.0 and lower, as it only depends on
+    ``web_poet.page_inputs.http.RequestUrl``.
+
+* The ``keyword`` parameter of :meth:`SearchRequestTemplate.request()
+  <zyte_common_items.SearchRequestTemplate.request>` has been deprecated in
+  favor of ``query``. As a result, Jinja templates in
+  :class:`~zyte_common_items.SearchRequestTemplate` field values should now use
+  the ``query`` variable (e.g. ``{{ query|quote_plus }}``) instead of the
+  ``keyword`` variable.
+
+* Unexpected variables in Jinja templates of
+  :class:`~zyte_common_items.SearchRequestTemplate` field values (e.g.
+  ``{{ foo }}``), which used to be silently removed, will now trigger an
+  :exc:`~jinja2.exceptions.UndefinedError` exception when calling
+  :meth:`SearchRequestTemplate.request()
+  <zyte_common_items.SearchRequestTemplate.request>`.
+
+* Fixed coverage data generation during tests.
+
+0.24.0 (2024-10-02)
+===================
+
+* Added :class:`~.JobPostingNavigation` and related classes.
+
+0.23.0 (2024-09-19)
+===================
+
+* Added :class:`~.CustomAttributes` and related classes.
+
+0.22.0 (2024-09-09)
+===================
+
+* Added :class:`~.Serp` and related classes.
+
+0.21.0 (2024-08-27)
+===================
+
+* The new :func:`~zyte_common_items.processors.images_processor`, used by
+  default in ``images`` fields, can convert a string, a list of strings or a
+  list of dicts into an :class:`~zyte_common_items.Image` list. Strings become
+  :attr:`Image.url <zyte_common_items.Image.url>`. Dicts get their ``url`` key
+  mapped as :attr:`Image.url <zyte_common_items.Image.url>`.
+
+* :func:`~zyte_common_items.processors.brand_processor` now converts strings
+  into :class:`~zyte_common_items.Brand` objects with the input string as
+  :attr:`Brand.name <zyte_common_items.Brand.name>`.
+
+* :func:`~zyte_common_items.processors.price_processor` and
+  :func:`~zyte_common_items.processors.simple_price_processor` now convert
+  numeric values into strings with 2 decimal positions.
+
+* :func:`~zyte_common_items.processors.metadata_processor` no longer assumes
+  that the input metadata is not ``None``.
+
 0.20.0 (2024-06-19)
 ===================
 
@@ -190,7 +343,7 @@ Changelog
   it for the ``brand`` fields.
 
 * Added :meth:`zyte_common_items.Request.to_scrapy` to convert
-  :class:`zyte_common_items.Request` instances to :class:`scrapy.http.Request`
+  :class:`zyte_common_items.Request` instances to :class:`scrapy.Request`
   instances.
 
 0.7.0 (2023-07-11)
@@ -206,12 +359,12 @@ Changelog
 
   * Added :ref:`item-specific metadata classes <components-metadata>`. The
     ``metadata`` item fields were changed to use them.
-  * **Backwards incompatible change**: the ``DateDownloadedMetadata`` class was
+  * **Backward-incompatible change**: the ``DateDownloadedMetadata`` class was
     removed. The item-specific ones are now used instead.
-  * **Backwards incompatible change**:
+  * **Backward-incompatible change**:
     :class:`~zyte_common_items.ArticleFromList` no longer has a ``probability``
     field and instead has a ``metadata`` field like all other similar classes.
-  * **Backwards incompatible change**: while in most items the old and the new
+  * **Backward-incompatible change**: while in most items the old and the new
     type of the ``metadata`` field have the same fields, the one in
     :class:`~zyte_common_items.Article` now has ``probability``, the one in
     :class:`~zyte_common_items.ProductList` no longer has ``probability``, and

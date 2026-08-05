@@ -29,6 +29,7 @@ version, release = get_version_and_release()
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
+    "sphinx_scrapy",
 ]
 
 html_theme = "sphinx_rtd_theme"
@@ -38,16 +39,18 @@ nitpick_ignore = [
     ("py:class", "itemadapter.ItemAdapter"),
     ("py:class", "web_poet.pages.ItemT"),
     ("py:class", "zyte_common_items.pages._BasePage"),
+    # https://github.com/scrapinghub/web-poet/issues/211
+    ("py:class", "web_poet.page_inputs.url.RequestUrl"),
+    ("py:class", "web_poet.page_inputs.url.ResponseUrl"),
 ]
 
 intersphinx_disabled_reftypes = []
-intersphinx_mapping = {
-    "jinja": ("https://jinja.palletsprojects.com/en/latest/", None),
-    "lxml": ("https://lxml.de/apidoc/", None),
-    "parsel": ("https://parsel.readthedocs.io/en/stable", None),
-    "python": ("https://docs.python.org/3", None),
-    "scrapy": ("https://docs.scrapy.org/en/stable", None),
-    "scrapy-poet": ("https://scrapy-poet.readthedocs.io/en/stable", None),
-    "web-poet": ("https://web-poet.readthedocs.io/en/stable", None),
-    "zyte-parsers": ("https://zyte-parsers.readthedocs.io/en/stable", None),
-}
+
+scrapy_intersphinx_enable = [
+    "jinja",
+    "lxml",
+    "parsel",
+    "scrapy-poet",
+    "web-poet",
+    "zyte-parsers",
+]

@@ -6,15 +6,16 @@ from zyte_common_items.util import url_to_str
 
 @attrs.define
 class _Media(Item):
-    #: URL.
-    #:
-    #: When multiple URLs exist for a given media element, pointing to
-    #: different-quality versions, the highest-quality URL should be used.
-    #:
-    #: `Data URIs`_ are not allowed in this attribute.
-    #:
-    #: .. _Data URIs: https://en.wikipedia.org/wiki/Data_URI_scheme
     url: str = attrs.field(converter=url_to_str)
+    """URL.
+
+    When multiple URLs exist for a given media element, pointing to
+    different-quality versions, the highest-quality URL should be used.
+
+    `Data URIs`_ are not allowed in this attribute.
+
+    .. _Data URIs: https://en.wikipedia.org/wiki/Data_URI_scheme
+    """
 
 
 @attrs.define

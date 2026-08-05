@@ -1,7 +1,13 @@
-from copy import deepcopy
-from warnings import warn
+# Raise ImportError if Scrapy is missing.
+import scrapy  # isort: skip  # noqa: F401
 
-from zyte_common_items import ae
+import logging
+from copy import deepcopy
+
+from .base import ProbabilityMixin
+from .log_formatters import InfoDropItem
+
+logger = logging.getLogger(__name__)
 
 
 class AEPipeline:
@@ -38,38 +44,41 @@ class AEPipeline:
     """
 
     def __init__(self):
-        warn(
-            (
-                "The zyte_common_items.pipelines.AEPipeline item pipeline has "
-                "been implemented temporarily to help speed up migrating from "
-                "Zyte Automatic Extraction to Zyte API automatic extraction "
-                "(https://docs.zyte.com/zyte-api/migration/zyte/autoextract.html). "
-                "However, this item pipeline will eventually be removed. "
-                "Please, update your code not to depend on this item pipeline "
-                "anymore."
-            ),
-            DeprecationWarning,
-            stacklevel=2,
-        )
+        from . import ae
+
+        self._downgrade = ae.downgrade
 
     def process_item(self, item, spider):
-        return ae.downgrade(item)
+        return self._downgrade(item)
 
 
 class DropLowProbabilityItemPipeline:
-    """This pipeline drops an item if its probability, defined in the settings,
-    is less than the specified threshold.
+    """:ref:`Item pipeline <topics-item-pipeline>` that drops items that have
+    a low probability.
 
-    By default, 0.1 threshold is used, i.e. items with probabillity < 0.1 are dropped.
+    The :setting:`ITEM_PROBABILITY_THRESHOLDS` setting determines the
+    probability thresholds. By default, items with probability < 0.1 are
+    dropped.
 
-    You can customize the thresholds by using the ITEM_PROBABILITY_THRESHOLDS setting that offers
-    greater flexibility, allowing you to define thresholds for each Item class separately or
-    set a default threshold for all other item classes.
+    :class:`dict` objects with items as values are supported. For those, the
+    probability of each item is evaluated, and items with a low probability are
+    removed from the :class:`dict`. If the :class:`dict` ends up empty, it is
+    dropped entirely.
 
-    Thresholds for Item classes can be defined using either the path to the Item class or
-    directly using the Item classes themselves.
+    .. setting:: ITEM_PROBABILITY_THRESHOLDS
 
-    The example of using ITEM_PROBABILITY_THRESHOLDS:
+    ITEM_PROBABILITY_THRESHOLDS
+    ---------------------------
+
+    Default: ``{"default": 0.1}``
+
+    Allows defining a threshold for each item class and a default threshold
+    for any other item class.
+
+    Thresholds for item classes can be defined using either an import path of
+    the item class or directly using the item class itself.
+
+    For example:
 
     .. code-block:: python
 
@@ -115,25 +124,52 @@ class DropLowProbabilityItemPipeline:
     def get_item_name(self, item):
         return item.__class__.__name__
 
-    def process_item(self, item, spider):
-        from scrapy.exceptions import DropItem
-
-        item_name = self.get_item_name(item)
+    def _process_probability(self, item, threshold):
+        if not isinstance(item, ProbabilityMixin):
+            return True
         item_proba = item.get_probability()
-        threshold = self.get_threshold_for_item(item, spider)
-
+        if item_proba is None:
+            # don't emit stats for types without probability
+            return True
+        item_name = self.get_item_name(item)
         self.stats.inc_value("drop_low_probability_item/processed")
         self.stats.inc_value(f"drop_low_probability_item/processed/{item_name}")
-
-        if item_proba is None or item_proba >= threshold:
+        if item_proba >= threshold:
             self.stats.inc_value("drop_low_probability_item/kept")
             self.stats.inc_value(f"drop_low_probability_item/kept/{item_name}")
-            return item
-
+            return True
         self.stats.inc_value("drop_low_probability_item/dropped")
         self.stats.inc_value(f"drop_low_probability_item/dropped/{item_name}")
+        return False
 
-        raise DropItem(
-            f"This item is dropped since the probability ({item_proba}) "
-            f"is below the threshold ({threshold}):\n{item!r}"
+    def process_item(self, item, spider):
+        if isinstance(item, dict):
+            if len(item) == 0:
+                return item
+            # for nested items remove sub-items that have low probability
+            # instead of dropping the whole result
+            new_item = {}
+            for item_type, sub_item in item.items():
+                threshold = self.get_threshold_for_item(sub_item, spider)
+                if self._process_probability(sub_item, threshold):
+                    new_item[item_type] = sub_item
+                else:
+                    logger.info(
+                        f"This sub-item is dropped since the probability ({sub_item.get_probability()}) "
+                        f"is below the threshold ({threshold}):\n{sub_item!r}"
+                    )
+            if not new_item:
+                # everything has been removed
+                raise InfoDropItem(
+                    "This item is dropped since the probability of all its sub-items "
+                    "is below the threshold:"
+                )
+            return new_item
+
+        threshold = self.get_threshold_for_item(item, spider)
+        if self._process_probability(item, threshold):
+            return item
+        raise InfoDropItem(
+            f"This item is dropped since the probability ({item.get_probability()}) "
+            f"is below the threshold ({threshold}):"
         )

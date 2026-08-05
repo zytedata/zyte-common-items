@@ -18,28 +18,12 @@ from zyte_common_items.fields import auto_field
 from zyte_common_items.items import BusinessPlace, BusinessPlaceMetadata
 from zyte_common_items.processors import (
     description_processor,
-    list_processor,
+    images_processor,
     rating_processor,
-    string_processor,
 )
 
 from .base import BasePage, Page
 from .mixins import HasMetadata
-
-
-class _BusinessPlaceProcessors(BasePage.Processors):
-    aggregateRating = [rating_processor]
-    description = [description_processor]
-    categories = [list_processor(string_processor)]
-    features = [list_processor(string_processor)]
-    map = [string_processor]
-    name = [string_processor]
-    placeId = [string_processor]
-    priceRange = [string_processor]
-    tags = [list_processor(string_processor)]
-    telephone = [string_processor]
-    timezone = [string_processor]
-    website = [string_processor]
 
 
 class BaseBusinessPlacePage(
@@ -47,8 +31,10 @@ class BaseBusinessPlacePage(
 ):
     """:class:`BasePage` subclass for :class:`BusinessPlace`."""
 
-    class Processors(_BusinessPlaceProcessors):
-        pass
+    class Processors(BasePage.Processors):
+        aggregateRating = [rating_processor]
+        description = [description_processor]
+        images = [images_processor]
 
 
 class BusinessPlacePage(
@@ -56,8 +42,10 @@ class BusinessPlacePage(
 ):
     """:class:`Page` subclass for :class:`BusinessPlace`."""
 
-    class Processors(_BusinessPlaceProcessors):
-        pass
+    class Processors(Page.Processors):
+        aggregateRating = [rating_processor]
+        description = [description_processor]
+        images = [images_processor]
 
 
 @attrs.define

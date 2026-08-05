@@ -19,38 +19,14 @@ from zyte_common_items.processors import (
     description_html_processor,
     description_processor,
     gtin_processor,
-    list_processor,
+    images_processor,
     price_processor,
     rating_processor,
     simple_price_processor,
-    string_processor,
 )
 
 from .base import BasePage, Page
 from .mixins import DescriptionMixin, HasMetadata, PriceMixin
-
-
-class _ProductProcessors(BasePage.Processors):
-    aggregateRating = [rating_processor]
-    brand = [brand_processor]
-    breadcrumbs = [breadcrumbs_processor]
-    description = [description_processor]
-    descriptionHtml = [description_html_processor]
-    gtin = [gtin_processor]
-    price = [price_processor]
-    regularPrice = [simple_price_processor]
-    availability = [string_processor]
-    canonicalUrl = [string_processor]
-    color = [string_processor]
-    currency = [string_processor]
-    currencyRaw = [string_processor]
-    features = [list_processor(string_processor)]
-    mpn = [string_processor]
-    name = [string_processor]
-    productId = [string_processor]
-    size = [string_processor]
-    sku = [string_processor]
-    style = [string_processor]
 
 
 class BaseProductPage(
@@ -62,8 +38,16 @@ class BaseProductPage(
 ):
     """:class:`BasePage` subclass for :class:`Product`."""
 
-    class Processors(_ProductProcessors):
-        pass
+    class Processors(BasePage.Processors):
+        aggregateRating = [rating_processor]
+        brand = [brand_processor]
+        breadcrumbs = [breadcrumbs_processor]
+        description = [description_processor]
+        descriptionHtml = [description_html_processor]
+        gtin = [gtin_processor]
+        price = [price_processor]
+        regularPrice = [simple_price_processor]
+        images = [images_processor]
 
 
 class ProductPage(
@@ -71,8 +55,16 @@ class ProductPage(
 ):
     """:class:`Page` subclass for :class:`Product`."""
 
-    class Processors(_ProductProcessors):
-        pass
+    class Processors(Page.Processors):
+        aggregateRating = [rating_processor]
+        brand = [brand_processor]
+        breadcrumbs = [breadcrumbs_processor]
+        description = [description_processor]
+        descriptionHtml = [description_html_processor]
+        gtin = [gtin_processor]
+        price = [price_processor]
+        regularPrice = [simple_price_processor]
+        images = [images_processor]
 
 
 @attrs.define

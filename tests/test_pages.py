@@ -6,6 +6,7 @@ import attrs
 import pytest
 from web_poet import HttpResponse, RequestUrl, ResponseUrl, Returns, field
 from web_poet.fields import get_fields_dict
+from web_poet.pages import WebPage, get_item_cls
 
 import zyte_common_items
 from zyte_common_items import (
@@ -158,11 +159,7 @@ def test_page_pairs():
         obj_name
         for obj_name in zyte_common_items.__dict__
         if (
-            not (
-                obj_name.startswith("Base")
-                or obj_name.startswith("Auto")
-                or obj_name.endswith("RequestTemplatePage")
-            )
+            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )
@@ -185,7 +182,9 @@ def test_page_pairs():
         for obj_name in zyte_common_items.__dict__
         if (obj_name.startswith("Auto") and obj_name.endswith("Page"))
     }
-    expected_auto_pages = {f"Auto{page}" for page in pages}
+    expected_auto_pages = {
+        f"Auto{page}" for page in pages if not page.endswith("RequestTemplatePage")
+    }
     assert actual_auto_pages == expected_auto_pages
 
 
@@ -215,11 +214,25 @@ METADATA_FIELDS = {
         "searchText",
         "validationMessages",
     },
+    "ForumThread": {"dateDownloaded", "validationMessages"},
     "Product": {"dateDownloaded", "probability", "validationMessages"},
     "ProductList": {"dateDownloaded", "validationMessages"},
     "ProductNavigation": {"dateDownloaded", "validationMessages"},
     "RealEstate": {"dateDownloaded", "probability", "validationMessages"},
     "JobPosting": {"dateDownloaded", "probability", "searchText", "validationMessages"},
+    "JobPostingNavigation": {"dateDownloaded", "validationMessages"},
+    "SearchRequestTemplate": {
+        "dateDownloaded",
+        "probability",
+        "validationMessages",
+    },
+    "Serp": {
+        "dateDownloaded",
+        "displayedQuery",
+        "searchedQuery",
+        "totalOrganicResults",
+        "validationMessages",
+    },
     "SocialMediaPost": {
         "dateDownloaded",
         "probability",
@@ -284,11 +297,7 @@ def test_metadata():
         obj_name
         for obj_name in zyte_common_items.__dict__
         if (
-            not (
-                obj_name.startswith("Base")
-                or obj_name.startswith("Auto")
-                or obj_name.endswith("RequestTemplatePage")
-            )
+            not (obj_name.startswith("Base") or obj_name.startswith("Auto"))
             and obj_name.endswith("Page")
             and obj_name != "Page"
         )
@@ -483,3 +492,36 @@ def test_auto_fields():
         auto_page_cls = zyte_common_items.__dict__[auto_page_name]
         for field_name in get_fields_dict(auto_page_cls):
             assert is_auto_field(auto_page_cls, field_name)
+
+
+def test_auto_page_item_fields():
+    """For every field in the item class of an Auto- page class, there should
+    be a matching field method in the Auto- page class."""
+    auto_pages: set[type]
+    auto_pages = {
+        obj
+        for obj_name, obj in zyte_common_items.__dict__.items()
+        if (obj_name.startswith("Auto") and obj_name.endswith("Page"))
+    }
+    for auto_page in auto_pages:
+        auto_page_fields = set(get_fields_dict(auto_page))
+        item_cls = get_item_cls(auto_page)  # type: ignore[call-overload]
+        item_fields = set(attrs.fields_dict(item_cls))
+        assert (
+            auto_page_fields == item_fields
+        ), f"{auto_page} does not map all {item_cls} fields"
+
+
+@pytest.mark.asyncio
+async def test_url_method_none() -> None:
+    """Test that a page for Product can return None from url()."""
+
+    class MyPage(WebPage, Returns[Product]):
+        @field
+        def url(self):
+            return None
+
+    url = ResponseUrl("https://example.com")
+    page = MyPage(response=HttpResponse(url=url, body=b""))
+    item = await page.to_item()
+    assert item.url is None

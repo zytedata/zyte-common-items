@@ -114,6 +114,30 @@ Job posting
 .. autoclass:: zyte_common_items.AutoJobPostingPage(**kwargs)
    :show-inheritance:
 
+Job posting navigation
+======================
+
+.. autoclass:: zyte_common_items.BaseJobPostingNavigationPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.JobPostingNavigationPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoJobPostingNavigationPage(**kwargs)
+   :show-inheritance:
+
+Search engine results
+=====================
+
+.. autoclass:: zyte_common_items.BaseSerpPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.SerpPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoSerpPage(**kwargs)
+   :show-inheritance:
+
 Social media post
 =================
 
@@ -126,8 +150,23 @@ Social media post
 .. autoclass:: zyte_common_items.AutoSocialMediaPostPage(**kwargs)
    :show-inheritance:
 
+Forum thread
+============
+
+.. autoclass:: zyte_common_items.BaseForumThreadPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.ForumThreadPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoForumThreadPage(**kwargs)
+   :show-inheritance:
+
 Request templates
 =================
+
+.. autoclass:: zyte_common_items.BaseSearchRequestTemplatePage(**kwargs)
+   :show-inheritance:
 
 .. autoclass:: zyte_common_items.SearchRequestTemplatePage(**kwargs)
    :show-inheritance:

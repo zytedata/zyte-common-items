@@ -155,7 +155,7 @@ class Item(ProbabilityMixin, _ItemBase):
                 ):
                     field_trail = _extend_trail(trail, field)
                     raise ValueError(
-                        f"Expected {field_trail} to be a list, got " f"{value!r}."
+                        f"Expected {field_trail} to be a list, got {value!r}."
                     )
                 type_annotation = get_args(type_annotation)[0]
                 if is_data_container(type_annotation):

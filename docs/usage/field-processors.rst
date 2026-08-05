@@ -41,6 +41,8 @@ Field                                Default processor
 ``description`` (excluding articles) :func:`~.description_processor`
 ``descriptionHtml``                  :func:`~.description_html_processor`
 ``gtin``                             :func:`~.gtin_processor`
+``images``                           :func:`~.images_processor`
+``metadata``                         :func:`~.metadata_processor`
 ``price``                            :func:`~.price_processor`
 ``regularPrice``                     :func:`~.simple_price_processor`
 ==================================== ====================================
