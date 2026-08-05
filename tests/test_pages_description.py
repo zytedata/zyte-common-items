@@ -234,3 +234,16 @@ def test_non_html_node():
     page = CustomPage(response=HttpResponse(url=url, body=body))
     with pytest.raises(ValueError):
         page.description
+
+
+def test_non_html_node_descriptionHtml():
+    class CustomPage(ProductPage):
+        @field
+        def descriptionHtml(self):
+            return self.xpath("//div/following-sibling::node()")
+
+    url = "https://example.com"
+    body = b"""<div></div><!-- test -->"""
+    page = CustomPage(response=HttpResponse(url=url, body=body))
+    with pytest.raises(ValueError):
+        page.descriptionHtml

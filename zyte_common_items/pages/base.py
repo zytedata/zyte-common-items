@@ -4,11 +4,11 @@ from web_poet.pages import ItemT
 
 from .._dateutils import utcnow_formatted
 from ..components import MetadataT
-from ..processors import metadata_processor
+from ..processors import _StringProcessors, metadata_processor
 from .mixins import HasMetadata
 
 
-class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT]):
+class _BasePage(ItemPage[ItemT], HasMetadata[MetadataT], _StringProcessors):
     class Processors:
         metadata = [metadata_processor]
 

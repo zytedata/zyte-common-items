@@ -1,10 +1,11 @@
-from typing import Type
+from typing import Type, Union
 
+import attrs
 import pytest
 from lxml.html import fromstring
 from parsel import Selector, SelectorList
 from price_parser import Price
-from web_poet import HttpResponse, field
+from web_poet import HttpResponse, Returns, field
 from zyte_parsers import Breadcrumb as zp_Breadcrumb
 from zyte_parsers import Gtin as zp_Gtin
 from zyte_parsers import extract_breadcrumbs
@@ -12,10 +13,12 @@ from zyte_parsers import extract_breadcrumbs
 from zyte_common_items import (
     AggregateRating,
     BasePage,
+    BaseProductPage,
     Brand,
     Breadcrumb,
     Gtin,
     Image,
+    Item,
     ProductPage,
 )
 from zyte_common_items.components.metadata import Metadata
@@ -29,6 +32,8 @@ from zyte_common_items.processors import (
     metadata_processor,
     price_processor,
     rating_processor,
+    string_list_processor,
+    string_processor,
 )
 
 base_url = "http://www.example.com/blog/"
@@ -313,6 +318,8 @@ def test_gtin(input_value, expected_value):
             },
             AggregateRating(ratingValue=3.8, bestRating=10.0, reviewCount=3),
         ),
+        ({}, None),
+        ({"reviewCount": 0}, None),
     ],
 )
 def test_rating(input_value, expected_value):
@@ -422,6 +429,16 @@ def test_prices(input_value, expected_value):
     assert page.price == expected_value
 
 
+def test_simple_price_number():
+    class CustomPage(BaseProductPage):
+        @field
+        def regularPrice(self):
+            return 100
+
+    page = CustomPage(base_url)  # type: ignore[arg-type]
+    assert page.regularPrice == "100.00"
+
+
 @pytest.mark.parametrize(
     "input_value,BasePage,expected_value",
     [
@@ -437,3 +454,80 @@ def test_metadata(input_value, BasePage: Type, expected_value):
 
     page = CustomPage(base_url)  # type: ignore[arg-type]
     assert page.metadata == expected_value
+
+
+@pytest.mark.parametrize(
+    "input_value,expected_value",
+    [
+        (None, None),
+        ("", ""),
+        ("foo bar", "foo bar"),
+        (" foo bar ", "foo bar"),
+        ("\n\tfoo\t\n", "foo"),
+        (1, 1),
+    ],
+)
+def test_string_processor(input_value, expected_value):
+    assert string_processor(input_value) == expected_value
+
+
+@pytest.mark.parametrize(
+    "input_value,expected_value",
+    [
+        (None, None),
+        ([], []),
+        ([" foo bar ", "baz"], ["foo bar", "baz"]),
+        ((" foo ",), ["foo"]),
+        (" foo ", " foo "),
+        ([1, " foo "], [1, " foo "]),
+    ],
+)
+def test_string_list_processor(input_value, expected_value):
+    assert string_list_processor(input_value) == expected_value
+
+
+def test_string_list_processor_selectorlist():
+    value = SelectorList([Selector(text="<p> foo </p>")])
+    assert string_list_processor(value) is value
+
+
+def test_string_processor_defaults():
+    class CustomPage(BaseProductPage):
+        @field
+        def name(self):
+            return " Some name "
+
+        @field
+        def features(self):
+            return [" foo ", "bar "]
+
+    page = CustomPage(base_url)  # type: ignore[arg-type]
+    assert page.name == "Some name"
+    assert page.features == ["foo", "bar"]
+
+
+def test_string_processor_defaults_ambiguous_type():
+    @attrs.define
+    class AmbiguousItem(Item):
+        name: Union[str, int] = ""
+
+    class CustomPage(BasePage, Returns[AmbiguousItem]):
+        @field
+        def name(self):
+            return " Some name "
+
+    page = CustomPage(base_url)  # type: ignore[arg-type]
+    assert page.name == " Some name "
+
+
+def test_string_processor_defaults_override():
+    class CustomPage(BaseProductPage):
+        class Processors(BaseProductPage.Processors):
+            name = []
+
+        @field
+        def name(self):
+            return " Some name "
+
+    page = CustomPage(base_url)  # type: ignore[arg-type]
+    assert page.name == " Some name "
