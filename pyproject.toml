@@ -29,6 +29,7 @@ dependencies = [
     "itemadapter>=0.8.0",
     "Jinja2>=2.10.2",
     "price-parser>=0.3.4",
+    "typing-extensions>=4.5.0",
     "web-poet>=0.14.0",
     "zyte-parsers>=0.5.0",
 ]
