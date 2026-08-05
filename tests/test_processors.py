@@ -1,10 +1,11 @@
-from typing import Type
+from typing import Type, Union
 
+import attrs
 import pytest
 from lxml.html import fromstring
 from parsel import Selector, SelectorList
 from price_parser import Price
-from web_poet import HttpResponse, field
+from web_poet import HttpResponse, Returns, field
 from zyte_parsers import Breadcrumb as zp_Breadcrumb
 from zyte_parsers import Gtin as zp_Gtin
 from zyte_parsers import extract_breadcrumbs
@@ -17,6 +18,7 @@ from zyte_common_items import (
     Breadcrumb,
     Gtin,
     Image,
+    Item,
     ProductPage,
 )
 from zyte_common_items.components.metadata import Metadata
@@ -316,6 +318,8 @@ def test_gtin(input_value, expected_value):
             },
             AggregateRating(ratingValue=3.8, bestRating=10.0, reviewCount=3),
         ),
+        ({}, None),
+        ({"reviewCount": 0}, None),
     ],
 )
 def test_rating(input_value, expected_value):
@@ -425,6 +429,16 @@ def test_prices(input_value, expected_value):
     assert page.price == expected_value
 
 
+def test_simple_price_number():
+    class CustomPage(BaseProductPage):
+        @field
+        def regularPrice(self):
+            return 100
+
+    page = CustomPage(base_url)  # type: ignore[arg-type]
+    assert page.regularPrice == "100.00"
+
+
 @pytest.mark.parametrize(
     "input_value,BasePage,expected_value",
     [
@@ -490,6 +504,20 @@ def test_string_processor_defaults():
     page = CustomPage(base_url)  # type: ignore[arg-type]
     assert page.name == "Some name"
     assert page.features == ["foo", "bar"]
+
+
+def test_string_processor_defaults_ambiguous_type():
+    @attrs.define
+    class AmbiguousItem(Item):
+        name: Union[str, int] = ""
+
+    class CustomPage(BasePage, Returns[AmbiguousItem]):
+        @field
+        def name(self):
+            return " Some name "
+
+    page = CustomPage(base_url)  # type: ignore[arg-type]
+    assert page.name == " Some name "
 
 
 def test_string_processor_defaults_override():
