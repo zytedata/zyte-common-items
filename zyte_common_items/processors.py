@@ -1,7 +1,7 @@
 from collections.abc import Iterable, Mapping
 from functools import wraps
 from numbers import Real
-from typing import Any, Callable, List, Optional, Union
+from typing import Any, Callable, Dict, List, Optional, Sequence, Union
 
 from clear_html import clean_node, cleaned_node_to_html, cleaned_node_to_text
 from lxml.html import HtmlElement
@@ -29,6 +29,7 @@ from .components import (
     ProbabilityRequest,
     Request,
 )
+from .converters import MetadataCaster, to_probability_request_list
 
 
 def _get_base_url(page: Any) -> Optional[str]:
@@ -393,17 +394,17 @@ def images_processor(value: Any, page: Any) -> Any:
 
 
 def probability_request_list_processor(
-    request_list: List[Request],
+    request_list: Sequence[Union[Request, Dict]],
 ) -> List[ProbabilityRequest]:
     """Convert all objects in *request_list*, which are instances of
-    :class:`Request` or a subclass, into instances of
+    :class:`Request` or a subclass, or dicts, into instances of
     :class:`ProbabilityRequest`."""
-    return [request.cast(ProbabilityRequest) for request in request_list]
+    return to_probability_request_list(request_list)
 
 
-def metadata_processor(metadata: Optional[BaseMetadata], page):
+def metadata_processor(metadata: Union[BaseMetadata, Dict, None], page):
     """Processor for a metadata field that ensures that the output metadata
     object uses the metadata class declared by *page*."""
     if metadata is None or page.metadata_cls is None:
         return None
-    return metadata.cast(page.metadata_cls)
+    return MetadataCaster(page.metadata_cls)(metadata)
