@@ -2,7 +2,7 @@ import base64
 
 import pytest
 
-from zyte_common_items import Header, Request
+from zyte_common_items import Header, ProbabilityRequest, Request
 from zyte_common_items.components import request_list_processor
 from zyte_common_items.processors import probability_request_list_processor
 
@@ -76,6 +76,12 @@ def test_request_to_scrapy_headers_with_the_same_name():
     req = Request("http://example.com", headers=headers)
     scrapy_req = req.to_scrapy(callback=None)
     assert scrapy_req.headers.getlist("name") == [b"value1", b"value2"]
+
+
+def test_probability_request_list_processor_dict():
+    assert probability_request_list_processor([{"url": "http://example.com"}]) == [
+        ProbabilityRequest(url="http://example.com", headers=[])
+    ]
 
 
 def test_deprecated_request_list_processor():

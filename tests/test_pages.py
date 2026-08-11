@@ -23,6 +23,7 @@ from zyte_common_items import (
     ProductListMetadata,
     ProductListPage,
     ProductMetadata,
+    ProductNavigationMetadata,
     ProductPage,
     Request,
 )
@@ -323,6 +324,26 @@ def test_metadata():
         base_page_cls = getattr(zyte_common_items, base_page)
         base_page_kwargs = {"request_url": RequestUrl("https://example.com")}
         check_default_metadata(base_page_cls, base_page_kwargs, item_name)
+
+
+@pytest.mark.asyncio
+async def test_dict_fields():
+    """Ensure that fields with converters accept dicts."""
+
+    class CustomProductNavigationPage(BaseProductNavigationPage):
+        @field
+        def metadata(self):
+            return {"dateDownloaded": "foo"}
+
+        @field
+        def items(self):
+            return [{"url": "https://example.com/1", "unknown": "bar"}]
+
+    page = CustomProductNavigationPage(RequestUrl("https://example.com"))
+    item = await page.to_item()
+    assert item.metadata == ProductNavigationMetadata(dateDownloaded="foo")
+    assert item.items == [ProbabilityRequest(url="https://example.com/1", headers=[])]
+    assert item.items[0]._unknown_fields_dict == {"unknown": "bar"}
 
 
 def test_metadata_generic():
