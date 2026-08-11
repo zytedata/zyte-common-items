@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 import attrs
 from web_poet import Returns
 
@@ -33,33 +31,33 @@ class AutoProductListPage(BaseProductListPage):
     product_list: ProductList
 
     @auto_field
-    def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+    def breadcrumbs(self) -> list[Breadcrumb] | None:
         return self.product_list.breadcrumbs
 
     @auto_field
-    def canonicalUrl(self) -> Optional[str]:
+    def canonicalUrl(self) -> str | None:
         return self.product_list.canonicalUrl
 
     @auto_field
-    def categoryName(self) -> Optional[str]:
+    def categoryName(self) -> str | None:
         return self.product_list.categoryName
 
     @auto_field
-    def metadata(self) -> Optional[ProductListMetadata]:
+    def metadata(self) -> ProductListMetadata | None:
         return self.product_list.metadata
 
     @auto_field
-    def pageNumber(self) -> Optional[int]:
+    def pageNumber(self) -> int | None:
         return self.product_list.pageNumber
 
     @auto_field
-    def paginationNext(self) -> Optional[Link]:
+    def paginationNext(self) -> Link | None:
         return self.product_list.paginationNext
 
     @auto_field
-    def products(self) -> Optional[List[ProductFromList]]:
+    def products(self) -> list[ProductFromList] | None:
         return self.product_list.products
 
     @auto_field
-    def url(self) -> Optional[str]:
+    def url(self) -> str | None:
         return self.product_list.url

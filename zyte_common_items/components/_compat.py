@@ -1,10 +1,9 @@
 import warnings
-from typing import List
 
 from .request import ProbabilityRequest, Request
 
 
-def request_list_processor(request_list: List[Request]) -> List[ProbabilityRequest]:
+def request_list_processor(request_list: list[Request]) -> list[ProbabilityRequest]:
     """Deprecated. Please use
     :func:`zyte_common_items.processors.probability_request_list_processor` instead."""
     warnings.warn(
@@ -13,6 +12,8 @@ def request_list_processor(request_list: List[Request]) -> List[ProbabilityReque
         category=DeprecationWarning,
         stacklevel=2,
     )
-    from zyte_common_items.processors import probability_request_list_processor
+    from zyte_common_items.processors import (  # noqa: PLC0415
+        probability_request_list_processor,
+    )
 
     return probability_request_list_processor(request_list)

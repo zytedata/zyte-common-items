@@ -8,7 +8,7 @@ PYTHON_FILE_EXTENSIONS = {".py"}
 
 
 def check_file_for_colon_comment(file_path):
-    with open(file_path, "r", encoding="utf-8") as f:
+    with Path(file_path).open(encoding="utf-8") as f:
         for i, line in enumerate(f, 1):
             if "test_file" in file_path:
                 raise ValueError(f"{line=}")
@@ -23,9 +23,10 @@ def check_file_for_colon_comment(file_path):
 def main():
     failed = False
     for file in sys.argv[1:]:
-        if Path(file).suffix in PYTHON_FILE_EXTENSIONS:
-            if check_file_for_colon_comment(file):
-                failed = True
+        if Path(file).suffix in PYTHON_FILE_EXTENSIONS and check_file_for_colon_comment(
+            file
+        ):
+            failed = True
     if failed:
         print(
             "\nERROR: Sphinx-style comments detected. Please use docstrings for documentation."

@@ -140,15 +140,7 @@ _DESCRIPTION_HTML_EXAMPLE = PageObjectMethodExample(
         "    cleaned_html = cleaned_node_to_html(cleaned_node)\n"
         "    return cleaned_html"
     ),
-    expected=(
-        "<article>\n"
-        "\n"
-        "<p>Paragraph 1</p>\n"
-        "\n"
-        "<p>Paragraph 2</p>\n"
-        "\n"
-        "</article>"
-    ),
+    expected=("<article>\n\n<p>Paragraph 1</p>\n\n<p>Paragraph 2</p>\n\n</article>"),
 )
 
 _GTIN_EXAMPLE_1 = PageObjectMethodExample(

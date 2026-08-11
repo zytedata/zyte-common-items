@@ -206,11 +206,11 @@ async def test_job_posting_mixin():
 
 @pytest.mark.parametrize(
     "page_class",
-    (
+    [
         BusinessPlacePage,
         JobPostingPage,
         RealEstatePage,
-    ),
+    ],
 )
 def test_description_simple(page_class: type):
     class CustomPage(page_class):
@@ -232,5 +232,5 @@ def test_non_html_node():
     url = "https://example.com"
     body = b"""<div></div><!-- test -->"""
     page = CustomPage(response=HttpResponse(url=url, body=body))
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="expects an HtmlElement node, got"):
         page.description

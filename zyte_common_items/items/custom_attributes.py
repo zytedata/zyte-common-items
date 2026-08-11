@@ -1,47 +1,45 @@
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import attrs
 
 from zyte_common_items.base import Item
 
 
-class CustomAttributesValues(Dict[str, Any]):
+class CustomAttributesValues(dict[str, Any]):
     """Container for custom attribute values."""
-
-    pass
 
 
 @attrs.define
 class CustomAttributesMetadata(Item):
     """Custom attribute extraction metadata."""
 
-    inputTokens: Optional[int] = None
+    inputTokens: int | None = None
     """Total number of used input tokens, excluding our internal fixed prompt
     with the LLM instruction, when using the "generate" method."""
 
-    outputTokens: Optional[int] = None
+    outputTokens: int | None = None
     """Total number of used output tokens, when using the "generate" method."""
 
-    textInputTokens: Optional[int] = None
+    textInputTokens: int | None = None
     """Total number of input tokens used for the text of the web page,
     excluding the schema and our internal fixed prompt with the LLM
     instruction, when using the "generate" method. Already included in
     ``inputTokens``."""
 
-    maxInputTokens: Optional[int] = None
+    maxInputTokens: int | None = None
     """Maximum number of allowed input tokens for the model, when using the
     "generate" method."""
 
-    textInputTokensBeforeTruncation: Optional[int] = None
+    textInputTokensBeforeTruncation: int | None = None
     """``textInputTokens`` before the text was truncated to fit into the input
     limits, either set via ``maxInputTokens`` or due to the model limitation
     returned in ``maxInputTokens``, when using the "generate" method."""
 
-    excludedPIIAttributes: Optional[List[str]] = None
+    excludedPIIAttributes: list[str] | None = None
     """A list of all attributes dropped from the output due to a risk of PII
     (Personally Identifiable Information) extraction."""
 
-    error: Optional[str] = None
+    error: str | None = None
     """Error message, if any.
 
     -   The ``extraction/unparsable-response`` error is given when the LLM

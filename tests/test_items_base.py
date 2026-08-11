@@ -1,4 +1,4 @@
-from typing import List, Optional, Union
+from typing import Union
 
 import attrs
 import pytest
@@ -9,8 +9,6 @@ from zyte_common_items import Item, Product, is_data_container
 class NotConsideredAnItem:
     """It has to inherit from Item to be considered one."""
 
-    pass
-
 
 @attrs.define
 class SubItem(Item):
@@ -19,7 +17,7 @@ class SubItem(Item):
 
 @attrs.define
 class BigItem(Item):
-    sub_item: Optional[SubItem] = None
+    sub_item: SubItem | None = None
 
 
 @attrs.define
@@ -80,11 +78,32 @@ def test_from_dict_pipe_bad_annotation():
 def test_from_dict_bad_annotation():
     """Items with fields annotated with a Union of multiple different types should
     error out.
+
+    Checks Union[X, Y].
     """
 
     @attrs.define
     class A(Item):
-        a: Union[int, str]
+        a: Union[int, str]  # noqa: UP007
+
+    pattern = (
+        r"^tests\.\S+\.A\.a is annotated with (typing\.Union\[int, str\]|int \| str)\. "
+        r"Fields should only be annotated with one type \(or optional\)\.$"
+    )
+    with pytest.raises(ValueError, match=pattern):
+        A.from_dict({"a": 1})
+
+
+def test_from_dict_bad_annotation_pipe():
+    """Items with fields annotated with a Union of multiple different types should
+    error out.
+
+    Checks X | Y.
+    """
+
+    @attrs.define
+    class A(Item):
+        a: int | str
 
     pattern = (
         r"^tests\.\S+\.A\.a is annotated with (typing\.Union\[int, str\]|int \| str)\. "
@@ -101,7 +120,7 @@ def test_from_dict_non_dict():
 
     pattern = r"Expected a dict with fields from tests\.\S+?\.A, got 'a'\."
     with pytest.raises(ValueError, match=pattern):
-        A.from_dict("a")  # type: ignore
+        A.from_dict("a")  # type: ignore[arg-type]
 
 
 def test_from_dict_non_dict_field():
@@ -121,7 +140,7 @@ def test_from_dict_non_dict_field():
 def test_from_dict_from_list_non_list_field():
     @attrs.define
     class A(Item):
-        a: List[str]
+        a: list[str]
 
     pattern = r"Expected a to be a list, got 'b'\."
     with pytest.raises(ValueError, match=pattern):
@@ -135,7 +154,7 @@ def test_from_dict_from_list_non_dict_field():
 
     @attrs.define
     class A(Item):
-        a: List[B]
+        a: list[B]
 
     pattern = r"Expected a\[0\] to be a dict with fields from tests\.\S+?\.B, got 'b'\."
     with pytest.raises(ValueError, match=pattern):
@@ -144,12 +163,12 @@ def test_from_dict_from_list_non_dict_field():
 
 def test_item_unknown_input():
     product = Product.from_dict(
-        dict(
-            a="b",
-            additionalProperties=[{"name": "a", "value": "b", "max": 10}],
-            aggregateRating=dict(worstRating=0),
-            url="https://example.com/?product=product22",
-        )
+        {
+            "a": "b",
+            "additionalProperties": [{"name": "a", "value": "b", "max": 10}],
+            "aggregateRating": {"worstRating": 0},
+            "url": "https://example.com/?product=product22",
+        }
     )
     assert product._unknown_fields_dict["a"] == "b"
     assert product.aggregateRating._unknown_fields_dict["worstRating"] == 0

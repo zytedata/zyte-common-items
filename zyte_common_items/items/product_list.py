@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import List, Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -29,13 +27,13 @@ class ProductList(Item):
     :attr:`url` is the only required attribute.
     """
 
-    breadcrumbs: Optional[List[Breadcrumb]] = None
+    breadcrumbs: list[Breadcrumb] | None = None
     """Webpage `breadcrumb trail`_.
 
     .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
     """
 
-    canonicalUrl: Optional[str] = attrs.field(
+    canonicalUrl: str | None = attrs.field(
         default=None, converter=url_to_str_optional, kw_only=True
     )
     """Canonical form of the URL, as indicated by the website.
@@ -43,7 +41,7 @@ class ProductList(Item):
     See also ``url``.
     """
 
-    categoryName: Optional[str] = None
+    categoryName: str | None = None
     """Name of the product listing as it appears on the webpage (no
     post-processing).
 
@@ -51,23 +49,23 @@ class ProductList(Item):
     ``categoryName`` is ``'Robots'``.
     """
 
-    metadata: Optional[ProductListMetadata] = attrs.field(
+    metadata: ProductListMetadata | None = attrs.field(
         default=None,
         converter=to_metadata_optional(ProductListMetadata),  # type: ignore[misc]
         kw_only=True,
     )
     """Data extraction process metadata."""
 
-    pageNumber: Optional[int] = None
+    pageNumber: int | None = None
     """Current page number, if displayed explicitly on the list page.
 
     Numeration starts with 1.
     """
 
-    paginationNext: Optional[Link] = None
+    paginationNext: Link | None = None
     """Link to the next page."""
 
-    products: Optional[List[ProductFromList]] = None
+    products: list[ProductFromList] | None = None
     """List of products.
 
     It only includes product information found in the product listing page
@@ -95,7 +93,7 @@ class ProductFromList(Item):
     :class:`ProductFromListSelectorExtractor`.
     """
 
-    currency: Optional[str] = None
+    currency: str | None = None
     """Price currency `ISO 4217`_ alphabetic code (e.g. ``"USD"``).
 
     See also ``currencyRaw``.
@@ -103,27 +101,27 @@ class ProductFromList(Item):
     .. _ISO 4217: https://en.wikipedia.org/wiki/ISO_4217
     """
 
-    currencyRaw: Optional[str] = None
+    currencyRaw: str | None = None
     """Price currency as it appears on the webpage (no post-processing), e.g.
     ``"$"``.
 
     See also ``currency``.
     """
 
-    mainImage: Optional[Image] = None
+    mainImage: Image | None = None
     """Main product image."""
 
-    metadata: Optional[ProbabilityMetadata] = attrs.field(
+    metadata: ProbabilityMetadata | None = attrs.field(
         default=None,
         converter=to_metadata_optional(ProbabilityMetadata),  # type: ignore[misc]
         kw_only=True,
     )
     """Data extraction process metadata."""
 
-    name: Optional[str] = None
+    name: str | None = None
     """Name as it appears on the webpage (no post-processing)."""
 
-    price: Optional[str] = None
+    price: str | None = None
     """Price at which the product is being offered.
 
     It is a string with the price amount, with a full stop as decimal
@@ -134,14 +132,14 @@ class ProductFromList(Item):
     ``regularPrice``.
     """
 
-    productId: Optional[str] = None
+    productId: str | None = None
     """Product identifier, unique within an e-commerce website.
 
     It may come in the form of an SKU or any other identifier, a hash, or even
     a URL.
     """
 
-    regularPrice: Optional[str] = None
+    regularPrice: str | None = None
     """Price at which the product was being offered in the past, and which is
     presented as a reference next to the current price.
 
@@ -154,7 +152,7 @@ class ProductFromList(Item):
     ``price``.
     """
 
-    url: Optional[str] = attrs.field(
+    url: str | None = attrs.field(
         default=None, converter=url_to_str_optional, kw_only=True
     )
     """Main URL from which the product data could be extracted."""

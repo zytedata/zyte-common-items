@@ -1,4 +1,4 @@
-from typing import List, Optional, Tuple, Union, get_args  # noqa
+from typing import List, Optional, Tuple, Union, get_args  # noqa: F401,UP035
 
 import attrs
 
@@ -14,6 +14,7 @@ def optional_type(cls):
     types = [t for t in get_args(cls) if not issubclass(t, type(None))]
     if len(types) == 1:
         return types[0]
+    return None
 
 
 def get_generic_type(cls):
@@ -28,11 +29,11 @@ def get_generic_type(cls):
     args = get_args(cls)
     if args and len(args) == 1:
         return args[0]
+    return None
 
 
 def assert_type_compliance(item, cls=None, attrib=None):
-    """
-    Assert recursively that the values of the attributes of an attrs
+    """Assert recursively that the values of the attributes of an attrs
     item are as defined
     """
     item_cls = cls or type(item)

@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -21,16 +19,16 @@ class ForumThread(Item):
     url: str = attrs.field(converter=url_to_str_optional)
     """The URL of the final response, after any redirects."""
 
-    topic: Optional[Topic] = None
+    topic: Topic | None = None
     """Topic discussed on the page."""
 
-    threadId: Optional[str] = None
+    threadId: str | None = None
     """Thread ID."""
 
-    posts: Optional[List[SocialMediaPost]] = None
+    posts: list[SocialMediaPost] | None = None
     """List of posts available on the page, including the first or top post."""
 
-    metadata: Optional[ForumThreadMetadata] = attrs.field(
+    metadata: ForumThreadMetadata | None = attrs.field(
         default=None,
         converter=to_metadata_optional(ForumThreadMetadata),  # type: ignore[misc]
         kw_only=True,

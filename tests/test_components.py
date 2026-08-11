@@ -88,9 +88,9 @@ def test_metadata_fields():
     superset = set(attrs.fields_dict(Metadata))
     for cls in get_all_subclasses(BaseMetadata):
         subset = set(attrs.fields_dict(cls))
-        assert subset.issubset(
-            superset
-        ), f"Metadata is missing some fields from {cls.__name__}: {subset - superset}"
+        assert subset.issubset(superset), (
+            f"Metadata is missing some fields from {cls.__name__}: {subset - superset}"
+        )
 
 
 def test_metadata_subclasses():

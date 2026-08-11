@@ -1,4 +1,3 @@
-# flake8: noqa
 from .adapter import ZyteItemAdapter, ZyteItemKeepEmptyAdapter
 from .base import Item, is_data_container
 from .components import (
@@ -254,9 +253,9 @@ __all__ = [
 try:
     from ._addon import Addon
 
-    __all__.append("Addon")
+    __all__ += ("Addon",)
 except ImportError:  # Scrapy is not installed.
     pass
 
 # Register serialization support for all Item subclasses
-from . import serialization  # noqa: F401
+from . import serialization

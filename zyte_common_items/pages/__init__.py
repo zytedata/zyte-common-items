@@ -1,4 +1,3 @@
-# flake8: noqa
 from .article import ArticlePage, AutoArticlePage, BaseArticlePage
 from .article_list import ArticleListPage, AutoArticleListPage, BaseArticleListPage
 from .article_navigation import (

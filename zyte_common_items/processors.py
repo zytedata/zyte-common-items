@@ -1,7 +1,7 @@
-from collections.abc import Iterable, Mapping
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from functools import wraps
 from numbers import Real
-from typing import Any, Callable, Dict, List, Optional, Sequence, Union
+from typing import Any
 
 from clear_html import clean_node, cleaned_node_to_html, cleaned_node_to_text
 from lxml.html import HtmlElement
@@ -32,7 +32,7 @@ from .components import (
 from .converters import MetadataCaster, to_probability_request_list
 
 
-def _get_base_url(page: Any) -> Optional[str]:
+def _get_base_url(page: Any) -> str | None:
     if isinstance(page, ResponseShortcutsMixin):
         return page.base_url
     return getattr(page, "url", None)
@@ -46,7 +46,7 @@ def _handle_selectorlist(value: Any) -> Any:
     return value[0]
 
 
-def _format_price(price: Price) -> Optional[str]:
+def _format_price(price: Price) -> str | None:
     """Return the price amount as a string, with a minimum of 2 decimal
     places."""
     if price.amount is None:
@@ -60,7 +60,7 @@ def _format_price(price: Price) -> Optional[str]:
 
 
 def only_handle_nodes(
-    f: Callable[[Union[Selector, HtmlElement], Any], Any],
+    f: Callable[[Selector | HtmlElement, Any], Any],
 ) -> Callable[[Any, Any], Any]:
     """Decorator for processors that only runs a decorated processor if the
     input is of type :class:`Selector` or :class:`HtmlElement`."""
@@ -70,8 +70,7 @@ def only_handle_nodes(
         value = _handle_selectorlist(value)
         if not isinstance(value, (Selector, HtmlElement)):
             return value
-        result = f(value, page)
-        return result
+        return f(value, page)
 
     return wrapper
 
@@ -99,7 +98,7 @@ def breadcrumbs_processor(value: Any, page: Any) -> Any:
     if not isinstance(value, Iterable) or isinstance(value, str):
         return value
 
-    results: List[Any] = []
+    results: list[Any] = []
     for item in value:
         if isinstance(item, zp_Breadcrumb):
             results.append(_from_zp_breadcrumb(item))
@@ -128,8 +127,7 @@ def brand_processor(value: Any, page: Any) -> Any:
     if isinstance(value, (Selector, HtmlElement)):
         if brand_name := extract_brand_name(value, search_depth=2):
             return Brand(name=brand_name)
-        else:
-            return None
+        return None
 
     return value
 
@@ -152,12 +150,11 @@ def price_processor(value: Any, page: Any) -> Any:
 
     if isinstance(value, Real):
         return f"{value:.2f}"
-    elif isinstance(value, (Selector, HtmlElement)):
+    if isinstance(value, (Selector, HtmlElement)):
         price = extract_price(value)
         page._parsed_price = price
         return _format_price(price)
-    else:
-        return value
+    return value
 
 
 def simple_price_processor(value: Any, page: Any) -> Any:
@@ -176,15 +173,14 @@ def simple_price_processor(value: Any, page: Any) -> Any:
 
     if isinstance(value, Real):
         return f"{value:.2f}"
-    elif isinstance(value, (Selector, HtmlElement)):
+    if isinstance(value, (Selector, HtmlElement)):
         price = extract_price(value)
         return _format_price(price)
-    else:
-        return value
+    return value
 
 
 @only_handle_nodes
-def description_html_processor(value: Union[Selector, HtmlElement], page: Any) -> Any:
+def description_html_processor(value: Selector | HtmlElement, page: Any) -> Any:
     """Convert the data into a cleaned up HTML if possible.
 
     Uses the clear-html_ library.
@@ -245,7 +241,7 @@ def description_processor(value: Any, page: Any) -> Any:
 
 
 def gtin_processor(
-    value: Union[SelectorList, Selector, HtmlElement, str], page: Any
+    value: SelectorList | Selector | HtmlElement | str, page: Any
 ) -> Any:
     """Convert the data into a list of :class:`~zyte_common_items.Gtin` objects if possible.
 
@@ -259,11 +255,11 @@ def gtin_processor(
     def _from_zp_gtin(zp_value: zp_Gtin) -> Gtin:
         return Gtin(type=zp_value.type, value=zp_value.value)
 
-    results = []
+    results: list[Gtin] = []
     if isinstance(value, SelectorList):
-        for sel in value:
-            if result := extract_gtin(sel):
-                results.append(_from_zp_gtin(result))
+        results.extend(
+            _from_zp_gtin(result) for sel in value if (result := extract_gtin(sel))
+        )
     elif isinstance(value, (Selector, HtmlElement, str)):
         if result := extract_gtin(value):
             results.append(_from_zp_gtin(result))
@@ -336,7 +332,7 @@ def rating_processor(value: Any, page: Any) -> Any:
         if result.reviewCount or result.bestRating or result.ratingValue:
             return result
         return None
-    elif isinstance(value, dict):
+    if isinstance(value, dict):
         result = AggregateRating()
 
         review_count = _handle_selectorlist(value.get("reviewCount"))
@@ -378,7 +374,7 @@ def images_processor(value: Any, page: Any) -> Any:
         return [Image(url=value)]
 
     if isinstance(value, Iterable):
-        results: List[Any] = []
+        results: list[Any] = []
         for item in value:
             if isinstance(item, Image):
                 results.append(item)
@@ -394,15 +390,15 @@ def images_processor(value: Any, page: Any) -> Any:
 
 
 def probability_request_list_processor(
-    request_list: Sequence[Union[Request, Dict]],
-) -> List[ProbabilityRequest]:
+    request_list: Sequence[Request | dict],
+) -> list[ProbabilityRequest]:
     """Convert all objects in *request_list*, which are instances of
     :class:`Request` or a subclass, or dicts, into instances of
     :class:`ProbabilityRequest`."""
     return to_probability_request_list(request_list)
 
 
-def metadata_processor(metadata: Union[BaseMetadata, Dict, None], page):
+def metadata_processor(metadata: BaseMetadata | dict | None, page):
     """Processor for a metadata field that ensures that the output metadata
     object uses the metadata class declared by *page*."""
     if metadata is None or page.metadata_cls is None:

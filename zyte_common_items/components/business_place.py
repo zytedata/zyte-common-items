@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -34,20 +32,20 @@ class ParentPlace(Item):
 class OpeningHoursItem(Item):
     """Specification of opening hours of a business place."""
 
-    dayOfWeek: Optional[str] = None
+    dayOfWeek: str | None = None
     """English weekday name."""
 
-    opens: Optional[str] = None
+    opens: str | None = None
     """Opening time in ISO 8601 format, local time."""
 
-    closes: Optional[str] = None
+    closes: str | None = None
     """Closing time in ISO 8601 format, local time."""
 
-    rawDayOfWeek: Optional[str] = None
+    rawDayOfWeek: str | None = None
     """Day of the week, as it appears on the page, without processing."""
 
-    rawOpens: Optional[str] = None
+    rawOpens: str | None = None
     """Opening time, as it appears on the page, without processing."""
 
-    rawCloses: Optional[str] = None
+    rawCloses: str | None = None
     """Closing time, as it appears on the page, without processing."""

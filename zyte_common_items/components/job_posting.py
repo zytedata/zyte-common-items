@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -11,7 +9,7 @@ from zyte_common_items.base import Item
 class JobLocation(Item):
     """Location of a job offer."""
 
-    raw: Optional[str] = None
+    raw: str | None = None
     """Job location, as it appears on the website."""
 
 
@@ -19,23 +17,23 @@ class JobLocation(Item):
 class BaseSalary(Item):
     """Base salary of a job offer."""
 
-    raw: Optional[str] = None
+    raw: str | None = None
     """Salary amount as it appears on the website."""
 
-    valueMin: Optional[str] = None
+    valueMin: str | None = None
     """The minimum value of the base salary as a number string."""
 
-    valueMax: Optional[str] = None
+    valueMax: str | None = None
     """The maximum value of the base salary as a number string."""
 
-    rateType: Optional[str] = None
+    rateType: str | None = None
     """The type of rate associated with the salary, e.g. monthly, annual,
     daily."""
 
-    currency: Optional[str] = None
+    currency: str | None = None
     """Currency associated with the salary amount."""
 
-    currencyRaw: Optional[str] = None
+    currencyRaw: str | None = None
     """Currency associated with the salary amount, without normalization."""
 
 
@@ -43,11 +41,11 @@ class BaseSalary(Item):
 class HiringOrganization(Item):
     """Organization that is hiring for a job offer."""
 
-    name: Optional[str] = None
+    name: str | None = None
     """Name of the hiring organization."""
 
-    nameRaw: Optional[str] = None
+    nameRaw: str | None = None
     """Organization information as available on the website."""
 
-    id: Optional[str] = None
+    id: str | None = None
     """Identifier of the organization used by job posting website."""

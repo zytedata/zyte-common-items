@@ -1,8 +1,4 @@
-"""
-Components specific to :class:`~SocialMediaPost` item.
-"""
-
-from typing import Optional
+"""Components specific to :class:`~SocialMediaPost` item."""
 
 import attrs
 
@@ -13,16 +9,16 @@ from zyte_common_items.base import Item
 class Reactions(Item):
     """Details of reactions to a post."""
 
-    replies: Optional[int] = None
+    replies: int | None = None
     """Number of times the post received a reply."""
 
-    reposts: Optional[int] = None
+    reposts: int | None = None
     """Number of times the post has been shared."""
 
-    likes: Optional[int] = None
+    likes: int | None = None
     """Number of likes or other positive reactions to the post."""
 
-    dislikes: Optional[int] = None
+    dislikes: int | None = None
     """Number of dislikes or other negative reactions to the post."""
 
 
@@ -30,20 +26,20 @@ class Reactions(Item):
 class SocialMediaPostAuthor(Item):
     """Details of the author of a social media post."""
 
-    numberOfFollowers: Optional[int] = None
+    numberOfFollowers: int | None = None
     """The number of the followers that observe the author."""
 
-    numberOfFollowing: Optional[int] = None
+    numberOfFollowing: int | None = None
     """The number of the users that the author follows."""
 
-    dateAccountCreated: Optional[str] = None
+    dateAccountCreated: str | None = None
     """The date of the creation of the author's account."""
 
-    location: Optional[str] = None
+    location: str | None = None
     """The location of the author, if it's available in the author profile.
 
     Country or city location only.
     """
 
-    isVerified: Optional[bool] = None
+    isVerified: bool | None = None
     """Indication if the author's account is verified."""

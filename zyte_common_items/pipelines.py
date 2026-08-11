@@ -1,8 +1,9 @@
-# Raise ImportError if Scrapy is missing.
-import scrapy  # isort: skip  # noqa: F401
-
 import logging
 from copy import deepcopy
+
+# Raise ImportError if Scrapy is missing.
+import scrapy  # noqa: F401
+from scrapy.utils.misc import load_object
 
 from .base import ProbabilityMixin
 from .log_formatters import InfoDropItem
@@ -44,7 +45,7 @@ class AEPipeline:
     """
 
     def __init__(self):
-        from . import ae
+        from . import ae  # noqa: PLC0415
 
         self._downgrade = ae.downgrade
 
@@ -104,8 +105,6 @@ class DropLowProbabilityItemPipeline:
         return cls(crawler)
 
     def init_thresholds(self, spider):
-        from scrapy.utils.misc import load_object
-
         thresholds_settings = deepcopy(
             spider.settings.get("ITEM_PROBABILITY_THRESHOLDS", {})
         )

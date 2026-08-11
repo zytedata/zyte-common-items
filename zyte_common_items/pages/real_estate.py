@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 import attrs
 from web_poet import Returns
 
@@ -43,105 +41,105 @@ class AutoRealEstatePage(BaseRealEstatePage):
     real_estate: RealEstate
 
     @auto_field
-    def additionalProperties(self) -> Optional[List[AdditionalProperty]]:
+    def additionalProperties(self) -> list[AdditionalProperty] | None:
         return self.real_estate.additionalProperties
 
     @auto_field
-    def address(self) -> Optional[Address]:
+    def address(self) -> Address | None:
         return self.real_estate.address
 
     @auto_field
-    def area(self) -> Optional[RealEstateArea]:
+    def area(self) -> RealEstateArea | None:
         return self.real_estate.area
 
     @auto_field
-    def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+    def breadcrumbs(self) -> list[Breadcrumb] | None:
         return self.real_estate.breadcrumbs
 
     @auto_field
-    def currency(self) -> Optional[str]:
+    def currency(self) -> str | None:
         return self.real_estate.currency
 
     @auto_field
-    def currencyRaw(self) -> Optional[str]:
+    def currencyRaw(self) -> str | None:
         return self.real_estate.currencyRaw
 
     @auto_field
-    def datePublished(self) -> Optional[str]:
+    def datePublished(self) -> str | None:
         return self.real_estate.datePublished
 
     @auto_field
-    def datePublishedRaw(self) -> Optional[str]:
+    def datePublishedRaw(self) -> str | None:
         return self.real_estate.datePublishedRaw
 
     @auto_field
-    def description(self) -> Optional[str]:
+    def description(self) -> str | None:
         return self.real_estate.description
 
     @auto_field
-    def images(self) -> Optional[List[Image]]:
+    def images(self) -> list[Image] | None:
         return self.real_estate.images
 
     @auto_field
-    def mainImage(self) -> Optional[Image]:
+    def mainImage(self) -> Image | None:
         return self.real_estate.mainImage
 
     @auto_field
-    def metadata(self) -> Optional[RealEstateMetadata]:
+    def metadata(self) -> RealEstateMetadata | None:
         return self.real_estate.metadata
 
     @auto_field
-    def name(self) -> Optional[str]:
+    def name(self) -> str | None:
         return self.real_estate.name
 
     @auto_field
-    def numberOfBathroomsTotal(self) -> Optional[int]:
+    def numberOfBathroomsTotal(self) -> int | None:
         return self.real_estate.numberOfBathroomsTotal
 
     @auto_field
-    def numberOfBedrooms(self) -> Optional[int]:
+    def numberOfBedrooms(self) -> int | None:
         return self.real_estate.numberOfBedrooms
 
     @auto_field
-    def numberOfFullBathrooms(self) -> Optional[int]:
+    def numberOfFullBathrooms(self) -> int | None:
         return self.real_estate.numberOfFullBathrooms
 
     @auto_field
-    def numberOfPartialBathrooms(self) -> Optional[int]:
+    def numberOfPartialBathrooms(self) -> int | None:
         return self.real_estate.numberOfPartialBathrooms
 
     @auto_field
-    def numberOfRooms(self) -> Optional[int]:
+    def numberOfRooms(self) -> int | None:
         return self.real_estate.numberOfRooms
 
     @auto_field
-    def price(self) -> Optional[str]:
+    def price(self) -> str | None:
         return self.real_estate.price
 
     @auto_field
-    def propertyType(self) -> Optional[str]:
+    def propertyType(self) -> str | None:
         return self.real_estate.propertyType
 
     @auto_field
-    def realEstateId(self) -> Optional[str]:
+    def realEstateId(self) -> str | None:
         return self.real_estate.realEstateId
 
     @auto_field
-    def rentalPeriod(self) -> Optional[str]:
+    def rentalPeriod(self) -> str | None:
         return self.real_estate.rentalPeriod
 
     @auto_field
-    def tradeType(self) -> Optional[str]:
+    def tradeType(self) -> str | None:
         return self.real_estate.tradeType
 
     @auto_field
-    def url(self) -> Optional[str]:
+    def url(self) -> str | None:
         return self.real_estate.url
 
     @auto_field
-    def virtualTourUrl(self) -> Optional[str]:
+    def virtualTourUrl(self) -> str | None:
         return self.real_estate.virtualTourUrl
 
     @auto_field
-    def yearBuilt(self) -> Optional[int]:
+    def yearBuilt(self) -> int | None:
         return self.real_estate.yearBuilt
