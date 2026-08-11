@@ -1,5 +1,6 @@
 """The ``Item`` class should be used as the parent class for data containers."""
 
+import types
 from collections import ChainMap
 from typing import Dict, List, Optional, Union, get_args, get_origin, get_type_hints
 
@@ -9,6 +10,9 @@ from .util import split_in_unknown_and_known_fields
 
 _Trail = Optional[str]
 _UNDEFINED = object()
+# ``Union[X, Y]`` has ``Union`` as its origin, while ``X | Y`` has
+# ``types.UnionType``.
+_UNION_ORIGINS = (Union, types.UnionType)
 
 
 def is_data_container(cls_or_obj):
@@ -131,7 +135,7 @@ class Item(ProbabilityMixin, _ItemBase):
         for field, type_annotation in annotations.items():
             origin = get_origin(type_annotation)
             is_optional = False
-            if origin == Union:
+            if origin in _UNION_ORIGINS:
                 field_classes = get_args(type_annotation)
                 if len(field_classes) != 2 or not isinstance(None, field_classes[1]):
                     path = f"{_get_import_path(cls)}.{field}"
