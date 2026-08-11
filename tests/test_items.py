@@ -800,8 +800,9 @@ def test_metadata():
 
     -   The metadata attribute must be of that metadata class.
 
-    -   If the generic Metadata object is assigned as input, it gets converted
-        into an object of the right, more specific metadata class.
+    -   If the generic Metadata object, or a dict, is assigned as input, it
+        gets converted into an object of the right, more specific metadata
+        class.
     """
     item_names = {
         obj_name[:-4]
@@ -828,6 +829,10 @@ def test_metadata():
         obj2.metadata = Metadata(dateDownloaded="foo")
         assert type(obj2.metadata) is metadata_cls
         assert obj2.metadata.dateDownloaded == "foo"
+
+        obj3 = cls(url="https://example.com", metadata={"dateDownloaded": "foo"})
+        assert type(obj3.metadata) is metadata_cls
+        assert obj3.metadata.dateDownloaded == "foo"
 
 
 def test_request():

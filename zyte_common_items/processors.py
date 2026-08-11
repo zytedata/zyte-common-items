@@ -1,4 +1,4 @@
-from collections.abc import Callable, Iterable, Mapping
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from functools import wraps
 from numbers import Real
 from typing import Any
@@ -29,6 +29,7 @@ from .components import (
     ProbabilityRequest,
     Request,
 )
+from .converters import MetadataCaster, to_probability_request_list
 
 
 def _get_base_url(page: Any) -> str | None:
@@ -389,17 +390,17 @@ def images_processor(value: Any, page: Any) -> Any:
 
 
 def probability_request_list_processor(
-    request_list: list[Request],
+    request_list: Sequence[Request | dict],
 ) -> list[ProbabilityRequest]:
     """Convert all objects in *request_list*, which are instances of
-    :class:`Request` or a subclass, into instances of
+    :class:`Request` or a subclass, or dicts, into instances of
     :class:`ProbabilityRequest`."""
-    return [request.cast(ProbabilityRequest) for request in request_list]
+    return to_probability_request_list(request_list)
 
 
-def metadata_processor(metadata: BaseMetadata | None, page):
+def metadata_processor(metadata: BaseMetadata | dict | None, page):
     """Processor for a metadata field that ensures that the output metadata
     object uses the metadata class declared by *page*."""
     if metadata is None or page.metadata_cls is None:
         return None
-    return metadata.cast(page.metadata_cls)
+    return MetadataCaster(page.metadata_cls)(metadata)

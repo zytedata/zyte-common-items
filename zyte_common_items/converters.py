@@ -29,23 +29,32 @@ def url_to_str_optional(
 
 
 class MetadataCaster:
-    """attrs converter that converts an input metadata object into the metadata
-    class declared by the container page object class."""
+    """attrs converter that converts an input metadata object, or a dict, into
+    the metadata class declared by the container page object class."""
 
     def __init__(self, target):
         self._target = target
 
     def __call__(self, value):
+        if isinstance(value, dict):
+            return self._target.from_dict(value)
         return value.cast(self._target)
 
 
 def to_probability_request_list(request_list):
-    """Attrs converter to turn lists of :class:`~scrapy.Request` instances into
-    lists of :class:`~.ProbabilityRequest` instances."""
+    """Attrs converter to turn lists of :class:`~scrapy.Request` instances, or
+    of dicts, into lists of :class:`~.ProbabilityRequest` instances."""
     # circular import
     from zyte_common_items.components import ProbabilityRequest  # noqa: PLC0415
 
-    return [request.cast(ProbabilityRequest) for request in request_list]
+    return [
+        (
+            ProbabilityRequest.from_dict(request)
+            if isinstance(request, dict)
+            else request.cast(ProbabilityRequest)
+        )
+        for request in request_list
+    ]
 
 
 def to_probability_request_list_optional(request_list):

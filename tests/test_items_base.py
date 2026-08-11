@@ -20,6 +20,11 @@ class BigItem(Item):
     sub_item: SubItem | None = None
 
 
+@attrs.define
+class BigItemPipe(Item):
+    sub_item: SubItem | None = None
+
+
 def test_is_data_container():
     """It should be able to discern if a given class/instance is a data container
     that is defined inside this repository.
@@ -44,7 +49,33 @@ def test_from_dict():
     type(item.sub_item) is SubItem  # noqa: B015
 
 
-def test_from_dict_bad_annotation_union():
+def test_from_dict_pipe_optional():
+    """``X | None`` annotations should be treated like ``Optional[X]``."""
+
+    assert BigItemPipe(sub_item=None).sub_item is None
+
+    item = BigItemPipe.from_dict({"sub_item": {"name": "hello"}})
+    assert type(item.sub_item) is SubItem
+
+
+def test_from_dict_pipe_bad_annotation():
+    """Items with fields annotated with a ``X | Y`` union of multiple different
+    types should error out.
+    """
+
+    @attrs.define
+    class A(Item):
+        a: int | str
+
+    pattern = (
+        r"^tests\.\S+\.A\.a is annotated with int \| str\. "
+        r"Fields should only be annotated with one type \(or optional\)\.$"
+    )
+    with pytest.raises(ValueError, match=pattern):
+        A.from_dict({"a": 1})
+
+
+def test_from_dict_bad_annotation():
     """Items with fields annotated with a Union of multiple different types should
     error out.
 

@@ -425,6 +425,7 @@ def test_prices(input_value, expected_value):
     [
         (None, ProductPage, None),
         (Metadata(), ProductPage, ProductMetadata()),
+        ({"probability": 0.5}, ProductPage, ProductMetadata(probability=0.5)),
     ],
 )
 def test_metadata(input_value, BasePage: type, expected_value):
