@@ -26,5 +26,6 @@ per-file-ignores =
 
     # ”module level import not at the top of file“ caused by
     # pytest.importorskip
+    tests/test_addon.py:E402,
     tests/test_ae_pipeline.py:E402,
     tests/test_pipelines.py:E402,
