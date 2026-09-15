@@ -404,6 +404,8 @@ def test_is_item_class():
     class Adapter(ZyteItemAdapter):
         pass
 
+    assert Adapter.is_item_class(Product)
+    assert not Adapter.is_item_class(NonItem)
     with configured_adapter(Adapter), catch_warnings():
         simplefilter("error")
         assert isinstance(ItemAdapter(Product(**_PRODUCT_MIN_KWARGS)).adapter, Adapter)
