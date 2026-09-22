@@ -14,17 +14,25 @@ from zyte_common_items import (
     AutoArticleNavigationPage,
     AutoArticlePage,
     AutoBusinessPlacePage,
+    AutoForumThreadPage,
+    AutoJobPostingNavigationPage,
     AutoJobPostingPage,
     AutoProductListPage,
     AutoProductNavigationPage,
     AutoProductPage,
     AutoRealEstatePage,
+    AutoSerpPage,
+    AutoSocialMediaPostPage,
     BusinessPlace,
+    ForumThread,
     JobPosting,
+    JobPostingNavigation,
     Product,
     ProductList,
     ProductNavigation,
     RealEstate,
+    Serp,
+    SocialMediaPost,
 )
 
 from .test_items import (
@@ -32,11 +40,15 @@ from .test_items import (
     _ARTICLE_LIST_ALL_KWARGS,
     _ARTICLE_NAVIGATION_ALL_KWARGS,
     _BUSINESS_PLACE_ALL_KWARGS,
+    _FORUM_THREAD_ALL_KWARGS,
     _JOB_POSTING_ALL_KWARGS,
+    _JOB_POSTING_NAVIGATION_ALL_KWARGS,
     _PRODUCT_ALL_KWARGS,
     _PRODUCT_LIST_ALL_KWARGS,
     _PRODUCT_NAVIGATION_ALL_KWARGS,
     _REAL_ESTATE_ALL_KWARGS,
+    _SERP_ALL_KWARGS,
+    _SOCIAL_MEDIA_POST_ALL_KWARGS,
 )
 
 PARAMS = (
@@ -57,10 +69,22 @@ PARAMS = (
             "business_place",
         ),
         (
+            ForumThread,
+            _FORUM_THREAD_ALL_KWARGS,
+            AutoForumThreadPage,
+            "forum_thread",
+        ),
+        (
             JobPosting,
             _JOB_POSTING_ALL_KWARGS,
             AutoJobPostingPage,
             "job_posting",
+        ),
+        (
+            JobPostingNavigation,
+            _JOB_POSTING_NAVIGATION_ALL_KWARGS,
+            AutoJobPostingNavigationPage,
+            "job_posting_navigation",
         ),
         (Product, _PRODUCT_ALL_KWARGS, AutoProductPage, "product"),
         (ProductList, _PRODUCT_LIST_ALL_KWARGS, AutoProductListPage, "product_list"),
@@ -75,6 +99,13 @@ PARAMS = (
             _REAL_ESTATE_ALL_KWARGS,
             AutoRealEstatePage,
             "real_estate",
+        ),
+        (Serp, _SERP_ALL_KWARGS, AutoSerpPage, "serp"),
+        (
+            SocialMediaPost,
+            _SOCIAL_MEDIA_POST_ALL_KWARGS,
+            AutoSocialMediaPostPage,
+            "social_media_post",
         ),
     ),
 )
