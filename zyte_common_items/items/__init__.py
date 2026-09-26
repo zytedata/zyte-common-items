@@ -12,6 +12,7 @@ from .custom_attributes import (
 from .forum_thread import ForumThread, ForumThreadMetadata
 from .job_posting import JobPosting, JobPostingMetadata
 from .job_posting_navigation import JobPostingNavigation, JobPostingNavigationMetadata
+from .page_content import PageContent, PageContentMetadata
 from .product import Product, ProductMetadata, ProductVariant
 from .product_list import ProductFromList, ProductList, ProductListMetadata
 from .product_navigation import ProductNavigation, ProductNavigationMetadata
@@ -42,6 +43,8 @@ __all__ = [
     "JobPostingMetadata",
     "JobPostingNavigation",
     "JobPostingNavigationMetadata",
+    "PageContent",
+    "PageContentMetadata",
     "Product",
     "ProductFromList",
     "ProductList",

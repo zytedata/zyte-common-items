@@ -153,6 +153,16 @@ Forum thread
 .. autoclass:: zyte_common_items.ForumThreadMetadata(**kwargs)
    :members: dateDownloaded, validationMessages
 
+Page content
+============
+
+.. autoclass:: zyte_common_items.PageContent(**kwargs)
+   :members:
+   :inherited-members:
+
+.. autoclass:: zyte_common_items.PageContentMetadata(**kwargs)
+   :members: dateDownloaded, probability, validationMessages
+
 .. _request-template-api:
 
 Search Request templates
