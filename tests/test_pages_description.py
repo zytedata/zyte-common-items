@@ -190,6 +190,24 @@ async def test_none():
     assert await page.description is None
     assert await page.descriptionHtml is None
 
+    page = CustomProductPage(response=HttpResponse(url=url, body=HTML))
+    assert await page.descriptionHtml is None
+    assert await page.description is None
+
+
+@pytest.mark.asyncio
+async def test_description_none():
+    # descriptionHtml is produced from a description that is None
+    class CustomProductPage(ProductPage):
+        @field
+        def description(self):
+            return None
+
+    url = "https://example.com"
+    page = CustomProductPage(response=HttpResponse(url=url, body=HTML))
+    assert await page.descriptionHtml is None
+    assert page.description is None
+
 
 @pytest.mark.asyncio
 async def test_job_posting_mixin():
