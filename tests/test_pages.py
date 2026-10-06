@@ -215,6 +215,7 @@ METADATA_FIELDS = {
         "validationMessages",
     },
     "ForumThread": {"dateDownloaded", "validationMessages"},
+    "PageContent": {"dateDownloaded", "probability", "validationMessages"},
     "Product": {"dateDownloaded", "probability", "validationMessages"},
     "ProductList": {"dateDownloaded", "validationMessages"},
     "ProductNavigation": {"dateDownloaded", "validationMessages"},
@@ -469,8 +470,11 @@ def test_metadata_cls_none():
     </html>
     """
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
-    with pytest.raises(ValueError, match="doesn't have a metadata class configured"):
+    msg = "doesn't have a metadata class configured"
+    with pytest.raises(ValueError, match=msg):
         page.metadata
+    with pytest.raises(ValueError, match=msg):
+        page.no_item_found()
 
 
 def test_request():

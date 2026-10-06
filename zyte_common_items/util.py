@@ -1,17 +1,16 @@
-import warnings
 from collections.abc import Callable
 from typing import Any, TypeVar
 from warnings import warn
 from weakref import WeakKeyDictionary
 
 import attrs
+from typing_extensions import deprecated
 
 # backwards compatibility imports
 from ._dateutils import format_datetime as format_datetime  # noqa: PLC0414
 from .converters import MetadataCaster  # noqa: F401
 from .converters import url_to_str as url_to_str  # noqa: PLC0414
 
-# Caches the attribute names for attr.s classes.
 _CLASS_ATTRS: WeakKeyDictionary = WeakKeyDictionary()
 
 
@@ -84,13 +83,11 @@ def convert_to_class(value: Any, new_cls: type[NewClassT]) -> NewClassT:
     return new_value
 
 
+@deprecated(
+    "zyte_common_items.util.metadata_processor is moved to "
+    "zyte_common_items.processors.metadata_processor"
+)
 def metadata_processor(metadata, page):
     from zyte_common_items.processors import metadata_processor  # noqa: PLC0415
 
-    warnings.warn(
-        "zyte_common_items.util.metadata_processor is moved to"
-        "zyte_common_items.processors.metadata_processor",
-        DeprecationWarning,
-        stacklevel=2,
-    )
     return metadata_processor(metadata, page)

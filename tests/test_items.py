@@ -24,6 +24,7 @@ from zyte_common_items import (
     BusinessPlace,
     BusinessPlaceMetadata,
     ForumThread,
+    ForumThreadMetadata,
     Gtin,
     Header,
     HiringOrganization,
@@ -33,10 +34,13 @@ from zyte_common_items import (
     JobPosting,
     JobPostingMetadata,
     JobPostingNavigation,
+    JobPostingNavigationMetadata,
     Link,
     Metadata,
     NamedLink,
     OpeningHoursItem,
+    PageContent,
+    PageContentMetadata,
     ParentPlace,
     ProbabilityMetadata,
     ProbabilityRequest,
@@ -60,6 +64,7 @@ from zyte_common_items import (
     SocialMediaPostAuthor,
     SocialMediaPostMetadata,
     StarRating,
+    Topic,
     Url,
     Video,
 )
@@ -221,6 +226,26 @@ _ARTICLE_NAVIGATION_ALL_KWARGS: dict = {
     ),
     "pageNumber": 5,
     "metadata": ArticleNavigationMetadata(dateDownloaded="2022-12-31T13:01:54Z"),
+}
+
+_PAGE_CONTENT_MIN_KWARGS: dict = {"url": "https://example.com/page"}
+
+_PAGE_CONTENT_ALL_KWARGS: dict = {
+    **_PAGE_CONTENT_MIN_KWARGS,
+    "canonicalUrl": "https://example.com/canonical-page",
+    "headline": "Example headline",
+    "title": "Example title",
+    "itemMain": "Example main text",
+    "itemMainXPath": "//*[@id='main']",
+    "breadcrumbs": [Breadcrumb(name="Home", url="https://example.com/")],
+    "navigationHeader": [NamedLink(name="Category", url="https://example.com/c/")],
+    "navigationFooter": [NamedLink(name="Privacy", url="https://example.com/p/")],
+    "navigationSidebar": [NamedLink(name="Side", url="https://example.com/s/")],
+    "pagination": [NamedLink(name="2", url="https://example.com/page?p=2")],
+    "nextPage": Request(url="https://example.com/page?p=2", name="Next"),
+    "metadata": PageContentMetadata(
+        dateDownloaded="2022-12-31T13:01:54Z", probability=0.9
+    ),
 }
 
 _BUSINESS_PLACE_MIN_KWARGS: dict = {}
@@ -575,6 +600,51 @@ _SOCIAL_MEDIA_POST_ALL_KWARGS: dict = {
 }
 
 
+_FORUM_THREAD_MIN_KWARGS: dict = {
+    "url": "https://example.com/thread/12345",
+}
+
+_FORUM_THREAD_ALL_KWARGS: dict = {
+    **_FORUM_THREAD_MIN_KWARGS,
+    "threadId": "12345",
+    "topic": Topic(name="Web scraping"),
+    "posts": [SocialMediaPost(**_SOCIAL_MEDIA_POST_ALL_KWARGS)],
+    "metadata": ForumThreadMetadata(dateDownloaded="2022-12-31T13:01:54Z"),
+}
+
+_JOB_POSTING_NAVIGATION_MIN_KWARGS: dict = {
+    "url": "https://example.com/jobs",
+}
+
+_JOB_POSTING_NAVIGATION_ALL_KWARGS: dict = {
+    **_JOB_POSTING_NAVIGATION_MIN_KWARGS,
+    "items": [
+        ProbabilityRequest(
+            url="https://example.com/viewjob/12345",
+            method="POST",
+            body="YmFzZTY0LWVuY29kZWQ=",
+            headers=[Header(name="content-type", value="text/json")],
+            name="Software Engineer",
+            metadata=ProbabilityMetadata(probability=0.99),
+        ),
+        ProbabilityRequest(
+            url="https://example.com/viewjob/12346",
+            name="Data Engineer",
+            metadata=ProbabilityMetadata(probability=0.98),
+        ),
+    ],
+    "nextPage": Request(
+        url="https://example.com/jobs?page=2",
+        name="Next page",
+        method="POST",
+        body="Im9rIg==",
+        headers=[Header(name="content-type", value="text/json")],
+    ),
+    "pageNumber": 1,
+    "metadata": JobPostingNavigationMetadata(dateDownloaded="2022-12-31T13:01:54Z"),
+}
+
+
 def test_article_all_fields():
     article = Article(**_ARTICLE_ALL_KWARGS)
     for field in list(_ARTICLE_ALL_KWARGS):
@@ -896,6 +966,28 @@ def test_serp_missing_fields():
             Serp(**incomplete_kwargs)
 
 
+def test_page_content_all_fields():
+    page_content = PageContent(**_PAGE_CONTENT_ALL_KWARGS)
+    for field in list(_PAGE_CONTENT_ALL_KWARGS):
+        assert getattr(page_content, field) == _PAGE_CONTENT_ALL_KWARGS[field]
+
+
+def test_page_content_min_fields():
+    page_content = PageContent(**_PAGE_CONTENT_MIN_KWARGS)
+    for field in list(_PAGE_CONTENT_ALL_KWARGS):
+        if field in _PAGE_CONTENT_MIN_KWARGS:
+            continue
+        assert getattr(page_content, field) is None
+
+
+def test_page_content_missing_fields():
+    for required_field in list(_PAGE_CONTENT_MIN_KWARGS):
+        incomplete_kwargs: dict = copy(_PAGE_CONTENT_MIN_KWARGS)
+        del incomplete_kwargs[required_field]
+        with pytest.raises(TypeError):
+            PageContent(**incomplete_kwargs)
+
+
 def test_social_media_post_all_fields():
     social_media_post = SocialMediaPost(**_SOCIAL_MEDIA_POST_ALL_KWARGS)
     for field in list(_SOCIAL_MEDIA_POST_ALL_KWARGS):
@@ -927,6 +1019,7 @@ def test_social_media_post_missing_fields():
         (ArticleNavigation, False),
         (BusinessPlace, True),
         (JobPosting, True),
+        (PageContent, True),
         (Product, True),
         (ProductFromList, True),
         (ProductList, False),
@@ -987,6 +1080,7 @@ def test_item_subclasses():
         ForumThread,
         JobPosting,
         JobPostingNavigation,
+        PageContent,
         Product,
         ProductList,
         ProductNavigation,

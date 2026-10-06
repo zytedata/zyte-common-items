@@ -1,6 +1,7 @@
 from collections.abc import Collection
 from contextlib import contextmanager
 from copy import copy
+from warnings import catch_warnings, simplefilter
 
 import attrs
 import pytest
@@ -385,3 +386,19 @@ def test_keep_empty_adapter_local():
     adapter = TestAdapter(item)
     actual_dict = adapter.asdict()
     assert actual_dict == {"children": []}
+
+
+def test_is_item_class():
+    @attrs.define
+    class NonItem:
+        pass
+
+    class Adapter(ZyteItemAdapter):
+        pass
+
+    assert Adapter.is_item_class(Product)
+    assert not Adapter.is_item_class(NonItem)
+    with configured_adapter(Adapter), catch_warnings():
+        simplefilter("error")
+        assert isinstance(ItemAdapter(Product(**_PRODUCT_MIN_KWARGS)).adapter, Adapter)
+        assert not isinstance(ItemAdapter(NonItem()).adapter, Adapter)

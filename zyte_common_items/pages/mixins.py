@@ -30,7 +30,7 @@ class PriceMixin(FieldsMixin):
 
     _parsed_price: Price | None = None
 
-    async def _get_parsed_price(self) -> Price | None:
+    async def _get_parsed_price(self) -> Price:
         if self._parsed_price is None:
             # the price field wasn't executed or doesn't write _parsed_price
             price = getattr(self, "price", None)
@@ -49,9 +49,7 @@ class PriceMixin(FieldsMixin):
     @field
     async def currencyRaw(self) -> str | None:
         parsed_price = await self._get_parsed_price()
-        if parsed_price:
-            return parsed_price.currency
-        return None
+        return parsed_price.currency
 
 
 class DescriptionMixin(FieldsMixin):

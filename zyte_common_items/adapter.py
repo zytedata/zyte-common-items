@@ -50,8 +50,15 @@ class ZyteItemAdapter(AttrsAdapter):
     """
 
     @classmethod
-    def is_item(cls, item: Any) -> bool:
-        return isinstance(item, Item)
+    def is_item_class(cls, item_class: type) -> bool:
+        return issubclass(item_class, Item)
+
+    # itemadapter versions that select adapters through is_item()
+    if "is_item" in vars(AttrsAdapter):
+
+        @classmethod
+        def is_item(cls, item: Any) -> bool:
+            return isinstance(item, Item)
 
     def get_field_meta(self, field_name: str) -> MappingProxyType:
         if field_name in self._fields_dict:

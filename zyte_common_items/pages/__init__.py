@@ -19,6 +19,7 @@ from .job_posting_navigation import (
     JobPostingNavigationPage,
 )
 from .mixins import DescriptionMixin, HasMetadata, PriceMixin
+from .page_content import AutoPageContentPage, BasePageContentPage, PageContentPage
 from .product import AutoProductPage, BaseProductPage, ProductPage
 from .product_list import AutoProductListPage, BaseProductListPage, ProductListPage
 from .product_navigation import (
@@ -49,6 +50,7 @@ __all__ = [
     "AutoForumThreadPage",
     "AutoJobPostingNavigationPage",
     "AutoJobPostingPage",
+    "AutoPageContentPage",
     "AutoProductListPage",
     "AutoProductNavigationPage",
     "AutoProductPage",
@@ -63,6 +65,7 @@ __all__ = [
     "BaseJobPostingNavigationPage",
     "BaseJobPostingPage",
     "BasePage",
+    "BasePageContentPage",
     "BaseProductListPage",
     "BaseProductNavigationPage",
     "BaseProductPage",
@@ -77,6 +80,7 @@ __all__ = [
     "JobPostingNavigationPage",
     "JobPostingPage",
     "Page",
+    "PageContentPage",
     "PriceMixin",
     "ProductListPage",
     "ProductNavigationPage",
