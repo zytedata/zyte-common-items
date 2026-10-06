@@ -1,13 +1,5 @@
 import datetime
-import sys
-
-try:
-    from datetime import UTC
-except ImportError:
-    # Python < 3.11
-    from datetime import timezone
-
-    UTC = timezone.utc
+from datetime import UTC
 
 
 def format_datetime(dt) -> str:
@@ -21,9 +13,6 @@ def parse_iso_datetime(date_str) -> datetime.datetime:
     """Parse ISO-formatted UTC date (with a timezone specified as Z)
     to a TZ-aware datetime object.
     """
-    if sys.version_info < (3, 11):
-        assert date_str[-1] == "Z"
-        return datetime.datetime.fromisoformat(date_str[:-1]).replace(tzinfo=UTC)
     return datetime.datetime.fromisoformat(date_str)
 
 
