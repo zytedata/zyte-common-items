@@ -70,7 +70,7 @@ def test_metadata_get_date_downloaded():
         minute=6,
         second=2,
         microsecond=0,
-        tzinfo=datetime.timezone.utc,
+        tzinfo=datetime.UTC,
     )
 
 
