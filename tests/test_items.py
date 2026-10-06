@@ -24,6 +24,7 @@ from zyte_common_items import (
     BusinessPlace,
     BusinessPlaceMetadata,
     ForumThread,
+    ForumThreadMetadata,
     Gtin,
     Header,
     HiringOrganization,
@@ -33,6 +34,7 @@ from zyte_common_items import (
     JobPosting,
     JobPostingMetadata,
     JobPostingNavigation,
+    JobPostingNavigationMetadata,
     Link,
     Metadata,
     NamedLink,
@@ -62,6 +64,7 @@ from zyte_common_items import (
     SocialMediaPostAuthor,
     SocialMediaPostMetadata,
     StarRating,
+    Topic,
     Url,
     Video,
 )
@@ -594,6 +597,51 @@ _SOCIAL_MEDIA_POST_ALL_KWARGS: dict = {
         probability=0.95,
         searchText="Extract Summit",
     ),
+}
+
+
+_FORUM_THREAD_MIN_KWARGS: dict = {
+    "url": "https://example.com/thread/12345",
+}
+
+_FORUM_THREAD_ALL_KWARGS: dict = {
+    **_FORUM_THREAD_MIN_KWARGS,
+    "threadId": "12345",
+    "topic": Topic(name="Web scraping"),
+    "posts": [SocialMediaPost(**_SOCIAL_MEDIA_POST_ALL_KWARGS)],
+    "metadata": ForumThreadMetadata(dateDownloaded="2022-12-31T13:01:54Z"),
+}
+
+_JOB_POSTING_NAVIGATION_MIN_KWARGS: dict = {
+    "url": "https://example.com/jobs",
+}
+
+_JOB_POSTING_NAVIGATION_ALL_KWARGS: dict = {
+    **_JOB_POSTING_NAVIGATION_MIN_KWARGS,
+    "items": [
+        ProbabilityRequest(
+            url="https://example.com/viewjob/12345",
+            method="POST",
+            body="YmFzZTY0LWVuY29kZWQ=",
+            headers=[Header(name="content-type", value="text/json")],
+            name="Software Engineer",
+            metadata=ProbabilityMetadata(probability=0.99),
+        ),
+        ProbabilityRequest(
+            url="https://example.com/viewjob/12346",
+            name="Data Engineer",
+            metadata=ProbabilityMetadata(probability=0.98),
+        ),
+    ],
+    "nextPage": Request(
+        url="https://example.com/jobs?page=2",
+        name="Next page",
+        method="POST",
+        body="Im9rIg==",
+        headers=[Header(name="content-type", value="text/json")],
+    ),
+    "pageNumber": 1,
+    "metadata": JobPostingNavigationMetadata(dateDownloaded="2022-12-31T13:01:54Z"),
 }
 
 

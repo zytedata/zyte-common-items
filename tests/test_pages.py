@@ -475,6 +475,8 @@ def test_metadata_cls_none():
     page = CustomProductPage(response=HttpResponse(url=url, body=html))
     with pytest.raises(ValueError):
         page.metadata
+    with pytest.raises(ValueError):
+        page.no_item_found()
 
 
 def test_request():
