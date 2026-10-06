@@ -60,22 +60,20 @@ itemadapter.ItemAdapter.ADAPTER_CLASSES_ as early as possible in your code::
     from itemadapter import ItemAdapter
     from zyte_common_items import ZyteItemAdapter
 
-    ItemAdapter.ADAPTER_CLASSES.appendleft(ZyteItemAdapter)
+    ItemAdapter.ADAPTER_CLASSES = (ZyteItemAdapter, *ItemAdapter.ADAPTER_CLASSES)
 
 
 Alternatively, make your own subclass of :class:`itemadapter.ItemAdapter`::
-
-    from collections import deque
 
     from itemadapter import ItemAdapter
     from zyte_common_items import ZyteItemAdapter
 
     class MyItemAdapter(ItemAdapter):
-        ADAPTER_CLASSES = deque([ZyteItemAdapter]) + ItemAdapter.ADAPTER_CLASSES
+        ADAPTER_CLASSES = (ZyteItemAdapter, *ItemAdapter.ADAPTER_CLASSES)
 
 Now you can use ``MyItemAdapter`` where you would use
 :class:`itemadapter.ItemAdapter`.
 
 .. _itemadapter: https://github.com/scrapy/itemadapter#itemadapter
-.. _itemadapter.ItemAdapter.ADAPTER_CLASSES: https://github.com/scrapy/itemadapter#class-attribute-adapter_classes-collectionsdeque
+.. _itemadapter.ItemAdapter.ADAPTER_CLASSES: https://github.com/scrapy/itemadapter#class-attribute-adapter_classes-iterable
 .. _Scrapy: https://scrapy.org/
