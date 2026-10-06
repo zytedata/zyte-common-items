@@ -15,6 +15,7 @@ from zyte_common_items import (
     Image,
     JobPosting,
     JobPostingNavigation,
+    PageContent,
     Product,
     ProductFromList,
     ProductList,
@@ -148,6 +149,18 @@ class TestTopLevelItemSerialization:
         deserialized = deserialize_leaf(JobPostingNavigation, serialized)
 
         assert deserialized.url == navigation.url
+
+    def test_page_content_serialization(self):
+        """Test PageContent serialization and deserialization."""
+        page_content = PageContent(
+            url="https://example.com/page",
+            itemMain="Main text",
+        )
+        serialized = serialize_leaf(page_content)
+        deserialized = deserialize_leaf(PageContent, serialized)
+
+        assert deserialized.url == page_content.url
+        assert deserialized.itemMain == page_content.itemMain
 
     def test_serp_serialization(self):
         """Test Serp serialization and deserialization."""

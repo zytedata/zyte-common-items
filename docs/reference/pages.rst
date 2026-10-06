@@ -162,6 +162,18 @@ Forum thread
 .. autoclass:: zyte_common_items.AutoForumThreadPage(**kwargs)
    :show-inheritance:
 
+Page content
+============
+
+.. autoclass:: zyte_common_items.BasePageContentPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.PageContentPage(**kwargs)
+   :show-inheritance:
+
+.. autoclass:: zyte_common_items.AutoPageContentPage(**kwargs)
+   :show-inheritance:
+
 Request templates
 =================
 
