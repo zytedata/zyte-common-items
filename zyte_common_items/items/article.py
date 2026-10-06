@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -27,10 +25,10 @@ class Article(Item):
     :attr:`url` is the only required attribute.
     """
 
-    headline: Optional[str] = None
+    headline: str | None = None
     """Headline or title."""
 
-    datePublished: Optional[str] = None
+    datePublished: str | None = None
     """Publication date of the article.
 
     Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ" or
@@ -42,11 +40,11 @@ class Article(Item):
     :attr:`~zyte_common_items.Article.dateModified` is used instead.
     """
 
-    datePublishedRaw: Optional[str] = None
+    datePublishedRaw: str | None = None
     """Same date as :attr:`~zyte_common_items.Article.datePublished`, but
     before parsing/normalization, i.e. as it appears on the website."""
 
-    dateModified: Optional[str] = None
+    dateModified: str | None = None
     """Date when the article was most recently modified.
 
     Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ" or
@@ -55,39 +53,39 @@ class Article(Item):
     With timezone, if available.
     """
 
-    dateModifiedRaw: Optional[str] = None
+    dateModifiedRaw: str | None = None
     """Same date as :attr:`~zyte_common_items.Article.dateModified`, but before
     parsing/normalization, i.e. as it appears on the website."""
 
-    authors: Optional[List[Author]] = None
+    authors: list[Author] | None = None
     """All authors of the article."""
 
-    breadcrumbs: Optional[List[Breadcrumb]] = None
+    breadcrumbs: list[Breadcrumb] | None = None
     """Webpage `breadcrumb trail`_.
 
     .. _Breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
     """
 
-    inLanguage: Optional[str] = None
+    inLanguage: str | None = None
     """Language of the article, as an ISO 639-1 language code.
 
     Sometimes the article language is not the same as the web page overall
     language.
     """
 
-    mainImage: Optional[Image] = None
+    mainImage: Image | None = None
     """Main image."""
 
-    images: Optional[List[Image]] = None
+    images: list[Image] | None = None
     """All images."""
 
-    description: Optional[str] = None
+    description: str | None = None
     """A short summary of the article.
 
     It can be either human-provided (if available), or auto-generated.
     """
 
-    articleBody: Optional[str] = None
+    articleBody: str | None = None
     """Clean text of the article, including sub-headings, with newline
     separators.
 
@@ -99,20 +97,20 @@ class Article(Item):
     - no normalization of Unicode characters.
     """
 
-    articleBodyHtml: Optional[str] = None
+    articleBodyHtml: str | None = None
     """Simplified and standardized HTML of the article, including sub-headings,
     image captions and embedded content (videos, tweets, etc.).
 
     Format: HTML string normalized in a consistent way.
     """
 
-    videos: Optional[List[Video]] = None
+    videos: list[Video] | None = None
     """All videos."""
 
-    audios: Optional[List[Audio]] = None
+    audios: list[Audio] | None = None
     """All audios."""
 
-    canonicalUrl: Optional[str] = attrs.field(
+    canonicalUrl: str | None = attrs.field(
         default=None, converter=url_to_str_optional, kw_only=True
     )
     """Canonical form of the URL, as indicated by the website.
@@ -131,7 +129,7 @@ class Article(Item):
     the returned "empty" item would still contain this URL field.
     """
 
-    metadata: Optional[ArticleMetadata] = attrs.field(
+    metadata: ArticleMetadata | None = attrs.field(
         default=None,
         converter=to_metadata_optional(ArticleMetadata),  # type: ignore[misc]
         kw_only=True,

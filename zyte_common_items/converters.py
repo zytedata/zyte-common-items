@@ -2,13 +2,11 @@
 A module with common attrs converters
 """
 
-from typing import Optional, Union
-
 import attrs
 from web_poet.page_inputs.url import RequestUrl, ResponseUrl
 
 
-def url_to_str(url: Union[str, RequestUrl, ResponseUrl]) -> str:
+def url_to_str(url: str | RequestUrl | ResponseUrl) -> str:
     """Return the input :class:`~web_poet.page_inputs.url.RequestUrl` or
     :class:`~web_poet.page_inputs.url.ResponseUrl` object as a string."""
 
@@ -20,8 +18,8 @@ def url_to_str(url: Union[str, RequestUrl, ResponseUrl]) -> str:
 
 
 def url_to_str_optional(
-    url: Union[str, RequestUrl, ResponseUrl, None],
-) -> Optional[str]:
+    url: str | RequestUrl | ResponseUrl | None,
+) -> str | None:
     """Return the input :class:`~web_poet.page_inputs.url.RequestUrl` or
     :class:`~web_poet.page_inputs.url.ResponseUrl` object as a string, or
     None if url is None."""
@@ -44,9 +42,10 @@ class MetadataCaster:
 
 
 def to_probability_request_list(request_list):
-    """attrs converter to turn lists of :class:`~scrapy.Request` instances, or
+    """Attrs converter to turn lists of :class:`~scrapy.Request` instances, or
     of dicts, into lists of :class:`~.ProbabilityRequest` instances."""
-    from zyte_common_items.components import ProbabilityRequest
+    # circular import
+    from zyte_common_items.components import ProbabilityRequest  # noqa: PLC0415
 
     return [
         (
@@ -59,7 +58,7 @@ def to_probability_request_list(request_list):
 
 
 def to_probability_request_list_optional(request_list):
-    """attrs converter to turn lists of :class:`~scrapy.Request` instances into
+    """Attrs converter to turn lists of :class:`~scrapy.Request` instances into
     lists of :class:`~.ProbabilityRequest` instances. If None is passed, None is
     returned."""
     if request_list is None:

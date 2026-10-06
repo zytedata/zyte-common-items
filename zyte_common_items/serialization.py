@@ -7,7 +7,6 @@ zyte-common-items items as dependencies.
 """
 
 import json
-from typing import Type
 
 import itemadapter
 from web_poet.serialization import SerializedLeafData, register_serialization
@@ -29,7 +28,7 @@ def _serialize_item(o: Item) -> SerializedLeafData:
     return {"json": item_json.encode()}
 
 
-def _deserialize_item(cls: Type[Item], data: SerializedLeafData) -> Item:
+def _deserialize_item(cls: type[Item], data: SerializedLeafData) -> Item:
     """Deserialize JSON data back to an Item instance."""
     return cls.from_dict(json.loads(data["json"]))
 

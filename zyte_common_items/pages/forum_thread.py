@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 import attrs
 from web_poet import Returns
 
@@ -26,21 +24,21 @@ class AutoForumThreadPage(BaseForumThreadPage):
     forum_thread: ForumThread
 
     @auto_field
-    def url(self) -> Optional[str]:
+    def url(self) -> str | None:
         return self.forum_thread.url
 
     @auto_field
-    def threadId(self) -> Optional[str]:
+    def threadId(self) -> str | None:
         return self.forum_thread.threadId
 
     @auto_field
-    def topic(self) -> Optional[Topic]:
+    def topic(self) -> Topic | None:
         return self.forum_thread.topic
 
     @auto_field
-    def posts(self) -> Optional[List[SocialMediaPost]]:
+    def posts(self) -> list[SocialMediaPost] | None:
         return self.forum_thread.posts
 
     @auto_field
-    def metadata(self) -> Optional[ForumThreadMetadata]:
+    def metadata(self) -> ForumThreadMetadata | None:
         return self.forum_thread.metadata

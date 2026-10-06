@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -16,7 +14,7 @@ class RealEstateArea(Item):
     """Unit of the value field, one of: SQMT (square meters), SQFT (square feet),
     ACRE (acres)."""
 
-    areaType: Optional[str] = None
+    areaType: str | None = None
     """Type of area, one of: LOT, FLOOR."""
 
     raw: str

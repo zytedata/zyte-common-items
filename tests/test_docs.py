@@ -1,5 +1,6 @@
 import re
 from importlib import import_module
+from pathlib import Path
 
 import pytest
 
@@ -12,7 +13,7 @@ TOP_LEVEL_CLASS_NAMES = {
 
 @pytest.mark.parametrize(
     ("submodule_name", "only_in_docs", "only_in_submodule"),
-    (
+    [
         ("components", set(), set()),
         ("items", {"Item", "base.ProbabilityMixin"}, {"RequestListCaster"}),
         (
@@ -20,11 +21,10 @@ TOP_LEVEL_CLASS_NAMES = {
             {"pages.base._BasePage"},
             {"DescriptionMixin", "HasMetadata", "PriceMixin"},
         ),
-    ),
+    ],
 )
 def test_component_reference_entries(submodule_name, only_in_docs, only_in_submodule):
-    with open(f"docs/reference/{submodule_name}.rst") as f:
-        docs_page = f.read()
+    docs_page = Path(f"docs/reference/{submodule_name}.rst").read_text(encoding="utf-8")
     docs_class_names = set()
     for match in AUTOCLASS_PATTERN.finditer(docs_page):
         class_name = match[1]

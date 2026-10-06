@@ -1,4 +1,3 @@
-# flake8: noqa
 from .article import ArticlePage, AutoArticlePage, BaseArticlePage
 from .article_list import ArticleListPage, AutoArticleListPage, BaseArticleListPage
 from .article_navigation import (
@@ -20,11 +19,7 @@ from .job_posting_navigation import (
     JobPostingNavigationPage,
 )
 from .mixins import DescriptionMixin, HasMetadata, PriceMixin
-from .page_content import (
-    AutoPageContentPage,
-    BasePageContentPage,
-    PageContentPage,
-)
+from .page_content import AutoPageContentPage, BasePageContentPage, PageContentPage
 from .product import AutoProductPage, BaseProductPage, ProductPage
 from .product_list import AutoProductListPage, BaseProductListPage, ProductListPage
 from .product_navigation import (

@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -28,10 +26,10 @@ class JobPosting(Item):
     url: str = attrs.field(converter=url_to_str_optional)
     """The url of the final response, after any redirects."""
 
-    jobPostingId: Optional[str] = None
+    jobPostingId: str | None = None
     """The identifier of the job posting."""
 
-    datePublished: Optional[str] = None
+    datePublished: str | None = None
     """Publication date of the job posting.
 
     Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
@@ -39,11 +37,11 @@ class JobPosting(Item):
     With timezone, if available.
     """
 
-    datePublishedRaw: Optional[str] = None
+    datePublishedRaw: str | None = None
     """Same date as datePublished, but before parsing/normalization, i.e. as it
     appears on the website."""
 
-    dateModified: Optional[str] = None
+    dateModified: str | None = None
     """The date when the job posting was most recently modified.
 
     Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
@@ -51,11 +49,11 @@ class JobPosting(Item):
     With timezone, if available.
     """
 
-    dateModifiedRaw: Optional[str] = None
+    dateModifiedRaw: str | None = None
     """Same date as dateModified, but before parsing/normalization, i.e. as it
     appears on the website."""
 
-    validThrough: Optional[str] = None
+    validThrough: str | None = None
     """The date after which the job posting is not valid, e.g. the end of an
     offer.
 
@@ -64,21 +62,21 @@ class JobPosting(Item):
     With timezone, if available.
     """
 
-    validThroughRaw: Optional[str] = None
+    validThroughRaw: str | None = None
     """Same date as validThrough, but before parsing/normalization, i.e. as it
     appears on the website."""
 
-    jobTitle: Optional[str] = None
+    jobTitle: str | None = None
     """The title of the job posting."""
 
-    headline: Optional[str] = None
+    headline: str | None = None
     """The headline of the job posting."""
 
-    jobLocation: Optional[JobLocation] = None
+    jobLocation: JobLocation | None = None
     """A (typically single) geographic location associated with the job
     position."""
 
-    description: Optional[str] = None
+    description: str | None = None
     """A description of the job posting including sub-headings, with newline
     separators.
 
@@ -91,24 +89,24 @@ class JobPosting(Item):
     - no normalization of Unicode characters.
     """
 
-    descriptionHtml: Optional[str] = None
+    descriptionHtml: str | None = None
     """Simplified HTML of the description, including sub-headings, image
     captions and embedded content."""
 
-    employmentType: Optional[str] = None
+    employmentType: str | None = None
     """Type of employment (e.g. full-time, part-time, contract, temporary,
     seasonal, internship)."""
 
-    baseSalary: Optional[BaseSalary] = None
+    baseSalary: BaseSalary | None = None
     """The base salary of the job or of an employee in the proposed role."""
 
-    requirements: Optional[List[str]] = None
+    requirements: list[str] | None = None
     """Candidate requirements for the job."""
 
-    hiringOrganization: Optional[HiringOrganization] = None
+    hiringOrganization: HiringOrganization | None = None
     """Information about the organization offering the job position."""
 
-    jobStartDate: Optional[str] = None
+    jobStartDate: str | None = None
     """Job start date.
 
     Format: ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
@@ -116,14 +114,14 @@ class JobPosting(Item):
     With timezone, if available.
     """
 
-    jobStartDateRaw: Optional[str] = None
+    jobStartDateRaw: str | None = None
     """Same date as jobStartDate, but before parsing/normalization, i.e. as it
     appears on the website."""
 
-    remoteStatus: Optional[str] = None
+    remoteStatus: str | None = None
     """Specifies the remote status of the position."""
 
-    metadata: Optional[JobPostingMetadata] = attrs.field(
+    metadata: JobPostingMetadata | None = attrs.field(
         default=None,
         converter=to_metadata_optional(JobPostingMetadata),  # type: ignore[misc]
         kw_only=True,

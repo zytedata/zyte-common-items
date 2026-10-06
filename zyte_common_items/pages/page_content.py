@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 import attrs
 from web_poet import Returns
 
@@ -26,53 +24,53 @@ class AutoPageContentPage(BasePageContentPage):
     page_content: PageContent
 
     @auto_field
-    def breadcrumbs(self) -> Optional[List[Breadcrumb]]:
+    def breadcrumbs(self) -> list[Breadcrumb] | None:
         return self.page_content.breadcrumbs
 
     @auto_field
-    def canonicalUrl(self) -> Optional[str]:
+    def canonicalUrl(self) -> str | None:
         return self.page_content.canonicalUrl
 
     @auto_field
-    def headline(self) -> Optional[str]:
+    def headline(self) -> str | None:
         return self.page_content.headline
 
     @auto_field
-    def itemMain(self) -> Optional[str]:
+    def itemMain(self) -> str | None:
         return self.page_content.itemMain
 
     @auto_field
-    def itemMainXPath(self) -> Optional[str]:
+    def itemMainXPath(self) -> str | None:
         return self.page_content.itemMainXPath
 
     @auto_field
-    def metadata(self) -> Optional[PageContentMetadata]:
+    def metadata(self) -> PageContentMetadata | None:
         return self.page_content.metadata
 
     @auto_field
-    def navigationFooter(self) -> Optional[List[NamedLink]]:
+    def navigationFooter(self) -> list[NamedLink] | None:
         return self.page_content.navigationFooter
 
     @auto_field
-    def navigationHeader(self) -> Optional[List[NamedLink]]:
+    def navigationHeader(self) -> list[NamedLink] | None:
         return self.page_content.navigationHeader
 
     @auto_field
-    def navigationSidebar(self) -> Optional[List[NamedLink]]:
+    def navigationSidebar(self) -> list[NamedLink] | None:
         return self.page_content.navigationSidebar
 
     @auto_field
-    def nextPage(self) -> Optional[Request]:
+    def nextPage(self) -> Request | None:
         return self.page_content.nextPage
 
     @auto_field
-    def pagination(self) -> Optional[List[NamedLink]]:
+    def pagination(self) -> list[NamedLink] | None:
         return self.page_content.pagination
 
     @auto_field
-    def title(self) -> Optional[str]:
+    def title(self) -> str | None:
         return self.page_content.title
 
     @auto_field
-    def url(self) -> Optional[str]:
+    def url(self) -> str | None:
         return self.page_content.url

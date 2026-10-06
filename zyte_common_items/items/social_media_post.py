@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -24,36 +22,36 @@ class SocialMediaPost(Item):
     url: str = attrs.field(converter=url_to_str_optional)
     """The URL of the final response, after any redirects."""
 
-    postId: Optional[str] = None
+    postId: str | None = None
     """The identifier of the post."""
 
-    reactions: Optional[Reactions] = None
+    reactions: Reactions | None = None
     """Details of reactions to the post."""
 
-    text: Optional[str] = None
+    text: str | None = None
     """The text content of the post."""
 
-    datePublished: Optional[str] = None
+    datePublished: str | None = None
     """The timestamp at which the post was created.
 
     Format: Timezone: UTC. ISO 8601 format: "YYYY-MM-DDThh:mm:ssZ"
     """
 
-    hashtags: Optional[List[str]] = None
+    hashtags: list[str] | None = None
     """The list of hashtags contained in the post."""
 
-    mediaUrls: Optional[List[Url]] = None
+    mediaUrls: list[Url] | None = None
     """The list of URLs of media files (images, videos, etc.) linked from the
     post."""
 
-    author: Optional[SocialMediaPostAuthor] = None
+    author: SocialMediaPostAuthor | None = None
     """Details of the author of the post.
 
     No easily identifiable information can be contained in here, such as
     usernames.
     """
 
-    metadata: Optional[SocialMediaPostMetadata] = attrs.field(
+    metadata: SocialMediaPostMetadata | None = attrs.field(
         default=None,
         converter=to_metadata_optional(SocialMediaPostMetadata),  # type: ignore[misc]
         kw_only=True,

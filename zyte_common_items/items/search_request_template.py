@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from base64 import b64encode
-from typing import Any, List, Optional
+from typing import Any
 from urllib.parse import quote_plus
 from warnings import warn
 
@@ -14,7 +14,7 @@ from zyte_common_items.base import Item
 from zyte_common_items.components import DetailsMetadata, Header, Request
 from zyte_common_items.converters import to_metadata_optional
 
-_TEMPLATE_ENVIRONMENT = jinja2.Environment(undefined=StrictUndefined)
+_TEMPLATE_ENVIRONMENT = jinja2.Environment(undefined=StrictUndefined)  # noqa: S701
 _TEMPLATE_ENVIRONMENT.filters["quote_plus"] = quote_plus
 _UNSET = object()
 
@@ -50,7 +50,7 @@ class SearchRequestTemplate(Item):
     """:doc:`Jinja template <jinja:templates>` for :class:`Request.method
     <zyte_common_items.Request.method>`."""
 
-    body: Optional[str] = None
+    body: str | None = None
     """:doc:`Jinja template <jinja:templates>` for :class:`Request.body
     <zyte_common_items.Request.body>`.
 
@@ -61,7 +61,7 @@ class SearchRequestTemplate(Item):
     Defining a non-UTF-8 body is not supported.
     """
 
-    headers: Optional[List[Header]] = None
+    headers: list[Header] | None = None
     """List of :class:`Header`, for :class:`Request.headers
     <zyte_common_items.Request.headers>`, where every :attr:`~Header.name`
     and :attr:`~Header.value` is a :doc:`Jinja template <jinja:templates>`.
@@ -71,7 +71,7 @@ class SearchRequestTemplate(Item):
     headers.
     """
 
-    metadata: Optional[SearchRequestTemplateMetadata] = attrs.field(
+    metadata: SearchRequestTemplateMetadata | None = attrs.field(
         default=None,
         converter=to_metadata_optional(SearchRequestTemplateMetadata),  # type: ignore[misc]
         kw_only=True,
@@ -88,16 +88,15 @@ class SearchRequestTemplate(Item):
                 raise TypeError(
                     "request() missing 1 required keyword-only argument: 'query'"
                 )
-            else:
-                query = keyword
-                warn(
-                    (
-                        "The 'keyword' parameter of request() is deprecated, "
-                        "use 'query' instead."
-                    ),
-                    DeprecationWarning,
-                    stacklevel=2,
-                )
+            query = keyword
+            warn(
+                (
+                    "The 'keyword' parameter of request() is deprecated, "
+                    "use 'query' instead."
+                ),
+                DeprecationWarning,
+                stacklevel=2,
+            )
         elif keyword is not _UNSET:
             if keyword == query:
                 warn(

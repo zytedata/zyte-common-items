@@ -166,7 +166,6 @@ async def test_currency_none_price():
         @field
         def price(self):
             self.call_count += 1
-            return None
 
     html = b"""
     <!DOCTYPE html>

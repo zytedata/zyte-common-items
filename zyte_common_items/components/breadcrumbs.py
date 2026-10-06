@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 
 from zyte_common_items.base import Item
@@ -16,10 +14,10 @@ class Breadcrumb(Item):
     .. _breadcrumb trail: https://en.wikipedia.org/wiki/Breadcrumb_navigation
     """
 
-    name: Optional[str] = None
+    name: str | None = None
     """Text of the breadcrumb, as it appears on the website."""
 
-    url: Optional[str] = attrs.field(
+    url: str | None = attrs.field(
         default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
     """Absolute URL of the breadcrumb."""

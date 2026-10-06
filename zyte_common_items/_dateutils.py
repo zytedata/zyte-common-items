@@ -10,8 +10,7 @@ def format_datetime(dt) -> str:
 
 
 def parse_iso_datetime(date_str) -> datetime.datetime:
-    """
-    Parse ISO-formatted UTC date (with a timezone specified as Z)
+    """Parse ISO-formatted UTC date (with a timezone specified as Z)
     to a TZ-aware datetime object.
     """
     return datetime.datetime.fromisoformat(date_str)

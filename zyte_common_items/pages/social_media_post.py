@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 import attrs
 from web_poet import Returns
 
@@ -28,37 +26,37 @@ class AutoSocialMediaPostPage(BaseSocialMediaPostPage):
     social_media_post: SocialMediaPost
 
     @auto_field
-    def url(self) -> Optional[str]:
+    def url(self) -> str | None:
         return self.social_media_post.url
 
     @auto_field
-    def postId(self) -> Optional[str]:
+    def postId(self) -> str | None:
         return self.social_media_post.postId
 
     @auto_field
-    def reactions(self) -> Optional[Reactions]:
+    def reactions(self) -> Reactions | None:
         return self.social_media_post.reactions
 
     @auto_field
-    def text(self) -> Optional[str]:
+    def text(self) -> str | None:
         return self.social_media_post.text
 
     @auto_field
-    def datePublished(self) -> Optional[str]:
+    def datePublished(self) -> str | None:
         return self.social_media_post.datePublished
 
     @auto_field
-    def hashtags(self) -> Optional[List[str]]:
+    def hashtags(self) -> list[str] | None:
         return self.social_media_post.hashtags
 
     @auto_field
-    def mediaUrls(self) -> Optional[List[Url]]:
+    def mediaUrls(self) -> list[Url] | None:
         return self.social_media_post.mediaUrls
 
     @auto_field
-    def author(self) -> Optional[SocialMediaPostAuthor]:
+    def author(self) -> SocialMediaPostAuthor | None:
         return self.social_media_post.author
 
     @auto_field
-    def metadata(self) -> Optional[SocialMediaPostMetadata]:
+    def metadata(self) -> SocialMediaPostMetadata | None:
         return self.social_media_post.metadata

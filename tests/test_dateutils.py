@@ -13,7 +13,7 @@ def test_parse_and_format():
         minute=6,
         second=2,
         microsecond=0,
-        tzinfo=datetime.timezone.utc,
+        tzinfo=datetime.UTC,
     )
 
     assert parse_iso_datetime(dt_str) == dt_obj

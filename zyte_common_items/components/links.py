@@ -1,5 +1,3 @@
-from typing import Optional
-
 import attrs
 
 from zyte_common_items import Item
@@ -10,10 +8,10 @@ from zyte_common_items.util import url_to_str
 class Link(Item):
     """A link from a webpage to another webpage."""
 
-    text: Optional[str] = None
+    text: str | None = None
     """Displayed text."""
 
-    url: Optional[str] = attrs.field(
+    url: str | None = attrs.field(
         default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
     """Target URL."""
@@ -23,10 +21,10 @@ class Link(Item):
 class NamedLink(Item):
     """A link from a webpage to another webpage."""
 
-    name: Optional[str] = None
+    name: str | None = None
     """The name of the link."""
 
-    url: Optional[str] = attrs.field(
+    url: str | None = attrs.field(
         default=None, converter=attrs.converters.optional(url_to_str), kw_only=True
     )
     """Target URL."""
