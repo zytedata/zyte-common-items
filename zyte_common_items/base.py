@@ -86,7 +86,7 @@ class Item(ProbabilityMixin, _ItemBase):
         if not isinstance(item, dict):
             path = _get_import_path(cls)
             prefix = f"Expected {trail} to be" if trail else "Expected"
-            raise ValueError(f"{prefix} a dict with fields from {path}, got {item!r}.")
+            raise ValueError(f"{prefix} a dict with fields from {path}, got {item!r}.")  # noqa: TRY004
 
         item = cls._apply_field_types_to_sub_fields(item, trail=trail)
         unknown_fields, known_fields = split_in_unknown_and_known_fields(item, cls)

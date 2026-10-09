@@ -198,7 +198,7 @@ def description_html_processor(value: Selector | HtmlElement, page: Any) -> Any:
     if value is None:
         return None
     if not isinstance(value, HtmlElement):
-        raise ValueError(
+        raise ValueError(  # noqa: TRY004
             f"description_html_processor expects an HtmlElement node, got "
             f"{value.__class__}"
         )
@@ -230,7 +230,7 @@ def description_processor(value: Any, page: Any) -> Any:
     if value is None:
         return None
     if not isinstance(value, HtmlElement):
-        raise ValueError(
+        raise ValueError(  # noqa: TRY004
             f"description_processor expects an HtmlElement node, got {value.__class__}"
         )
     cleaned_node = clean_node(value, _get_base_url(page))

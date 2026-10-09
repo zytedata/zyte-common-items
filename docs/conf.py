@@ -1,9 +1,9 @@
 import pkgutil
-from datetime import datetime
+from datetime import UTC, datetime
 
 
 def get_copyright(attribution, *, first_year):
-    current_year = datetime.now().year
+    current_year = datetime.now(UTC).year
     years = (
         current_year if first_year == current_year else f"{first_year}-{current_year}"
     )
