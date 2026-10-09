@@ -137,7 +137,7 @@ def edit_request_url(expression, page):
     if isinstance(expression, str):
         return expression
     if not isinstance(expression, dict):
-        raise ValueError(
+        raise TypeError(
             f"The edit_request_url processor expected a dict, got {expression!r}"
         )
     if "url" in expression:
