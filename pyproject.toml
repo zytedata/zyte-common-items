@@ -55,7 +55,7 @@ ignore_missing_imports = false
 implicit_reexport = false
 exclude = ['test_mypy\.py$', 'test_conversion\.py$']
 
-[tool.pytest.ini_options]
+[tool.pytest]
 filterwarnings = [
     'ignore:The zyte_common_items.ae module .*:DeprecationWarning',
 ]
@@ -74,6 +74,9 @@ regex = true
 
 [[tool.bumpversion.files]]
 filename = "zyte_common_items/VERSION"
+
+[tool.coverage.run]
+branch = true
 
 [tool.ruff.format]
 exclude = [
