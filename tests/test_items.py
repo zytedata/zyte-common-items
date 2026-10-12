@@ -545,6 +545,8 @@ _SERP_ALL_KWARGS: dict = {
             url="https://en.wikipedia.org/wiki/Foobar",
             rank=1,
             displayedUrlText="https://en.wikipedia.org › wiki › F...",
+            guessedDomain="https://en.wikipedia.org",
+            guessedUrl="https://en.wikipedia.org/wiki/Foobar",
         ),
     ],
     "url": "https://example.com/search?q=foo+bar",

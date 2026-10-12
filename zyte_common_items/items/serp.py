@@ -42,6 +42,24 @@ class SerpOrganicResult(Item):
     something like ``"https://en.wikipedia.org  › wiki › Foobar"``.
     """
 
+    guessedDomain: str | None = attrs.field(
+        default=None, converter=url_to_str_optional, kw_only=True
+    )
+    """A guess of which domain the obfuscated redirect :attr:`url` is pointing
+    towards.
+
+    Only present when :attr:`url` is obfuscated and making a guess is possible.
+    """
+
+    guessedUrl: str | None = attrs.field(
+        default=None, converter=url_to_str_optional, kw_only=True
+    )
+    """A guess of which URL the obfuscated redirect :attr:`url` is pointing
+    towards.
+
+    Only present when :attr:`url` is obfuscated and making a guess is possible.
+    """
+
 
 @attrs.define(kw_only=True)
 class SerpAiOverviewReference(Item):
