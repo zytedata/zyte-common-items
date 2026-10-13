@@ -2,6 +2,42 @@
 Changelog
 =========
 
+0.30.0 (unreleased)
+===================
+
+* Added official Python 3.15 support and dropped support for Python 3.9 and
+  3.10.
+
+* Now requires ``Jinja2 >= 2.10.2`` (a version increase) and
+  ``typing-extensions >= 4.12.0`` (a new dependency).
+
+* Added :class:`~zyte_common_items.PageContent` and related classes.
+
+* Added :attr:`Serp.aiOverview <zyte_common_items.Serp.aiOverview>`, with
+  the new :class:`~zyte_common_items.SerpAiOverview` and
+  :class:`~zyte_common_items.SerpAiOverviewReference` classes.
+
+* Items now support web-poet serialization, so page objects that use them as
+  dependencies work with the web-poet testing framework, e.g. with ``scrapy
+  savefixture``.
+
+* :class:`~zyte_common_items.ZyteItemAdapter` now implements
+  ``is_item_class()``, needed by newer versions of itemadapter.
+
+  The :ref:`add-on <scrapy-config>` now sets ``ItemAdapter.ADAPTER_CLASSES``
+  to a :class:`tuple` instead of a :class:`~collections.deque`, and the
+  :ref:`setup docs <itemadapter-config>` now recommend doing the same.
+
+* The metadata processor and converter, and the request list processor and
+  converter, now also accept :class:`dict` objects as input.
+
+* ``from_dict()`` now also converts nested items for fields annotated with
+  ``X | None`` instead of ``Optional[X]``, and reports invalid ``X | Y``
+  annotations.
+
+* Deprecated functions and classes are now marked with
+  :func:`~warnings.deprecated`, so type checkers report their use.
+
 0.29.0 (2025-10-16)
 ===================
 
