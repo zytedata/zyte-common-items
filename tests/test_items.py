@@ -58,6 +58,8 @@ from zyte_common_items import (
     RealEstateMetadata,
     Request,
     Serp,
+    SerpAiOverview,
+    SerpAiOverviewReference,
     SerpMetadata,
     SerpOrganicResult,
     SocialMediaPost,
@@ -552,6 +554,22 @@ _SERP_ALL_KWARGS: dict = {
         displayedQuery="foo bar",
         searchedQuery="foo bar",
         totalOrganicResults=999_999_999_999,
+    ),
+    "aiOverview": SerpAiOverview(
+        text="Foobar is a placeholder name used in computer programming.",
+        markdown=(
+            "**Foobar** is a placeholder name used in computer programming."
+            " [[1]](https://en.wikipedia.org/wiki/Foobar)"
+        ),
+        references=[
+            SerpAiOverviewReference(
+                url="https://en.wikipedia.org/wiki/Foobar",
+                source="Wikipedia",
+                domain="en.wikipedia.org",
+                title="Foobar - Wikipedia",
+                text="The terms foobar, foo, bar, baz, qux, quux, and others are used as metasyntactic variables.",
+            ),
+        ],
     ),
 }
 

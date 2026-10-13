@@ -133,6 +133,14 @@ Search engine results
 .. autoclass:: zyte_common_items.SerpMetadata(**kwargs)
    :members: dateDownloaded, displayedQuery, searchedQuery, totalOrganicResults, validationMessages
 
+.. autoclass:: zyte_common_items.SerpAiOverview(**kwargs)
+   :members:
+   :inherited-members:
+
+.. autoclass:: zyte_common_items.SerpAiOverviewReference(**kwargs)
+   :members:
+   :inherited-members:
+
 Social media post
 =================
 
