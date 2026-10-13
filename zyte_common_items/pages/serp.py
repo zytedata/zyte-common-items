@@ -2,7 +2,12 @@ import attrs
 from web_poet import Returns
 
 from zyte_common_items.fields import auto_field
-from zyte_common_items.items import Serp, SerpMetadata, SerpOrganicResult
+from zyte_common_items.items import (
+    Serp,
+    SerpAiOverview,
+    SerpMetadata,
+    SerpOrganicResult,
+)
 
 from .base import BasePage, Page
 from .mixins import HasMetadata
@@ -35,3 +40,7 @@ class AutoSerpPage(BaseSerpPage):
     @auto_field
     def metadata(self) -> SerpMetadata | None:
         return self.serp.metadata
+
+    @auto_field
+    def aiOverview(self) -> SerpAiOverview | None:
+        return self.serp.aiOverview
