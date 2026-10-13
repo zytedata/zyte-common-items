@@ -20,7 +20,13 @@ from .search_request_template import (
     SearchRequestTemplate,
     SearchRequestTemplateMetadata,
 )
-from .serp import Serp, SerpMetadata, SerpOrganicResult
+from .serp import (
+    Serp,
+    SerpAiOverview,
+    SerpAiOverviewReference,
+    SerpMetadata,
+    SerpOrganicResult,
+)
 from .social_media_post import SocialMediaPost, SocialMediaPostMetadata
 
 __all__ = [
@@ -58,6 +64,8 @@ __all__ = [
     "SearchRequestTemplate",
     "SearchRequestTemplateMetadata",
     "Serp",
+    "SerpAiOverview",
+    "SerpAiOverviewReference",
     "SerpMetadata",
     "SerpOrganicResult",
     "SocialMediaPost",

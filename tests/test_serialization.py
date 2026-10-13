@@ -23,6 +23,8 @@ from zyte_common_items import (
     RealEstate,
     SearchRequestTemplate,
     Serp,
+    SerpAiOverview,
+    SerpAiOverviewReference,
     SerpOrganicResult,
     SocialMediaPost,
 )
@@ -170,6 +172,11 @@ class TestTopLevelItemSerialization:
             organicResults=[
                 SerpOrganicResult(url="https://example.com/r1", name="Result 1"),
             ],
+            aiOverview=SerpAiOverview(
+                text="Answer.",
+                markdown="Answer. [[1]](https://example.com/r1)",
+                references=[SerpAiOverviewReference(url="https://example.com/r1")],
+            ),
         )
         serialized = serialize_leaf(serp)
         deserialized = deserialize_leaf(Serp, serialized)
@@ -178,6 +185,7 @@ class TestTopLevelItemSerialization:
         assert deserialized.pageNumber == serp.pageNumber
         assert deserialized.organicResults is not None
         assert len(deserialized.organicResults) == 1
+        assert deserialized.aiOverview == serp.aiOverview
 
     def test_business_place_serialization(self):
         """Test BusinessPlace serialization and deserialization."""

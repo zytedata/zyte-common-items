@@ -1,6 +1,7 @@
 import datetime
 
 import attrs
+import pytest
 from web_poet import RequestUrl
 
 from zyte_common_items import (
@@ -28,6 +29,8 @@ from zyte_common_items import (
     Reactions,
     RealEstateArea,
     Request,
+    SerpAiOverview,
+    SerpAiOverviewReference,
     SerpOrganicResult,
     SocialMediaPostAuthor,
     SocialMediaPostMetadata,
@@ -238,6 +241,29 @@ def test_serp_organic_result():
         rank=1,
         displayedUrlText="https://en.wikipedia.org › wiki › F...",
     )
+
+
+def test_serp_ai_overview():
+    SerpAiOverview(
+        text="Foobar is a placeholder name.",
+        markdown="Foobar is a placeholder name. [[1]](https://en.wikipedia.org/wiki/Foobar)",
+        references=[
+            SerpAiOverviewReference(
+                url="https://en.wikipedia.org/wiki/Foobar",
+                source="Wikipedia",
+                domain="en.wikipedia.org",
+                title="Foobar - Wikipedia",
+                text="Foobar is a placeholder name.",
+            ),
+        ],
+    )
+
+
+def test_serp_ai_overview_missing_fields():
+    with pytest.raises(TypeError):
+        SerpAiOverview()  # type: ignore[call-arg]
+    with pytest.raises(TypeError):
+        SerpAiOverviewReference()  # type: ignore[call-arg]
 
 
 def test_social_media_post_author():
