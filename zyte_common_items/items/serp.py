@@ -73,8 +73,7 @@ class SerpAiOverviewReference(Item):
 
 @attrs.define(kw_only=True)
 class SerpAiOverview(Item):
-    """AI-generated answer shown on a search engine results page, e.g. the
-    Google AI Overview."""
+    """AI-generated answer shown on a search engine results page."""
 
     text: str
     """Plain-text rendering of the AI overview."""
