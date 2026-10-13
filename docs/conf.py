@@ -1,13 +1,4 @@
 import pkgutil
-from datetime import datetime
-
-
-def get_copyright(attribution, *, first_year):
-    current_year = datetime.now().year
-    years = (
-        current_year if first_year == current_year else f"{first_year}-{current_year}"
-    )
-    return f"{years}, {attribution}"
 
 
 def get_version_and_release():
@@ -23,7 +14,7 @@ def get_version_and_release():
 
 
 project = "zyte-common-items"
-project_copyright = get_copyright("Zyte Group Ltd", first_year=2022)
+project_copyright = "Zyte Group Ltd"
 version, release = get_version_and_release()
 
 extensions = [

@@ -1,18 +1,19 @@
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
 
 [project]
 name = "zyte-common-items"
 dynamic = ["version"]
 description = "Item definitions for Zyte API schema"
 readme = { file = "README.rst", content-type = "text/x-rst" }
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
 requires-python = ">=3.11"
 authors = [{ name = "Zyte Group Ltd", email = "info@zyte.com" }]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: BSD License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
@@ -28,7 +29,7 @@ dependencies = [
     "itemadapter>=0.8.0",
     "Jinja2>=2.10.2",
     "price-parser>=0.3.4",
-    "typing-extensions>=4.5.0",
+    "typing-extensions>=4.12.0",
     "web-poet>=0.14.0",
     "zyte-parsers>=0.5.0",
 ]
@@ -39,15 +40,18 @@ issues = "https://github.com/zytedata/zyte-common-items/issues"
 documentation = "https://zyte-common-items.readthedocs.io/en/stable/"
 changelog = "https://github.com/zytedata/zyte-common-items/blob/main/CHANGELOG.rst"
 
-[tool.setuptools.dynamic]
-version = { file = "zyte_common_items/VERSION" }
+[tool.hatch.version]
+path = "zyte_common_items/VERSION"
+pattern = "^(?P<version>.+)$"
 
-[tool.setup_tools.package-data]
-zyte_common_items = ["py.typed","VERSION"]
-
-[tool.setuptools.packages.find]
-include = ["zyte_common_items*"]
-namespaces = false
+[tool.hatch.build.targets.sdist]
+include = [
+    "/docs",
+    "/tests",
+    "/zyte_common_items",
+    "/CHANGELOG.rst",
+    "/tox.ini",
+]
 
 [tool.mypy]
 check_untyped_defs = true
@@ -55,7 +59,7 @@ ignore_missing_imports = false
 implicit_reexport = false
 exclude = ['test_mypy\.py$', 'test_conversion\.py$']
 
-[tool.pytest.ini_options]
+[tool.pytest]
 filterwarnings = [
     'ignore:The zyte_common_items.ae module .*:DeprecationWarning',
 ]
@@ -74,6 +78,9 @@ regex = true
 
 [[tool.bumpversion.files]]
 filename = "zyte_common_items/VERSION"
+
+[tool.coverage.run]
+branch = true
 
 [tool.ruff.format]
 exclude = [
@@ -94,6 +101,12 @@ extend-select = [
     "COM",
     # pydocstyle
     "D",
+    # pycodestyle
+    "E4",
+    "E7",
+    "E9",
+    # Pyflakes
+    "F",
     # flake8-future-annotations
     "FA",
     # flynt

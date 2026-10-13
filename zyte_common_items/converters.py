@@ -11,7 +11,7 @@ def url_to_str(url: str | RequestUrl | ResponseUrl) -> str:
     :class:`~web_poet.page_inputs.url.ResponseUrl` object as a string."""
 
     if not isinstance(url, (str, RequestUrl, ResponseUrl)):
-        raise ValueError(
+        raise ValueError(  # noqa: TRY004
             f"{url!r} is neither a string nor an instance of RequestUrl or ResponseUrl."
         )
     return str(url)
