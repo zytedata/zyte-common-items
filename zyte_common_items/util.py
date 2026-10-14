@@ -1,10 +1,15 @@
+import sys
 from collections.abc import Callable
 from typing import Any, TypeVar
 from warnings import warn
 from weakref import WeakKeyDictionary
 
 import attrs
-from typing_extensions import deprecated
+
+if sys.version_info >= (3, 13):
+    from warnings import deprecated
+else:
+    from typing_extensions import deprecated
 
 # backwards compatibility imports
 from ._dateutils import format_datetime as format_datetime  # noqa: PLC0414

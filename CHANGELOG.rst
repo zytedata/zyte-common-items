@@ -8,8 +8,8 @@ Changelog
 * Added official Python 3.15 support and dropped support for Python 3.9 and
   3.10.
 
-* Now requires ``Jinja2 >= 2.10.2`` (a version increase) and
-  ``typing-extensions >= 4.12.0`` (a new dependency).
+* Now requires ``Jinja2 >= 2.10.2`` (a version increase) and, on Python 3.12
+  and lower, ``typing-extensions >= 4.12.0`` (a new dependency).
 
 * Added :class:`~zyte_common_items.PageContent` and related classes.
 
