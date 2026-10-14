@@ -28,8 +28,10 @@ Changelog
   to a :class:`tuple` instead of a :class:`~collections.deque`, and the
   :ref:`setup docs <itemadapter-config>` now recommend doing the same.
 
-* The metadata processor and converter, and the request list processor and
-  converter, now also accept :class:`dict` objects as input.
+* ``metadata`` fields and request list fields, e.g.
+  :attr:`ProductNavigation.items <zyte_common_items.ProductNavigation.items>`,
+  now also accept :class:`dict` objects, both as item constructor arguments
+  and as page object field values.
 
 * ``from_dict()`` now also converts nested items for fields annotated with
   ``X | None`` instead of ``Optional[X]``, and reports invalid ``X | Y``
