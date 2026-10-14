@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.30.0 (unreleased)
+0.30.0 (2026-10-14)
 ===================
 
 * Added official Python 3.15 support and dropped support for Python 3.9 and
