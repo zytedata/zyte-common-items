@@ -240,7 +240,7 @@ def test_serp_organic_result():
         url="https://en.wikipedia.org/wiki/Foobar",
         rank=1,
         displayedUrlText="https://en.wikipedia.org › wiki › F...",
-        guessedDomain="https://en.wikipedia.org",
+        guessedOrigin="https://en.wikipedia.org",
         guessedUrl="https://en.wikipedia.org/wiki/Foobar",
     )
 

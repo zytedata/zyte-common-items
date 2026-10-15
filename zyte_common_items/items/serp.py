@@ -42,11 +42,11 @@ class SerpOrganicResult(Item):
     something like ``"https://en.wikipedia.org  › wiki › Foobar"``.
     """
 
-    guessedDomain: str | None = attrs.field(
+    guessedOrigin: str | None = attrs.field(
         default=None, converter=url_to_str_optional, kw_only=True
     )
-    """A guess of which domain the obfuscated redirect :attr:`url` is pointing
-    towards.
+    """A guess of the origin (scheme, host and port) the obfuscated redirect
+    :attr:`url` is pointing towards, e.g. ``"https://en.wikipedia.org"``.
 
     Only present when :attr:`url` is obfuscated and making a guess is possible.
     """
