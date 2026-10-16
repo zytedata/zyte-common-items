@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.31.0 (unreleased)
+0.31.0 (2026-10-16)
 ===================
 
 * Added :attr:`SerpOrganicResult.guessedOrigin
