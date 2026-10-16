@@ -2,6 +2,16 @@
 Changelog
 =========
 
+0.31.0 (unreleased)
+===================
+
+* Added :attr:`SerpOrganicResult.guessedOrigin
+  <zyte_common_items.SerpOrganicResult.guessedOrigin>` and
+  :attr:`SerpOrganicResult.guessedUrl
+  <zyte_common_items.SerpOrganicResult.guessedUrl>`, guesses of where an
+  obfuscated redirect :attr:`~zyte_common_items.SerpOrganicResult.url` points
+  to.
+
 0.30.0 (2026-10-14)
 ===================
 
