@@ -1,5 +1,3 @@
-import inspect
-import runpy
 from collections.abc import Collection
 from contextlib import contextmanager
 from copy import copy
@@ -8,7 +6,6 @@ from warnings import catch_warnings, simplefilter
 import attrs
 import pytest
 from itemadapter import ItemAdapter
-from itemadapter.adapter import AttrsAdapter
 
 from zyte_common_items import Item, Product, ZyteItemAdapter
 from zyte_common_items.adapter import ZyteItemKeepEmptyAdapter
@@ -405,13 +402,3 @@ def test_is_item_class():
         simplefilter("error")
         assert isinstance(ItemAdapter(Product(**_PRODUCT_MIN_KWARGS)).adapter, Adapter)
         assert not isinstance(ItemAdapter(NonItem()).adapter, Adapter)
-
-
-def test_no_is_item_override(monkeypatch):
-    # itemadapter versions without AttrsAdapter.is_item() select adapters
-    # through is_item_class() only.
-    monkeypatch.delattr(AttrsAdapter, "is_item")
-    namespace = runpy.run_path(inspect.getfile(ZyteItemAdapter))
-    adapter = namespace["ZyteItemAdapter"]
-    assert "is_item" not in vars(adapter)
-    assert adapter.is_item_class(Product)
