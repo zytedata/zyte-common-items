@@ -1071,7 +1071,11 @@ def test_get_probability_request(cls, has_proba):
 
 def test_deprecated_request_list_caster():
     with pytest.deprecated_call():
-        RequestListCaster(ProbabilityRequest)
+        caster = RequestListCaster(ProbabilityRequest)
+    request_list = [Request(url="https://example.com")]
+    (result,) = caster(request_list)
+    assert isinstance(result, ProbabilityRequest)
+    assert result.url == "https://example.com"
 
 
 def test_item_subclasses():

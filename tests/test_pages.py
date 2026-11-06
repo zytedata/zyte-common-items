@@ -27,6 +27,7 @@ from zyte_common_items import (
     Request,
 )
 from zyte_common_items._dateutils import utcnow
+from zyte_common_items.components.metadata import BaseMetadata
 from zyte_common_items.fields import is_auto_field
 
 
@@ -547,3 +548,19 @@ async def test_url_method_none() -> None:
     page = MyPage(response=HttpResponse(url=url, body=b""))
     item = await page.to_item()
     assert item.url is None
+
+
+def test_metadata_cls_without_default_fields():
+    """Metadata classes may lack dateDownloaded and probability."""
+
+    @attrs.define(kw_only=True)
+    class BareMetadata(BaseMetadata):
+        pass
+
+    class CustomProductPage(Page, Returns[Product]):
+        metadata_cls = BareMetadata
+
+    url = ResponseUrl("https://example.com")
+    page = CustomProductPage(response=HttpResponse(url=url, body=b"<html></html>"))
+    assert type(page.metadata) is BareMetadata
+    assert page.no_item_found().url == "https://example.com"

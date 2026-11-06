@@ -178,13 +178,7 @@ class Item(ProbabilityMixin, _ItemBase):
                 item[key] = cls_._from_dict(value, trail=key_trail)
             for key, cls_ in (from_list or {}).items():
                 key_trail = _extend_trail(trail, key)
-                value = item.get(key)
-                if value is not None and not isinstance(value, list):
-                    path = _get_import_path(cls_)
-                    raise ValueError(
-                        f"Expected {key_trail} to be a list of dicts "
-                        f"with fields from {path}, got {value!r}."
-                    )
-                item[key] = cls_._from_list(value, trail=key_trail)
+                # Non-list values are already rejected above.
+                item[key] = cls_._from_list(item.get(key), trail=key_trail)
 
         return item

@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 import pytest
 from lxml.html import fromstring
 from parsel import Selector, SelectorList
@@ -22,11 +24,13 @@ from zyte_common_items.processors import (
     _format_price,
     brand_processor,
     breadcrumbs_processor,
+    description_html_processor,
     gtin_processor,
     images_processor,
     metadata_processor,
     price_processor,
     rating_processor,
+    simple_price_processor,
 )
 
 base_url = "http://www.example.com/blog/"
@@ -436,3 +440,85 @@ def test_metadata(input_value, BasePage: type, expected_value):
 
     page = CustomPage(base_url)  # type: ignore[arg-type]
     assert page.metadata == expected_value
+
+
+@pytest.mark.parametrize(
+    ("amount", "expected"),
+    [
+        (None, None),
+        (Decimal("NaN"), None),
+        (Decimal("Infinity"), None),
+        (Decimal("22.9"), "22.90"),
+    ],
+)
+def test_format_price_amount(amount, expected):
+    assert _format_price(Price(amount=amount, currency=None, amount_text=None)) == (
+        expected
+    )
+
+
+@pytest.mark.parametrize(
+    ("input_value", "expected_value"),
+    [
+        (22.9, "22.90"),
+        (22, "22.00"),
+        (Selector(text="<html>$22.9</html>"), "22.90"),
+        (SelectorList([Selector(text="<html>$22.9</html>")]), "22.90"),
+        (Selector(text="<html>no price</html>"), None),
+        ("22.9", "22.9"),
+        (None, None),
+    ],
+)
+def test_simple_price(input_value, expected_value):
+    assert simple_price_processor(input_value, None) == expected_value
+
+
+@pytest.mark.parametrize(
+    "value", [None, Selector(text="null", type="json")], ids=["none", "null-root"]
+)
+def test_description_html_no_node(value):
+    class DescriptionPage(BasePage):
+        @field(out=[description_html_processor])
+        def descriptionHtml(self):
+            return value
+
+    page = DescriptionPage(base_url)  # type: ignore[arg-type]
+    assert page.descriptionHtml is None
+
+
+def test_description_html_invalid_type():
+    class DescriptionPage(BasePage):
+        @field(out=[description_html_processor])
+        def descriptionHtml(self):
+            return Selector(text='{"a": 1}', type="json")
+
+    page = DescriptionPage(base_url)  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="expects an HtmlElement node"):
+        page.descriptionHtml
+
+
+@pytest.mark.parametrize(
+    ("input_value", "expected_value"),
+    [
+        ({}, None),
+        ({"ratingValue": 3.8}, AggregateRating(ratingValue=3.8)),
+        ({"bestRating": 5}, AggregateRating(bestRating=5.0)),
+        ({"reviewCount": "3"}, AggregateRating(reviewCount=3)),
+    ],
+)
+def test_rating_dict(input_value, expected_value):
+    assert rating_processor(input_value, None) == expected_value
+
+
+def test_images_unsupported_entries():
+    value = [
+        {"url": ""},
+        {"alt": "no url"},
+        42,
+        Image("https://www.url.com/img1.jpg"),
+        "https://www.url.com/img2.jpg",
+    ]
+    assert images_processor(value, None) == [
+        Image("https://www.url.com/img1.jpg"),
+        Image("https://www.url.com/img2.jpg"),
+    ]

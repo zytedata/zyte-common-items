@@ -378,11 +378,7 @@ class AEProductList(Item):
                 _remove(product, ["currency"])
                 _convert_offer(product)
                 _convert_images(product)
-                if _is_truthy_else_remove(product, "metadata"):
-                    if _is_not_none(product["metadata"], "probability"):
-                        product["probability"] = product["metadata"].pop("probability")
-                    del product["metadata"]
-                product.setdefault("probability", 1.0)
+                _convert_list_item_metadata(product)
         _remove(data, ["metadata", "categoryName"])
         _convert_breadcrumbs(data)
         return super().from_dict(data)

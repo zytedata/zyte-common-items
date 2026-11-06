@@ -2,8 +2,18 @@ import base64
 
 import pytest
 
-from zyte_common_items import Header, ProbabilityRequest, Request
+from zyte_common_items import (
+    Header,
+    Metadata,
+    ProbabilityMetadata,
+    ProbabilityRequest,
+    Request,
+)
 from zyte_common_items.components import request_list_processor
+from zyte_common_items.converters import (
+    to_metadata,
+    to_probability_request_list_optional,
+)
 from zyte_common_items.processors import probability_request_list_processor
 
 
@@ -90,3 +100,16 @@ def test_deprecated_request_list_processor():
         old_result = request_list_processor(request_list)
 
     assert old_result == probability_request_list_processor(request_list)
+
+
+def test_probability_request_list_optional():
+    assert to_probability_request_list_optional(None) is None
+    assert to_probability_request_list_optional([{"url": "http://example.com"}]) == [
+        ProbabilityRequest(url="http://example.com", headers=[])
+    ]
+
+
+def test_to_metadata():
+    converter = to_metadata(ProbabilityMetadata)
+    assert converter({"probability": 0.5}) == ProbabilityMetadata(probability=0.5)
+    assert converter(Metadata()) == ProbabilityMetadata()

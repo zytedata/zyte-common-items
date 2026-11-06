@@ -1,7 +1,8 @@
 import attrs
 import pytest
 
-from zyte_common_items.util import split_in_unknown_and_known_fields
+from zyte_common_items.processors import metadata_processor as new_metadata_processor
+from zyte_common_items.util import metadata_processor, split_in_unknown_and_known_fields
 
 
 @attrs.define(auto_attribs=True, slots=True)
@@ -26,3 +27,8 @@ def test_split_in_unknown_and_known_fields():
 
     with pytest.raises(ValueError, match="The cls <class 'str'> is not attrs class"):
         split_in_unknown_and_known_fields(input_, str)
+
+
+def test_deprecated_metadata_processor():
+    with pytest.deprecated_call():
+        assert metadata_processor(None, None) == new_metadata_processor(None, None)

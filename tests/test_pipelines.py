@@ -17,6 +17,7 @@ from zyte_common_items import (
     ProductNavigation,
 )
 from zyte_common_items.base import ProbabilityMixin
+from zyte_common_items.log_formatters import InfoDropItem
 from zyte_common_items.pipelines import DropLowProbabilityItemPipeline
 
 
@@ -349,3 +350,20 @@ def test_no_warning():
         mock_crawler = MagicMock(spec=["spider", "stats"])
         DropLowProbabilityItemPipeline(mock_crawler)
     assert len(record) == 0
+
+
+def test_from_crawler():
+    crawler = MagicMock(spec=["spider", "stats"])
+    crawler.spider.settings.get.return_value = {}
+    pipeline = DropLowProbabilityItemPipeline.from_crawler(crawler)
+    assert isinstance(pipeline, DropLowProbabilityItemPipeline)
+    assert pipeline.stats is crawler.stats
+
+
+def test_process_item_all_sub_items_dropped():
+    crawler = MagicMock(spec=["spider", "stats"])
+    crawler.spider.settings.get.return_value = {}
+    pipeline = DropLowProbabilityItemPipeline(crawler)
+    item = {"product": Product(url="http://example.com", metadata={"probability": 0.0})}
+    with pytest.raises(InfoDropItem, match="probability of all its sub-items"):
+        pipeline.process_item(item, spider=crawler.spider)
